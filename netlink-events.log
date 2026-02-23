@@ -1,0 +1,11 @@
+=== Netlink monitor Fri Nov  1 12:10:01 UTC 2013 ===
+
+--- Link events (ip monitor link) ---
+3: swp1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP 
+    link/ether 80:a2:35:81:ca:af brd ff:ff:ff:ff:ff:ff
+3: swp1: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc pfifo_fast state DOWN 
+    link/ether 80:a2:35:81:ca:af brd ff:ff:ff:ff:ff:ff
+3: swp1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP 
+    link/ether 80:a2:35:81:ca:af brd ff:ff:ff:ff:ff:ff
+
+--- Route events (ip monitor route) ---

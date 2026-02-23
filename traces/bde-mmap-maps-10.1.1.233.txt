@@ -1,0 +1,92 @@
+=== /proc/19036/maps (mmap regions) ===
+00100000-00102000 r-xp 00000000 00:00 0          [vdso]
+0fb84000-0fb9a000 r-xp 00000000 08:06 18493      /lib/powerpc-linux-gnu/libgcc_s.so.1
+0fb9a000-0fbaa000 ---p 00016000 08:06 18493      /lib/powerpc-linux-gnu/libgcc_s.so.1
+0fbaa000-0fbab000 rw-p 00016000 08:06 18493      /lib/powerpc-linux-gnu/libgcc_s.so.1
+0fbbb000-0fd2c000 r-xp 00000000 08:06 18631      /lib/powerpc-linux-gnu/libc-2.13.so
+0fd2c000-0fd3c000 ---p 00171000 08:06 18631      /lib/powerpc-linux-gnu/libc-2.13.so
+0fd3c000-0fd40000 r--p 00171000 08:06 18631      /lib/powerpc-linux-gnu/libc-2.13.so
+0fd40000-0fd41000 rw-p 00175000 08:06 18631      /lib/powerpc-linux-gnu/libc-2.13.so
+0fd41000-0fd44000 rw-p 00000000 00:00 0 
+0fd54000-0fdfe000 r-xp 00000000 08:06 18497      /lib/powerpc-linux-gnu/libm-2.13.so
+0fdfe000-0fe0e000 ---p 000aa000 08:06 18497      /lib/powerpc-linux-gnu/libm-2.13.so
+0fe0e000-0fe11000 r--p 000aa000 08:06 18497      /lib/powerpc-linux-gnu/libm-2.13.so
+0fe11000-0fe12000 rw-p 000ad000 08:06 18497      /lib/powerpc-linux-gnu/libm-2.13.so
+0fe22000-0fe3a000 r-xp 00000000 08:06 18593      /lib/powerpc-linux-gnu/libpthread-2.13.so
+0fe3a000-0fe49000 ---p 00018000 08:06 18593      /lib/powerpc-linux-gnu/libpthread-2.13.so
+0fe49000-0fe4a000 r--p 00017000 08:06 18593      /lib/powerpc-linux-gnu/libpthread-2.13.so
+0fe4a000-0fe4b000 rw-p 00018000 08:06 18593      /lib/powerpc-linux-gnu/libpthread-2.13.so
+0fe4b000-0fe4d000 rw-p 00000000 00:00 0 
+0fe5d000-0fe60000 r-xp 00000000 08:06 18475      /lib/powerpc-linux-gnu/libdl-2.13.so
+0fe60000-0fe6f000 ---p 00003000 08:06 18475      /lib/powerpc-linux-gnu/libdl-2.13.so
+0fe6f000-0fe70000 r--p 00002000 08:06 18475      /lib/powerpc-linux-gnu/libdl-2.13.so
+0fe70000-0fe71000 rw-p 00003000 08:06 18475      /lib/powerpc-linux-gnu/libdl-2.13.so
+0fe81000-0fe89000 r-xp 00000000 08:06 18480      /lib/powerpc-linux-gnu/librt-2.13.so
+0fe89000-0fe98000 ---p 00008000 08:06 18480      /lib/powerpc-linux-gnu/librt-2.13.so
+0fe98000-0fe99000 r--p 00007000 08:06 18480      /lib/powerpc-linux-gnu/librt-2.13.so
+0fe99000-0fe9a000 rw-p 00008000 08:06 18480      /lib/powerpc-linux-gnu/librt-2.13.so
+0feaa000-0fed4000 r-xp 00000000 08:06 18512      /lib/powerpc-linux-gnu/libfuse.so.2.9.0
+0fed4000-0fee3000 ---p 0002a000 08:06 18512      /lib/powerpc-linux-gnu/libfuse.so.2.9.0
+0fee3000-0feed000 r--p 00029000 08:06 18512      /lib/powerpc-linux-gnu/libfuse.so.2.9.0
+0feed000-0feee000 rw-p 00033000 08:06 18512      /lib/powerpc-linux-gnu/libfuse.so.2.9.0
+0fefe000-0ff14000 r-xp 00000000 08:06 14814      /usr/lib/libnet.so.1.5.0
+0ff14000-0ff23000 ---p 00016000 08:06 14814      /usr/lib/libnet.so.1.5.0
+0ff23000-0ff24000 rw-p 00015000 08:06 14814      /usr/lib/libnet.so.1.5.0
+0ff24000-0ff25000 rw-p 00000000 00:00 0 
+0ff35000-0ff39000 r-xp 00000000 08:06 18647      /lib/libnl-genl-3.so.200.5.2
+0ff39000-0ff49000 ---p 00004000 08:06 18647      /lib/libnl-genl-3.so.200.5.2
+0ff49000-0ff4a000 rwxp 00004000 08:06 18647      /lib/libnl-genl-3.so.200.5.2
+0ff5a000-0ff9e000 r-xp 00000000 08:06 14036      /usr/lib/libnl-route-3.so.200.5.2
+0ff9e000-0ffad000 ---p 00044000 08:06 14036      /usr/lib/libnl-route-3.so.200.5.2
+0ffad000-0ffb2000 rwxp 00043000 08:06 14036      /usr/lib/libnl-route-3.so.200.5.2
+0ffb2000-0ffb4000 rwxp 00000000 00:00 0 
+0ffc4000-0ffdf000 r-xp 00000000 08:06 18741      /lib/libnl-3.so.200.5.2
+0ffdf000-0ffee000 ---p 0001b000 08:06 18741      /lib/libnl-3.so.200.5.2
+0ffee000-0ffef000 rwxp 0001a000 08:06 18741      /lib/libnl-3.so.200.5.2
+0ffef000-0fff0000 rwxp 00000000 00:00 0 
+10000000-11809000 r-xp 00000000 08:06 9948       /usr/sbin/switchd
+11819000-11e47000 rw-p 01809000 08:06 9948       /usr/sbin/switchd
+11e47000-124e5000 rwxp 00000000 00:00 0          [heap]
+124e5000-1314c000 rwxp 00000000 00:00 0          [heap]
+48000000-48020000 r-xp 00000000 08:06 18575      /lib/powerpc-linux-gnu/ld-2.13.so
+48020000-48021000 rw-p 00000000 00:00 0 
+48021000-48022000 r--p 00021000 08:06 18575      /lib/powerpc-linux-gnu/ld-2.13.so
+48022000-48023000 rw-p 00022000 08:06 18575      /lib/powerpc-linux-gnu/ld-2.13.so
+48023000-48027000 rw-p 00000000 00:00 0 
+48027000-4802b000 rw-p 00000000 00:00 0 
+4802b000-4806b000 rw-s a0000000 00:0c 36         /dev/mem
+4806b000-4c06b000 rw-s 04000000 00:0c 36         /dev/mem
+4c06b000-4c06c000 ---p 00000000 00:00 0 
+4c06c000-4c08f000 rwxp 00000000 00:00 0 
+4c08f000-4c090000 ---p 00000000 00:00 0 
+4c090000-4c1af000 rwxp 00000000 00:00 0 
+4c1af000-4c734000 rw-p 00000000 00:00 0 
+4c734000-4c735000 ---p 00000000 00:00 0 
+4c735000-4c756000 rwxp 00000000 00:00 0 
+4c756000-4c757000 ---p 00000000 00:00 0 
+4c757000-4c77a000 rwxp 00000000 00:00 0 
+4c77a000-4c77b000 ---p 00000000 00:00 0 
+4c77b000-4c79e000 rwxp 00000000 00:00 0 
+4c79e000-4c79f000 ---p 00000000 00:00 0 
+4c79f000-4c7c2000 rwxp 00000000 00:00 0 
+4c7c2000-4c823000 rw-p 00000000 00:00 0 
+4c823000-4c824000 ---p 00000000 00:00 0 
+4c824000-4c847000 rwxp 00000000 00:00 0 
+4c847000-4c848000 ---p 00000000 00:00 0 
+4c848000-4c86b000 rwxp 00000000 00:00 0 
+4c86b000-4d3a0000 rw-p 00000000 00:00 0 
+4d3a0000-4d3a1000 ---p 00000000 00:00 0 
+4d3a1000-4d3c4000 rwxp 00000000 00:00 0 
+4d3c4000-4d3c5000 ---p 00000000 00:00 0 
+4d3c5000-4d3e8000 rwxp 00000000 00:00 0 
+4d3e8000-4d58b000 rw-p 00000000 00:00 0 
+4d58b000-4d58c000 ---p 00000000 00:00 0 
+4d58c000-4dd8b000 rwxp 00000000 00:00 0 
+4dd8b000-4dd95000 rw-p 00000000 00:00 0 
+4df00000-4dfce000 rw-p 00000000 00:00 0 
+4dfce000-4e000000 ---p 00000000 00:00 0 
+bfb3a000-bfb5b000 rwxp 00000000 00:00 0          [stack]
+
+=== grep for mem|bde|tun ===
+4802b000-4806b000 rw-s a0000000 00:0c 36         /dev/mem
+4806b000-4c06b000 rw-s 04000000 00:0c 36         /dev/mem

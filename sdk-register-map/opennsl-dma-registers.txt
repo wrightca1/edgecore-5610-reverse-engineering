@@ -1,0 +1,21 @@
+            irq_stat & (0x08000000 << (XGS_DMA_RX_CHAN + chan))) {
+        if (pci_set_dma_mask(sinfo->pdev, 0xffffffff)) {
+        irq_stat & (0x08000000 << XGS_DMA_TX_CHAN)) {
+#define CMICM_DMA_CTRLr         (CMICM_CMC_BASE + 0x00000140)
+#define CMICM_DMA_DESC0r        (CMICM_CMC_BASE + 0x00000158)
+#define CMICM_DMA_HALT_ADDRr    (CMICM_CMC_BASE + 0x00000120)
+#define CMICM_DMA_STAT_CLRr     (CMICM_CMC_BASE + 0x000001a4)
+#define CMICM_DMA_STATr         (CMICM_CMC_BASE + 0x00000150)
+#define CMICX_DMA_CTRLr         (CMICX_CMC_BASE + 0x00002100)
+#define CMICX_DMA_DESC_HIr      (CMICX_CMC_BASE + 0x00002108)
+#define CMICX_DMA_DESC_LOr      (CMICX_CMC_BASE + 0x00002104)
+#define CMICX_DMA_HALT_HIr      (CMICX_CMC_BASE + 0x00002110)
+#define CMICX_DMA_HALT_LOr      (CMICX_CMC_BASE + 0x0000210c)
+#define CMICX_DMA_STATr         (CMICX_CMC_BASE + 0x00002114)
+#define CMICX_DS_CMC_DMA_ACTIVE         (0x00000002)
+#define CMIC_DMA_CTRLr          0x00000100
+#define CMIC_DMA_DESC0r         0x00000110
+#define CMIC_DMA_STATr          0x00000104
+#define DS_CMC_DMA_ACTIVE(ch)           (0x00000100 << (ch))
+#define DS_DMA_ACTIVE(ch)               (0x00040000 << (ch))
+#define DS_DMA_EN_TST(ch)               (0x00000001 << (ch))

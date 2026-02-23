@@ -1,0 +1,76 @@
+            lkbde_irq_mask_set(d, CMIC_IRQ_MASK, imask, 0);
+            mask = user_bde->read(d, CMIC_CMCx_PCIE_IRQ_MASK1_OFFSET(cmc));
+            mask = user_bde->read(d, CMIC_CMCx_PCIE_IRQ_MASK2_OFFSET(cmc));
+            mask = user_bde->read(d, CMIC_CMCx_PCIE_IRQ_MASK3_OFFSET(cmc));
+            mask = user_bde->read(d, CMIC_CMCx_PCIE_IRQ_MASK4_OFFSET(cmc));
+            mask = user_bde->read(d, CMIC_CMCx_PCIE_IRQ_MASK5_OFFSET(cmc));
+            mask = user_bde->read(d, CMIC_CMCx_PCIE_IRQ_MASK6_OFFSET(cmc));
+            mask = user_bde->read(d, CMIC_CMCx_UC0_IRQ_MASK1_OFFSET(cmc));
+            mask = user_bde->read(d, CMIC_CMCx_UC0_IRQ_MASK2_OFFSET(cmc));
+            mask = user_bde->read(d, CMIC_CMCx_UC0_IRQ_MASK3_OFFSET(cmc));
+            mask = user_bde->read(d, CMIC_CMCx_UC0_IRQ_MASK4_OFFSET(cmc));
+            mask = user_bde->read(d, CMIC_CMCx_UC0_IRQ_MASK5_OFFSET(cmc));
+            mask = user_bde->read(d, CMIC_CMCx_UC0_IRQ_MASK6_OFFSET(cmc));
+        ctrl->bde_dev.base_address = (sal_vaddr_t)IOREMAP(gmac_base, 0x300000);
+        data = CMIC_SWAP32(data);
+        lkbde_irq_mask_set(d, CMIC_CMCx_PCIE_IRQ_MASK0_OFFSET(cmc), 0, 0);
+        lkbde_irq_mask_set(d, CMIC_CMCx_UC0_IRQ_MASK0_OFFSET(cmc), 0, 0);
+        paddr = BCM_ICS_CMIC_BASE;
+        stat = user_bde->read(d, CMIC_CMCx_IRQ_STAT0_OFFSET(cmc));
+        stat = user_bde->read(d, CMIC_CMCx_IRQ_STAT1_OFFSET(cmc));
+        stat = user_bde->read(d, CMIC_CMCx_IRQ_STAT2_OFFSET(cmc));
+        stat = user_bde->read(d, CMIC_CMCx_IRQ_STAT3_OFFSET(cmc));
+        stat = user_bde->read(d, CMIC_CMCx_IRQ_STAT4_OFFSET(cmc));
+        stat = user_bde->read(d, CMIC_CMCx_IRQ_STAT5_OFFSET(cmc));
+        stat = user_bde->read(d, CMIC_CMCx_IRQ_STAT6_OFFSET(cmc));
+        stat = user_bde->read(d, CMIC_IRQ_STAT);
+        user_bde->write(d, CMIC_CMCx_PCIE_IRQ_MASK0_OFFSET(1), 0);
+        user_bde->write(d, CMIC_CMCx_PCIE_IRQ_MASK0_OFFSET(2), 0);
+        user_bde->write(d, CMIC_CMCx_PCIE_IRQ_MASK1_OFFSET(cmc), 0);
+        user_bde->write(d, CMIC_CMCx_PCIE_IRQ_MASK2_OFFSET(cmc), 0);
+        user_bde->write(d, CMIC_CMCx_PCIE_IRQ_MASK3_OFFSET(cmc), 0);
+        user_bde->write(d, CMIC_CMCx_PCIE_IRQ_MASK4_OFFSET(cmc), 0);
+        user_bde->write(d, CMIC_CMCx_PCIE_IRQ_MASK5_OFFSET(cmc), 0);
+        user_bde->write(d, CMIC_CMCx_PCIE_IRQ_MASK6_OFFSET(cmc), 0);
+        user_bde->write(d, CMIC_CMCx_UC0_IRQ_MASK0_OFFSET(1), 0);
+        user_bde->write(d, CMIC_CMCx_UC0_IRQ_MASK0_OFFSET(2), 0);
+        user_bde->write(d, CMIC_CMCx_UC0_IRQ_MASK1_OFFSET(cmc), 0);
+        user_bde->write(d, CMIC_CMCx_UC0_IRQ_MASK2_OFFSET(cmc), 0);
+        user_bde->write(d, CMIC_CMCx_UC0_IRQ_MASK3_OFFSET(cmc), 0);
+        user_bde->write(d, CMIC_CMCx_UC0_IRQ_MASK4_OFFSET(cmc), 0);
+        user_bde->write(d, CMIC_CMCx_UC0_IRQ_MASK5_OFFSET(cmc), 0);
+        user_bde->write(d, CMIC_CMCx_UC0_IRQ_MASK6_OFFSET(cmc), 0);
+    dev_rev_id = _read(dev_id, 0x178);  /* CMIC_DEV_REV_ID */
+    lkbde_irq_mask_set(d, CMIC_IRQ_MASK, 0, 0);
+    lkbde_irq_mask_set(d, CMIC_IRQ_MASK_1, 0, 0); 
+    lkbde_irq_mask_set(d, CMIC_IRQ_MASK_2, 0, 0);
+#define BCM_ICS_CMIC_BASE       0x08000000
+#define CMIC_CMCx_IRQ_STAT0_OFFSET(x)                    (0x31400 + (0x1000 * x))
+#define CMIC_CMCx_IRQ_STAT1_OFFSET(x)                    (0x31404 + (0x1000 * x))
+#define CMIC_CMCx_IRQ_STAT2_OFFSET(x)                    (0x31408 + (0x1000 * x))
+#define CMIC_CMCx_IRQ_STAT3_OFFSET(x)                    (0x3140c + (0x1000 * x))
+#define CMIC_CMCx_IRQ_STAT4_OFFSET(x)                    (0x31410 + (0x1000 * x))
+#define CMIC_CMCx_IRQ_STAT5_OFFSET(x)                    (0x314b0 + (0x1000 * x))
+#define CMIC_CMCx_IRQ_STAT6_OFFSET(x)                    (0x314b4 + (0x1000 * x))
+#define CMIC_CMCx_PCIE_IRQ_MASK0_OFFSET(x)               (0x31414 + (0x1000 * x))
+#define CMIC_CMCx_PCIE_IRQ_MASK1_OFFSET(x)               (0x31418 + (0x1000 * x))
+#define CMIC_CMCx_PCIE_IRQ_MASK2_OFFSET(x)               (0x3141c + (0x1000 * x))
+#define CMIC_CMCx_PCIE_IRQ_MASK3_OFFSET(x)               (0x31420 + (0x1000 * x))
+#define CMIC_CMCx_PCIE_IRQ_MASK4_OFFSET(x)               (0x31424 + (0x1000 * x))
+#define CMIC_CMCx_PCIE_IRQ_MASK5_OFFSET(x)               (0x314b8 + (0x1000 * x))
+#define CMIC_CMCx_PCIE_IRQ_MASK6_OFFSET(x)               (0x314bc + (0x1000 * x))
+#define CMIC_CMCx_UC0_IRQ_MASK0_OFFSET(x)                (0x31428 + (0x1000 * x))
+#define CMIC_CMCx_UC0_IRQ_MASK1_OFFSET(x)                (0x3142c + (0x1000 * x))
+#define CMIC_CMCx_UC0_IRQ_MASK2_OFFSET(x)                (0x31430 + (0x1000 * x))
+#define CMIC_CMCx_UC0_IRQ_MASK3_OFFSET(x)                (0x31434 + (0x1000 * x))
+#define CMIC_CMCx_UC0_IRQ_MASK4_OFFSET(x)                (0x31438 + (0x1000 * x))
+#define CMIC_CMCx_UC0_IRQ_MASK5_OFFSET(x)                (0x314c0 + (0x1000 * x))
+#define CMIC_CMCx_UC0_IRQ_MASK6_OFFSET(x)                (0x314c4 + (0x1000 * x))
+#define CMIC_IRQ_MASK                   0x00000148
+#define CMIC_IRQ_MASK_1                 0x0000006C
+#define CMIC_IRQ_MASK_2                 0x00000070
+#define CMIC_IRQ_STAT                   0x00000144
+#define _SOC_CMIC_H
+#endif  /* !_SOC_CMIC_H */
+#if defined(CMIC_SOFT_BYTE_SWAP)
+#ifndef _SOC_CMIC_H

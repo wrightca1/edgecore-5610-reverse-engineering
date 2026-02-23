@@ -1,0 +1,202 @@
+=== Route/ECMP strace summary ===
+Date: Thu Feb 19 18:59:19 UTC 2026
+[pid 19088] 18:59:12.420242 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19072] 18:59:12.420488 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19070] 18:59:12.420540 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19058] 18:59:12.420623 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19057] 18:59:12.420671 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19040] 18:59:12.420746 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19039] 18:59:12.420795 ioctl(14, 0x20004c09 <unfinished ...>
+[pid 19036] 18:59:12.426293 mmap(NULL, 659456, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x4dd95000
+[pid 19036] 18:59:12.426429 mmap(NULL, 659456, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x4de36000
+[pid 19088] 18:59:12.519927 <... ioctl resumed> , 0x4c869748) = 0
+[pid 19088] 18:59:12.520100 ioctl(14, 0x20004c0a, 0x4c869748) = 0
+[pid 19088] 18:59:12.619998 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19072] 18:59:12.669930 <... ioctl resumed> , 0x4c845618) = 0
+[pid 19072] 18:59:12.670049 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19039] 18:59:12.670097 <... ioctl resumed> , 0x4c754718) = 0
+[pid 19039] 18:59:12.670163 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19072] 18:59:12.670229 <... ioctl resumed> , 0x4c845138) = 0
+[pid 19039] 18:59:12.670271 <... ioctl resumed> , 0x4c754608) = 0
+[pid 19072] 18:59:12.670339 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19039] 18:59:12.670390 ioctl(14, 0x20004c09, 0x4c754718) = 0
+[pid 19039] 18:59:12.670486 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19072] 18:59:12.670553 <... ioctl resumed> , 0x4c845138) = 0
+[pid 19039] 18:59:12.670595 <... ioctl resumed> , 0x4c754608) = 0
+[pid 19072] 18:59:12.670662 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19039] 18:59:12.670713 ioctl(14, 0x20004c09, 0x4c754718) = 0
+[pid 19039] 18:59:12.670808 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19072] 18:59:12.670874 <... ioctl resumed> , 0x4c845138) = 0
+[pid 19039] 18:59:12.670934 <... ioctl resumed> , 0x4c754608) = 0
+[pid 19072] 18:59:12.671002 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19039] 18:59:12.671053 ioctl(14, 0x20004c09, 0x4c754718) = 0
+[pid 19039] 18:59:12.671149 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19072] 18:59:12.671214 <... ioctl resumed> , 0x4c845138) = 0
+[pid 19039] 18:59:12.671256 <... ioctl resumed> , 0x4c754608) = 0
+[pid 19072] 18:59:12.671323 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19039] 18:59:12.671375 ioctl(14, 0x20004c09, 0x4c754718) = 0
+[pid 19039] 18:59:12.671470 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19072] 18:59:12.671535 <... ioctl resumed> , 0x4c845138) = 0
+[pid 19039] 18:59:12.671577 <... ioctl resumed> , 0x4c754608) = 0
+[pid 19072] 18:59:12.671643 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19039] 18:59:12.671695 ioctl(14, 0x20004c09, 0x4c754718) = 0
+[pid 19039] 18:59:12.671790 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19072] 18:59:12.671855 <... ioctl resumed> , 0x4c845138) = 0
+[pid 19039] 18:59:12.671908 <... ioctl resumed> , 0x4c754608) = 0
+[pid 19072] 18:59:12.671976 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19039] 18:59:12.672027 ioctl(14, 0x20004c09, 0x4c754718) = 0
+[pid 19039] 18:59:12.672123 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19072] 18:59:12.672188 <... ioctl resumed> , 0x4c845138) = 0
+[pid 19039] 18:59:12.672230 <... ioctl resumed> , 0x4c754608) = 0
+[pid 19072] 18:59:12.672298 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19039] 18:59:12.672350 ioctl(14, 0x20004c09, 0x4c754718) = 0
+[pid 19039] 18:59:12.672459 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19072] 18:59:12.672525 <... ioctl resumed> , 0x4c8450f8) = 0
+[pid 19039] 18:59:12.672567 <... ioctl resumed> , 0x4c754608) = 0
+[pid 19072] 18:59:12.672633 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19039] 18:59:12.672693 ioctl(14, 0x20004c09, 0x4c754718) = 0
+[pid 19039] 18:59:12.672785 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19072] 18:59:12.672850 <... ioctl resumed> , 0x4c8450f8) = 0
+[pid 19039] 18:59:12.672941 <... ioctl resumed> , 0x4c754608) = 0
+[pid 19072] 18:59:12.673104 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19039] 18:59:12.673185 ioctl(14, 0x20004c09, 0x4c754718) = 0
+[pid 19039] 18:59:12.673277 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19072] 18:59:12.673342 <... ioctl resumed> , 0x4c8450f8) = 0
+[pid 19039] 18:59:12.673418 <... ioctl resumed> , 0x4c754608) = 0
+[pid 19072] 18:59:12.673575 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19039] 18:59:12.673656 ioctl(14, 0x20004c09, 0x4c754718) = 0
+[pid 19039] 18:59:12.673748 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19072] 18:59:12.673813 <... ioctl resumed> , 0x4c8450f8) = 0
+[pid 19039] 18:59:12.673899 <... ioctl resumed> , 0x4c754608) = 0
+[pid 19072] 18:59:12.674060 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19039] 18:59:12.674141 ioctl(14, 0x20004c09, 0x4c754718) = 0
+[pid 19039] 18:59:12.674233 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19072] 18:59:12.674299 <... ioctl resumed> , 0x4c8450b8) = 0
+[pid 19039] 18:59:12.674374 <... ioctl resumed> , 0x4c754608) = 0
+[pid 19072] 18:59:12.674532 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19039] 18:59:12.674613 ioctl(14, 0x20004c09, 0x4c754718) = 0
+[pid 19039] 18:59:12.674705 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19072] 18:59:12.674770 <... ioctl resumed> , 0x4c8450b8) = 0
+[pid 19039] 18:59:12.674845 <... ioctl resumed> , 0x4c754608) = 0
+[pid 19072] 18:59:12.675067 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19039] 18:59:12.675149 ioctl(14, 0x20004c09, 0x4c754718) = 0
+[pid 19039] 18:59:12.675241 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19072] 18:59:12.675307 <... ioctl resumed> , 0x4c8450d8) = 0
+[pid 19039] 18:59:12.675382 <... ioctl resumed> , 0x4c754608) = 0
+[pid 19072] 18:59:12.675540 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19039] 18:59:12.675621 ioctl(14, 0x20004c09, 0x4c754718) = 0
+[pid 19039] 18:59:12.675712 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19072] 18:59:12.675777 <... ioctl resumed> , 0x4c8450d8) = 0
+[pid 19039] 18:59:12.675853 <... ioctl resumed> , 0x4c754608) = 0
+[pid 19072] 18:59:12.676025 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19039] 18:59:12.676107 ioctl(14, 0x20004c09, 0x4c754718) = 0
+[pid 19039] 18:59:12.676198 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19072] 18:59:12.676264 <... ioctl resumed> , 0x4c8450d8) = 0
+[pid 19039] 18:59:12.676339 <... ioctl resumed> , 0x4c754608) = 0
+[pid 19072] 18:59:12.676496 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19039] 18:59:12.676577 ioctl(14, 0x20004c09, 0x4c754718) = 0
+[pid 19039] 18:59:12.676669 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19072] 18:59:12.676734 <... ioctl resumed> , 0x4c8450d8) = 0
+[pid 19039] 18:59:12.676809 <... ioctl resumed> , 0x4c754608) = 0
+[pid 19072] 18:59:12.677025 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19039] 18:59:12.677107 ioctl(14, 0x20004c09, 0x4c754718) = 0
+[pid 19039] 18:59:12.677199 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19072] 18:59:12.677264 <... ioctl resumed> , 0x4c845138) = 0
+[pid 19039] 18:59:12.677340 <... ioctl resumed> , 0x4c754608) = 0
+[pid 19072] 18:59:12.677498 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19039] 18:59:12.677578 ioctl(14, 0x20004c09, 0x4c754718) = 0
+[pid 19039] 18:59:12.677670 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19072] 18:59:12.677735 <... ioctl resumed> , 0x4c845138) = 0
+[pid 19039] 18:59:12.677811 <... ioctl resumed> , 0x4c754608) = 0
+[pid 19072] 18:59:12.677980 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19039] 18:59:12.678062 ioctl(14, 0x20004c09, 0x4c754718) = 0
+[pid 19039] 18:59:12.678154 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19072] 18:59:12.678219 <... ioctl resumed> , 0x4c845138) = 0
+[pid 19039] 18:59:12.678304 <... ioctl resumed> , 0x4c754608) = 0
+[pid 19072] 18:59:12.678462 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19039] 18:59:12.678543 ioctl(14, 0x20004c09, 0x4c754718) = 0
+[pid 19039] 18:59:12.678634 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19072] 18:59:12.678700 <... ioctl resumed> , 0x4c845138) = 0
+[pid 19039] 18:59:12.678775 <... ioctl resumed> , 0x4c754608) = 0
+[pid 19072] 18:59:12.678947 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19039] 18:59:12.679028 ioctl(14, 0x20004c09, 0x4c754718) = 0
+[pid 19039] 18:59:12.679120 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19072] 18:59:12.679185 <... ioctl resumed> , 0x4c845138) = 0
+[pid 19039] 18:59:12.679261 <... ioctl resumed> , 0x4c754608) = 0
+[pid 19072] 18:59:12.679418 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19039] 18:59:12.679499 ioctl(14, 0x20004c09, 0x4c754718) = 0
+[pid 19039] 18:59:12.679591 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19072] 18:59:12.679656 <... ioctl resumed> , 0x4c845138) = 0
+[pid 19039] 18:59:12.679731 <... ioctl resumed> , 0x4c754608) = 0
+[pid 19072] 18:59:12.679898 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19039] 18:59:12.679980 ioctl(14, 0x20004c09, 0x4c754718) = 0
+[pid 19039] 18:59:12.680072 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19072] 18:59:12.680137 <... ioctl resumed> , 0x4c845138) = 0
+[pid 19039] 18:59:12.680213 <... ioctl resumed> , 0x4c754608) = 0
+[pid 19072] 18:59:12.680371 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19039] 18:59:12.680452 ioctl(14, 0x20004c09, 0x4c754718) = 0
+[pid 19039] 18:59:12.680544 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19072] 18:59:12.680609 <... ioctl resumed> , 0x4c845138) = 0
+[pid 19039] 18:59:12.680685 <... ioctl resumed> , 0x4c754608) = 0
+[pid 19072] 18:59:12.680842 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19039] 18:59:12.680935 ioctl(14, 0x20004c09, 0x4c754718) = 0
+[pid 19039] 18:59:12.681027 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19072] 18:59:12.681092 <... ioctl resumed> , 0x4c845138) = 0
+[pid 19039] 18:59:12.681168 <... ioctl resumed> , 0x4c754608) = 0
+[pid 19072] 18:59:12.681326 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19039] 18:59:12.681407 ioctl(14, 0x20004c09, 0x4c754718) = 0
+[pid 19039] 18:59:12.681498 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19072] 18:59:12.681563 <... ioctl resumed> , 0x4c845138) = 0
+[pid 19039] 18:59:12.681639 <... ioctl resumed> , 0x4c754608) = 0
+[pid 19072] 18:59:12.681796 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19039] 18:59:12.681877 ioctl(14, 0x20004c09, 0x4c754718) = 0
+[pid 19039] 18:59:12.681982 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19072] 18:59:12.682048 <... ioctl resumed> , 0x4c845138) = 0
+[pid 19039] 18:59:12.682123 <... ioctl resumed> , 0x4c754608) = 0
+[pid 19072] 18:59:12.682282 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19039] 18:59:12.682363 ioctl(14, 0x20004c09, 0x4c754718) = 0
+[pid 19039] 18:59:12.682454 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19072] 18:59:12.682519 <... ioctl resumed> , 0x4c845138) = 0
+[pid 19039] 18:59:12.682595 <... ioctl resumed> , 0x4c754608) = 0
+[pid 19072] 18:59:12.682752 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19039] 18:59:12.682833 ioctl(14, 0x20004c09, 0x4c754718) = 0
+[pid 19039] 18:59:12.682937 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19072] 18:59:12.683003 <... ioctl resumed> , 0x4c845138) = 0
+[pid 19039] 18:59:12.683078 <... ioctl resumed> , 0x4c754608) = 0
+[pid 19072] 18:59:12.683235 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19039] 18:59:12.683316 ioctl(14, 0x20004c09, 0x4c754718) = 0
+[pid 19039] 18:59:12.683408 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19072] 18:59:12.683473 <... ioctl resumed> , 0x4c845138) = 0
+[pid 19039] 18:59:12.683549 <... ioctl resumed> , 0x4c754608) = 0
+[pid 19072] 18:59:12.683707 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19039] 18:59:12.683788 ioctl(14, 0x20004c09, 0x4c754718) = 0
+[pid 19039] 18:59:12.683880 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19072] 18:59:12.683957 <... ioctl resumed> , 0x4c8450f8) = 0
+[pid 19039] 18:59:12.684033 <... ioctl resumed> , 0x4c754608) = 0
+[pid 19072] 18:59:12.684190 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19039] 18:59:12.684277 ioctl(14, 0x20004c09, 0x4c754718) = 0
+[pid 19039] 18:59:12.684370 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19072] 18:59:12.684436 <... ioctl resumed> , 0x4c8450f8) = 0
+[pid 19039] 18:59:12.684511 <... ioctl resumed> , 0x4c754608) = 0
+[pid 19072] 18:59:12.684669 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19039] 18:59:12.684750 ioctl(14, 0x20004c09, 0x4c754718) = 0
+[pid 19039] 18:59:12.684841 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19072] 18:59:12.684920 <... ioctl resumed> , 0x4c8450f8) = 0
+[pid 19039] 18:59:12.684996 <... ioctl resumed> , 0x4c754608) = 0
+[pid 19072] 18:59:12.685154 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19039] 18:59:12.685235 ioctl(14, 0x20004c09, 0x4c754718) = 0
+[pid 19039] 18:59:12.685326 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19072] 18:59:12.685391 <... ioctl resumed> , 0x4c8450f8) = 0
+[pid 19039] 18:59:12.685467 <... ioctl resumed> , 0x4c754608) = 0
+[pid 19072] 18:59:12.685625 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19039] 18:59:12.685706 ioctl(14, 0x20004c09, 0x4c754718) = 0
+[pid 19039] 18:59:12.685797 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19072] 18:59:12.685863 <... ioctl resumed> , 0x4c8450f8) = 0
+[pid 19039] 18:59:12.685950 <... ioctl resumed> , 0x4c754608) = 0
+[pid 19072] 18:59:12.686107 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19039] 18:59:12.686188 ioctl(14, 0x20004c09, 0x4c754718) = 0
+[pid 19039] 18:59:12.686280 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19072] 18:59:12.686345 <... ioctl resumed> , 0x4c8450f8) = 0
+[pid 19039] 18:59:12.686421 <... ioctl resumed> , 0x4c754608) = 0
+[pid 19072] 18:59:12.686578 ioctl(14, 0x20004c0a <unfinished ...>
+[pid 19039] 18:59:12.686659 ioctl(14, 0x20004c09, 0x4c754718) = 0

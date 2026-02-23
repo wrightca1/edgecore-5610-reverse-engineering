@@ -1,0 +1,47 @@
+=== switchd init trace summary ===
+Date: Fri Nov  1 12:08:33 UTC 2013
+Trace file: /tmp/switchd-init.trace
+
+--- Files opened ---
+6567  12:04:30.410682 open("/etc/cumulus/switchd.conf", O_RDONLY|O_LARGEFILE) = 3
+6567  12:04:30.411409 open("/var/log/switchd.log", O_WRONLY|O_CREAT|O_APPEND|O_LARGEFILE, 0666) = 3
+6567  12:04:30.412219 open("/etc/cumulus/.license.txt", O_RDONLY|O_LARGEFILE) = 4
+6568  12:04:30.432549 open("/dev/linux-user-bde", O_RDWR|O_SYNC|0x100000) = 14
+6570  12:04:30.553417 open("/etc/bcm.d/rc.soc", O_RDONLY) = 17
+
+--- Sockets ---
+6568  12:04:30.422794 socket(PF_NETLINK, SOCK_RAW|SOCK_CLOEXEC, 0) = 6
+6568  12:04:30.423037 bind(6, {sa_family=AF_NETLINK, pid=6568, groups=00000000}, 12) = 0
+6568  12:04:30.453583 bind(16, {sa_family=AF_FILE, path="/var/run/switchd.socket"}, 25) = 0
+
+--- ioctl ---
+6568  12:04:30.432695 ioctl(14, 0x20004c05, 0xbf866b98) = 0
+6568  12:04:30.432908 ioctl(14, 0x20004c01, 0xbf866c38) = 0
+6568  12:04:30.432988 ioctl(14, 0x20004c01, 0xbf866c38) = 0
+6568  12:04:30.433066 ioctl(14, 0x20004c01, 0xbf866c38) = 0
+6568  12:04:30.433145 ioctl(14, 0x20004c01, 0xbf866c38) = 0
+6568  12:04:30.433243 ioctl(14, 0x20004c0c, 0xbf866c38) = 0
+6568  12:04:30.433322 ioctl(14, 0x20004c02, 0xbf866c38) = 0
+6568  12:04:30.433513 ioctl(14, 0x20004c1a, 0xbf866c38) = 0
+6568  12:04:30.434058 ioctl(14, 0x20004c0a, 0xbf866b88) = 0
+6568  12:04:30.434793 ioctl(1, TCGETS, 0xbf866458) = -1 ENOTTY (Inappropriate ioctl for device)
+6568  12:04:30.435011 ioctl(14, 0x20004c0a, 0xbf866b68) = 0
+6568  12:04:30.435098 ioctl(14, 0x20004c0a, 0xbf866b68) = 0
+6568  12:04:30.435194 ioctl(14, 0x20004c0b, 0xbf866b98) = 0
+6568  12:04:30.452236 ioctl(14, 0x20004c0a, 0xbf866ca8) = 0
+6568  12:04:30.452353 ioctl(14, 0x20004c0a, 0xbf866c38) = 0
+6568  12:04:30.452771 ioctl(14, 0x20004c0a <unfinished ...>
+6569  12:04:30.452977 ioctl(14, 0x20004c0a, 0x4c08d778) = 0
+6569  12:04:30.453113 ioctl(14, 0x20004c0a <unfinished ...>
+6568  12:04:30.453164 ioctl(14, 0x20004c0a, 0xbf866c38) = 0
+6568  12:04:30.454335 ioctl(14, 0x20004c0a, 0xbf866cd8) = 0
+6568  12:04:30.454424 ioctl(14, 0x20004c0a, 0xbf866c68) = 0
+6568  12:04:30.454784 ioctl(14, 0x20004c0a <unfinished ...>
+6570  12:04:30.454954 ioctl(14, 0x20004c0a, 0x4c2ae778) = 0
+6568  12:04:30.455088 ioctl(14, 0x20004c0a, 0xbf866c68) = 0
+6568  12:04:30.455295 ioctl(14, 0x20004c0a <unfinished ...>
+6570  12:04:30.527296 ioctl(14, 0x20004c0a, 0x4c2ae438) = 0
+6570  12:04:30.527727 ioctl(14, 0x20004c0a <unfinished ...>
+6571  12:04:30.527905 ioctl(14, 0x20004c0a, 0x4c855718) = 0
+6570  12:04:30.528043 ioctl(14, 0x20004c0a, 0x4c2ae438) = 0
+6571  12:04:30.528164 ioctl(14, 0x20004c09 <unfinished ...>

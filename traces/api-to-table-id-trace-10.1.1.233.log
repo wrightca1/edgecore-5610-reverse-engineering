@@ -1,0 +1,160 @@
+warning: Currently logging to /dev/shm/api_to_table_id_trace.log.  Turn the logging off and on to make the new setting effective.
+warning: Currently logging to /dev/shm/api_to_table_id_trace.log.  Turn the logging off and on to make the new setting effective.
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/powerpc-linux-gnu/libthread_db.so.1".
+[New Thread 0x4dd8a060 (LWP 19089)]
+[New Thread 0x4c86a060 (LWP 19088)]
+[New Thread 0x4c846060 (LWP 19072)]
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/powerpc-linux-gnu/libthread_db.so.1".
+[New Thread 0x4dd8a060 (LWP 19089)]
+[New Thread 0x4c86a060 (LWP 19088)]
+[New Thread 0x4c846060 (LWP 19072)]
+warning: Can't attach LWP 19071: No child processes
+warning: Can't attach LWP 19071: No child processes
+warning: Can't attach LWP 19071: No child processes
+warning: Can't attach LWP 19071: No child processes
+warning: Can't attach LWP 19071: No child processes
+warning: Can't attach LWP 19071: No child processes
+warning: Can't attach LWP 19071: No child processes
+warning: Can't attach LWP 19071: No child processes
+warning: Can't attach LWP 19071: No child processes
+warning: Can't attach LWP 19071: No child processes
+0x0fca81a8 in select () from /lib/powerpc-linux-gnu/libc.so.6
+0x0fca81a8 in select () from /lib/powerpc-linux-gnu/libc.so.6
+Breakpoint 1 at 0x11dbdb40
+Breakpoint 1 at 0x11dbdb40
+Breakpoint 2 at 0x11dbd3c8
+Breakpoint 2 at 0x11dbd3c8
+Breakpoint 3 at 0x11dbd3e8
+Breakpoint 3 at 0x11dbd3e8
+Breakpoint 4 at 0x11876f10
+Breakpoint 4 at 0x11876f10
+Breakpoint 5 at 0x118d7ad4
+Breakpoint 5 at 0x118d7ad4
+Breakpoint 6 at 0x118d62ec
+Breakpoint 6 at 0x118d62ec
+Breakpoint 7 at 0x1070c994
+Breakpoint 7 at 0x1070c994
+Breakpoint 8 at 0x113949c0
+Breakpoint 8 at 0x113949c0
+warning: Currently logging to /dev/shm/api_to_table_id_trace.log.  Turn the logging off and on to make the new setting effective.
+warning: Currently logging to /dev/shm/api_to_table_id_trace.log.  Turn the logging off and on to make the new setting effective.
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/powerpc-linux-gnu/libthread_db.so.1".
+[New Thread 0x4dd8a060 (LWP 19089)]
+[New Thread 0x4c86a060 (LWP 19088)]
+[New Thread 0x4c846060 (LWP 19072)]
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/powerpc-linux-gnu/libthread_db.so.1".
+[New Thread 0x4dd8a060 (LWP 19089)]
+[New Thread 0x4c86a060 (LWP 19088)]
+[New Thread 0x4c846060 (LWP 19072)]
+warning: Can't attach LWP 19071: No child processes
+warning: Can't attach LWP 19071: No child processes
+warning: Can't attach LWP 19071: No child processes
+warning: Can't attach LWP 19071: No child processes
+warning: Can't attach LWP 19071: No child processes
+warning: Can't attach LWP 19071: No child processes
+warning: Can't attach LWP 19071: No child processes
+warning: Can't attach LWP 19071: No child processes
+warning: Can't attach LWP 19071: No child processes
+warning: Can't attach LWP 19071: No child processes
+0x0fca81a8 in select () from /lib/powerpc-linux-gnu/libc.so.6
+0x0fca81a8 in select () from /lib/powerpc-linux-gnu/libc.so.6
+Breakpoint 1 at 0x11dbdb40
+Breakpoint 1 at 0x11dbdb40
+Breakpoint 2 at 0x11dbd3c8
+Breakpoint 2 at 0x11dbd3c8
+Breakpoint 3 at 0x11dbd3e8
+Breakpoint 3 at 0x11dbd3e8
+Breakpoint 4 at 0x11876f10
+Breakpoint 4 at 0x11876f10
+Breakpoint 5 at 0x118d7ad4
+Breakpoint 5 at 0x118d7ad4
+Breakpoint 6 at 0x118d62ec
+Breakpoint 6 at 0x118d62ec
+Breakpoint 7 at 0x1070c994
+Breakpoint 7 at 0x1070c994
+Breakpoint 8 at 0x113949c0
+Breakpoint 8 at 0x113949c0
+warning: Currently logging to /dev/shm/api_to_table_id_trace.log.  Turn the logging off and on to make the new setting effective.
+warning: Currently logging to /dev/shm/api_to_table_id_trace.log.  Turn the logging off and on to make the new setting effective.
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/powerpc-linux-gnu/libthread_db.so.1".
+[New Thread 0x4dd8a060 (LWP 19089)]
+[New Thread 0x4c86a060 (LWP 19088)]
+[New Thread 0x4c846060 (LWP 19072)]
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/powerpc-linux-gnu/libthread_db.so.1".
+[New Thread 0x4dd8a060 (LWP 19089)]
+[New Thread 0x4c86a060 (LWP 19088)]
+[New Thread 0x4c846060 (LWP 19072)]
+warning: Can't attach LWP 19071: No child processes
+warning: Can't attach LWP 19071: No child processes
+warning: Can't attach LWP 19071: No child processes
+warning: Can't attach LWP 19071: No child processes
+warning: Can't attach LWP 19071: No child processes
+warning: Can't attach LWP 19071: No child processes
+warning: Can't attach LWP 19071: No child processes
+warning: Can't attach LWP 19071: No child processes
+warning: Can't attach LWP 19071: No child processes
+warning: Can't attach LWP 19071: No child processes
+0x0fca81a8 in select () from /lib/powerpc-linux-gnu/libc.so.6
+0x0fca81a8 in select () from /lib/powerpc-linux-gnu/libc.so.6
+Breakpoint 1 at 0x11dbdb40
+Breakpoint 1 at 0x11dbdb40
+Breakpoint 2 at 0x11dbd3c8
+Breakpoint 2 at 0x11dbd3c8
+Breakpoint 3 at 0x11dbd3e8
+Breakpoint 3 at 0x11dbd3e8
+Breakpoint 4 at 0x11876f10
+Breakpoint 4 at 0x11876f10
+Breakpoint 5 at 0x118d7ad4
+Breakpoint 5 at 0x118d7ad4
+Breakpoint 6 at 0x118d62ec
+Breakpoint 6 at 0x118d62ec
+Breakpoint 7 at 0x1070c994
+Breakpoint 7 at 0x1070c994
+Breakpoint 8 at 0x113949c0
+Breakpoint 8 at 0x113949c0
+warning: Currently logging to /dev/shm/api_to_table_id_trace.log.  Turn the logging off and on to make the new setting effective.
+warning: Currently logging to /dev/shm/api_to_table_id_trace.log.  Turn the logging off and on to make the new setting effective.
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/powerpc-linux-gnu/libthread_db.so.1".
+[New Thread 0x4dd8a060 (LWP 19089)]
+[New Thread 0x4c86a060 (LWP 19088)]
+[New Thread 0x4c846060 (LWP 19072)]
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/powerpc-linux-gnu/libthread_db.so.1".
+[New Thread 0x4dd8a060 (LWP 19089)]
+[New Thread 0x4c86a060 (LWP 19088)]
+[New Thread 0x4c846060 (LWP 19072)]
+warning: Can't attach LWP 19071: No child processes
+warning: Can't attach LWP 19071: No child processes
+warning: Can't attach LWP 19071: No child processes
+warning: Can't attach LWP 19071: No child processes
+warning: Can't attach LWP 19071: No child processes
+warning: Can't attach LWP 19071: No child processes
+warning: Can't attach LWP 19071: No child processes
+warning: Can't attach LWP 19071: No child processes
+warning: Can't attach LWP 19071: No child processes
+warning: Can't attach LWP 19071: No child processes
+0x0fca81a8 in select () from /lib/powerpc-linux-gnu/libc.so.6
+0x0fca81a8 in select () from /lib/powerpc-linux-gnu/libc.so.6
+Breakpoint 1 at 0x11dbdb40
+Breakpoint 1 at 0x11dbdb40
+Breakpoint 2 at 0x11dbd3c8
+Breakpoint 2 at 0x11dbd3c8
+Breakpoint 3 at 0x11dbd3e8
+Breakpoint 3 at 0x11dbd3e8
+Breakpoint 4 at 0x11876f10
+Breakpoint 4 at 0x11876f10
+Breakpoint 5 at 0x118d7ad4
+Breakpoint 5 at 0x118d7ad4
+Breakpoint 6 at 0x118d62ec
+Breakpoint 6 at 0x118d62ec
+Breakpoint 7 at 0x1070c994
+Breakpoint 7 at 0x1070c994
+Breakpoint 8 at 0x113949c0
+Breakpoint 8 at 0x113949c0

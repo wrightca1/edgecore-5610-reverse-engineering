@@ -1,0 +1,12 @@
+=== S-Channel Write Capture Summary ===
+Date: Sat Feb 21 16:46:43 UTC 2026
+switchd PID: 1731
+Capture duration: 30s
+
+=== Unique cmd_addr values observed ===
+
+=== SCHAN_WRITE count ===
+0
+0
+
+=== All SCHAN_WRITE headers ===

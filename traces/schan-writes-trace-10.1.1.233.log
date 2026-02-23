@@ -1,0 +1,42 @@
+warning: Currently logging to /dev/shm/schan_writes_trace.log.  Turn the logging off and on to make the new setting effective.
+warning: Currently logging to /dev/shm/schan_writes_trace.log.  Turn the logging off and on to make the new setting effective.
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/powerpc-linux-gnu/libthread_db.so.1".
+[New Thread 0x4dd8a060 (LWP 1783)]
+[New Thread 0x4c86a060 (LWP 1782)]
+[New Thread 0x4c846060 (LWP 1780)]
+[New Thread 0x4c7c1060 (LWP 1778)]
+[New Thread 0x4c79d060 (LWP 1777)]
+[New Thread 0x4c779060 (LWP 1775)]
+[New Thread 0x4d3e7060 (LWP 1774)]
+[New Thread 0x4d3c3060 (LWP 1764)]
+[New Thread 0x4c755000 (LWP 1763)]
+[New Thread 0x4c1ae060 (LWP 1741)]
+[New Thread 0x4c08e060 (LWP 1735)]
+[Thread debugging using libthread_db enabled]
+Using host libthread_db library "/lib/powerpc-linux-gnu/libthread_db.so.1".
+[New Thread 0x4dd8a060 (LWP 1783)]
+[New Thread 0x4c86a060 (LWP 1782)]
+[New Thread 0x4c846060 (LWP 1780)]
+[New Thread 0x4c7c1060 (LWP 1778)]
+[New Thread 0x4c79d060 (LWP 1777)]
+[New Thread 0x4c779060 (LWP 1775)]
+[New Thread 0x4d3e7060 (LWP 1774)]
+[New Thread 0x4d3c3060 (LWP 1764)]
+[New Thread 0x4c755000 (LWP 1763)]
+[New Thread 0x4c1ae060 (LWP 1741)]
+[New Thread 0x4c08e060 (LWP 1735)]
+0x0fca81a8 in select () from /lib/powerpc-linux-gnu/libc.so.6
+0x0fca81a8 in select () from /lib/powerpc-linux-gnu/libc.so.6
+Breakpoint 1 at 0x10325fa0
+Breakpoint 1 at 0x10325fa0
+Breakpoint 2 at 0x103273a4
+Breakpoint 2 at 0x103273a4
+Breakpoint 3 at 0x10328480
+Breakpoint 3 at 0x10328480
+
+=== S-Channel Write Capture Ready ===
+
+=== S-Channel Write Capture Ready ===
+Now trigger table writes (ip route add, etc.) in another terminal
+Now trigger table writes (ip route add, etc.) in another terminal
