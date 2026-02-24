@@ -18,6 +18,9 @@ All findings are in the `docs/` directory. Key documents:
 | [L3_IPV6_FORMAT.md](L3_IPV6_FORMAT.md) | IPv6 routing: L3_DEFIP_128 (/128 TCAM), L3_DEFIP double-wide (LPM ≤/64), shared nexthops |
 | [SERDES_WC_INIT.md](SERDES_WC_INIT.md) | Warpcore WC-B0 SerDes MDIO init sequence (captured via GDB watchpoint) |
 | [PORT_BRINGUP_REGISTER_MAP.md](PORT_BRINGUP_REGISTER_MAP.md) | XLPORT block addresses, MAC registers, per-lane formula |
+| [VLAN_TABLE_FORMAT.md](VLAN_TABLE_FORMAT.md) | VLAN (ingress) + EGR_VLAN (egress): direct-indexed by VLAN ID, PORT_BITMAP/UT_PORT_BITMAP layouts |
+| [PKTIO_BDE_DMA_INTERFACE.md](PKTIO_BDE_DMA_INTERFACE.md) | Packet I/O: DCB type 21, 16-word TX/RX format, LOCAL_DEST_PORT encoding, BDE ioctls |
+| [STATS_COUNTER_FORMAT.md](STATS_COUNTER_FORMAT.md) | Stats counters: XLMAC register offsets, S-Channel address formula, port→block/lane map |
 | [SCHAN_FORMAT_ANALYSIS.md](SCHAN_FORMAT_ANALYSIS.md) | S-channel command word format (0x2800XXXX) |
 | [WRITE_MECHANISM_ANALYSIS.md](WRITE_MECHANISM_ANALYSIS.md) | Confirmed: S-channel DMA path, not direct BAR writes |
 | [L2_WRITE_PATH_COMPLETE.md](L2_WRITE_PATH_COMPLETE.md) | Full L2 add call chain from API to ASIC |
@@ -72,6 +75,20 @@ IPv6 /128: L3_DEFIP_128[exact]  ─┘
 - `L3_DEFIP_128` (0x0a176000, 256 entries × 39 bytes): exact /128 TCAM — `KEY@[141:2]` holds full 128-bit address
 - `L3_DEFIP` double-wide (MODE=1): LPM prefix ≤ 64 bits — `IP_ADDR1` = IPv6[127:96], `IP_ADDR0` = IPv6[95:64]
 - `L3_ENTRY_IPV6_UNICAST` (0x0917c000): hash table, present but unused in this deployment
+
+### VLAN Tables
+- **VLAN** (ingress, alias QVLAN): `0x12168000`, 4096 × 40B, direct-indexed by VLAN ID. `PORT_BITMAP@[65:0]` (CPU=bit0, xe0=bit1, ..., xe51=bit52), `STG@[140:132]`, `VALID@205`
+- **EGR_VLAN** (egress): `0x0d260000`, 4096 × 29B. `UT_PORT_BITMAP@[161:96]` (untagged ports), `PORT_BITMAP@[227:162]`
+
+### Packet I/O (BDE DMA)
+- DCB type **21**, 16 words (64 bytes) per descriptor
+- TX: `word[0]=buf_phys, word[1][15:0]=pkt_len, word[2]=0xff000000, word[3]=0x00000100 (UNICAST=1), word[4][7:0]=LOCAL_DEST_PORT (1=xe0, 2=xe1, ...)`, `word[15]=status`
+- BDE ioctls: `LUBDE_WAIT_FOR_INTERRUPT (0x20004c09)`, `LUBDE_SEM_OP (0x20004c0a)` — sync only; packets flow via mmap'd DMA rings
+
+### Stats Counters (XLMAC)
+- Register address: `(block_id << 20) | (lane << 12) | reg_offset`
+- Key offsets: `RPKT=0x0b, RBYT=0x34, TPKT=0x45, TBYT=0x64, R64=0x00, T64=0x39`
+- All MAC counters 64-bit (`COUNT<39:0>` or `COUNT<47:0>`); read via S-Channel
 
 ### SerDes Init (Warpcore WC-B0, 10GbE)
 Key MDIO writes on port bring-up:
