@@ -15,6 +15,7 @@ All findings are in the `docs/` directory. Key documents:
 | [PATH_B_COMPLETION_STATUS.md](PATH_B_COMPLETION_STATUS.md) | **Master status table** — what's been confirmed, with links to artifacts |
 | [L2_ENTRY_FORMAT.md](L2_ENTRY_FORMAT.md) | L2_ENTRY and L2_USER_ENTRY ASIC bit layouts (verified via live bcmcmd) |
 | [L3_NEXTHOP_FORMAT.md](L3_NEXTHOP_FORMAT.md) | Full L3 forwarding chain: L3_DEFIP → ECMP → ING/EGR nexthop → EGR_L3_INTF |
+| [L3_IPV6_FORMAT.md](L3_IPV6_FORMAT.md) | IPv6 routing: L3_DEFIP_128 (/128 TCAM), L3_DEFIP double-wide (LPM ≤/64), shared nexthops |
 | [SERDES_WC_INIT.md](SERDES_WC_INIT.md) | Warpcore WC-B0 SerDes MDIO init sequence (captured via GDB watchpoint) |
 | [PORT_BRINGUP_REGISTER_MAP.md](PORT_BRINGUP_REGISTER_MAP.md) | XLPORT block addresses, MAC registers, per-lane formula |
 | [SCHAN_FORMAT_ANALYSIS.md](SCHAN_FORMAT_ANALYSIS.md) | S-channel command word format (0x2800XXXX) |
@@ -57,13 +58,20 @@ All findings are in the `docs/` directory. Key documents:
 - Hash table, 131072 entries × 13 bytes, base address `0x07120000`
 - Key fields: `VALID@0`, `VLAN_ID@[15:4]`, `MAC_ADDR@[63:16]`, `PORT_NUM@[70:64]`
 
-### L3 Forwarding Chain
+### L3 Forwarding Chain (IPv4 and IPv6 — shared nexthops)
 ```
-L3_DEFIP[prefix] → NEXT_HOP_INDEX
+IPv4: L3_DEFIP[prefix, MODE=0]  ─┐
+IPv6 LPM (≤/64): L3_DEFIP[prefix, MODE=1, double-wide]  ─┤─→ NEXT_HOP_INDEX
+IPv6 /128: L3_DEFIP_128[exact]  ─┘
   ING_L3_NEXT_HOP[idx] → PORT_NUM[22:16]
   EGR_L3_NEXT_HOP[idx] → DA_MAC[62:15] + INTF_NUM[14:3]
     EGR_L3_INTF[intf]  → SA_MAC[80:33] + VLAN[24:13]
 ```
+
+### IPv6 Tables
+- `L3_DEFIP_128` (0x0a176000, 256 entries × 39 bytes): exact /128 TCAM — `KEY@[141:2]` holds full 128-bit address
+- `L3_DEFIP` double-wide (MODE=1): LPM prefix ≤ 64 bits — `IP_ADDR1` = IPv6[127:96], `IP_ADDR0` = IPv6[95:64]
+- `L3_ENTRY_IPV6_UNICAST` (0x0917c000): hash table, present but unused in this deployment
 
 ### SerDes Init (Warpcore WC-B0, 10GbE)
 Key MDIO writes on port bring-up:
