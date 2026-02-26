@@ -36,6 +36,6 @@ No direct register addresses in first 80 lines; hardware access is in the indire
 
 ## References
 
-- [PORT_UP_TRACE_ANALYSIS_10.1.1.233.md](traces/PORT_UP_TRACE_ANALYSIS_10.1.1.233.md) — BDE ioctls during link up
+- [PORT_UP_TRACE_ANALYSIS_<LIVE_SWITCH_IP>.md](traces/PORT_UP_TRACE_ANALYSIS_<LIVE_SWITCH_IP>.md) — BDE ioctls during link up
 - libopennsl-port-functions.txt
 - libopennsl-dump-07d3f34.txt, 07de7cc.txt, 07d3294.txt

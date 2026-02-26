@@ -1,7 +1,7 @@
 # SDK and ASIC Config from Live Switch
 
 **Date**: February 15, 2026  
-**Source**: Cumulus switch 10.1.1.233 (AS5610-52X, BCM56846 Trident+)  
+**Source**: Cumulus switch <LIVE_SWITCH_IP> (AS5610-52X, BCM56846 Trident+)  
 **Purpose**: Document actual config files used by switchd/SDK for ASIC control
 
 ---

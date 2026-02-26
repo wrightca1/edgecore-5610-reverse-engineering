@@ -8,15 +8,15 @@
 
 | Property | Value |
 |----------|-------|
-| **Host** | `cumulus@10.1.1.233` |
+| **Host** | `<SWITCH_USER>@<LIVE_SWITCH_IP>` |
 | **Role** | Production Cumulus switch; runs switchd, has TUN devices, BDE, `/dev/mem` |
 | **OS** | Cumulus Linux (Debian-based) |
 | **Key paths** | `/home/cumulus/` (trace scripts, logs) |
 | **Use for** | Strace traces (packet I/O, port up/down), `bcmcmd`, live behavior |
 
 **Scripts that SSH here:**
-- `run-port-up-trace-10.1.1.233.sh` — strace during `ip link set swp1 down/up`
-- `run-bde-mmap-trace-10.1.1.233.sh` — mmap/ioctl at startup
+- `run-port-up-trace-<LIVE_SWITCH_IP>.sh` — strace during `ip link set swp1 down/up`
+- `run-bde-mmap-trace-<LIVE_SWITCH_IP>.sh` — mmap/ioctl at startup
 - `trace-packet-io-on-switch.sh` (via `run-*-trace-*.sh`) — packet I/O strace
 
 ---
@@ -37,7 +37,7 @@
 
 | Property | Value |
 |----------|-------|
-| **Host** | `<USER>@10.1.1.30` |
+| **Host** | `<USER>@<GHIDRA_HOST_IP>` |
 | **Role** | Runs Ghidra headless; analyzes libopennsl, switchd |
 | **REMOTE_PROJECT** | `/home/<USER>/analysis` |
 | **Ghidra install** | `/home/<USER>/analysis/ghidra_12.0.3_PUBLIC` |
@@ -59,14 +59,14 @@
 
 | System | SSH target | Purpose |
 |--------|------------|---------|
-| **Live switch** | `cumulus@10.1.1.233` | Strace, live traces |
-| **Ghidra server** | `<USER>@10.1.1.30` | Ghidra headless, analysis output |
+| **Live switch** | `<SWITCH_USER>@<LIVE_SWITCH_IP>` | Strace, live traces |
+| **Ghidra server** | `<USER>@<GHIDRA_HOST_IP>` | Ghidra headless, analysis output |
 
 ---
 
 ## Environment variables (scripts)
 
-- `GHIDRA_HOST` — default `<USER>@10.1.1.30`
+- `GHIDRA_HOST` — default `<USER>@<GHIDRA_HOST_IP>`
 - `REMOTE_PROJECT` — default `/home/<USER>/analysis`
-- `SWITCH` — default `cumulus@10.1.1.233` (in port-up trace script)
+- `SWITCH` — default `<SWITCH_USER>@<LIVE_SWITCH_IP>` (in port-up trace script)
 - `SUDOPASS` / `SSHPASS` — for sudo on switch when needed

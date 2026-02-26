@@ -18,7 +18,7 @@ Runtime tracing is required to:
 ## Prerequisites
 
 ### Live Switch Access
-- **Switch**: 10.1.1.233 (Cumulus Linux)
+- **Switch**: <LIVE_SWITCH_IP> (Cumulus Linux)
 - **User**: cumulus
 - **Requirements**: sudo access for gdb/strace
 
@@ -45,17 +45,17 @@ Runtime tracing is required to:
 **Usage**:
 ```bash
 # On local machine
-./scripts/reverse-engineering/run-api-to-table-id-trace-10.1.1.233.sh
+./scripts/reverse-engineering/run-api-to-table-id-trace-<LIVE_SWITCH_IP>.sh
 
 # During trace, trigger API calls:
-ssh cumulus@10.1.1.233
+ssh <SWITCH_USER>@<LIVE_SWITCH_IP>
 sudo ip route add 10.1.1.0/24 via 10.1.1.1 dev swp1
 sudo ip route add 192.168.1.0/24 via 10.1.1.2 dev swp2
 ```
 
 **Output**:
-- `api-to-table-id-trace-10.1.1.233.log` - Full gdb trace
-- `api-to-table-id-summary-10.1.1.233.txt` - Summary with table IDs
+- `api-to-table-id-trace-<LIVE_SWITCH_IP>.log` - Full gdb trace
+- `api-to-table-id-summary-<LIVE_SWITCH_IP>.txt` - Summary with table IDs
 
 ### Method 2: Table Write Dispatcher Tracing
 
@@ -69,12 +69,12 @@ sudo ip route add 192.168.1.0/24 via 10.1.1.2 dev swp2
 
 **Usage**:
 ```bash
-./scripts/reverse-engineering/run-table-write-trace-10.1.1.233.sh
+./scripts/reverse-engineering/run-table-write-trace-<LIVE_SWITCH_IP>.sh
 ```
 
 **Output**:
-- `table-writes-trace-10.1.1.233.log` - Full trace
-- `table-writes-summary-10.1.1.233.txt` - Summary
+- `table-writes-trace-<LIVE_SWITCH_IP>.log` - Full trace
+- `table-writes-summary-<LIVE_SWITCH_IP>.txt` - Summary
 
 ### Method 3: Strace System Call Tracing
 
@@ -88,8 +88,8 @@ sudo ip route add 192.168.1.0/24 via 10.1.1.2 dev swp2
 **Usage**:
 ```bash
 # Copy script to switch
-scp trace-api-calls-strace-on-switch.sh cumulus@10.1.1.233:/home/cumulus/
-ssh cumulus@10.1.1.233
+scp trace-api-calls-strace-on-switch.sh <SWITCH_USER>@<LIVE_SWITCH_IP>:/home/cumulus/
+ssh <SWITCH_USER>@<LIVE_SWITCH_IP>
 sudo bash /home/cumulus/trace-api-calls-strace-on-switch.sh
 ```
 

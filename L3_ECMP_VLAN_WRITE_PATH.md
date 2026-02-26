@@ -320,7 +320,7 @@ Same situation as L2 (they share FUN_01876c30):
 # On switch: strace during L3 route add (OSPF will trigger this automatically)
 # OSPF is already running on swp1 — the strace captures all ioctl/mmap access
 # Look for write() calls to mmap'd regions during route-add netlink events
-./scripts/reverse-engineering/run-packet-io-trace-10.1.1.233.sh
+./scripts/reverse-engineering/run-packet-io-trace-<LIVE_SWITCH_IP>.sh
 ```
 
 ---

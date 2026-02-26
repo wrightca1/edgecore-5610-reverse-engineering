@@ -7,9 +7,9 @@
 
 ## Overview
 
-Runtime tracing infrastructure has been created to map OpenNSL API calls to table IDs on the live Cumulus switch (10.1.1.233). The infrastructure is ready, but execution requires:
+Runtime tracing infrastructure has been created to map OpenNSL API calls to table IDs on the live Cumulus switch (<LIVE_SWITCH_IP>). The infrastructure is ready, but execution requires:
 
-1. **Switch access** - SSH to cumulus@10.1.1.233
+1. **Switch access** - SSH to <SWITCH_USER>@<LIVE_SWITCH_IP>
 2. **Sudo permissions** - For gdb/strace attachment
 3. **API trigger** - Commands to trigger route/ECMP/VLAN operations
 
@@ -37,17 +37,17 @@ Runtime tracing infrastructure has been created to map OpenNSL API calls to tabl
 
 ### 2. Wrapper Scripts
 
-#### `run-api-to-table-id-trace-10.1.1.233.sh`
+#### `run-api-to-table-id-trace-<LIVE_SWITCH_IP>.sh`
 - Copies script to switch, runs trace, fetches results
-- **Usage**: `./run-api-to-table-id-trace-10.1.1.233.sh`
+- **Usage**: `./run-api-to-table-id-trace-<LIVE_SWITCH_IP>.sh`
 
-#### `run-gdb-symbol-trace-10.1.1.233.sh`
+#### `run-gdb-symbol-trace-<LIVE_SWITCH_IP>.sh`
 - Runs symbol-based GDB trace
-- **Usage**: `./run-gdb-symbol-trace-10.1.1.233.sh`
+- **Usage**: `./run-gdb-symbol-trace-<LIVE_SWITCH_IP>.sh`
 
-#### `run-table-write-trace-10.1.1.233.sh`
+#### `run-table-write-trace-<LIVE_SWITCH_IP>.sh`
 - Runs table write dispatcher trace
-- **Usage**: `./run-table-write-trace-10.1.1.233.sh`
+- **Usage**: `./run-table-write-trace-<LIVE_SWITCH_IP>.sh`
 
 ### 3. Helper Scripts
 
@@ -56,9 +56,9 @@ Runtime tracing infrastructure has been created to map OpenNSL API calls to tabl
 - Adds/deletes test routes
 - **Usage**: Run in parallel with trace script
 
-#### `run-complete-runtime-trace-10.1.1.233.sh`
+#### `run-complete-runtime-trace-<LIVE_SWITCH_IP>.sh`
 - Runs trace and triggers API calls automatically
-- **Usage**: `./run-complete-runtime-trace-10.1.1.233.sh`
+- **Usage**: `./run-complete-runtime-trace-<LIVE_SWITCH_IP>.sh`
 
 #### `check-switchd-libraries.sh`
 - Checks what libraries switchd loads
@@ -88,9 +88,9 @@ Runtime tracing infrastructure has been created to map OpenNSL API calls to tabl
 
 ### Step 1: Test Symbol-Based Tracing
 ```bash
-./scripts/reverse-engineering/run-gdb-symbol-trace-10.1.1.233.sh
+./scripts/reverse-engineering/run-gdb-symbol-trace-<LIVE_SWITCH_IP>.sh
 ```
-- In parallel terminal: `ssh cumulus@10.1.1.233 "sudo ip route add 10.1.1.0/24 via 10.1.1.1 dev swp1"`
+- In parallel terminal: `ssh <SWITCH_USER>@<LIVE_SWITCH_IP> "sudo ip route add 10.1.1.0/24 via 10.1.1.1 dev swp1"`
 
 ### Step 2: If Symbols Don't Work, Use Address-Based
 1. Extract switchd binary from switch
@@ -108,14 +108,14 @@ Runtime tracing infrastructure has been created to map OpenNSL API calls to tabl
 ## Expected Outputs
 
 ### Trace Files
-- `docs/reverse-engineering/traces/api-to-table-id-trace-10.1.1.233.log`
-- `docs/reverse-engineering/traces/gdb-symbol-trace-10.1.1.233.log`
-- `docs/reverse-engineering/traces/table-writes-trace-10.1.1.233.log`
+- `docs/reverse-engineering/traces/api-to-table-id-trace-<LIVE_SWITCH_IP>.log`
+- `docs/reverse-engineering/traces/gdb-symbol-trace-<LIVE_SWITCH_IP>.log`
+- `docs/reverse-engineering/traces/table-writes-trace-<LIVE_SWITCH_IP>.log`
 
 ### Summary Files
-- `docs/reverse-engineering/traces/api-to-table-id-summary-10.1.1.233.txt`
-- `docs/reverse-engineering/traces/gdb-symbol-summary-10.1.1.233.txt`
-- `docs/reverse-engineering/traces/table-writes-summary-10.1.1.233.txt`
+- `docs/reverse-engineering/traces/api-to-table-id-summary-<LIVE_SWITCH_IP>.txt`
+- `docs/reverse-engineering/traces/gdb-symbol-summary-<LIVE_SWITCH_IP>.txt`
+- `docs/reverse-engineering/traces/table-writes-summary-<LIVE_SWITCH_IP>.txt`
 
 ---
 
@@ -137,7 +137,7 @@ Runtime tracing infrastructure has been created to map OpenNSL API calls to tabl
 
 ### Permission Denied
 - **Solution**: Ensure sudo access on switch
-- **Test**: `ssh cumulus@10.1.1.233 "sudo cat /proc/\$(pgrep switchd)/maps | head -5"`
+- **Test**: `ssh <SWITCH_USER>@<LIVE_SWITCH_IP> "sudo cat /proc/\$(pgrep switchd)/maps | head -5"`
 
 ---
 

@@ -3,7 +3,7 @@
 **Date**: 2026-02-18  
 **Status**: In Progress  
 **Target**: libopennsl.so.1 (PowerPC, 47MB)  
-**Method**: Ghidra headless analysis on build server (<USER>@10.1.1.30)
+**Method**: Ghidra headless analysis on build server (<USER>@<GHIDRA_HOST_IP>)
 
 ## Current Status
 

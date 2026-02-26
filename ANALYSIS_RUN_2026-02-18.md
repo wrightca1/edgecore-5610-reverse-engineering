@@ -1,12 +1,12 @@
 # Reverse Engineering Analysis Run — 2026-02-18
 
-**Switch**: cumulus@10.1.1.233 (AS5610-52X, Cumulus Linux 2.5.1)  
-**Build servers**: 10.22.1.4 (modern Debian), 10.22.1.5 (Debian 8)  
-**Ghidra host**: <USER>@10.1.1.30 (Fedora 36)
+**Switch**: <SWITCH_USER>@<LIVE_SWITCH_IP> (AS5610-52X, Cumulus Linux 2.5.1)  
+**Build servers**: <BUILD_SERVER_IP> (modern Debian), <BUILD_SERVER_IP> (Debian 8)  
+**Ghidra host**: <USER>@<GHIDRA_HOST_IP> (Fedora 36)
 
 ## Summary of actions
 
-### On switch (10.1.1.233)
+### On switch (<LIVE_SWITCH_IP>)
 
 1. **switchd trace** — Stopped switchd, ran `strace -f` on `switchd -d` for 30 seconds
    - Output: `docs/reverse-engineering/traces/switchd-init-2026-02-18.trace` (~27MB, 455k lines)
@@ -19,10 +19,10 @@
 
 3. **Live switchd binary** — Copied `/usr/sbin/switchd` to `cumulus/extracted/switchd/switchd` (replaces extracted image copy)
 
-4. **BCM config** — Archived live `/etc/bcm.d/` to `docs/reverse-engineering/traces/bcm-config-10.1.1.233.tar.gz`
+4. **BCM config** — Archived live `/etc/bcm.d/` to `docs/reverse-engineering/traces/bcm-config-<LIVE_SWITCH_IP>.tar.gz`
    - Includes: config.bcm (6054 bytes), rc.soc, rc.ports_0, rc.led, rc.phy, config.d/*, datapath, led*.asm/hex
 
-### On build server (10.22.1.4)
+### On build server (<BUILD_SERVER_IP>)
 
 1. **Copy SDK** — Copied switchd and scripts to `/home/<USER>/ONL-RE/build-server/`
 
@@ -36,17 +36,17 @@
      - readelf-sections.txt, readelf-segments.txt
      - REPORT.txt
 
-### Ghidra (10.1.1.30)
+### Ghidra (<GHIDRA_HOST_IP>)
 
 - **Ghidra headless** — Not run due to project lock: `/home/<USER>/analysis/build-server/switchd/ghidra-projects/switchd`
 - **To retry**: Close any Ghidra GUI or other headless process using that project, then:
   ```bash
-  GHIDRA_HOST=<USER>@10.1.1.30 REMOTE_PROJECT=/home/<USER>/analysis ./scripts/reverse-engineering/run-ghidra-on-build-server.sh
+  GHIDRA_HOST=<USER>@<GHIDRA_HOST_IP> REMOTE_PROJECT=/home/<USER>/analysis ./scripts/reverse-engineering/run-ghidra-on-build-server.sh
   ```
 
 ## Script changes
 
-- `deep-extract-strings.sh`: Added fallback to `xxd` when `hexdump` is not installed (e.g. on build server 10.22.1.4)
+- `deep-extract-strings.sh`: Added fallback to `xxd` when `hexdump` is not installed (e.g. on build server <BUILD_SERVER_IP>)
 
 ## Artifacts
 
@@ -55,7 +55,7 @@
 | switchd trace (raw) | docs/reverse-engineering/traces/switchd-init-2026-02-18.trace |
 | trace summary | docs/reverse-engineering/traces/switchd-init-2026-02-18.summary.txt |
 | netlink monitor log | docs/reverse-engineering/traces/netlink-monitor-2026-02-18.log |
-| BCM config archive | docs/reverse-engineering/traces/bcm-config-10.1.1.233.tar.gz |
+| BCM config archive | docs/reverse-engineering/traces/bcm-config-<LIVE_SWITCH_IP>.tar.gz |
 | live switchd binary | cumulus/extracted/switchd/switchd |
 | deep-extract output | build-server/switchd/sdk-deep-extract/ |
 
@@ -63,23 +63,23 @@
 
 ```bash
 # Copy scripts to switch
-sshpass -p '<SWITCH_PASSWORD>' scp scripts/reverse-engineering/trace-switchd-init.sh scripts/reverse-engineering/monitor-netlink.sh cumulus@10.1.1.233:/tmp/
+sshpass -p '<PASSWORD>' scp scripts/reverse-engineering/trace-switchd-init.sh scripts/reverse-engineering/monitor-netlink.sh <SWITCH_USER>@<LIVE_SWITCH_IP>:/tmp/
 
 # Stop switchd and trace
-sshpass -p '<SWITCH_PASSWORD>' ssh cumulus@10.1.1.233 "echo '<SWITCH_PASSWORD>' | sudo -S /etc/init.d/switchd stop"
-sshpass -p '<SWITCH_PASSWORD>' ssh cumulus@10.1.1.233 'cd /tmp && echo "<SWITCH_PASSWORD>" | sudo -S bash trace-switchd-init.sh /tmp/switchd-init.trace /tmp/switchd-init.summary'
+sshpass -p '<PASSWORD>' ssh <SWITCH_USER>@<LIVE_SWITCH_IP> "echo '<PASSWORD>' | sudo -S /etc/init.d/switchd stop"
+sshpass -p '<PASSWORD>' ssh <SWITCH_USER>@<LIVE_SWITCH_IP> 'cd /tmp && echo "<PASSWORD>" | sudo -S bash trace-switchd-init.sh /tmp/switchd-init.trace /tmp/switchd-init.summary'
 
 # Restart switchd
-sshpass -p '<SWITCH_PASSWORD>' ssh cumulus@10.1.1.233 "echo '<SWITCH_PASSWORD>' | sudo -S /etc/init.d/switchd start"
+sshpass -p '<PASSWORD>' ssh <SWITCH_USER>@<LIVE_SWITCH_IP> "echo '<PASSWORD>' | sudo -S /etc/init.d/switchd start"
 
 # Copy trace and config from switch
-sshpass -p '<SWITCH_PASSWORD>' scp cumulus@10.1.1.233:/tmp/switchd-init.trace docs/reverse-engineering/traces/
-sshpass -p '<SWITCH_PASSWORD>' scp cumulus@10.1.1.233:/usr/sbin/switchd cumulus/extracted/switchd/switchd
+sshpass -p '<PASSWORD>' scp <SWITCH_USER>@<LIVE_SWITCH_IP>:/tmp/switchd-init.trace docs/reverse-engineering/traces/
+sshpass -p '<PASSWORD>' scp <SWITCH_USER>@<LIVE_SWITCH_IP>:/usr/sbin/switchd cumulus/extracted/switchd/switchd
 
 # Build server deep extract
-BUILD_SERVER=<USER>@10.22.1.4:/home/<USER>/ONL-RE ./scripts/reverse-engineering/copy-sdk-to-build-server.sh
-ssh <USER>@10.22.1.4 'cd /home/<USER>/ONL-RE/build-server && bash scripts/deep-extract-strings.sh switchd/switchd'
+BUILD_SERVER=<USER>@<BUILD_SERVER_IP>:/home/<USER>/ONL-RE ./scripts/reverse-engineering/copy-sdk-to-build-server.sh
+ssh <USER>@<BUILD_SERVER_IP> 'cd /home/<USER>/ONL-RE/build-server && bash scripts/deep-extract-strings.sh switchd/switchd'
 
 # Sync back
-rsync -avz <USER>@10.22.1.4:/home/<USER>/ONL-RE/build-server/switchd/ build-server/switchd/
+rsync -avz <USER>@<BUILD_SERVER_IP>:/home/<USER>/ONL-RE/build-server/switchd/ build-server/switchd/
 ```

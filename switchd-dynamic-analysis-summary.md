@@ -1,6 +1,6 @@
 # switchd Dynamic Analysis Summary
 
-**Switch**: AS5610-52X at 10.1.1.233
+**Switch**: AS5610-52X at <LIVE_SWITCH_IP>
 **Date**: 2013-11-01 (clock set back for license)
 **Status**: switchd running successfully
 

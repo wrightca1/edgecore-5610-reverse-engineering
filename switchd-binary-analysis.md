@@ -80,7 +80,7 @@ Use Ghidra's Function Graph or References to trace:
 
 ## Ghidra Headless Analysis
 
-Automated analysis using Ghidra headless on analysis host (`<USER>@10.1.1.30`):
+Automated analysis using Ghidra headless on analysis host (`<USER>@<GHIDRA_HOST_IP>`):
 
 **Results**: [GHIDRA_REGISTER_TABLE_ANALYSIS.md](GHIDRA_REGISTER_TABLE_ANALYSIS.md)
 

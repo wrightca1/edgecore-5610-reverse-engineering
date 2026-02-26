@@ -2,14 +2,14 @@
 
 **Date**: 2026-02-18  
 **Status**: In Progress  
-**Method**: Ghidra headless analysis on build server (<USER>@10.1.1.30)
+**Method**: Ghidra headless analysis on build server (<USER>@<GHIDRA_HOST_IP>)
 
 ## Current Status
 
 ### Extraction Running
 - **Script**: `ExtractRegisterConstants.java`
 - **Target**: switchd binary (Cumulus Linux 2.5.1)
-- **Host**: <USER>@10.1.1.30 (Fedora, 30GB RAM)
+- **Host**: <USER>@<GHIDRA_HOST_IP> (Fedora, 30GB RAM)
 - **Output**: `/home/<USER>/analysis/build-server/switchd/sdk-deep-extract/ghidra-register-constants.txt`
 
 ### Search Ranges Expanded

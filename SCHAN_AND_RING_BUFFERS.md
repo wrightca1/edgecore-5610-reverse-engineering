@@ -13,7 +13,7 @@
 | **S-Channel** | CMICm offset 0x1800 from CMC base | CPU ↔ ASIC message channel |
 | **Ring / DMA** | CMICm DMA_CTRL, DMA_DESC0, DMA_HALT_ADDR | Per-channel descriptor rings |
 
-Cumulus switch (10.1.1.233) reports **BCM56840_B0** (Trident), which uses **CMICm** (memory-mapped CMIC). Trident+ (BCM56846) also uses CMICm.
+Cumulus switch (<LIVE_SWITCH_IP>) reports **BCM56840_B0** (Trident), which uses **CMICm** (memory-mapped CMIC). Trident+ (BCM56846) also uses CMICm.
 
 ---
 

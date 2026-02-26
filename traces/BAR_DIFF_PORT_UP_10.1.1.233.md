@@ -1,4 +1,4 @@
-# BAR diff during port up (10.1.1.233)
+# BAR diff during port up (<LIVE_SWITCH_IP>)
 
 **Date**: 2026-02-20  
 **Purpose**: Find register offsets that change when bringing swp1 up (Path B 5.2–5.3).  
@@ -43,11 +43,11 @@ Offsets are relative to BAR0 base **0x04000000** (full address = 0x04000000 + of
 ## Scripts
 
 - **On-switch**: `scripts/reverse-engineering/bar-diff-port-up-on-switch.sh [interface]` (run with sudo).
-- **From host**: `scripts/reverse-engineering/run-bar-diff-port-up-10.1.1.233.sh [interface]` — runs on switch, fetches dumps, prints diff.
+- **From host**: `scripts/reverse-engineering/run-bar-diff-port-up-<LIVE_SWITCH_IP>.sh [interface]` — runs on switch, fetches dumps, prints diff.
 
 ## swp2 vs swp1 (per-port)
 
-Run with `run-bar-diff-port-up-10.1.1.233.sh swp2`:
+Run with `run-bar-diff-port-up-<LIVE_SWITCH_IP>.sh swp2`:
 
 - **swp2**: 5 words changed — 0x49e8, 0x4a38, 0x4a40, 0x4a50, 0x4b38 (values differ from swp1; e.g. 0x4a38 0x69d→0x69e).
 - **swp1**: 14 words changed (see table above); includes 0x46f8, 0x4818, 0x4820, 0x4830, 0x4870, 0x4880, 0x4888, 0x4928, 0x49b8 in addition to the five above.
@@ -56,7 +56,7 @@ So **0x49e8, 0x4a38, 0x4a40, 0x4a50, 0x4b38** change for both ports (likely shar
 
 ### swp3
 
-Run with `run-bar-diff-port-up-10.1.1.233.sh swp3`:
+Run with `run-bar-diff-port-up-<LIVE_SWITCH_IP>.sh swp3`:
 
 - **swp3**: 6 words changed — **0x46f8, 0x4820, 0x4870, 0x4880, 0x4928, 0x49b8** (values differ per port; e.g. 0x46f8 0x17e7→0x17e8).
 - Overlap with swp1: 0x46f8, 0x4820, 0x4870, 0x4880, 0x4928, 0x49b8 (swp3 does not show 0x4818, 0x4830, 0x4888, 0x49e8, 0x4a38, 0x4a40, 0x4a50, 0x4b38 in this run). So **0x46f8, 0x4820, 0x4870, 0x4880, 0x4928, 0x49b8** are strong per-port candidates; the rest may be shared or timing-dependent.

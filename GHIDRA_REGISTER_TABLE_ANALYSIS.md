@@ -3,7 +3,7 @@
 **Date**: 2026-02-18  
 **Tool**: Ghidra 12.0.3 headless  
 **Binary**: switchd (Cumulus Linux 2.5.1)  
-**Host**: <USER>@10.1.1.30 (Fedora, 30GB RAM)  
+**Host**: <USER>@<GHIDRA_HOST_IP> (Fedora, 30GB RAM)  
 **Output**: `build-server/switchd/sdk-deep-extract/ghidra-register-table-export.txt`
 
 ## Analysis Summary
@@ -173,7 +173,7 @@ The script searched for constants in the 0x31xxx-0x35xxx and 0x32xxx-0x33xxx ran
 
 - **Full output**: `build-server/switchd/sdk-deep-extract/ghidra-register-table-export.txt`
 - **Script**: `scripts/reverse-engineering/ExtractRegisterAndTableInfo.java`
-- **Analysis host**: `<USER>@10.1.1.30:/home/<USER>/analysis/`
+- **Analysis host**: `<USER>@<GHIDRA_HOST_IP>:/home/<USER>/analysis/`
 
 ## Cross-References to Other Analysis
 

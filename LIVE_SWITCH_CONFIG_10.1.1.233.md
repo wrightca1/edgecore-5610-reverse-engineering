@@ -1,8 +1,8 @@
-# Live Switch BCM Config — 10.1.1.233
+# Live Switch BCM Config — <LIVE_SWITCH_IP>
 
 **Source**: Cumulus Linux 2.5.1 on AS5610-52X (BCM56846 Trident+)  
 **Captured**: 2026-02-18  
-**Location**: `cumulus/extracted-from-switch/etc/bcm.d/` (extracted from `docs/reverse-engineering/traces/bcm-config-10.1.1.233.tar.gz`)
+**Location**: `cumulus/extracted-from-switch/etc/bcm.d/` (extracted from `docs/reverse-engineering/traces/bcm-config-<LIVE_SWITCH_IP>.tar.gz`)
 
 ---
 

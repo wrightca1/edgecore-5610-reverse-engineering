@@ -8,7 +8,7 @@
 
 ### 1. Infrastructure Reference Document ✅
 - Created `INFRASTRUCTURE_REFERENCE.md` - canonical reference for hosts, paths, workflows
-- Documents: Live switch (10.1.1.233), Ghidra server (10.1.1.30), Debian build servers
+- Documents: Live switch (<LIVE_SWITCH_IP>), Ghidra server (<GHIDRA_HOST_IP>), Debian build servers
 - Includes environment variables, script mappings, quick copy commands
 
 ### 2. S-Channel Format Analysis (Path B 2.3) ✅
@@ -113,8 +113,8 @@
 
 ## Infrastructure Used
 
-- **Live switch**: cumulus@10.1.1.233 (Cumulus Linux)
-- **Ghidra server**: <USER>@10.1.1.30 (Fedora, 30GB RAM)
+- **Live switch**: <SWITCH_USER>@<LIVE_SWITCH_IP> (Cumulus Linux)
+- **Ghidra server**: <USER>@<GHIDRA_HOST_IP> (Fedora, 30GB RAM)
 - **Binaries analyzed**: libopennsl.so.1, switchd
 - **Scripts used**: run-dump-func-on-build-server.sh, run-find-packet-tx-path-on-build-server.sh
 

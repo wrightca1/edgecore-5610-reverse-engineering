@@ -2,7 +2,7 @@
 
 **Date**: 2026-02-24
 **Status**: HAVE — register addresses and field layouts verified via bcmcmd listreg/getreg on live switch
-**Switch**: Edgecore AS5610-52X / Cumulus Linux 2.5 / 10.1.1.233
+**Switch**: Edgecore AS5610-52X / Cumulus Linux 2.5 / <LIVE_SWITCH_IP>
 
 ---
 

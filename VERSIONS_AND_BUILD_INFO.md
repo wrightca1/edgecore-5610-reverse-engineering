@@ -7,18 +7,18 @@
 
 ## Summary
 
-| Component | Cumulus (live 10.1.1.233) | ONL / open-nos build |
+| Component | Cumulus (live <LIVE_SWITCH_IP>) | ONL / open-nos build |
 |-----------|---------------------------|----------------------|
 | **OS** | Cumulus Linux 2.5.1, Debian 7.8 (Wheezy) | Debian 8 (Jessie) base, ONL |
 | **Kernel** | 3.2.60-1+deb7u1+cl2.5+1 | 3.16.64 (ONL default) |
 | **Architecture** | PowerPC 32-bit | PowerPC |
 | **SDK** | Broadcom SDK 6.3.8 (proprietary, statically linked) | OpenNSL 3.5.0.1 (GPL, libopennsl.so) |
 | **BDE** | linux-kernel-bde, linux-user-bde (6.3.8-cl2.5+1) | OpenNSL sdk-6.5.12-gpl-modules |
-| **Build host** | — | Debian 8 (Jessie) @ 10.22.1.5 |
+| **Build host** | — | Debian 8 (Jessie) @ <BUILD_SERVER_IP> |
 
 ---
 
-## 1. Cumulus Switch (Live 10.1.1.233)
+## 1. Cumulus Switch (Live <LIVE_SWITCH_IP>)
 
 ### 1.1 OS and Kernel
 
@@ -124,7 +124,7 @@ Depends: libc6 (>= 2.6), libfuse2 (>= 2.8.1), libnet1 (>= 1.1.2.1),
 
 | Item | Value |
 |------|-------|
-| **Build host** | <USER>@10.22.1.5 |
+| **Build host** | <USER>@<BUILD_SERVER_IP> |
 | **Build host OS** | Debian 8 (Jessie) |
 | **Target architecture** | powerpc |
 | **Target platform** | powerpc-accton-as5610-52x-r0 |

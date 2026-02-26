@@ -1,11 +1,11 @@
 # Reverse Engineering Complete
 
-**Date**: 2026-02-15
-**Status**: All phases complete
+**Date**: 2026-02-26  
+**Status**: All phases complete; live-switch verification complete for L2/L3/port/packet I/O
 
 ## Summary
 
-Successfully reverse-engineered Cumulus Linux 2.5.1 and created open-source implementation based on extracted knowledge.
+Successfully reverse-engineered Cumulus Linux 2.5.1 and created open-source implementation based on extracted knowledge. **Since 2026-02-15**: L2/L3/ECMP/VLAN table layouts, port bringup (XLPORT/MAC + SerDes), packet DCB format, and write mechanism (S-Channel DMA) were verified on live switch via bcmcmd and GDB. See [PATH_B_COMPLETION_STATUS.md](PATH_B_COMPLETION_STATUS.md) and [PATH_B_WHATS_LEFT_AND_NEXT_STEPS.md](PATH_B_WHATS_LEFT_AND_NEXT_STEPS.md).
 
 ## Phase 1: Static Analysis ✅
 
@@ -54,8 +54,8 @@ See [NO_KNET_ARCHITECTURE.md](../NO_KNET_ARCHITECTURE.md) for details.
 ## Key Deliverables
 
 ### Documentation
-- 12 reverse engineering docs in `docs/reverse-engineering/`
-- 2 implementation docs in `docs/implementation/`
+- 80+ reverse engineering documents in `docs/reverse-engineering/` (including L2_ENTRY_FORMAT, L3_NEXTHOP_FORMAT, VLAN_TABLE_FORMAT, PKTIO_BDE_DMA_INTERFACE, PORT_BRINGUP_REGISTER_MAP, SERDES_WC_INIT, STATS_COUNTER_FORMAT, WRITE_MECHANISM_ANALYSIS, and traces)
+- Implementation plan in `open-nos-as5610/PLAN.md`
 - Complete API mapping (2,864 APIs)
 
 ### Code

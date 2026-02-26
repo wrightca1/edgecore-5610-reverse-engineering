@@ -1,6 +1,6 @@
 # Cumulus Reverse Engineering Verification Results
 
-**Switch**: AS5610-52X at 10.1.1.233
+**Switch**: AS5610-52X at <LIVE_SWITCH_IP>
 **Date**: 2013-11-01 (clock set for license)
 **Cumulus Version**: 2.5.1
 **Status**: ✅ Verified and documented

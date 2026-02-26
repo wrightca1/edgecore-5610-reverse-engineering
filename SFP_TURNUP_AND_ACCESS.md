@@ -2,7 +2,7 @@
 
 **Date**: February 15, 2026  
 **Platform**: Accton AS5610-52X (Edgecore AS5610-52X)  
-**Source**: Live tests on Cumulus switch 10.1.1.233
+**Source**: Live tests on Cumulus switch <LIVE_SWITCH_IP>
 
 ---
 

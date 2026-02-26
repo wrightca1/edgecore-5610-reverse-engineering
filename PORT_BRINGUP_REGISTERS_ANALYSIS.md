@@ -114,7 +114,7 @@ Based on OpenNSL documentation and Broadcom SDK patterns:
 
 ## References
 
-- **Port-up trace**: [PORT_UP_TRACE_ANALYSIS_10.1.1.233.md](traces/PORT_UP_TRACE_ANALYSIS_10.1.1.233.md)
-- **BDE mmap**: [BDE_MMAP_ANALYSIS_10.1.1.233.md](traces/BDE_MMAP_ANALYSIS_10.1.1.233.md)
+- **Port-up trace**: [PORT_UP_TRACE_ANALYSIS_<LIVE_SWITCH_IP>.md](traces/PORT_UP_TRACE_ANALYSIS_<LIVE_SWITCH_IP>.md)
+- **BDE mmap**: [BDE_MMAP_ANALYSIS_<LIVE_SWITCH_IP>.md](traces/BDE_MMAP_ANALYSIS_<LIVE_SWITCH_IP>.md)
 - **Register map**: [SDK_REGISTER_MAP.md](SDK_REGISTER_MAP.md)
 - **OpenNSL port APIs**: [OPENNSL_DOCUMENTATION_SUMMARY.md](../OPENNSL_DOCUMENTATION_SUMMARY.md)

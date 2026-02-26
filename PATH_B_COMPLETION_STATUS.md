@@ -42,7 +42,7 @@
 | `run-dump-func-on-build-server.sh <binary> <addr>` | Dump function assembly |
 | `run-schan-data-refs-on-build-server.sh` | Find 0x32800/0x2800 refs |
 | `run-l2-callers-on-build-server.sh` | L2 call chain |
-| `run-port-up-trace-10.1.1.233.sh [iface]` | Port up/down trace on switch |
+| `run-port-up-trace-<LIVE_SWITCH_IP>.sh [iface]` | Port up/down trace on switch |
 | `run-find-packet-tx-path-on-build-server.sh [binary]` | Packet TX path (opennsl_tx, read) |
 | `run-find-table-write-callers-on-build-server.sh` | Find callers of FUN_01876f10 (generic table write dispatcher) |
 | `run-find-specific-table-ids-on-build-server.sh` | Find callers passing specific table IDs (0x1547, 0x22ca, 0x2c33, 0x835) |

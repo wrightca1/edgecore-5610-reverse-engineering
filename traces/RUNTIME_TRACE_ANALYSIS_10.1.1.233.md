@@ -1,7 +1,7 @@
-# Runtime Trace Analysis — 10.1.1.233
+# Runtime Trace Analysis — <LIVE_SWITCH_IP>
 
 **Date**: 2026-02-19  
-**Switch**: Cumulus Linux @ 10.1.1.233
+**Switch**: Cumulus Linux @ <LIVE_SWITCH_IP>
 
 ---
 
@@ -50,6 +50,6 @@ Strace does not expose table IDs. For API→table mapping:
 
 ## Next steps
 
-1. Install GDB on switch; run `run-api-to-table-id-trace-10.1.1.233.sh`.
+1. Install GDB on switch; run `run-api-to-table-id-trace-<LIVE_SWITCH_IP>.sh`.
 2. Add mmap/read/write to trace filter if deeper register/tables analysis needed.
 3. Use L3 table callers output: FUN_018d7ad4 calls FUN_018d62ec (table write wrapper).

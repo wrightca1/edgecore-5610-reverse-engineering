@@ -190,7 +190,7 @@ When primary handler at `r9 + 0x19484` is NULL:
 | Check if handler calls mmap write or kernel ioctl | Handler disasm will show: BAR write = `stwx` to mmap ptr; ioctl = `sc 0` or `bl kernel_ioctl` | HIGH |
 | Cross-check with switchd for same handler | Find `unit_struct + 0x19484` equivalent in switchd (same SDK, different base addr) | MEDIUM |
 
-### GDB commands (Cumulus switch 10.1.1.233)
+### GDB commands (Cumulus switch <LIVE_SWITCH_IP>)
 
 ```bash
 gdb --pid $(pgrep -f 'switchd -d')

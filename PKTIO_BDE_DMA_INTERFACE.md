@@ -2,7 +2,7 @@
 
 **Date**: 2026-02-24
 **Status**: HAVE — architecture confirmed from strace, DCB format verified via `bcmcmd dma dvalloc/dcbdump` on live switch
-**Switch**: Edgecore AS5610-52X / Cumulus Linux 2.5 / 10.1.1.233
+**Switch**: Edgecore AS5610-52X / Cumulus Linux 2.5 / <LIVE_SWITCH_IP>
 
 ---
 
@@ -303,5 +303,5 @@ type 21 !chain !sg !reload hg stat
 - [PACKET_BUFFER_ANALYSIS.md](PACKET_BUFFER_ANALYSIS.md) — opennsl_pkt_t structure, TX call chain
 - [DMA_DCB_LAYOUT_FROM_KNET.md](DMA_DCB_LAYOUT_FROM_KNET.md) — DCB/ring layout from KNET source
 - [WRITE_MECHANISM_ANALYSIS.md](WRITE_MECHANISM_ANALYSIS.md) — BDE/S-Channel for table writes
-- [traces/PACKET_IO_TRACE_EXTRACTED_10.1.1.233.md](traces/PACKET_IO_TRACE_EXTRACTED_10.1.1.233.md) — strace thread/ioctl analysis
-- [traces/BDE_MMAP_ANALYSIS_10.1.1.233.md](traces/BDE_MMAP_ANALYSIS_10.1.1.233.md) — DMA pool physical address
+- [traces/PACKET_IO_TRACE_EXTRACTED_<LIVE_SWITCH_IP>.md](traces/PACKET_IO_TRACE_EXTRACTED_<LIVE_SWITCH_IP>.md) — strace thread/ioctl analysis
+- [traces/BDE_MMAP_ANALYSIS_<LIVE_SWITCH_IP>.md](traces/BDE_MMAP_ANALYSIS_<LIVE_SWITCH_IP>.md) — DMA pool physical address

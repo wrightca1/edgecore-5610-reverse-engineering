@@ -2,13 +2,13 @@
 
 **Date**: 2026-02-23
 **Status**: MOSTLY HAVE — XLPORT/MAC control registers identified via bcmcmd; full block address map derived; PHY=Warpcore WC-B0. SerDes programming sequence still needs GDB.
-**Sources**: [traces/BAR_DIFF_PORT_UP_10.1.1.233.md](traces/BAR_DIFF_PORT_UP_10.1.1.233.md), [PORT_BRINGUP_ANALYSIS.md](PORT_BRINGUP_ANALYSIS.md), [traces/PORT_UP_TRACE_ANALYSIS_10.1.1.233.md](traces/PORT_UP_TRACE_ANALYSIS_10.1.1.233.md), [traces/BDE_MMAP_ANALYSIS_10.1.1.233.md](traces/BDE_MMAP_ANALYSIS_10.1.1.233.md)
+**Sources**: [traces/BAR_DIFF_PORT_UP_<LIVE_SWITCH_IP>.md](traces/BAR_DIFF_PORT_UP_<LIVE_SWITCH_IP>.md), [PORT_BRINGUP_ANALYSIS.md](PORT_BRINGUP_ANALYSIS.md), [traces/PORT_UP_TRACE_ANALYSIS_<LIVE_SWITCH_IP>.md](traces/PORT_UP_TRACE_ANALYSIS_<LIVE_SWITCH_IP>.md), [traces/BDE_MMAP_ANALYSIS_<LIVE_SWITCH_IP>.md](traces/BDE_MMAP_ANALYSIS_<LIVE_SWITCH_IP>.md)
 
 ---
 
 ## 1. How Registers Are Accessed
 
-From [traces/BDE_MMAP_ANALYSIS_10.1.1.233.md](traces/BDE_MMAP_ANALYSIS_10.1.1.233.md):
+From [traces/BDE_MMAP_ANALYSIS_<LIVE_SWITCH_IP>.md](traces/BDE_MMAP_ANALYSIS_<LIVE_SWITCH_IP>.md):
 
 - switchd mmaps **`/dev/mem`** at two regions at startup (fd 15):
   - `0x04000000` — 64MB range (main register space / BAR0)
@@ -174,7 +174,7 @@ From [PORT_BRINGUP_ANALYSIS.md](PORT_BRINGUP_ANALYSIS.md):
 ### Option A — GDB on Cumulus switch (fastest)
 
 ```bash
-# On Cumulus switch (10.1.1.233), GDB on switchd
+# On Cumulus switch (<LIVE_SWITCH_IP>), GDB on switchd
 # Break at bctrl in FUN_007de7cc (speed handler)
 gdb --pid $(pgrep -f 'switchd -d')
 (gdb) break *0x007de7cc+<offset_to_bctrl>
@@ -186,14 +186,14 @@ gdb --pid $(pgrep -f 'switchd -d')
 # Capture the handler address → dump that function in Ghidra
 ```
 
-Script: `scripts/reverse-engineering/run-port-up-trace-10.1.1.233.sh`
+Script: `scripts/reverse-engineering/run-port-up-trace-<LIVE_SWITCH_IP>.sh`
 
 ### Option B — Ghidra on switchd binary
 
 The Cumulus switchd has the Broadcom SDK **statically linked** (SDK 6.3.8). Port register access is in the switchd binary, not libopennsl.
 
 ```bash
-# On Ghidra server (10.1.1.30), analyze switchd binary
+# On Ghidra server (<GHIDRA_HOST_IP>), analyze switchd binary
 # Search for:
 #   - Constants 0x46f8, 0x4818, 0x4820, 0x4870, 0x4928 in code
 #   - "port" or "serdes" strings near register write patterns
@@ -207,8 +207,8 @@ Run BAR diff on swp4 and swp5, then compute:
 - E.g., if swp1 uses offset X and swp3 uses offset X+N, stride N could indicate per-port register spacing
 
 ```bash
-./scripts/reverse-engineering/run-bar-diff-port-up-10.1.1.233.sh swp4
-./scripts/reverse-engineering/run-bar-diff-port-up-10.1.1.233.sh swp5
+./scripts/reverse-engineering/run-bar-diff-port-up-<LIVE_SWITCH_IP>.sh swp4
+./scripts/reverse-engineering/run-bar-diff-port-up-<LIVE_SWITCH_IP>.sh swp5
 ```
 
 Compare offsets across swp1, swp3, swp4, swp5 to find the per-port stride.
@@ -226,7 +226,7 @@ grep -r "0x46f8\|0x4818\|0x4820\|0x4870\|0x4928\|0x49b8\|0x4a38\|0x4b38" \
 
 ## 7. Known BDE ioctls During Port Up
 
-From [traces/PORT_UP_TRACE_ANALYSIS_10.1.1.233.md](traces/PORT_UP_TRACE_ANALYSIS_10.1.1.233.md):
+From [traces/PORT_UP_TRACE_ANALYSIS_<LIVE_SWITCH_IP>.md](traces/PORT_UP_TRACE_ANALYSIS_<LIVE_SWITCH_IP>.md):
 
 | ioctl code | Meaning | When seen |
 |-----------|---------|-----------|
@@ -355,11 +355,11 @@ This matches the API call chain: `opennsl_port_enable_set` → `FUN_007d3f34` �
 
 ## References
 
-- [traces/BAR_DIFF_PORT_UP_10.1.1.233.md](traces/BAR_DIFF_PORT_UP_10.1.1.233.md)
+- [traces/BAR_DIFF_PORT_UP_<LIVE_SWITCH_IP>.md](traces/BAR_DIFF_PORT_UP_<LIVE_SWITCH_IP>.md)
 - [PORT_BRINGUP_ANALYSIS.md](PORT_BRINGUP_ANALYSIS.md)
 - [PORT_BRINGUP_REGISTERS_ANALYSIS.md](PORT_BRINGUP_REGISTERS_ANALYSIS.md)
-- [traces/PORT_UP_TRACE_ANALYSIS_10.1.1.233.md](traces/PORT_UP_TRACE_ANALYSIS_10.1.1.233.md)
-- [traces/PORT_UP_PERF_ANALYSIS_10.1.1.233.md](traces/PORT_UP_PERF_ANALYSIS_10.1.1.233.md)
-- [traces/BDE_MMAP_ANALYSIS_10.1.1.233.md](traces/BDE_MMAP_ANALYSIS_10.1.1.233.md)
+- [traces/PORT_UP_TRACE_ANALYSIS_<LIVE_SWITCH_IP>.md](traces/PORT_UP_TRACE_ANALYSIS_<LIVE_SWITCH_IP>.md)
+- [traces/PORT_UP_PERF_ANALYSIS_<LIVE_SWITCH_IP>.md](traces/PORT_UP_PERF_ANALYSIS_<LIVE_SWITCH_IP>.md)
+- [traces/BDE_MMAP_ANALYSIS_<LIVE_SWITCH_IP>.md](traces/BDE_MMAP_ANALYSIS_<LIVE_SWITCH_IP>.md)
 - [SDK_REGISTER_MAP.md](SDK_REGISTER_MAP.md)
 - [PATH_B_WHATS_LEFT_AND_NEXT_STEPS.md](PATH_B_WHATS_LEFT_AND_NEXT_STEPS.md) §5

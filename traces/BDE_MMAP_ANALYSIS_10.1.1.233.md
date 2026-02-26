@@ -1,7 +1,7 @@
-# BDE mmap vs ioctl Analysis (10.1.1.233)
+# BDE mmap vs ioctl Analysis (<LIVE_SWITCH_IP>)
 
 **Date**: 2026-02-19  
-**Source**: `bde-mmap-trace-10.1.1.233.log`, `bde-mmap-maps-10.1.1.233.txt`
+**Source**: `bde-mmap-trace-<LIVE_SWITCH_IP>.log`, `bde-mmap-maps-<LIVE_SWITCH_IP>.txt`
 
 ## /proc/PID/maps: /dev/mem mmap
 

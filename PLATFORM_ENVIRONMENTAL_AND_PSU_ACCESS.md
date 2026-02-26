@@ -219,7 +219,7 @@ find /sys -path "*cpld*" 2>/dev/null
 
 ---
 
-## 11. Verified on Cumulus Switch (10.1.1.233)
+## 11. Verified on Cumulus Switch (<LIVE_SWITCH_IP>)
 
 Live probe on Cumulus AS5610-52X:
 

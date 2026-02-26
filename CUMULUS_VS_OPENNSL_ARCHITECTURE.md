@@ -2,7 +2,7 @@
 
 **Date**: 2026-02-21
 **Status**: CONFIRMED — Cumulus does NOT use libopennsl; uses statically-linked Broadcom SDK (bcm_* API)
-**Sources**: [traces/BDE_MMAP_ANALYSIS_10.1.1.233.md](traces/BDE_MMAP_ANALYSIS_10.1.1.233.md), [build-server/switchd/sdk-deep-extract/strings-register-table.txt](../../build-server/switchd/sdk-deep-extract/strings-register-table.txt), [build-server/switchd/sdk-deep-extract/switchd-schan-data-refs.txt](../../build-server/switchd/sdk-deep-extract/switchd-schan-data-refs.txt)
+**Sources**: [traces/BDE_MMAP_ANALYSIS_<LIVE_SWITCH_IP>.md](traces/BDE_MMAP_ANALYSIS_<LIVE_SWITCH_IP>.md), [build-server/switchd/sdk-deep-extract/strings-register-table.txt](../../build-server/switchd/sdk-deep-extract/strings-register-table.txt), [build-server/switchd/sdk-deep-extract/switchd-schan-data-refs.txt](../../build-server/switchd/sdk-deep-extract/switchd-schan-data-refs.txt)
 
 ---
 

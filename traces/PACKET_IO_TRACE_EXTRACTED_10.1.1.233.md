@@ -1,6 +1,6 @@
-# Packet I/O trace extraction — 10.1.1.233
+# Packet I/O trace extraction — <LIVE_SWITCH_IP>
 
-**Source**: `packet-io-trace-10.1.1.233.log` (20,367 lines), switchd PID 19036, 25s strace of read/write/ioctl and select/poll/epoll.
+**Source**: `packet-io-trace-<LIVE_SWITCH_IP>.log` (20,367 lines), switchd PID 19036, 25s strace of read/write/ioctl and select/poll/epoll.
 
 **Capture note**: Strace reported "Process 19036 attached with 9 threads" and some later PTRACE_ATTACH "Operation not permitted"; the log still contains syscalls from 11 TIDs (19036, 19037, 19038, 19039, 19040, 19057, 19058, 19070, 19072, 19088, 19089), so the trace is complete for the threads that perform packet I/O and BDE ioctls.
 

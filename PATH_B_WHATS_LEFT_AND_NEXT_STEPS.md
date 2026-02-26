@@ -1,17 +1,18 @@
 # Path B — What’s left and next steps
 
+**Last updated**: 2026-02-26  
 **Source**: Derived from [PATH_B_INFORMATION_CHECKLIST.md](PATH_B_INFORMATION_CHECKLIST.md). Use this for a concise “what to do next” list.
 
 ---
 
 ## Cumulus vs OpenNSL
 
-**Cumulus does not use OpenNSL.** The live switch (10.1.1.233) runs Cumulus Linux with its own SDK/API. Implications:
+**Cumulus does not use OpenNSL.** The live switch (<LIVE_SWITCH_IP>) runs Cumulus Linux with its own SDK/API. Implications:
 
 - **GDB breakpoints at OpenNSL API addresses** on Cumulus switchd will never hit — N/A for API→table-ID tracing.
 - **libopennsl** remains the **ASIC reference** — Ghidra on libopennsl extracts S-Channel format, table layouts, L2/L3 entry formats. This is BCM56846-level; applies regardless of Cumulus vs ONL.
 - **Strace on Cumulus** remains valid — port-up, packet I/O, BDE mmap capture low-level syscalls; same hardware/BDE.
-- **Runtime API tracing** for OpenNSL would require the **ONL switch (10.1.1.222)** if it uses OpenNSL, or skip and rely on Ghidra static analysis.
+- **Runtime API tracing** for OpenNSL would require the **ONL switch (<ONL_SWITCH_IP>)** if it uses OpenNSL, or skip and rely on Ghidra static analysis.
 
 ---
 
@@ -20,15 +21,15 @@
 | Section | Have | Partial | Need | Blocker for… |
 |--------|------|---------|------|----------------|
 | **1** BDE/device | 1.1–1.6 | — | — | — |
-| **2** Registers | 2.1–2.5, **2.3** S-Chan | — | **2.6** port/SerDes, **2.7** pipeline regs | Port up |
-| **3** Tables | 3.1–3.2 | **3.3–3.8** L2/L3/ECMP layout + write path | **3.10** hash/index | L2/L3 programming |
-| **4** Packet I/O | 4.1–4.2, **4.3** TX path, **4.6** buffer | 4.4–4.5, 4.7–4.8 | — | Full packet path |
-| **5** Port bringup | 5.1 | 5.4 (breakout) | **5.2–5.3** port/SerDes regs | Link up |
+| **2** Registers | 2.1–2.6, **2.3** S-Chan, **2.6** port/SerDes | — | **2.7** pipeline regs | Optional |
+| **3** Tables | 3.1–3.9 (L2/L3/ECMP/VLAN layout + write path) | — | **3.10** hash/index | Optional |
+| **4** Packet I/O | 4.1–4.6, **4.3** TX, **4.6** buffer, DCB verified | 4.4–4.5, 4.7–4.8 | — | Full packet path |
+| **5** Port bringup | 5.1–5.4 (**5.2–5.3** XLPORT/MAC + SerDes) | — | — | Link up ✅ |
 | **6** Init | 6.1–6.3 | 6.4–6.5 | — | Optional tuning |
 | **7** Platform | — | 7.2 (LED) | 7.1 (I2C) | Full AS5610 |
 | **8** Errors | 8.1 | 8.2–8.3 | — | Production hardening |
 
-**Must-have to ship**: §2.3 (S-Chan), §3.3–3.8 (tables), §4.6 (buffer), §5.2–5.3 (port up). §2.3, §4.3, §4.6 **DONE**. §3.3–3.8 PARTIAL. §5.2–5.3 NEED.
+**Must-have to ship**: §2.3 (S-Chan), §3.3–3.8 (tables), §4.6 (buffer), §5.2–5.3 (port up). **All DONE.** See [PATH_B_COMPLETION_STATUS.md](PATH_B_COMPLETION_STATUS.md).
 
 **Primary path**: Ghidra on libopennsl (ASIC reference) + strace on Cumulus (low-level behavior). No OpenNSL runtime tracing on Cumulus.
 
@@ -39,12 +40,12 @@
 | Priority | What | How |
 |----------|------|-----|
 | **L2** | Finish ASIC L2_USER_ENTRY layout (3.3, 3.8) | In Ghidra/dumps: annotate **0181e718** (and **0181c73c**) for every **stw/stb/sth** to r29 (buffer) or r29+offset → table: byte offset → field (MAC, VLAN, port, flags). See [L2_PAYLOAD_FROM_DUMPS.md](L2_PAYLOAD_FROM_DUMPS.md). **Done**: store table + **descriptor formulas** (0x4=width, 0x6=word/bit index, 0x8=offset; input 0x28=word index); layout is descriptor-driven bitfield. |
-| **Port** | Name BAR diff registers (5.2–5.3) | Search SDK/OpenNSL headers for **0x46f8, 0x4818, 0x4830, 0x4870, 0x4928, 0x49b8, 0x4a38, 0x4b38**; or run BAR diff on swp3 and compare. [traces/BAR_DIFF_PORT_UP_10.1.1.233.md](traces/BAR_DIFF_PORT_UP_10.1.1.233.md). **Done**: swp3 diff run (6 words: 0x46f8, 0x4820, 0x4870, 0x4880, 0x4928, 0x49b8). |
+| **Port** | Name BAR diff registers (5.2–5.3) | Search SDK/OpenNSL headers for **0x46f8, 0x4818, 0x4830, 0x4870, 0x4928, 0x49b8, 0x4a38, 0x4b38**; or run BAR diff on swp3 and compare. [traces/BAR_DIFF_PORT_UP_<LIVE_SWITCH_IP>.md](traces/BAR_DIFF_PORT_UP_<LIVE_SWITCH_IP>.md). **Done**: swp3 diff run (6 words: 0x46f8, 0x4820, 0x4870, 0x4880, 0x4928, 0x49b8). |
 | **L3** | Per-table layout (3.4–3.7) | For table IDs 0x22d3, 0x2c32, 0x1559–0x155e: trace from FUN_018d62ec/018d43e4, list **stores** into 0x224-byte buffer → field layout. [L3_NEXT_STEPS.md](L3_NEXT_STEPS.md). **Done**: [L3_BUFFER_LAYOUT_FROM_DUMPS.md](L3_BUFFER_LAYOUT_FROM_DUMPS.md) — 014a51e8/0170b700 stores; 0x0=op, 0x4/0x44=entry array, 0x84/0x9c/0xb4/0xcc=indices, 0x204–0x214=format constants. |
 | **L3** | Write mechanism | Confirm FUN_01876f10 (or 01876c30’s handler) uses S-Chan (FUN_007042f0) or direct BAR; trace one L3 write to completion. **Checked**: 01876f10 does not call 007042f0 (→01876ee0→01876c30→bctrl); S-Chan would be in indirect handler. |
 | **Optional** | Hash/index (3.10) | In Ghidra, find hash/index computation before L2/L3 table insert; document key and index derivation. **L2 done**: [L2_INDEX_SOURCE_FROM_DUMPS.md](L2_INDEX_SOURCE_FROM_DUMPS.md) — 01cc2f2c retry 0..5, 00948700 passes -1; no hash in these paths. |
 
-**Scripts**: `run-dump-func-on-build-server.sh libopennsl <addr> [insn_limit]`, `run-bar-diff-port-up-10.1.1.233.sh [swpN]`, `run-find-l3-table-callers-on-build-server.sh`.
+**Scripts**: `run-dump-func-on-build-server.sh libopennsl <addr> [insn_limit]`, `run-bar-diff-port-up-<LIVE_SWITCH_IP>.sh [swpN]`, `run-find-l3-table-callers-on-build-server.sh`.
 
 ---
 
@@ -78,19 +79,18 @@
 
 ---
 
-### 5. Port bringup registers (closes 5.2–5.3)
+### 5. Port bringup registers (5.2–5.3) — **done**
 
 - **What**: Minimal register sequence to bring one port up (enable, speed, duplex) and SerDes lane config.
-- **Done**: Strace + perf port-up trace; **BAR diff** during port up. See [traces/PORT_UP_TRACE_ANALYSIS_10.1.1.233.md](traces/PORT_UP_TRACE_ANALYSIS_10.1.1.233.md), [traces/PORT_UP_PERF_ANALYSIS_10.1.1.233.md](traces/PORT_UP_PERF_ANALYSIS_10.1.1.233.md), [traces/BAR_DIFF_PORT_UP_10.1.1.233.md](traces/BAR_DIFF_PORT_UP_10.1.1.233.md) — 14 BAR0 offsets changed (0x46f8–0x4b38); candidates for port/SerDes.
-- **How to close further**: (B) Ghidra on Cumulus switchd for port paths; (C) OpenNSL handlers at -0x5fe0/-0x68b0; correlate BAR offsets with SDK register names.
-- **Scripts**: `run-port-up-trace-10.1.1.233.sh`, `run-perf-port-up-10.1.1.233.sh`, **`run-bar-diff-port-up-10.1.1.233.sh [interface]`** (dump /dev/mem before/after port up, diff).
+- **Done**: XLPORT/MAC registers and full Warpcore SerDes init sequence verified via bcmcmd and GDB watchpoint. See [PORT_BRINGUP_REGISTER_MAP.md](PORT_BRINGUP_REGISTER_MAP.md), [SERDES_WC_INIT.md](SERDES_WC_INIT.md). Strace, perf, and BAR diff traces in [traces/](traces/).
+- **Scripts**: `run-port-up-trace-<LIVE_SWITCH_IP>.sh`, `run-perf-port-up-<LIVE_SWITCH_IP>.sh`, `run-bar-diff-port-up-<LIVE_SWITCH_IP>.sh [interface]`.
 
 ---
 
 ### 6. Runtime Tracing — **strace valid; OpenNSL GDB N/A on Cumulus**
 
-- **Strace** (port-up, packet I/O, BDE mmap): Done; analysis in [traces/RUNTIME_TRACE_ANALYSIS_10.1.1.233.md](traces/RUNTIME_TRACE_ANALYSIS_10.1.1.233.md). Valid on Cumulus (low-level syscalls).
-- **GDB breakpoints at OpenNSL APIs**: **N/A on Cumulus** — Cumulus does not use OpenNSL; breakpoints never hit. Scripts exist but are for ONL switch (10.1.1.222) if it uses OpenNSL.
+- **Strace** (port-up, packet I/O, BDE mmap): Done; analysis in [traces/RUNTIME_TRACE_ANALYSIS_<LIVE_SWITCH_IP>.md](traces/RUNTIME_TRACE_ANALYSIS_<LIVE_SWITCH_IP>.md). Valid on Cumulus (low-level syscalls).
+- **GDB breakpoints at OpenNSL APIs**: **N/A on Cumulus** — Cumulus does not use OpenNSL; breakpoints never hit. Scripts exist but are for ONL switch (<ONL_SWITCH_IP>) if it uses OpenNSL.
 - **Path forward**: Rely on Ghidra static analysis of libopennsl for table layouts; strace for low-level behavior.
 
 ### 7. Packet buffer format (4.6) — **done**
@@ -115,15 +115,15 @@
 
 ## Done (no action needed)
 
-- **Packet I/O trace (10.1.1.233)**: Full strace captured; extraction in [traces/PACKET_IO_TRACE_EXTRACTED_10.1.1.233.md](traces/PACKET_IO_TRACE_EXTRACTED_10.1.1.233.md). BDE ioctls (WAIT_FOR_INTERRUPT, SEM_OP, USLEEP), TUN read/write on fd 20, thread roles, and canonical TX/RX sequences are documented.
+- **Packet I/O trace (<LIVE_SWITCH_IP>)**: Full strace captured; extraction in [traces/PACKET_IO_TRACE_EXTRACTED_<LIVE_SWITCH_IP>.md](traces/PACKET_IO_TRACE_EXTRACTED_<LIVE_SWITCH_IP>.md). BDE ioctls (WAIT_FOR_INTERRUPT, SEM_OP, USLEEP), TUN read/write on fd 20, thread roles, and canonical TX/RX sequences are documented.
 - **Function dumps**: [FUNCTION_DUMP_ANALYSIS.md](FUNCTION_DUMP_ANALYSIS.md) — FUN_0080ba18 (opennsl_tx callee), FUN_1000b638 (switchd S-Channel anchor). DumpFunctionCode runs on build server; FindL2Writes found 0 scalar L2 stores (PowerPC uses register+offset).
-- **Port-up trace**: [PORT_UP_TRACE_ANALYSIS_10.1.1.233.md](traces/PORT_UP_TRACE_ANALYSIS_10.1.1.233.md) — BDE ioctls 0x20004c08–0x20004c0b decoded. Strace re-run 2026-02-19 (10982 lines); perf port-up 2026-02-20 (~23.5k samples).
-- **Port-up perf trace**: [PORT_UP_PERF_ANALYSIS_10.1.1.233.md](traces/PORT_UP_PERF_ANALYSIS_10.1.1.233.md). **BAR diff**: [BAR_DIFF_PORT_UP_10.1.1.233.md](traces/BAR_DIFF_PORT_UP_10.1.1.233.md) — swp1: 14 offsets; swp2: 5 offsets (overlap 0x49e8, 0x4a38, 0x4a40, 0x4a50, 0x4b38).
-- **BDE mmap (1.5–1.6)**: [BDE_MMAP_ANALYSIS_10.1.1.233.md](traces/BDE_MMAP_ANALYSIS_10.1.1.233.md) — switchd mmaps /dev/mem at 0x04000000 and 0xa0000000; register access via mmap, not ioctl.
+- **Port-up trace**: [PORT_UP_TRACE_ANALYSIS_<LIVE_SWITCH_IP>.md](traces/PORT_UP_TRACE_ANALYSIS_<LIVE_SWITCH_IP>.md) — BDE ioctls 0x20004c08–0x20004c0b decoded. Strace re-run 2026-02-19 (10982 lines); perf port-up 2026-02-20 (~23.5k samples).
+- **Port-up perf trace**: [PORT_UP_PERF_ANALYSIS_<LIVE_SWITCH_IP>.md](traces/PORT_UP_PERF_ANALYSIS_<LIVE_SWITCH_IP>.md). **BAR diff**: [BAR_DIFF_PORT_UP_<LIVE_SWITCH_IP>.md](traces/BAR_DIFF_PORT_UP_<LIVE_SWITCH_IP>.md) — swp1: 14 offsets; swp2: 5 offsets (overlap 0x49e8, 0x4a38, 0x4a40, 0x4a50, 0x4b38).
+- **BDE mmap (1.5–1.6)**: [BDE_MMAP_ANALYSIS_<LIVE_SWITCH_IP>.md](traces/BDE_MMAP_ANALYSIS_<LIVE_SWITCH_IP>.md) — switchd mmaps /dev/mem at 0x04000000 and 0xa0000000; register access via mmap, not ioctl.
 - **L2 table access**: [L2_TABLE_ACCESS_ANALYSIS.md](L2_TABLE_ACCESS_ANALYSIS.md) — L2_USER_ENTRY (0x180c200) xrefs. [L2_PAYLOAD_FROM_DUMPS.md](L2_PAYLOAD_FROM_DUMPS.md) — table ID 0x1547, 0x24-byte payload; 01cbd2e0 input (flags 0x0, MAC 0x8, VLAN 0x14, port 0x2c); 0181f080 → 0181e718 fills buffer (r29); descriptor-driven layout.
 - **S-Channel call chain**: FUN_007042f0 / FUN_00704790 / FUN_00704784 → FUN_00703dc0 (oris 0x2800). [SCHAN_AND_L2_ANALYSIS.md](SCHAN_AND_L2_ANALYSIS.md).
 - **L2 call chain**: FUN_00946a00 → FUN_00948700 → FUN_01cc2f2c. Dumped FUN_00946a00, FUN_0092c64c, FUN_009307a4, FUN_01d2f1f0, FUN_00973f6c, FUN_0094e450, FUN_00a68ef0, FUN_0089c230, FUN_00b2bbb4, FUN_009af1fc. S-Chan callers: FUN_007042f0, FUN_00704790, FUN_00704784.
-- **Runtime trace analysis**: [traces/RUNTIME_TRACE_ANALYSIS_10.1.1.233.md](traces/RUNTIME_TRACE_ANALYSIS_10.1.1.233.md) — consolidated BDE ioctl summary.
+- **Runtime trace analysis**: [traces/RUNTIME_TRACE_ANALYSIS_<LIVE_SWITCH_IP>.md](traces/RUNTIME_TRACE_ANALYSIS_<LIVE_SWITCH_IP>.md) — consolidated BDE ioctl summary.
 - **L3 table callers**: [libopennsl-l3-table-callers.txt](../build-server/opennsl/sdk-deep-extract/libopennsl-l3-table-callers.txt) — FUN_018d7ad4→FUN_018d62ec chain.
 - **Port bringup**: [PORT_BRINGUP_ANALYSIS.md](PORT_BRINGUP_ANALYSIS.md) — port API callees and dispatch pattern.
 - **L2 callers**: FUN_00946a00→FUN_0092c64c, FUN_009307a4. Dumped L2 handlers: 0094e450, 00a68ef0, 0089c230, 00b2bbb4, 009af1fc. S-Chan callers: FUN_007042f0, FUN_00704790, FUN_00704784. See [L2_TABLE_ACCESS_ANALYSIS.md](L2_TABLE_ACCESS_ANALYSIS.md), [SCHAN_AND_L2_ANALYSIS.md](SCHAN_AND_L2_ANALYSIS.md).
@@ -137,6 +137,6 @@
 - **Checklist**: [PATH_B_INFORMATION_CHECKLIST.md](PATH_B_INFORMATION_CHECKLIST.md)
 - **Suggested order**: §11 of checklist (Packet I/O → BDE/DMA → S-Chan → L2 → L3 → Port bringup → Registers).
 - **Ghidra TX path**: [HOW_TO_RUN_FINDPACKETTXPATH.md](HOW_TO_RUN_FINDPACKETTXPATH.md), `scripts/reverse-engineering/ghidra-find-packet-tx-path.sh`
-- **Trace extraction**: [traces/PACKET_IO_TRACE_EXTRACTED_10.1.1.233.md](traces/PACKET_IO_TRACE_EXTRACTED_10.1.1.233.md)
+- **Trace extraction**: [traces/PACKET_IO_TRACE_EXTRACTED_<LIVE_SWITCH_IP>.md](traces/PACKET_IO_TRACE_EXTRACTED_<LIVE_SWITCH_IP>.md)
 - **S-Channel / DMA**: [SCHAN_AND_RING_BUFFERS.md](SCHAN_AND_RING_BUFFERS.md), [SDK_REGISTER_MAP.md](SDK_REGISTER_MAP.md)
 - **Tables**: [TABLE_NAME_MAPPING.md](TABLE_NAME_MAPPING.md), [TABLE_MEMORY_ANALYSIS.md](TABLE_MEMORY_ANALYSIS.md)

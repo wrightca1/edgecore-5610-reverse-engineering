@@ -1,15 +1,15 @@
-# Port-Up Perf Trace Analysis (10.1.1.233)
+# Port-Up Perf Trace Analysis (<LIVE_SWITCH_IP>)
 
 **Date**: 2026-02-20  
-**Trace**: `perf-port-up-10.1.1.233.data`, `perf-port-up-10.1.1.233.txt`  
-**Command**: `run-perf-port-up-10.1.1.233.sh swp1` (perf record on switchd during `ip link set swp1 down/up`)
+**Trace**: `perf-port-up-<LIVE_SWITCH_IP>.data`, `perf-port-up-<LIVE_SWITCH_IP>.txt`  
+**Command**: `run-perf-port-up-<LIVE_SWITCH_IP>.sh swp1` (perf record on switchd during `ip link set swp1 down/up`)
 
 ---
 
 ## Summary
 
 - **~23.5k samples** over ~12s; **159 samples** include `linux_user_bde` or switchd user-space frames.
-- Port bringup path shows **BDE semaphore/ioctl** (`sal_sem_take` → `_ioctl` → `vfs_ioctl`) called from **Cumulus switchd** (not OpenNSL). Register access is via **mmap** (see [BDE_MMAP_ANALYSIS_10.1.1.233.md](BDE_MMAP_ANALYSIS_10.1.1.233.md)), so perf does not show CPU_READ_REG/CPU_WRITE_REG.
+- Port bringup path shows **BDE semaphore/ioctl** (`sal_sem_take` → `_ioctl` → `vfs_ioctl`) called from **Cumulus switchd** (not OpenNSL). Register access is via **mmap** (see [BDE_MMAP_ANALYSIS_<LIVE_SWITCH_IP>.md](BDE_MMAP_ANALYSIS_<LIVE_SWITCH_IP>.md)), so perf does not show CPU_READ_REG/CPU_WRITE_REG.
 - Call stacks during port up show a consistent **switchd → BDE** chain: many switchd addresses (e.g. 100235ec, 100118d0, 10011fcc, 1000f084, 10008a4c) then libc `ioctl`, then `_ioctl` / `sal_sem_take` in `linux_user_bde`.
 
 ---
@@ -46,7 +46,7 @@ Another stack shows different switchd frames (10024aa0, 1001d750, 1000f250) befo
 ## Interpretation for 5.2–5.3 (port bringup registers)
 
 1. **BDE usage**: Port up/down triggers **LUBDE_SEM_OP** (and USLEEP/WAIT_FOR_INTERRUPT/UDELAY) as in the strace; perf confirms these happen from switchd via `sal_sem_take` / `_ioctl` in `linux_user_bde`.
-2. **Register access**: No register read/write ioctls in strace; [BDE_MMAP_ANALYSIS_10.1.1.233.md](BDE_MMAP_ANALYSIS_10.1.1.233.md) shows switchd mmaps at 0x04000000 and 0xa0000000. So **port/SerDes register writes are via mmap**, not captured by perf call stacks unless we had a custom probe on those addresses.
+2. **Register access**: No register read/write ioctls in strace; [BDE_MMAP_ANALYSIS_<LIVE_SWITCH_IP>.md](BDE_MMAP_ANALYSIS_<LIVE_SWITCH_IP>.md) shows switchd mmaps at 0x04000000 and 0xa0000000. So **port/SerDes register writes are via mmap**, not captured by perf call stacks unless we had a custom probe on those addresses.
 3. **Next steps to close 5.2–5.3**:
    - **Option A**: Strace or eBPF on **mmap’d region**: trace `read`/`write` (or equivalent) to the BAR ranges during port up to log which offsets are touched (port/SerDes register list).
    - **Option B**: **Ghidra on Cumulus switchd** binary: locate port enable/speed/duplex code paths (e.g. by string refs or by correlating the perf addresses 100235ec, 100118d0, 1000f084, etc. if symbols are available) and extract register offsets.
@@ -58,7 +58,7 @@ Another stack shows different switchd frames (10024aa0, 1001d750, 1000f250) befo
 
 | File | Description |
 |------|-------------|
-| `perf-port-up-10.1.1.233.data` | Perf record data (can run `perf script -i …` again) |
-| `perf-port-up-10.1.1.233.txt` | Perf script output (~23.5k lines, call stacks) |
+| `perf-port-up-<LIVE_SWITCH_IP>.data` | Perf record data (can run `perf script -i …` again) |
+| `perf-port-up-<LIVE_SWITCH_IP>.txt` | Perf script output (~23.5k lines, call stacks) |
 
 Perf was installed from Debian Wheezy powerpc packages (linux-tools-3.2, libelf1, libdw1, libnewt0.52) and run with `LD_LIBRARY_PATH=/tmp/bundle:/tmp/bundle/elfutils` on the switch.

@@ -10,22 +10,22 @@ See **[PATH_B_WHATS_LEFT_AND_NEXT_STEPS.md](PATH_B_WHATS_LEFT_AND_NEXT_STEPS.md)
 
 **Note**: Cumulus does not use OpenNSL. Use libopennsl as ASIC reference (Ghidra); use Cumulus for strace only.
 
-1. ~~**Live switch trace**~~ **Done.** [traces/PACKET_IO_TRACE_EXTRACTED_10.1.1.233.md](traces/PACKET_IO_TRACE_EXTRACTED_10.1.1.233.md)
+1. ~~**Live switch trace**~~ **Done.** [traces/PACKET_IO_TRACE_EXTRACTED_<LIVE_SWITCH_IP>.md](traces/PACKET_IO_TRACE_EXTRACTED_<LIVE_SWITCH_IP>.md)
 2. ~~**Packet TX path (4.3)**~~ **Done.** [FUNCTION_DUMP_ANALYSIS.md](FUNCTION_DUMP_ANALYSIS.md), [PACKET_BUFFER_ANALYSIS.md](PACKET_BUFFER_ANALYSIS.md)
 3. ~~**S-Channel (2.3)**~~ **Done.** [SCHAN_AND_L2_ANALYSIS.md](SCHAN_AND_L2_ANALYSIS.md), [SCHAN_FORMAT_ANALYSIS.md](SCHAN_FORMAT_ANALYSIS.md)
 4. ~~**Packet buffer (4.6)**~~ **Done.** [PACKET_BUFFER_ANALYSIS.md](PACKET_BUFFER_ANALYSIS.md)
-5. **L2/L3 layouts + write path (3.3–3.8)**: PARTIAL. [L2_TABLE_ACCESS_ANALYSIS.md](L2_TABLE_ACCESS_ANALYSIS.md), [L3_TABLE_WRITE_CHAIN_DUMP.md](L3_TABLE_WRITE_CHAIN_DUMP.md)
-6. **Port bringup**: Strace + perf port-up done. See [traces/PORT_UP_TRACE_ANALYSIS_10.1.1.233.md](traces/PORT_UP_TRACE_ANALYSIS_10.1.1.233.md), [traces/PORT_UP_PERF_ANALYSIS_10.1.1.233.md](traces/PORT_UP_PERF_ANALYSIS_10.1.1.233.md). To close 5.2–5.3: mmap trace or Ghidra on switchd. [PORT_BRINGUP_ANALYSIS.md](PORT_BRINGUP_ANALYSIS.md)
+5. ~~**L2/L3 layouts + write path (3.3–3.8)**~~ **Done.** L2_ENTRY + L2_USER_ENTRY, L3/ECMP/VLAN table layouts and write path verified on live switch. [L2_ENTRY_FORMAT.md](L2_ENTRY_FORMAT.md), [L2_WRITE_PATH_COMPLETE.md](L2_WRITE_PATH_COMPLETE.md), [L3_NEXTHOP_FORMAT.md](L3_NEXTHOP_FORMAT.md), [L3_ECMP_VLAN_WRITE_PATH.md](L3_ECMP_VLAN_WRITE_PATH.md), [VLAN_TABLE_FORMAT.md](VLAN_TABLE_FORMAT.md), [PATH_B_COMPLETION_STATUS.md](PATH_B_COMPLETION_STATUS.md).
+6. ~~**Port bringup (5.2–5.3)**~~ **Done.** XLPORT/MAC registers and Warpcore SerDes init verified. [PORT_BRINGUP_REGISTER_MAP.md](PORT_BRINGUP_REGISTER_MAP.md), [SERDES_WC_INIT.md](SERDES_WC_INIT.md). Traces: [traces/PORT_UP_TRACE_ANALYSIS_<LIVE_SWITCH_IP>.md](traces/PORT_UP_TRACE_ANALYSIS_<LIVE_SWITCH_IP>.md), [traces/PORT_UP_PERF_ANALYSIS_<LIVE_SWITCH_IP>.md](traces/PORT_UP_PERF_ANALYSIS_<LIVE_SWITCH_IP>.md).
 
 ### At a glance (Path B must-haves)
 
 | Area | Have | Partial | Need | Notes |
 |------|------|---------|------|--------|
 | BDE/device | 1.1–1.6 | — | — | §1 |
-| Registers | 2.1–2.5, **2.3** S-Chan format | — | 2.6 port/SerDes, 2.7 pipeline | §2 |
-| Tables | 3.1–3.2 | **3.3–3.8** layouts + write path | 3.10 hash/index | §3 |
-| Packet I/O | 4.1–4.2, **4.3** TX path, **4.6** buffer | 4.4 RX, 4.5 BDE, 4.7–4.8 DCB/ring | — | §4 |
-| Port bringup | 5.1 | 5.4 breakout | 5.2–5.3 reg sequence | §5 |
+| Registers | 2.1–2.6, **2.3** S-Chan, **2.6** port/SerDes | — | 2.7 pipeline | §2 |
+| Tables | 3.1–3.9 (L2/L3/ECMP/VLAN layout + write path) | — | 3.10 hash/index | §3 |
+| Packet I/O | 4.1–4.3, **4.6** buffer, DCB verified | 4.4–4.5, 4.7–4.8 | — | §4 |
+| Port bringup | 5.1–5.4 (**5.2–5.3** XLPORT/MAC + SerDes) | — | — | §5 |
 | Init/config | 6.1–6.3 | 6.4–6.5 | — | §6 |
 | Platform | — | 7.2 LED | 7.1 I2C | §7 |
 
@@ -39,8 +39,8 @@ See **[PATH_B_WHATS_LEFT_AND_NEXT_STEPS.md](PATH_B_WHATS_LEFT_AND_NEXT_STEPS.md)
 | 1.2 | Open device, basic ioctl list (LUBDE_* in linux-user-bde.h) | HAVE | `systems/bde/linux/user/kernel/linux-user-bde.h` |
 | 1.3 | Register read/write ioctls: LUBDE_CPU_READ_REG (24), LUBDE_CPU_WRITE_REG (23) | HAVE | linux-user-bde.h; args in lubde_ioctl_t (dev, d0/d1 = addr/data, etc.) |
 | 1.4 | LUBDE_GET_DMA_INFO (5), LUBDE_GET_DEVICE (2), LUBDE_GET_NUM_DEVICES (1) | HAVE | linux-user-bde.h |
-| 1.5 | PCI BAR mapping: BAR0 = ASIC registers (e.g. 256KB); how userland gets base address | HAVE | BDE_MMAP_ANALYSIS_10.1.1.233.md: switchd mmaps /dev/mem at 0x04000000 (64MB) and 0xa0000000 (256KB). |
-| 1.6 | How register read/write is used: ioctl with (dev, addr, value) or mmap + direct read/write | HAVE | BDE_MMAP_ANALYSIS_10.1.1.233.md: mmap + direct read/write (not per-access ioctl). |
+| 1.5 | PCI BAR mapping: BAR0 = ASIC registers (e.g. 256KB); how userland gets base address | HAVE | BDE_MMAP_ANALYSIS_<LIVE_SWITCH_IP>.md: switchd mmaps /dev/mem at 0x04000000 (64MB) and 0xa0000000 (256KB). |
+| 1.6 | How register read/write is used: ioctl with (dev, addr, value) or mmap + direct read/write | HAVE | BDE_MMAP_ANALYSIS_<LIVE_SWITCH_IP>.md: mmap + direct read/write (not per-access ioctl). |
 
 **How to get 1.5–1.6**: Strace switchd at startup (open, ioctl, mmap). Inspect BDE kernel module for how it implements LUBDE_CPU_READ_REG/WRITE and whether it exposes a base address for mmap.
 
@@ -55,7 +55,7 @@ See **[PATH_B_WHATS_LEFT_AND_NEXT_STEPS.md](PATH_B_WHATS_LEFT_AND_NEXT_STEPS.md)
 | 2.3 | S-Channel command/response format (opcodes, data words, poll/completion) | HAVE | [SCHAN_AND_L2_ANALYSIS.md](SCHAN_AND_L2_ANALYSIS.md), [SCHAN_FORMAT_ANALYSIS.md](SCHAN_FORMAT_ANALYSIS.md). FUN_00703dc0 encodes command word `0x2800XXXX` (val masked and ORed with 0x28000000). |
 | 2.4 | LED register offsets | HAVE | SDK_REGISTER_MAP.md |
 | 2.5 | DMA ring registers: DMA_CTRL, DMA_DESC0, DMA_HALT_ADDR (0x31140, 0x31158, 0x31120) | HAVE | SCHAN_AND_RING_BUFFERS.md |
-| 2.6 | Port/SerDes register blocks (per-port base or block layout) | NEED | Register dump during port up; or OpenNSL/soc port code |
+| 2.6 | Port/SerDes register blocks (per-port base or block layout) | HAVE | [PORT_BRINGUP_REGISTER_MAP.md](PORT_BRINGUP_REGISTER_MAP.md), [SERDES_WC_INIT.md](SERDES_WC_INIT.md) — XLPORT/MAC + Warpcore WC-B0 MDIO init verified |
 | 2.7 | Pipeline / buffer / stats register set (full list) | NEED | Ghidra extraction; register dump; OpenNSL/soc |
 
 **How to get 2.3**: Ghidra: find code that writes to 0x32800 (or S-Chan symbol); decode opcode and data layout. Or capture schan traffic (bcmcmd schan) and correlate with SDK.
@@ -70,13 +70,13 @@ See **[PATH_B_WHATS_LEFT_AND_NEXT_STEPS.md](PATH_B_WHATS_LEFT_AND_NEXT_STEPS.md)
 |---|-------------|--------|--------------------|
 | 3.1 | Table memory region 0x01000000–0x01ffffff (16MB) | HAVE | TABLE_MEMORY_ANALYSIS.md, SDK_REGISTER_MAP.md |
 | 3.2 | Table names → addresses (L2_ENTRY, L2_USER_ENTRY, L3_DEFIP, L3_ECMP, VLAN_XLATE, ECMP) | HAVE | TABLE_NAME_MAPPING.md, opennsl-table-name-to-addr-xref.txt |
-| 3.3 | L2 entry layout: MAC, VLAN, port, valid/static/hit, entry size, byte order | PARTIAL | [L2_TABLE_ACCESS_ANALYSIS.md](L2_TABLE_ACCESS_ANALYSIS.md). opennsl_l2_addr_t + call chain FUN_00946a00→FUN_00948700→FUN_01cc2f2c. ASIC L2_USER_ENTRY format needs S-Chan decode. |
-| 3.4 | L3 route (DEFIP) layout: prefix, mask, egress id, next-hop, entry size | PARTIAL | [L3_TABLE_WRITE_CHAIN_DUMP.md](L3_TABLE_WRITE_CHAIN_DUMP.md). FUN_018d7ad4→FUN_018d62ec→FUN_018d43e4; table IDs 0x22d3/0x22ca. OpenNSL types + Ghidra. |
-| 3.5 | L3 egress layout: port, MAC, entry size | PARTIAL | Same chain as 3.4; table IDs 0x2c32/0x2c33 (L3_ECMP). |
-| 3.6 | L3 host layout | PARTIAL | Same chain; table IDs 0x1559–0x155e, 0x1599, 0x2c24, 0x15a5. |
-| 3.7 | ECMP group layout and how it links to egress/next-hop | PARTIAL | FUN_01a1572c references L3_ECMP; table IDs 0x6418/0x6419/0x8a8. |
-| 3.8 | How tables are written: S-Channel memory write vs direct BAR access vs other | PARTIAL | [SCHAN_AND_L2_ANALYSIS.md](SCHAN_AND_L2_ANALYSIS.md). S-Chan via FUN_00703dc0; table write via FUN_01876f10, FUN_018d62ec. |
-| 3.9 | VLAN table (VLAN_XLATE) layout and write path | PARTIAL | Addresses have; layout and write path NEED |
+| 3.3 | L2 entry layout: MAC, VLAN, port, valid/static/hit, entry size, byte order | HAVE | [L2_ENTRY_FORMAT.md](L2_ENTRY_FORMAT.md), [L2_WRITE_PATH_COMPLETE.md](L2_WRITE_PATH_COMPLETE.md) — L2_ENTRY + L2_USER_ENTRY bit layouts verified on live switch. |
+| 3.4 | L3 route (DEFIP) layout: prefix, mask, egress id, next-hop, entry size | HAVE | [L3_NEXTHOP_FORMAT.md](L3_NEXTHOP_FORMAT.md), [L3_ECMP_VLAN_WRITE_PATH.md](L3_ECMP_VLAN_WRITE_PATH.md) — verified via bcmcmd. |
+| 3.5 | L3 egress layout: port, MAC, entry size | HAVE | Same as 3.4; ING/EGR_L3_NEXT_HOP + EGR_L3_INTF verified. |
+| 3.6 | L3 host layout | HAVE | Same chain; verified on live switch. |
+| 3.7 | ECMP group layout and how it links to egress/next-hop | HAVE | L3_ECMP + L3_ECMP_GROUP verified; [PATH_B_COMPLETION_STATUS.md](PATH_B_COMPLETION_STATUS.md). |
+| 3.8 | How tables are written: S-Channel memory write vs direct BAR access vs other | HAVE | S-Channel DMA path confirmed; [WRITE_MECHANISM_ANALYSIS.md](WRITE_MECHANISM_ANALYSIS.md), [SCHAN_AND_L2_ANALYSIS.md](SCHAN_AND_L2_ANALYSIS.md). |
+| 3.9 | VLAN table (VLAN_XLATE) layout and write path | HAVE | [VLAN_TABLE_FORMAT.md](VLAN_TABLE_FORMAT.md) — VLAN + EGR_VLAN verified on live switch. |
 | 3.10 | Hash/index computation for L2 (and L3 if hash-based) | NEED | Ghidra on L2/L3 add; or SDK/soc docs |
 
 **How to get 3.3–3.10**: (1) OpenNSL headers give logical fields. (2) Ghidra: find functions that reference both table name string and table address; decode how they build the entry and which memory/register they write. (3) Optional: dump table on live switch and reverse from known entries.
@@ -98,7 +98,7 @@ See **[PATH_B_WHATS_LEFT_AND_NEXT_STEPS.md](PATH_B_WHATS_LEFT_AND_NEXT_STEPS.md)
 
 **How to get 4.3–4.8**: (1) **Live switch**: Follow [TRACING_PACKET_IO_GUIDE.md](TRACING_PACKET_IO_GUIDE.md) (strace/ltrace during ping). (2) **Ghidra**: Run `FindPacketTxPath.java` on switchd (callers of `read`, refs to opennsl_tx/bcm_tx) and on libopennsl (opennsl_tx callees). (3) **DCB/ring layout**: See [DMA_DCB_LAYOUT_FROM_KNET.md](DMA_DCB_LAYOUT_FROM_KNET.md) (from bcm-knet.c).
 
-**Trace run (10.1.1.233)**: Full syscall trace; see [traces/PACKET_IO_TRACE_EXTRACTED_10.1.1.233.md](traces/PACKET_IO_TRACE_EXTRACTED_10.1.1.233.md) for full extraction (thread roles, fd map, BDE ioctl decode, canonical TX/RX sequences, raw samples). Artifacts: `traces/packet-io-trace-10.1.1.233.log`, `packet-io-summary-10.1.1.233.txt`, optional `packet-io-probe-10.1.1.233.log`.
+**Trace run (<LIVE_SWITCH_IP>)**: Full syscall trace; see [traces/PACKET_IO_TRACE_EXTRACTED_<LIVE_SWITCH_IP>.md](traces/PACKET_IO_TRACE_EXTRACTED_<LIVE_SWITCH_IP>.md) for full extraction (thread roles, fd map, BDE ioctl decode, canonical TX/RX sequences, raw samples). Artifacts: `traces/packet-io-trace-<LIVE_SWITCH_IP>.log`, `packet-io-summary-<LIVE_SWITCH_IP>.txt`, optional `packet-io-probe-<LIVE_SWITCH_IP>.log`.
 
 ---
 
@@ -107,9 +107,9 @@ See **[PATH_B_WHATS_LEFT_AND_NEXT_STEPS.md](PATH_B_WHATS_LEFT_AND_NEXT_STEPS.md)
 | # | Information | Status | Where / How to get |
 |---|-------------|--------|--------------------|
 | 5.1 | Port mapping swpN ↔ xeM (BCM port), porttab format | HAVE | WHAT_MAKES_THE_SWITCH_WORK.md, COMPLETE_INTERFACE_ANALYSIS.md |
-| 5.2 | List of registers (or script) to bring one port up (enable, speed, duplex) | NEED | Capture setreg/getreg (or rc.ports_0) on working Cumulus during “port up”; or OpenNSL port init code |
-| 5.3 | SerDes lane configuration (per port / per lane) | NEED | Same as 5.2; often in soc/port or phy code |
-| 5.4 | 40G vs 4×10G breakout (ports 49–52): lane remap, port numbering | PARTIAL | QSFP_BREAKOUT_CONFIGURATION.md concept; exact regs NEED |
+| 5.2 | List of registers (or script) to bring one port up (enable, speed, duplex) | HAVE | [PORT_BRINGUP_REGISTER_MAP.md](PORT_BRINGUP_REGISTER_MAP.md) — XLPORT_PORT_ENABLE, XLPORT_CONFIG, MAC_MODE, etc., verified via bcmcmd. |
+| 5.3 | SerDes lane configuration (per port / per lane) | HAVE | [SERDES_WC_INIT.md](SERDES_WC_INIT.md) — Warpcore WC-B0 MDIO init sequence captured via GDB watchpoint. |
+| 5.4 | 40G vs 4×10G breakout (ports 49–52): lane remap, port numbering | PARTIAL | [QSFP_BREAKOUT_CONFIGURATION.md](QSFP_BREAKOUT_CONFIGURATION.md) concept; exact regs optional |
 
 **How to get 5.2–5.4**: On Cumulus, run a script that does “ip link set swp1 up” (and down) while logging all register reads/writes (e.g. via wrapper or /dev/mem trace). Diff to get minimal set. Alternatively analyze OpenNSL/soc port and SerDes code.
 
@@ -190,7 +190,7 @@ See **[PATH_B_WHATS_LEFT_AND_NEXT_STEPS.md](PATH_B_WHATS_LEFT_AND_NEXT_STEPS.md)
 - **DCB/ring layout (from KNET source)**: [DMA_DCB_LAYOUT_FROM_KNET.md](DMA_DCB_LAYOUT_FROM_KNET.md)
 - **What’s left / next steps**: [PATH_B_WHATS_LEFT_AND_NEXT_STEPS.md](PATH_B_WHATS_LEFT_AND_NEXT_STEPS.md)
 - **Ghidra script (TX path)**: `scripts/reverse-engineering/FindPacketTxPath.java`; run guide: [HOW_TO_RUN_FINDPACKETTXPATH.md](HOW_TO_RUN_FINDPACKETTXPATH.md); wrapper: `ghidra-find-packet-tx-path.sh`
-- **Port-up trace (5.2–5.3)**: `run-port-up-trace-10.1.1.233.sh`, `trace-port-up-on-switch.sh`
+- **Port-up trace (5.2–5.3)**: `run-port-up-trace-<LIVE_SWITCH_IP>.sh`, `trace-port-up-on-switch.sh`
 - **Gaps (general)**: [GAPS_FOR_CUSTOM_SWITCHD_SDK.md](GAPS_FOR_CUSTOM_SWITCHD_SDK.md)
 - **Stack readiness**: [STACK_READINESS_AS5610.md](STACK_READINESS_AS5610.md)
 - **Register map**: [SDK_REGISTER_MAP.md](SDK_REGISTER_MAP.md), [BDE_CMIC_REGISTERS.md](BDE_CMIC_REGISTERS.md)

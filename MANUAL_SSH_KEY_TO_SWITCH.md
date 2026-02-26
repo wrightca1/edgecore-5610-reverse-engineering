@@ -5,7 +5,7 @@ If `ssh-copy-id` fails, add your key by hand.
 ## 1. SSH into the switch with your password
 
 ```bash
-ssh cumulus@10.1.1.233
+ssh <SWITCH_USER>@<LIVE_SWITCH_IP>
 ```
 
 ## 2. On the switch, add your public key
@@ -31,4 +31,4 @@ Copy the whole line (starts with ssh-ed25519 or ssh-rsa) and use it in place of 
 
 ## 4. Test
 
-From your Mac: `ssh cumulus@10.1.1.233` — should log in without a password.
+From your Mac: `ssh <SWITCH_USER>@<LIVE_SWITCH_IP>` — should log in without a password.

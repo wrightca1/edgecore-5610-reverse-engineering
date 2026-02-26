@@ -1,8 +1,8 @@
-# Port-Up Trace Analysis (10.1.1.233)
+# Port-Up Trace Analysis (<LIVE_SWITCH_IP>)
 
 **Date**: 2026-02-19  
-**Trace**: `port-up-trace-10.1.1.233.log`, `port-up-summary-10.1.1.233.txt`  
-**Command**: `run-port-up-trace-10.1.1.233.sh swp1`
+**Trace**: `port-up-trace-<LIVE_SWITCH_IP>.log`, `port-up-summary-<LIVE_SWITCH_IP>.txt`  
+**Command**: `run-port-up-trace-<LIVE_SWITCH_IP>.sh swp1`
 
 ## BDE ioctl decoding
 
@@ -33,7 +33,7 @@ Port bringup uses the same BDE synchronization as packet I/O: **wait_for_interru
 
 ## Next steps for port bringup (5.2–5.3)
 
-1. **perf port-up trace**: `run-perf-port-up-10.1.1.233.sh swp1` — captures call stacks during port down/up (requires perf on switch).
+1. **perf port-up trace**: `run-perf-port-up-<LIVE_SWITCH_IP>.sh swp1` — captures call stacks during port down/up (requires perf on switch).
 2. Add **mmap** and **read**/write to trace filter to catch register access if via mmap.
 3. Run trace with longer capture around link up.
 4. Check for LUBDE_CPU_READ_REG (0x20004c18) / LUBDE_CPU_WRITE_REG (0x20004c17) in full trace.

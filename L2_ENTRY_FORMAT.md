@@ -2,7 +2,7 @@
 
 **Date**: 2026-02-23
 **Status**: HAVE — bit positions fully verified via bcmcmd listmem + raw dump + write-back tests
-**Switch**: Edgecore AS5610-52X / Cumulus Linux 2.5 / 10.1.1.233
+**Switch**: Edgecore AS5610-52X / Cumulus Linux 2.5 / <LIVE_SWITCH_IP>
 
 ---
 

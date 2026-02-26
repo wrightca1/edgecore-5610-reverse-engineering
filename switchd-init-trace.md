@@ -1,6 +1,6 @@
 # switchd Initialization Trace
 
-**Source**: Actual trace from Cumulus Linux 2.5.1 on AS5610-52X (10.1.1.233)
+**Source**: Actual trace from Cumulus Linux 2.5.1 on AS5610-52X (<LIVE_SWITCH_IP>)
 **Date**: 2013-11-01 (clock set back for license)
 **Trace file**: `/tmp/switchd-init.trace` (51MB, 680k lines)
 
@@ -76,7 +76,7 @@ From `/var/log/switchd.log`:
 
 To analyze full trace:
 ```bash
-scp cumulus@10.1.1.233:/tmp/switchd-init.trace .
+scp <SWITCH_USER>@<LIVE_SWITCH_IP>:/tmp/switchd-init.trace .
 # Analyze with: grep, awk, or import into analysis tool
 ```
 

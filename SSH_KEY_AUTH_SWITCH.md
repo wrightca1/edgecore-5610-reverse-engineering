@@ -1,4 +1,4 @@
-# Why key auth fails to the Cumulus switch (10.1.1.233)
+# Why key auth fails to the Cumulus switch (<LIVE_SWITCH_IP>)
 
 ## Two causes (both fixed)
 
@@ -16,18 +16,18 @@ OpenSSH 8.8+ clients disable the legacy **ssh-rsa** (SHA1) signature. The switch
 2. **Use legacy algorithm** when connecting. Add to `~/.ssh/config`:
 
 ```
-Host 10.1.1.233
+Host <LIVE_SWITCH_IP>
   User cumulus
   IdentityFile ~/.ssh/id_rsa_switch
   PubkeyAcceptedAlgorithms +ssh-rsa
 ```
 
-Then `ssh cumulus@10.1.1.233` uses key auth with no password.
+Then `ssh <SWITCH_USER>@<LIVE_SWITCH_IP>` uses key auth with no password.
 
 One-liner without config:
 
 ```bash
-ssh -i ~/.ssh/id_rsa_switch -o PubkeyAcceptedAlgorithms=+ssh-rsa cumulus@10.1.1.233
+ssh -i ~/.ssh/id_rsa_switch -o PubkeyAcceptedAlgorithms=+ssh-rsa <SWITCH_USER>@<LIVE_SWITCH_IP>
 ```
 
 ## Verified

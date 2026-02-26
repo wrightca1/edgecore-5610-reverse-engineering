@@ -7,7 +7,7 @@
 
 ## Summary
 
-Complete runtime tracing infrastructure has been created to map OpenNSL API calls to table IDs on the live Cumulus switch (10.1.1.233). All scripts are ready for execution.
+Complete runtime tracing infrastructure has been created to map OpenNSL API calls to table IDs on the live Cumulus switch (<LIVE_SWITCH_IP>). All scripts are ready for execution.
 
 ---
 
@@ -36,18 +36,18 @@ Complete runtime tracing infrastructure has been created to map OpenNSL API call
 
 ### Wrapper Scripts (Local)
 
-1. **`run-api-to-table-id-trace-10.1.1.233.sh`**
+1. **`run-api-to-table-id-trace-<LIVE_SWITCH_IP>.sh`**
    - Copies script, runs trace, fetches results
    - Handles SSH/SCP automatically
 
-2. **`run-gdb-symbol-trace-10.1.1.233.sh`**
+2. **`run-gdb-symbol-trace-<LIVE_SWITCH_IP>.sh`**
    - Runs symbol-based GDB trace
    - Simplified execution
 
-3. **`run-table-write-trace-10.1.1.233.sh`**
+3. **`run-table-write-trace-<LIVE_SWITCH_IP>.sh`**
    - Runs table write dispatcher trace
 
-4. **`run-complete-runtime-trace-10.1.1.233.sh`**
+4. **`run-complete-runtime-trace-<LIVE_SWITCH_IP>.sh`**
    - Automated: runs trace + triggers API calls
 
 ### Helper Scripts
@@ -99,14 +99,14 @@ Based on static analysis:
 
 ```bash
 # Option 1: Automated (trace + trigger API calls)
-./scripts/reverse-engineering/run-complete-runtime-trace-10.1.1.233.sh
+./scripts/reverse-engineering/run-complete-runtime-trace-<LIVE_SWITCH_IP>.sh
 
 # Option 2: Manual (run trace, trigger API calls separately)
 # Terminal 1:
-./scripts/reverse-engineering/run-gdb-symbol-trace-10.1.1.233.sh
+./scripts/reverse-engineering/run-gdb-symbol-trace-<LIVE_SWITCH_IP>.sh
 
 # Terminal 2:
-ssh cumulus@10.1.1.233
+ssh <SWITCH_USER>@<LIVE_SWITCH_IP>
 sudo ip route add 10.1.1.0/24 via 10.1.1.1 dev swp1
 sudo ip route add 192.168.1.0/24 via 10.1.1.2 dev swp2
 ```
@@ -115,10 +115,10 @@ sudo ip route add 192.168.1.0/24 via 10.1.1.2 dev swp2
 
 All outputs go to `docs/reverse-engineering/traces/`:
 
-- `api-to-table-id-trace-10.1.1.233.log` - Full GDB trace
-- `api-to-table-id-summary-10.1.1.233.txt` - Summary with table IDs
-- `gdb-symbol-trace-10.1.1.233.log` - Symbol-based trace
-- `table-writes-trace-10.1.1.233.log` - Table write dispatcher trace
+- `api-to-table-id-trace-<LIVE_SWITCH_IP>.log` - Full GDB trace
+- `api-to-table-id-summary-<LIVE_SWITCH_IP>.txt` - Summary with table IDs
+- `gdb-symbol-trace-<LIVE_SWITCH_IP>.log` - Symbol-based trace
+- `table-writes-trace-<LIVE_SWITCH_IP>.log` - Table write dispatcher trace
 
 ---
 
@@ -142,7 +142,7 @@ All outputs go to `docs/reverse-engineering/traces/`:
 
 ### Issue: Permission denied
 - **Solution**: Ensure sudo access on switch
-- **Test**: `ssh cumulus@10.1.1.233 "sudo cat /proc/\$(pgrep switchd)/maps | head -5"`
+- **Test**: `ssh <SWITCH_USER>@<LIVE_SWITCH_IP> "sudo cat /proc/\$(pgrep switchd)/maps | head -5"`
 
 ---
 
@@ -177,10 +177,10 @@ All outputs go to `docs/reverse-engineering/traces/`:
 - `check-switchd-libraries.sh`
 
 ### Local Wrapper Scripts
-- `run-api-to-table-id-trace-10.1.1.233.sh`
-- `run-gdb-symbol-trace-10.1.1.233.sh`
-- `run-table-write-trace-10.1.1.233.sh`
-- `run-complete-runtime-trace-10.1.1.233.sh`
+- `run-api-to-table-id-trace-<LIVE_SWITCH_IP>.sh`
+- `run-gdb-symbol-trace-<LIVE_SWITCH_IP>.sh`
+- `run-table-write-trace-<LIVE_SWITCH_IP>.sh`
+- `run-complete-runtime-trace-<LIVE_SWITCH_IP>.sh`
 - `trigger-api-calls-on-switch.sh`
 
 ---
