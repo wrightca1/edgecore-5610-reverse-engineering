@@ -87,7 +87,7 @@ From the [ONIE NOS interface](https://opencomputeproject.github.io/onie/design-s
 2. **Load platform.conf**: partition variables (`persist_part`, `kernel_part1`, `ro_part1`, …), USB syspath, `blk_dev` detection.
 3. **format_disk**: `fdisk -u /dev/$blk_dev < platform.fdisk`, then `mkfs` on persist and rw_root.
 4. **image_install_handler 1 2**: For each slot, extract from data.tar and write:  
-   `tar -xOf data.tar sysroot.squash.xz | dd of=/dev/sda6` (slot 1), same for sda8 (slot 2); kernel: `dd if=uImage-powerpc.itb of=/dev/sda5` (and sda7).
+   `tar -xOf data.tar sysroot.squash.xz | dd of=/dev/sda6`; kernel: `dd if=...itb of=/dev/sda5`.
 5. **image_env_handler**: Write U-Boot env from uboot_env/*.inc (e.g. `fw_setenv` for each line).
 6. **arch_post_provision**: Set `bootsource=flashboot`, `cl.active=1`.
 7. **save_info** (optional): Persist installer copy to rw partition.
@@ -102,15 +102,14 @@ From the [ONIE NOS interface](https://opencomputeproject.github.io/onie/design-s
 | Partition | Type | Start (sector) | End (sector) | Sectors | Size (approx) | Purpose |
 |-----------|------|----------------|--------------|---------|---------------|---------|
 | **sda1** | Primary | 8192 | 270273 | 262082 | ~128 MiB | **persist** — ext2 (config, licenses) |
-| **sda2** | Extended | 270274 | 860097 | 589824 | ~288 MiB | Container for logicals |
-| **sda5** | Logical | 270336 | 303041 | 32768 | 16 MiB | **Kernel slot A** — raw FIT (uImage .itb) |
-| **sda6** | Logical | 303104 | 565185 | 262082 | ~128 MiB | **Root FS slot A** — squashfs |
-| **sda7** | Logical | 565248 | 597953 | 32768 | 16 MiB | **Kernel slot B** — raw FIT |
-| **sda8** | Logical | 598016 | 860097 | 262082 | ~128 MiB | **Root FS slot B** — squashfs |
-| **sda3** | Primary | 860160 | end | rest | ~remaining | **rw-overlay** — ext2 (overlay upper/work) |
+| **sda2** | Extended | 270274 | 895839 | 625566 | ~305 MiB | Container for logicals |
+| **sda5** | Logical | 270336 | 303041 | 32768 | 16 MiB | **Kernel** — raw FIT (uImage .itb) |
+| **sda6** | Logical | 303104 | 895839 | 592736 | ~289 MiB | **Root FS** — squashfs |
+| **sda3** | Primary | 895840 | end | rest | ~remaining | **rw-overlay** — ext2 (overlay upper/work) |
 
-- **Total logical in extended**: 32768 + 262082 + 32768 + 262082 = 589800 (fits in 589824).
-- **Cumulus platform.fdisk** order: create primary 1, extended 2, primary 3, then logicals 5–8 (Cumulus script creates sda3 before logicals; open-nos uses same sector ranges).
+**Single-slot layout**: Only 2 logicals (sda5, sda6) so ONIE’s kernel always exposes both. Cumulus uses 4 logicals (sda5..sda8) but their installer runs in a full Linux initramfs; ONIE’s BusyBox on this device only exposes 3 logicals, so we use 2.
+
+- **Total logical in extended**: 32768 + 592736 = 625504 (fits in 625566).
 
 ### 3.2 Block device detection (Cumulus platform.conf)
 
@@ -118,14 +117,13 @@ From the [ONIE NOS interface](https://opencomputeproject.github.io/onie/design-s
 - **Detection**: Wait for `hostN` under that syspath; then `blk_dev=sdX` (e.g. `sda`) from the SCSI host number. Timeout ~100 s (slumber × 0.1 s).
 - **open-nos**: Uses fixed `sda` or tries `sda`/`sdb` if `/dev/sda` not present.
 
-### 3.3 Slot mapping
+### 3.3 Slot mapping (single-slot)
 
-| Slot | Kernel partition | Root partition | U-Boot `cl.active` |
-|------|------------------|----------------|--------------------|
-| **A** | /dev/sda5 | /dev/sda6 | 1 |
-| **B** | /dev/sda7 | /dev/sda8 | 2 |
+| Slot | Kernel partition | Root partition |
+|------|------------------|----------------|
+| **1** | /dev/sda5 | /dev/sda6 |
 
-Kernel cmdline typically **`root=/dev/sda6`** (slot A) or **`root=/dev/sda8`** (slot B). Initramfs mounts squashfs from that root and overlay from **/dev/sda3**, then `switch_root`.
+Kernel cmdline **`root=/dev/sda6`**. Initramfs mounts squashfs from that root and overlay from **/dev/sda3**, then `switch_root`.
 
 ---
 
@@ -186,7 +184,7 @@ Installer-Version: 1.0
 ## 5. U-Boot boot flow (AS5610)
 
 - **nos_bootcmd** (or platform default): Typically runs a **bootorder** that includes **flashboot** (primary) and **flashboot_alt** (alternate).
-- **flashboot**: Runs **initargs** then **boot_active** — loads kernel from partition for **cl.active** (sda5 if 1, sda7 if 2), root from sda6 or sda8.
+- **flashboot**: Runs **initargs** then **boot_active** — loads kernel from **sda5**, root **sda6**.
 - **flashboot_alt**: Swaps active slot and boots (e.g. for A/B upgrade).
 - **bootsource=flashboot**: Tells U-Boot to use flash boot path instead of ONIE/discovery.
 

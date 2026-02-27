@@ -243,6 +243,7 @@ U-Boot loads kernel from USB flash based on `cl.active` and slot layout (MTD or 
 ## 8. References
 
 - **[ONIE_AND_INSTALLER_FORMATS_DEEP_DIVE.md](ONIE_AND_INSTALLER_FORMATS_DEEP_DIVE.md)** — Exact installer formats, sector layout, ONIE contract, Cumulus vs open-nos payload, U-Boot NOS interface
+- **[ONIE_AS5610_52X_MACHINE_REFERENCE.md](ONIE_AS5610_52X_MACHINE_REFERENCE.md)** — ONIE upstream machine `machine/accton/accton_as5610_52x` (Makefile, NOR layout, demo platform.conf, install-platform)
 - ONIE: https://github.com/opencomputeproject/onie
 - ONIE NOS interface: https://opencomputeproject.github.io/onie/design-spec/nos_interface.html
 - U-Boot NOS interface: https://opencomputeproject.github.io/onie/design-spec/uboot_nos_interface.html
