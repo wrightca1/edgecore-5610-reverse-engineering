@@ -268,7 +268,72 @@ Driver: `accton_as5610_52x_cpld`
 
 ---
 
-## 12. References
+## 12. ONLP Source Confirmation (2026-03-02)
+
+The official OpenNetworkLinux ONLP platform source for AS5610-52X was retrieved and
+cross-validated against earlier Cumulus findings. Key confirmed values:
+
+### Confirmed CPLD Register Map
+
+| Offset | Register | Description |
+|--------|----------|-------------|
+| `0x01` | PSU2_STATUS | bit0: present (active-LOW), bit1: pwr-ok, bit2: fan-fail |
+| `0x02` | PSU1_STATUS | same |
+| `0x03` | SYS_STATUS | bit2: fan-present (active-LOW), bit3: fan-fail, bit4: fan-direction |
+| `0x0D` | FAN_SPEED_CTL | `0x0C`=40%, `0x15`=70%, `0x1F`=100% |
+| `0x13` | LED_CONTROL | PSU1[1:0], PSU2[3:2], DIAG[5:4], FAN[7:6] |
+| `0x15` | LED_LOC | `0x01`=off, `0x03`=orange-blink |
+
+> On Cumulus the `pwm1` attribute reads values 0-248 (not the raw 0x0C/0x15/0x1F);
+> on our open-nos CPLD driver `pwm1` uses percentages (40/70/100) and the
+> kernel driver converts to raw values. Both are correct for their respective APIs.
+
+### Confirmed I2C Topology for Thermal Sensors
+
+```
+i2c-0 (MPC85xx — the base management bus)
+└── PCA9548 8-channel mux at address 0x70
+    ├── Channel 0x02 → PSU1 (AC EEPROM 0x3A, config 0x3E; DC EEPROM 0x56)
+    ├── Channel 0x04 → PSU2 (AC EEPROM 0x39, config 0x3D; DC EEPROM 0x55)
+    └── Channel 0x80 → Thermal sensors
+        ├── MAX6581 at 0x4D  (1 local + 7 remote = 8 temp channels)
+        └── NE1617A at 0x18  (1 local + 1 remote = 2 temp channels)
+```
+
+On Cumulus with `pca954x` driver, the mux output channel 0x80 (channel 7) is mapped to
+**i2c-9**, which explains the Cumulus paths `9-004d` (MAX6581) and `9-0018` (NE1617A).
+
+ONLP programs the mux directly:
+```c
+as5610_52x_i2c0_pca9548_channel_set(0x80);  // before thermal read
+as5610_52x_i2c0_pca9548_channel_set(0x0);   // reset when done
+```
+
+### Thermal Sensor Register Map (MAX6581 at 0x4D)
+
+| Register | Description |
+|----------|-------------|
+| `0x41` | CONFIG — bit1: enable extended range (allows temps below 0°C; -64°C offset) |
+| `0x46` | DIODE_FAULT_STATUS — bit N set = sensor N open/failed |
+| `0x07` | LOCAL temp (integer part) |
+| `0x01..0x06, 0x08` | REMOTE_1..7 temp (integer) — in order: diodes 1-6, then 7 |
+| `0x57` | LOCAL temp fractional (bits[7:5] = 0.125°C units) |
+| `0x51..0x56, 0x58` | REMOTE fractional parts |
+
+ONLP enables extended range mode on init (`data |= 0x02` at reg 0x41).
+
+### PSU Type Strings (for model detection from EEPROM)
+
+| Model string | Type |
+|---|---|
+| `CPR-4011-4M11` | AC Front-to-Back |
+| `CPR-4011-4M21` | AC Back-to-Front |
+| `um400d01G` | DC 48V Back-to-Front |
+| `um400d01-01G` | DC 48V Front-to-Back |
+
+---
+
+## 13. References
 
 - `cumulus/extracted/sysroot/usr/lib/python2.7/dist-packages/cumulus/platforms/accton.py` – AcctonAS5610_52X sensors, PSU, fan, temp, CPLD
 - `cumulus/extracted/etc/bcm.d/rc.soc` – GPIO, I2C init
@@ -276,3 +341,4 @@ Driver: `accton_as5610_52x_cpld`
 - `docs/reverse-engineering/ASIC_INIT_AND_DMA_MAP.md` – ASIC, DMA
 - `docs/reverse-engineering/SCHAN_AND_RING_BUFFERS.md` – S-Channel, DMA registers
 - `docs/reverse-engineering/VERSIONS_AND_BUILD_INFO.md` – OS, packages, libraries, build toolchain
+- ONL ONLP source: `platform_lib.c`, `fani.c`, `ledi.c`, `thermali.c` (Accton AS5610-52X-r0)
