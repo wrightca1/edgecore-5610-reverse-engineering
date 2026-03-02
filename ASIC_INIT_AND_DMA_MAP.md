@@ -78,12 +78,18 @@ data = ((uint32_t *)base_address)[addr / 4];
 | Register | Offset | Notes |
 |----------|--------|-------|
 | **CMICM_CMC_BASE** | 0x31000 | CMICm base (Trident) |
-| **CMICM_DMA_CTRLr** | 0x31140 | +4×chan |
-| **CMICM_DMA_DESC0r** | 0x31158 | +4×chan – descriptor ring base |
-| **CMICM_DMA_HALT_ADDRr** | 0x31120 | +4×chan |
-| **CMICM_DMA_STATr** | 0x31150 | |
-| **CMIC_CMC0_SCHAN_CTRL** | 0x32800 | S-Channel control |
+| **CMICM_DMA_CTRLr** | 0x31140 | +4×chan — **packet DMA only** |
+| **CMICM_DMA_DESC0r** | 0x31158 | +4×chan — **packet DMA only** |
+| **CMICM_DMA_HALT_ADDRr** | 0x31120 | +4×chan — **packet DMA only** |
+| **CMICM_DMA_STATr** | 0x31150 | **packet DMA only** |
+| **CMIC_CMC0_SCHAN_CTRL** | 0x32800 | S-Channel start/done/error |
+| **CMIC_CMC0_SCHAN_MSG(n)** | 0x3300c + n×4 | S-Channel PIO message regs [0..20] |
 | **CMIC_CMCx_IRQ_STAT0** | 0x31400 + 0x1000×cmc | IRQ status |
+
+> **CRITICAL DISTINCTION**: DMA registers (0x31140+) are for **packet I/O** only.
+> S-Channel register/table access uses **SCHAN_MSG** registers at 0x3300c+.
+> Confirmed from libopennsl.so.1 binary string:
+> `"S-bus PIO Message Register Set; PCI offset from: 0x3300c to: 0x33060"` (21 words)
 
 ### iProc Devices
 

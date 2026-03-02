@@ -1,8 +1,8 @@
 # S-Channel and Ring Buffers for Broadcom ASIC
 
-**Date**: February 15, 2026  
-**Target**: BCM56840_B0 (Trident) / BCM56846 (Trident+)  
-**Source**: OpenNSL SDK, bcm-knet, linux-user-bde, Cumulus switch verification
+**Date**: February 15, 2026 (updated March 2, 2026)
+**Target**: BCM56840_B0 (Trident) / BCM56846 (Trident+)
+**Source**: OpenNSL SDK, bcm-knet, linux-user-bde, Cumulus switch verification, libopennsl.so.1 binary strings
 
 ---
 
@@ -10,10 +10,14 @@
 
 | Component | Location | Notes |
 |-----------|----------|-------|
-| **S-Channel** | CMICm offset 0x1800 from CMC base | CPU ↔ ASIC message channel |
-| **Ring / DMA** | CMICm DMA_CTRL, DMA_DESC0, DMA_HALT_ADDR | Per-channel descriptor rings |
+| **SCHAN_CTRL** | BAR0 + 0x32800 | Start/done/error control register |
+| **SCHAN_MSG[0..20]** | BAR0 + 0x3300c to 0x33060 | S-Channel PIO message registers (21 × u32) |
+| **Ring / DMA** | CMICm DMA_CTRL, DMA_DESC0, DMA_HALT_ADDR | Per-channel descriptor rings (packet I/O ONLY) |
 
-Cumulus switch (<LIVE_SWITCH_IP>) reports **BCM56840_B0** (Trident), which uses **CMICm** (memory-mapped CMIC). Trident+ (BCM56846) also uses CMICm.
+Cumulus switch reports **BCM56840_B0** (Trident), which uses **CMICm** (memory-mapped CMIC). Trident+ (BCM56846) also uses CMICm.
+
+> **IMPORTANT**: S-Channel uses dedicated SCHAN_MSG registers (0x3300c+), NOT DMA channels (0x31140+).
+> DMA channels are for packet I/O only. These are separate subsystems.
 
 ---
 
@@ -24,13 +28,52 @@ Cumulus switch (<LIVE_SWITCH_IP>) reports **BCM56840_B0** (Trident), which uses 
 - Used for: register read/write, ARL operations, table programming
 - `bcmcmd schan 0 0 0 0` sends an S-Channel message (verified on Cumulus)
 
-### Register Location (BCM56840 / Trident)
+### Registers (CMICm / BCM56846 Trident+)
 
-| Register | Offset (from BAR0) | Source |
-|----------|--------------------|--------|
-| **CMIC_CMC0_SCHAN_CTRL** | **0x32800** | PORT_BRINGUP_STATUS.md, direct mmap read |
+| Register | Offset (from BAR0) | Description | Source |
+|----------|--------------------|-------------|--------|
+| **CMIC_CMC0_SCHAN_CTRL** | **0x32800** | Start/done/error bits | mmap read, libopennsl binary (143 refs) |
+| **CMIC_CMC0_SCHAN_MSG(n)** | **0x3300c + n×4** | PIO message registers [0..20] | libopennsl binary string (confirmed) |
 
 `0x32800` = `CMICM_CMC_BASE (0x31000)` + `0x1800`
+
+**SCHAN_MSG range confirmed from Broadcom binary string**:
+```
+"S-bus PIO Message Register Set; PCI offset from: 0x3300c to: 0x33060"
+```
+→ 21 registers × 4 bytes = 0x54 bytes (0x3300c to 0x3305f)
+
+### SCHAN_CTRL Bit Fields
+
+| Bit | Name | Description |
+|-----|------|-------------|
+| 0 | START | Write 1 to begin S-Channel operation |
+| 1 | DONE | Set by hardware when operation completes |
+| 2-3 | ERR | Error bits set by hardware |
+
+### S-Channel PIO Protocol (confirmed)
+
+```
+1. Write cmd[0..cmd_words-1]     → SCHAN_MSG(0..cmd_words-1)
+2. Write data[0..data_words-1]   → SCHAN_MSG(cmd_words..cmd_words+data_words-1)   [write ops only]
+3. Write 0                       → SCHAN_CTRL   [clear any stale state]
+4. Write SCHAN_CTRL_START (0x1) → SCHAN_CTRL   [trigger operation]
+5. Poll SCHAN_CTRL for DONE (bit 1)
+6. Write 0                       → SCHAN_CTRL   [clear done bit]
+7. Read result[0..data_words-1]  ← SCHAN_MSG(0..data_words-1)                    [read ops only]
+```
+
+Max message words: **21** (confirmed from binary range 0x3300c–0x33060).
+Typical: 1–2 cmd words + 0–16 data words.
+
+### Common Implementation Bug
+
+> **WARNING**: A known mistake is confusing DMA channel registers with S-Channel registers.
+>
+> DMA registers (0x31140+, 0x31158+) are for **packet I/O only** — they control descriptor rings
+> for punted/injected packets. They have **nothing to do** with register/table access.
+> Any BDE that writes to `CMICM_DMA_DESC0(0)` or `CMICM_DMA_CTRL(0)` expecting an S-Channel
+> response is fundamentally broken.
 
 ### Config Parameters (from .bcm configs)
 ```
@@ -134,11 +177,28 @@ uint32_t dma_desc0 = regs[0x31158 / 4];    // CMICM_DMA_DESC0r
 
 ---
 
-## 6. References
+## 6. Implementation Validation (2026-03-02)
 
-- `open-nos-build/.opennsl-extract/OpenNSL-3.5.0.1/sdk-6.5.12-gpl-modules/systems/linux/kernel/modules/bcm-knet/bcm-knet.c` – CMIC/CMICm/CMICx DMA and S-Chan
+The confirmed S-Channel PIO protocol was implemented in `open-nos-as5610/bde/nos_kernel_bde.c`
+as `nos_bde_schan_op()`. Key results:
+
+- `bcm56846_chip_init()` now runs to completion on the AS5610-52X switch
+- Journal confirms: `[init] bcm56846_chip_init: done (SCHAN_CTRL=0x00000000)`
+- SCHAN_CTRL=0x00000000 is **expected** — the protocol clears SCHAN_CTRL at the end of each op
+- 52 TAP interfaces (swp1-swp52) successfully created after init
+
+The prior broken implementation used `CMICM_DMA_DESC0(0)` / `CMICM_DMA_CTRL(0)` for S-Channel.
+Replacing it with SCHAN_MSG PIO at 0x3300c resolved silent S-Channel failures.
+
+---
+
+## 7. References
+
+- `libopennsl-schan-data-refs.txt` – 143 refs to 0x2800 (SCHAN_CTRL low 16 bits) in libopennsl.so.1
+- `libopennsl-schan-usage.txt` – functions referencing 0x32800
+- Binary string from libopennsl.so.1: `"S-bus PIO Message Register Set; PCI offset from: 0x3300c to: 0x33060"`
+- `open-nos-build/.opennsl-extract/OpenNSL-3.5.0.1/sdk-6.5.12-gpl-modules/systems/linux/kernel/modules/bcm-knet/bcm-knet.c` – CMICm DMA registers
 - `open-nos-build/.opennsl-extract/OpenNSL-3.5.0.1/sdk-6.5.12-gpl-modules/systems/bde/linux/user/kernel/linux-user-bde.c` – CMIC CMC/IRQ offsets
 - `PORT_BRINGUP_STATUS.md` – raw register 0x32800 = CMIC_CMC0_SCHAN_CTRL
-- `docs/reverse-engineering/NO_KNET_ARCHITECTURE.md` – Cumulus TUN/BDE packet path
 - `cumulus/extracted/etc/bcm.d/rc.soc` – `debug -SChan`
 - `open-nos-build/hal/config/*.bcm` – `schan_timeout_usec`, `schan_intr_enable`
