@@ -179,13 +179,14 @@ uint32_t dma_desc0 = regs[0x31158 / 4];    // CMICM_DMA_DESC0r
 
 ## 6. Implementation Validation (2026-03-02)
 
-The confirmed S-Channel PIO protocol was implemented in `open-nos-as5610/bde/nos_kernel_bde.c`
-as `nos_bde_schan_op()`. Key results:
+The S-Channel PIO protocol was implemented in `open-nos-as5610/bde/nos_kernel_bde.c` as `nos_bde_schan_op()`.
 
-- `bcm56846_chip_init()` now runs to completion on the AS5610-52X switch
-- Journal confirms: `[init] bcm56846_chip_init: done (SCHAN_CTRL=0x00000000)`
-- SCHAN_CTRL=0x00000000 is **expected** — the protocol clears SCHAN_CTRL at the end of each op
-- 52 TAP interfaces (swp1-swp52) successfully created after init
+**Critical:** BCM56846 on AS5610-52X uses **CMC0** for S-Channel, NOT CMC2:
+- **SCHAN_CTRL** at **0x32800** (CMC0 base 0x31000 + 0x1800)
+- **SCHAN_MSG** at **0x3300c** (per libopennsl string)
+
+Using CMC2 (0x33000 for CTRL) caused 158 S-Channel timeouts; ASIC never set DONE.
+Switching to CMC0 (0x32800) → **0 timeouts**, ASIC completes S-Channel ops.
 
 The prior broken implementation used `CMICM_DMA_DESC0(0)` / `CMICM_DMA_CTRL(0)` for S-Channel.
 Replacing it with SCHAN_MSG PIO at 0x3300c resolved silent S-Channel failures.

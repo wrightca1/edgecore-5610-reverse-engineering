@@ -1,6 +1,6 @@
 # Reverse Engineering Documentation — Full Index
 
-**Last updated**: 2026-02-26  
+**Last updated**: 2026-03-03
 **Total**: 80+ markdown docs + traces + sdk-register-map. Use this to “check” all RE docs.
 
 ---
@@ -25,6 +25,7 @@
 
 | Document | Purpose |
 |----------|---------|
+| [CHIP_RESET_RE_FINDINGS.md](CHIP_RESET_RE_FINDINGS.md) | **BCM56846 soft reset RE**: SCHAN_CTRL=0x92 root cause; CMIC_SBUS_RING_MAP BAR0+0x200..0x214; BCM56846 ring values confirmed; TOP_SOFT_RESET_REG_2 enum=0x8714; reset function at 0x10e6e400 |
 | [ASIC_INIT_AND_DMA_MAP.md](ASIC_INIT_AND_DMA_MAP.md) | BDE init, DMA pool, /dev/mem mappings |
 | [BDE_CMIC_REGISTERS.md](BDE_CMIC_REGISTERS.md) | CMIC/CMICm register offsets |
 | [SDK_REGISTER_MAP.md](SDK_REGISTER_MAP.md) | Register map (CMIC, S-Chan, DMA, LED, etc.) |
