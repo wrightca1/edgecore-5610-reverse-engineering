@@ -115,8 +115,61 @@ Bits 30-31:  Upper bits from input
 
 ---
 
+---
+
+## switchd SDK Register-Cache Hash Table (2026-03-04 Update)
+
+**Functions**: `FUN_10325fa0` (insert) and `FUN_103260d4` (lookup) in `build-server/switchd/switchd`
+
+These functions implement the BCM SDK's internal register read-back cache — a hash table with
+73 buckets (linked lists). The hash **key** is the SCHAN command word for the register, using
+the same `oris r9,r9,0x2800` construction to embed opcode `0x0A` in bits[31:26].
+
+### Key Construction (switchd hash table)
+
+```asm
+; FUN_10325fa0 — hash insert:
+; r3 = block_sel (15-bit block address), r4 = reg_off (11-bit register offset)
+rlwinm r9,r3,0x0,0x11,0x1f   ; r9 = r3 & 0x7FFF         (15 bits)
+rlwinm r9,r9,0x0b,0x0,0x14   ; r9 = (r9 << 11) & mask   (bits[25:11])
+oris   r10,r9,0x2800          ; r10 = r9 | 0x28000000    (opcode 0x0A)
+rlwinm r9,r4,0x0,0x15,0x1f   ; r9 = r4 & 0x7FF          (11 bits)
+or     r10,r10,r9             ; SCHAN_word = opcode | block_addr | reg_off
+
+; Mod-73 hash bucket computation:
+mulli  r9,r10,0x2F2F          ; r9 = SCHAN_word * 0x2F2F
+mulhwu r11,r9,<const>         ; high word of multiply (for div-by-73)
+subf   r9,r11,r9              ; mod-73 remainder → bucket index
+```
+
+### Comparison: libopennsl vs switchd SCHAN builders
+
+| Aspect | libopennsl `FUN_00703dc0` | switchd `FUN_10325fa0` |
+|--------|--------------------------|------------------------|
+| Binary | `build-server/opennsl/libopennsl.so.1` | `build-server/switchd/switchd` |
+| Purpose | Build SCHAN command word for issue | Build hash key (= SCHAN word) for cache |
+| Opcode OR | `oris r9,r9,0x2800` | `oris r10,r9,0x2800` |
+| Result | SCHAN word written to MSG[0] | Used as hash key (mod 73) |
+| Confirms | Same SCHAN format in both binaries | SCHAN format == hash cache key |
+
+Both use the identical construction, confirming that `0x28000000` (opcode 0x0A = READ_REGISTER)
+is indeed the SCHAN READ opcode for BCM56840/BCM56846, and that the hash table keys ARE the
+SCHAN command words (the SDK caches register values indexed by their SCHAN addresses).
+
+### Derived SCHAN Addresses
+
+| Register | block_sel (DATA@) | reg_off | SCHAN word |
+|----------|------------------|---------|------------|
+| TOP_SOFT_RESET_REG | `0x0066` (DATA@0x11436428) | `0x200` | `0x28033200` |
+| (related TOP reg) | `0x0100` (DATA@0x11436434) | `0x200` | `0x28100200` |
+
+See [CHIP_RESET_RE_FINDINGS.md](CHIP_RESET_RE_FINDINGS.md) for the full analysis of
+`TOP_SOFT_RESET_REG` and the XLPORT reset de-assertion sequence.
+
 ## References
 
 - **S-Channel analysis**: [SCHAN_AND_L2_ANALYSIS.md](SCHAN_AND_L2_ANALYSIS.md)
+- **Chip reset findings**: [CHIP_RESET_RE_FINDINGS.md](CHIP_RESET_RE_FINDINGS.md)
 - **Register map**: [SDK_REGISTER_MAP.md](SDK_REGISTER_MAP.md)
 - **Function dumps**: `libopennsl-dump-0703dc0.txt`, `libopennsl-dump-07042f0.txt`, `libopennsl-dump-0704790.txt`, `libopennsl-dump-0704784.txt`
+- **switchd dumps**: `build-server/switchd/sdk-deep-extract/switchd-dump-10325fa0.txt`, `switchd-dump-103260d4.txt`

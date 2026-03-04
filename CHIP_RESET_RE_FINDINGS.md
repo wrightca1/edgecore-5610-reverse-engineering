@@ -248,6 +248,71 @@ Note: CMIC_CMC0_SCHAN_CTRL is at BAR0 + 0x32800 (confirmed separately).
 
 ---
 
+---
+
+## TOP_SOFT_RESET_REG SCHAN Address — RE-Confirmed (2026-03-04)
+
+**Update**: The SBUS address for TOP_SOFT_RESET_REG has been recovered from the switchd binary
+via analysis of the SDK register-cache hash table implementation.
+
+### How the SCHAN Address Was Found
+
+Functions `FUN_10325fa0` (hash insert) and `FUN_103260d4` (hash lookup) in the switchd binary
+are the BCM SDK's internal register-read-back cache. The hash key for each register is
+constructed as the **SCHAN command word** itself:
+
+```asm
+; PowerPC assembly (FUN_10325fa0, ~vaddr 0x10325fa0):
+rlwinm r9,r9,0x0,0x11,0x1f   ; mask r3 (block_sel) to lower 15 bits
+rlwinm r9,r9,0x0b,0x0,0x14   ; shift left 11 → places in bits[25:11]
+oris   r10,r9,0x2800          ; OR 0x28000000 → opcode 0x0A in bits[31:26]
+rlwinm r9,r9,0x0,0x15,0x1f   ; mask r4 (reg_off) to lower 11 bits
+or     r10,r10,r9             ; combine: SCHAN_word = opcode|block_addr|reg_off
+```
+
+The resulting 32-bit value is the SCHAN READ command word:
+- `bits[31:26]` = `0x0A` (READ_REGISTER opcode; `0x0A << 26 = 0x28000000`)
+- `bits[25:11]` = 15-bit SBUS block selector (from `r3`)
+- `bits[10:0]`  = 11-bit register offset within block (from `r4`)
+
+### Data Constants (Ghidra analysis, switchd .data section)
+
+| Value | Address | Interpretation |
+|-------|---------|----------------|
+| `0x01120066` | DATA@0x11436428 | block_sel for TOP block (SBUS dest 3) |
+| `0x01120200` | DATA@0x11436434 | likely TOP_SOFT_RESET_REG_2 entry |
+
+For `0x01120066`:
+- Lower 15 bits: `0x1120066 & 0x7FFF = 0x0066`
+- After shift-left-11: `0x0066 << 11 = 0x00033000`
+- After OR 0x28000000: `0x28033000`
+- With r4 = register offset 0x200 (11-bit mask): `0x28033200`
+
+### SCHAN Word Decoded: `0x28033200`
+
+```
+0x28033200 = 0010 1000 0000 0011 0011 0010 0000 0000
+             ├─────────┤ ├──────────────┤ ├──────────────┤
+             opcode=0x0A  SBUS_dst=0x003   block/reg=0x3200
+             (READ_REG)   (TOP block)      (off 0x200)
+```
+
+- **SBUS destination 3** = TOP block, confirmed: `RING_MAP_0 = 0x43052100`,
+  nibble 3 maps agent 3 → ring 2 (the TOP block ring for BCM56846).
+- **Register offset 0x200** = known BCM56840 `TOP_SOFT_RESET_REG` offset.
+- The `0x3200` in bits[15:0] encodes both the block sub-address from the upper bits
+  of `block_sel << 11` and the 11-bit register offset.
+
+### Usage in nos-switchd SDK (open-nos-as5610)
+
+`init.c` `bcm56846_xlport_deassert_reset()` probes 7 candidate addresses in priority order.
+`0x28033200` is CAND_0 (highest confidence); `0x00033200` (no opcode prefix) is CAND_1.
+
+The probe accepts any address that reads a value with only bits[12:0] set (the 13 XLP_RESET
+bits for BCM56846's 13 XLPORT blocks), then writes 0 to de-assert all XLPORT resets.
+
+---
+
 ## Required Actions (from findings)
 
 ### 1. Fix nos_kernel_bde.c SCHAN_CTRL error mask
@@ -278,23 +343,33 @@ static const struct { uint32_t offset; uint32_t value; } sbus_ring_map[] = {
 
 ### 3. Implement bcm56846_chip_init() sequence
 
-Full order of operations needed before first SCHAN:
+Full order of operations needed before first SCHAN (implemented in `sdk/src/init.c`):
 
 ```
-1. Write CMIC_SOFT_RESET_REG (BAR0 + 0x70)  → de-assert CMIC block resets
-2. Wait ~100ms for CMIC to stabilize
-3. Write CMIC_SBUS_RING_MAP[0..4] (BAR0 + 0x200..0x214) → S-bus ring topology
-4. Write TOP_SOFT_RESET_REG  → de-assert pipeline resets (enum TBD, near 0x86d9)
-5. Write TOP_SOFT_RESET_REG_2 (soc_reg_t enum 0x8714) → de-assert remaining resets
-6. Wait ~100ms for pipeline to stabilize
-7. Now SCHAN reads should return 0x02 (DONE only), not 0x92
+1. Detect boot mode: read CMIC_DMA_RING_ADDR (BAR0+0x158)
+   - Non-zero → warm boot; CMC2 in DMA ring-buffer mode; cold power cycle required
+   - Zero + SCHAN_CTRL START=1,DONE=0 → PIO ERROR state = genuine cold boot
+2. Write CMIC_SBUS_RING_MAP[0..7] (BAR0+0x204..0x220) → S-bus ring topology
+3. Write CMIC_MISC_CONTROL LINK40G_ENABLE (BAR0+0x1c bit 0) → enable XLMAC SBUS
+4. Write SCHAN_CTRL 0xFE (W1C + ABORT) → clear stale PIO error state (cold boot only)
+5. Verify SCHAN_CTRL = 0x00 → SCHAN ready
+6. Write TOP_SOFT_RESET_REG (SCHAN addr 0x28033200) → de-assert XLPORT resets
+   - Probe 7 candidate addresses; accept first that reads bits[12:0]-only value
+   - Write 0x00000000 to clear all 13 XLP_RESET bits
 ```
 
-The exact SBUS addresses for TOP_SOFT_RESET_REG and TOP_SOFT_RESET_REG_2 are populated at
-runtime by the SDK (runtime BSS tables). Options to find them:
-- BCM56840 datasheet / BCM56846 register spec (proprietary)
-- Dynamic tracing of Cumulus switchd during init (GDB/strace on soc_reg32_set calls)
-- The write function region in switchd is at 0x10e6e400 — disassemble the full function
+**Current status**: Steps 1–5 confirmed working on hardware (AS5610-52X at 10.1.1.233).
+52 TAP interfaces up. Step 6 (XLPORT reset de-assertion) pending cold power cycle test
+to confirm address `0x28033200` is correct.
+
+### 4. TOP_SOFT_RESET_REG SCHAN Address (Best Candidate)
+
+| Address | Confidence | Derivation |
+|---------|-----------|------------|
+| `0x28033200` | **HIGH** | RE-confirmed from switchd hash-table key construction code |
+| `0x00033200` | Medium | Same address without opcode prefix (BDE addr-only format) |
+| `0x00030200` | Low | agent<<16 \| offset (common CMICm format) |
+| Others | Low | Various encoding schemes |
 
 ---
 
