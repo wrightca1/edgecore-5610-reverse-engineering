@@ -193,7 +193,42 @@ Replacing it with SCHAN_MSG PIO at 0x3300c resolved silent S-Channel failures.
 
 ---
 
-## 7. References
+## 7. DMA Ring Mode vs PIO Mode Detection (2026-03-04)
+
+After Cumulus Linux, the BCM56846 CMICm is left in **DMA ring-buffer SCHAN mode**.
+This mode is indistinguishable from PIO mode via normal register reads because the
+DONE bit stays set (`SCHAN_CTRL = 0x92`). A cold VDD power cycle is the only fix.
+
+### Reliable Detection
+
+| Register | Cold boot (PIO) | Warm boot (DMA ring) |
+|----------|----------------|----------------------|
+| BAR0+0x158 `CMIC_DMA_RING_ADDR` | `0x00000000` | `0x0294ffd0` (Cumulus ring PA) |
+| BAR0+0x10c `CMIC_CMC2_SCHAN_DMA` | `0x00000000` | `0x32000043` |
+| BAR0+0x33000 `CMC2 SCHAN_CTRL` | `0x00000000` | `0x00000092` (DONE stuck) |
+
+**Primary indicator**: `BAR0+0x158 != 0` → warm boot → cold cycle required.
+
+### Symptoms of DMA Ring Mode
+
+- All SCHAN ioctl ops appear to "succeed" (return no error) but produce wrong data
+- Reading back `SCHAN_CTRL` returns `0x92` (the ring FIFO status) instead of real SCHAN state
+- Writing SC_GO=1 → `SCHAN_CTRL` immediately shows `0xb7` without SBUS activity
+- MSG register writes silently submitted as ring descriptors; readback returns SRAM content
+- `schan_diag` tool: if section 4 shows `data[0]=0x00000092`, chip is in DMA ring mode
+
+### BAR0+0x0148 (CMIC_DMA_CFG) — CRITICAL: DO NOT WRITE
+
+Hardware test 2026-03-04: writing 0 to BAR0+0x0148 **completely disabled SCHAN PIO**.
+All subsequent SCHAN ops stopped responding after that write.
+
+- Power-on hardware default: `0x80000000` (bit 31 set)
+- Function of bit 31: unknown (not documented publicly)
+- **Never write to this register**; it is not needed for boot-mode detection
+
+---
+
+## 8. References
 
 - `libopennsl-schan-data-refs.txt` – 143 refs to 0x2800 (SCHAN_CTRL low 16 bits) in libopennsl.so.1
 - `libopennsl-schan-usage.txt` – functions referencing 0x32800

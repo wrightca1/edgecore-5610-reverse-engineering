@@ -348,7 +348,7 @@ Full order of operations needed before first SCHAN (implemented in `sdk/src/init
 ```
 1. Detect boot mode: read CMIC_DMA_RING_ADDR (BAR0+0x158)
    - Non-zero → warm boot; CMC2 in DMA ring-buffer mode; cold power cycle required
-   - Zero + SCHAN_CTRL START=1,DONE=0 → PIO ERROR state = genuine cold boot
+   - Zero → cold boot; PIO SCHAN available
 2. Write CMIC_SBUS_RING_MAP[0..7] (BAR0+0x204..0x220) → S-bus ring topology
 3. Write CMIC_MISC_CONTROL LINK40G_ENABLE (BAR0+0x1c bit 0) → enable XLMAC SBUS
 4. Write SCHAN_CTRL 0xFE (W1C + ABORT) → clear stale PIO error state (cold boot only)
@@ -357,6 +357,19 @@ Full order of operations needed before first SCHAN (implemented in `sdk/src/init
    - Probe 7 candidate addresses; accept first that reads bits[12:0]-only value
    - Write 0x00000000 to clear all 13 XLP_RESET bits
 ```
+
+**CRITICAL: BAR0+0x0148 (CMIC_DMA_CFG) — DO NOT WRITE**
+
+Hardware confirmed (2026-03-04): BAR0+0x0148 reads `0x80000000` as the BCM56846
+**power-on default**. Writing 0 to this register disables SCHAN PIO entirely — all
+subsequent SCHAN ops stop responding. Its bit 31 function is undocumented in public
+sources but must remain set for SCHAN to work. The boot-mode detection sequence must
+never probe or clear this register.
+
+| Register | Offset | Cold-boot value | Notes |
+|----------|--------|-----------------|-------|
+| CMIC_DMA_CFG | 0x0148 | 0x80000000 | HW power-on default; DO NOT WRITE |
+| CMIC_DMA_RING_ADDR | 0x0158 | 0x00000000 | 0 = cold boot; non-zero = warm/Cumulus |
 
 **Current status**: Steps 1–5 confirmed working on hardware (AS5610-52X at 10.1.1.233).
 52 TAP interfaces up. Step 6 (XLPORT reset de-assertion) pending cold power cycle test
