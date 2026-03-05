@@ -369,11 +369,16 @@ never probe or clear this register.
 | Register | Offset | Cold-boot value | Notes |
 |----------|--------|-----------------|-------|
 | CMIC_DMA_CFG | 0x0148 | 0x80000000 | HW power-on default; DO NOT WRITE |
-| CMIC_DMA_RING_ADDR | 0x0158 | 0x00000000 | 0 = cold boot; non-zero = warm/Cumulus |
+| CMIC_DMA_RING_ADDR | 0x0158 | 0x00000000 | Cleared by P2020 PERST_N on EVERY reboot |
+
+**Boot-mode caveat (confirmed 2026-03-05)**: 0x158 reads 0 after both warm AND cold
+reboots (PERST_N always clears it). Software `reboot` does NOT exit CMICm DMA ring
+mode — only cold VDD power cycle does. Use the MSG0 probe (write 0x5A5A0000 to
+BAR0+0x3300c, read back) as the definitive DMA mode check.
 
 **Current status**: Steps 1–5 confirmed working on hardware (AS5610-52X at 10.1.1.233).
-52 TAP interfaces up. Step 6 (XLPORT reset de-assertion) pending cold power cycle test
-to confirm address `0x28033200` is correct.
+52 TAP interfaces up. Step 6 (XLPORT reset de-assertion) pending cold VDD power cycle
+to exit DMA ring mode and confirm SCHAN address `0x28033200` is correct.
 
 ### 4. TOP_SOFT_RESET_REG SCHAN Address (Best Candidate)
 

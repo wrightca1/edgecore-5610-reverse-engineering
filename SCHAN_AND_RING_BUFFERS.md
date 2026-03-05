@@ -201,13 +201,20 @@ DONE bit stays set (`SCHAN_CTRL = 0x92`). A cold VDD power cycle is the only fix
 
 ### Reliable Detection
 
-| Register | Cold boot (PIO) | Warm boot (DMA ring) |
+| Register | Cold boot (PIO) | DMA ring mode |
 |----------|----------------|----------------------|
 | BAR0+0x158 `CMIC_DMA_RING_ADDR` | `0x00000000` | `0x0294ffd0` (Cumulus ring PA) |
 | BAR0+0x10c `CMIC_CMC2_SCHAN_DMA` | `0x00000000` | `0x32000043` |
 | BAR0+0x33000 `CMC2 SCHAN_CTRL` | `0x00000000` | `0x00000092` (DONE stuck) |
 
-**Primary indicator**: `BAR0+0x158 != 0` → warm boot → cold cycle required.
+**CAVEAT (confirmed 2026-03-05)**: `BAR0+0x158` is cleared by P2020 PERST_N on every
+reboot (warm AND cold software reboot). So after a `reboot` command, 0x158 reads 0
+even if the chip is STILL in DMA ring mode. **Software `reboot` does NOT exit DMA ring
+mode**. Only a cold VDD power cycle (physical power-off/on) does.
+
+**Definitive check**: Write 0x5A5A0000 to BAR0+0x3300c (CMC2 MSG0), read back.
+- Reads back `0x5A5A0000` → PIO mode (cold boot, SCHAN available)
+- Reads back anything else (0x00, 0x92, 0x77, etc.) → DMA ring mode, cold cycle required
 
 ### Symptoms of DMA Ring Mode
 
