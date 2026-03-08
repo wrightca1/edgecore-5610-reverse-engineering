@@ -10,7 +10,7 @@
 
 | Component | Location | Notes |
 |-----------|----------|-------|
-| **SCHAN_CTRL** | BAR0 + 0x32800 | Start/done/error control register |
+| **SCHAN_CTRL** | BAR0 + 0x33000 | Start/done/error control register (CMC2) |
 | **SCHAN_MSG[0..20]** | BAR0 + 0x3300c to 0x33060 | S-Channel PIO message registers (21 × u32) |
 | **Ring / DMA** | CMICm DMA_CTRL, DMA_DESC0, DMA_HALT_ADDR | Per-channel descriptor rings (packet I/O ONLY) |
 
@@ -32,10 +32,11 @@ Cumulus switch reports **BCM56840_B0** (Trident), which uses **CMICm** (memory-m
 
 | Register | Offset (from BAR0) | Description | Source |
 |----------|--------------------|-------------|--------|
-| **CMIC_CMC0_SCHAN_CTRL** | **0x32800** | Start/done/error bits | mmap read, libopennsl binary (143 refs) |
-| **CMIC_CMC0_SCHAN_MSG(n)** | **0x3300c + n×4** | PIO message registers [0..20] | libopennsl binary string (confirmed) |
+| **CMIC_CMC2_SCHAN_CTRL** | **0x33000** | Start/done/error bits | CMC2 base + 0x0 (SCHAN_DISCOVERY_REPORT.md) |
+| **CMIC_CMC2_SCHAN_MSG(n)** | **0x3300c + n×4** | PIO message registers [0..20] | libopennsl binary string (confirmed) |
 
-`0x32800` = `CMICM_CMC_BASE (0x31000)` + `0x1800`
+`0x33000` = CMC2 base (confirmed from libopennsl and hardware testing).
+**NOTE**: 0x32800 was previously claimed as SCHAN_CTRL but is actually LEDUP area.
 
 **SCHAN_MSG range confirmed from Broadcom binary string**:
 ```
@@ -149,8 +150,11 @@ linux-user-bde.c uses CMC-per-device layout:
 
 So:
 - **CMC0 base**: 0x31000
-- **S-CHAN_CTRL**: 0x31000 + 0x1800 = **0x32800**
+- **CMC2 base**: 0x33000
+- **SCHAN_CTRL**: **0x33000** (CMC2, confirmed by SCHAN_DISCOVERY_REPORT.md)
+- **SCHAN_MSG**: 0x3300c..0x33060 (CMC2)
 - **DMA registers**: 0x31120–0x311a4
+- NOTE: 0x32800 is NOT SCHAN_CTRL — it's in the LEDUP/DMA area
 
 ---
 
@@ -177,16 +181,23 @@ uint32_t dma_desc0 = regs[0x31158 / 4];    // CMICM_DMA_DESC0r
 
 ---
 
-## 6. Implementation Validation (2026-03-02)
+## 6. Implementation Validation (2026-03-02, CORRECTED 2026-03-06)
 
 The S-Channel PIO protocol was implemented in `open-nos-as5610/bde/nos_kernel_bde.c` as `nos_bde_schan_op()`.
 
-**Critical:** BCM56846 on AS5610-52X uses **CMC0** for S-Channel, NOT CMC2:
-- **SCHAN_CTRL** at **0x32800** (CMC0 base 0x31000 + 0x1800)
-- **SCHAN_MSG** at **0x3300c** (per libopennsl string)
+**Correct SCHAN addresses (CMC2)**:
+- **SCHAN_CTRL** at **0x33000** (CMC2 base + 0x0)
+- **SCHAN_MSG** at **0x3300c..0x33060** (CMC2 base + 0xc..0x60, 21 x u32)
 
-Using CMC2 (0x33000 for CTRL) caused 158 S-Channel timeouts; ASIC never set DONE.
-Switching to CMC0 (0x32800) → **0 timeouts**, ASIC completes S-Channel ops.
+**CORRECTION**: The earlier claim that `0x32800` is SCHAN_CTRL was **wrong**.
+Hardware testing (SCHAN_DISCOVERY_REPORT.md) confirmed 0x32800 is in the
+LEDUP/DMA area (byte-wide registers, NOT a SCHAN_CTRL register).  The "0 timeouts"
+observation was due to 0x32800 accepting writes but not triggering actual SCHAN ops
+(it's not connected to the SCHAN engine).  CMC2 at 0x33000 IS the correct SCHAN
+channel used by libopennsl.
+
+**Root cause of SCHAN failures**: After warm reboot from Cumulus, CMC2 is locked
+in ring-buffer DMA mode.  A cold VDD power cycle restores PIO mode.
 
 The prior broken implementation used `CMICM_DMA_DESC0(0)` / `CMICM_DMA_CTRL(0)` for S-Channel.
 Replacing it with SCHAN_MSG PIO at 0x3300c resolved silent S-Channel failures.
