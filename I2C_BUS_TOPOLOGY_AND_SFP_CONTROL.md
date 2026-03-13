@@ -11,7 +11,9 @@ The P2020 SoC has two MPC I2C controllers:
 Visually confirmed on PCB near SFP cages:
 - **6× PCA9548** (8-channel I2C mux, all at addr 0x74 behind PCA9546 channels)
 - **6× PCA9506D** (40-bit GPIO expander, TSSOP-24 package)
-- **4× PCA9538** (8-bit GPIO expander, on bus 16 for QSFP control)
+- **4× PCA9538** (TI PCA9538, marked "PD538 / 88K 04 / C020", 8-bit GPIO expander)
+  - 2× near QSFP cages: @ 0x70 (RST_L + LPMODE), @ 0x71 (MODSEL_L + INT)
+  - 2× near SFP ports 40-48: @ 0x72 (SFP 40-47 rate select), @ 0x73 (misc GPIO)
 - **3× PCA9546** (4-channel I2C mux, at 0x75/0x76/0x77 on i2c-1)
 - **1× PCA9548** (8-channel I2C mux, at 0x70 on i2c-0, management bus)
 
@@ -168,11 +170,15 @@ GPIO 97-104:   SFP TX_DISABLE     (output, set LOW = TX enabled)
 
 ### Memory-Mapped Devices (Non-I2C)
 
-| Base Address | Device | Interface | Sysfs Path |
-|-------------|--------|-----------|------------|
-| 0xEA000000 | CPLD | eLBC CS1 (memory-mapped) | `/sys/devices/ff705000.localbus/ea000000.cpld` |
-| 0xEFC00000 | NOR Flash | eLBC CS0 (CFI, 4MB) | — |
-| 0xA0000000 | BCM56846 | PCIe BAR0 (512MB range) | `/sys/devices/pci0000:00/0000:00:00.0/0000:01:00.0` |
+| Base Address | Device | Package | Interface | Sysfs Path |
+|-------------|--------|---------|-----------|------------|
+| 0xEA000000 | Altera EPM570T144C5N (MAX II CPLD) | TQFP-144 | eLBC CS1 (memory-mapped) | `/sys/devices/ff705000.localbus/ea000000.cpld` |
+| 0xEFC00000 | NOR Flash | — | eLBC CS0 (CFI, 4MB) | — |
+| 0xA0000000 | BCM56846 | — | PCIe BAR0 (512MB range) | `/sys/devices/pci0000:00/0000:00:00.0/0000:01:00.0` |
+
+The CPLD (570 logic elements, speed grade C5) is located near the CPU. Kernel
+module: `accton_as5610_52x_cpld`. Handles PSU status, fan PWM, system LEDs,
+watchdog, reset sequencing, voltage margining, and interrupt routing.
 
 ### Per-Port Bus Formula
 
