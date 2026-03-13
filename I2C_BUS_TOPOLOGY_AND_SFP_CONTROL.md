@@ -6,6 +6,19 @@ The P2020 SoC has two MPC I2C controllers:
 - **i2c-0** (`/sys/devices/soc.0/ff703000.i2c`): Management/platform bus
 - **i2c-1** (`/sys/devices/soc.0/ff703100.i2c`): SFP/QSFP data and control buses
 
+## Physical I2C Chip Count (Board Inspection)
+
+Visually confirmed on PCB near SFP cages:
+- **6× PCA9548** (8-channel I2C mux, all at addr 0x74 behind PCA9546 channels)
+- **6× PCA9506D** (40-bit GPIO expander, TSSOP-24 package)
+- **4× PCA9538** (8-bit GPIO expander, on bus 16 for QSFP control)
+- **3× PCA9546** (4-channel I2C mux, at 0x75/0x76/0x77 on i2c-1)
+- **1× PCA9548** (8-channel I2C mux, at 0x70 on i2c-0, management bus)
+
+Note: Software enumerates 7 PCA9506 addresses (0x20-0x24 across buses 16-17).
+6 confirmed near SFP cages; 7th may be elsewhere on the board (opposite side,
+near QSFP cages, or CPU area).
+
 ## Kernel Module Load Order
 
 From Cumulus `/etc/modules` (loaded in this order at boot):
