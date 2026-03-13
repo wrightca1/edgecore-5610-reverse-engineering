@@ -10,8 +10,10 @@
 | Chip | Part Number | Package | Marking | Function |
 |------|-------------|---------|---------|----------|
 | P2020 SoC | Freescale P2020 | BGA | — | Dual-core PowerPC e500 CPU |
+| Mgmt PHY | Broadcom BCM54610C1KFBG | BGA | — | GbE PHY, RGMII to eTSEC, near mgmt RJ-45 |
 | CPLD | Altera EPM570T144C5N | TQFP-144 | — | MAX II CPLD, 570 LEs, speed grade C5 |
-| NOR Flash | Spansion S29GL064N90TFI01 | TSOP-56 | — | 64 Mbit (8 MB), 90ns, uniform 128KB sectors, industrial temp |
+| NOR Flash | Spansion S29GL064N90TFI01 | TSOP-56 | — | 64 Mbit (8 MB), 90ns, boot storage (U-Boot + ONIE) |
+| NAND Flash | Toshiba TC58NVG5H2HTA00 | TSOP-48 | — | 32 Gbit (4 GB), MLC, OS storage |
 | Bus Buffer | SN74LVC244A (×2) | — | — | Octal buffer/line driver, 3-state outputs |
 | Bus Mux | SN74LVC257A | — | CL257 / 88K G4 / AH05 | Quad 2:1 mux, 3-state outputs |
 
@@ -57,6 +59,30 @@ Flash layout (from DTS, 4 MB mapped region):
 0x380000 - 0x3FFFFF  uboot       (512 KB)
 ```
 
+### Internal USB Flash Drive (Toshiba NAND + Phison Controller)
+
+The Toshiba NAND and Phison PS2251-67 are located together on the board and
+form an **on-board USB flash drive**. This is the primary NOS storage — ONIE
+installs Cumulus/ONL/etc. to this device.
+
+| Parameter | Value |
+|-----------|-------|
+| NAND | Toshiba TC58NVG5H2HTA00 |
+| Capacity | 32 Gbit (4 GB) |
+| Type | MLC NAND |
+| Controller | Phison PS2251-67-5 (USB 2.0) |
+| Interface | NAND → Phison → USB2513i hub → P2020 USB |
+
+**Boot flow:**
+```
+NOR Flash (Spansion, 8 MB)          Internal USB Drive (Toshiba+Phison, 4 GB)
+┌─────────────────────┐             ┌─────────────────────┐
+│ U-Boot (512 KB)     │ ──────────► │ NOS partition(s)    │
+│ ONIE  (3.375 MB)    │  USB boot   │ Cumulus / ONL / etc │
+│ Board EEPROM (64 KB)│             │ Config, logs        │
+└─────────────────────┘             └─────────────────────┘
+```
+
 ### eLBC Bus Glue Logic
 
 **2× SN74LVC244A** (octal buffer/line driver) near the CPLD. Buffer the eLBC
@@ -67,6 +93,19 @@ strength isolation for the memory-mapped CPLD interface.
 **1× SN74LVC257A** (quad 2:1 mux) near the CPLD. Multiplexes shared eLBC
 signals between the NOR flash (CS0 @ 0xEFC00000) and CPLD (CS1 @ 0xEA000000),
 switched by chip-select lines.
+
+### Management PHY (Broadcom BCM54610C1KFBG)
+
+Located near the management RJ-45 port. Single-port 10/100/1000BASE-T PHY.
+
+| Parameter | Value |
+|-----------|-------|
+| Interface | RGMII to P2020 eTSEC (@ 0x24000) |
+| MDIO Address | 0x01 |
+| MDIO Bus | gianfar (@ 0x24520) |
+
+Note: Some documentation references BCM5482S (dual-port) as the management PHY,
+but board inspection confirms BCM54610C (single-port).
 
 ---
 
@@ -115,6 +154,19 @@ initialization details.
 
 ---
 
+## USB Storage
+
+| Chip | Part Number | Function |
+|------|-------------|----------|
+| USB Flash Controller | Phison PS2251-67-5 | USB-to-NAND flash controller |
+
+The Phison PS2251-67 is a USB 2.0 flash drive controller. Paired with the
+Toshiba TC58NVG5H2HTA00 NAND (physically adjacent), it presents as an internal
+USB mass storage device to the P2020 via the SMSC USB2513i hub on the management
+bus. This is the primary NOS storage — ONIE installs the operating system here.
+
+---
+
 ## Switch ASIC
 
 | Chip | Part Number | Interface | Function |
@@ -134,6 +186,8 @@ PCI Device ID: `0x14e4:0xb846`
 | Switch ASIC | Broadcom BCM56846 | 1 |
 | CPLD | Altera EPM570T144C5N | 1 |
 | NOR Flash | Spansion S29GL064N90TFI01 | 1 |
+| NAND Flash | Toshiba TC58NVG5H2HTA00 | 1 |
+| USB Flash Controller | Phison PS2251-67-5 | 1 |
 | I2C Mux (4-ch) | PCA9546 | 3 |
 | I2C Mux (8-ch) | PCA9548 | 7 |
 | GPIO (40-bit) | PCA9506D | 6+ |
@@ -147,4 +201,5 @@ PCI Device ID: `0x14e4:0xb846`
 | USB Hub | SMSC USB2513i | 1 |
 | Voltage Monitor | VT1165M | 1 |
 | Clock Buffer | ICS83905I | 1 |
-| **Total ICs** | | **~41** |
+| Mgmt PHY | Broadcom BCM54610C | 1 |
+| **Total ICs** | | **~44** |
