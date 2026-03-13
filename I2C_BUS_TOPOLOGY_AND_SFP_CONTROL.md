@@ -6,20 +6,8 @@ The P2020 SoC has two MPC I2C controllers:
 - **i2c-0** (`/sys/devices/soc.0/ff703000.i2c`): Management/platform bus
 - **i2c-1** (`/sys/devices/soc.0/ff703100.i2c`): SFP/QSFP data and control buses
 
-## Physical I2C Chip Count (Board Inspection)
-
-Visually confirmed on PCB near SFP cages:
-- **6× PCA9548** (8-channel I2C mux, all at addr 0x74 behind PCA9546 channels)
-- **6× PCA9506D** (40-bit GPIO expander, TSSOP-24 package)
-- **4× PCA9538** (TI PCA9538, marked "PD538 / 88K 04 / C020", 8-bit GPIO expander)
-  - 2× near QSFP cages: @ 0x70 (RST_L + LPMODE), @ 0x71 (MODSEL_L + INT)
-  - 2× near SFP ports 40-48: @ 0x72 (SFP 40-47 rate select), @ 0x73 (misc GPIO)
-- **3× PCA9546** (4-channel I2C mux, at 0x75/0x76/0x77 on i2c-1)
-- **1× PCA9548** (8-channel I2C mux, at 0x70 on i2c-0, management bus)
-
-Note: Software enumerates 7 PCA9506 addresses (0x20-0x24 across buses 16-17).
-6 confirmed near SFP cages; 7th may be elsewhere on the board (opposite side,
-near QSFP cages, or CPU area).
+> For physical chip inventory, markings, and board locations see
+> [AS5610_52X_BOARD_COMPONENT_MAP.md](AS5610_52X_BOARD_COMPONENT_MAP.md)
 
 ## Kernel Module Load Order
 
@@ -170,15 +158,14 @@ GPIO 97-104:   SFP TX_DISABLE     (output, set LOW = TX enabled)
 
 ### Memory-Mapped Devices (Non-I2C)
 
-| Base Address | Device | Package | Interface | Sysfs Path |
-|-------------|--------|---------|-----------|------------|
-| 0xEA000000 | Altera EPM570T144C5N (MAX II CPLD) | TQFP-144 | eLBC CS1 (memory-mapped) | `/sys/devices/ff705000.localbus/ea000000.cpld` |
-| 0xEFC00000 | NOR Flash | — | eLBC CS0 (CFI, 4MB) | — |
-| 0xA0000000 | BCM56846 | — | PCIe BAR0 (512MB range) | `/sys/devices/pci0000:00/0000:00:00.0/0000:01:00.0` |
+See [AS5610_52X_BOARD_COMPONENT_MAP.md](AS5610_52X_BOARD_COMPONENT_MAP.md) for
+full chip details, markings, and board locations.
 
-The CPLD (570 logic elements, speed grade C5) is located near the CPU. Kernel
-module: `accton_as5610_52x_cpld`. Handles PSU status, fan PWM, system LEDs,
-watchdog, reset sequencing, voltage margining, and interrupt routing.
+| Base Address | Device | Interface | Sysfs Path |
+|-------------|--------|-----------|------------|
+| 0xEA000000 | Altera EPM570T144C5N (CPLD) | eLBC CS1 | `/sys/devices/ff705000.localbus/ea000000.cpld` |
+| 0xEFC00000 | Spansion S29GL064N (8 MB NOR) | eLBC CS0 | — |
+| 0xA0000000 | BCM56846 (Trident+) | PCIe BAR0 | `/sys/devices/pci0000:00/0000:00:00.0/0000:01:00.0` |
 
 ### Per-Port Bus Formula
 
