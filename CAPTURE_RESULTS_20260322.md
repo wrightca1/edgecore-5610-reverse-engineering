@@ -277,6 +277,44 @@ switchd uses ONLY two BDE ioctls during normal operation:
 
 All register access (both XLPORT direct and CMICm PIO indirect) goes through **mmap** of BAR0, with the SDK handling the PIO indirection protocol for CMIC registers internally.
 
+### CMIC_COMMON Block (BAR0 + 0x10000)
+
+The CMIC_COMMON block at BAR0 + 0x10000 provides a **direct-access mirror** of key CMIC registers:
+
+| Offset | Value | Register |
+|--------|-------|----------|
+| 0x10178 | 0x0002b846 | DEV_REV_ID (BCM56846 rev 2) |
+| 0x10200-0x10214 | ring map | SBUS_RING_MAP (same as 0x200) |
+| 0x10234 | 0x04172000 | TX DMA ring base (phys) |
+| 0x10238 | 0x04152000 | RX DMA ring base (phys) |
+| 0x1025c | 0x05162000 | DMA allocation A |
+| 0x10260 | 0x05142000 | DMA allocation B |
+| 0x10158 | 0x02510000 | MIIM_PARAM mirror |
+| 0x10164 | 0x04003698 | DMA misc pointer |
+| 0x101e4 | 0x0f77cc33 | PIO endianness config |
+
+### DMA Pool Structure
+
+The DMA pool at phys 0x04000000 (32MB) contains:
+
+| Phys Address | Content |
+|-------------|---------|
+| 0x04000000 | BDE header: magic=0xaabbccdd, alloc=0x113b5e40, size=0x3600 |
+| 0x04003680 | BDE header: magic=0xaabbccdd, alloc=0x113b63c8, size=0x42000 |
+| 0x04045700 | BDE header: magic=0xaabbccdd, alloc=0x113c64d4, size=0x5000, va=0x4806b000 |
+| 0x04045740 | RX descriptor ring: repeating {VA=0x44047fc0, size=0x7fc=2044 bytes} |
+| 0x04046300+ | ASIC table entry data (masks, field widths) |
+
+RX buffer size: **2044 bytes** (0x7FC), VA pointer: **0x44047fc0** (in switchd address space).
+
+The `0xaabbccdd` magic identifies BDE DMA allocation headers. Each allocation has:
+- Word 0: magic (0xaabbccdd)
+- Word 1: allocator function pointer
+- Word 2: allocation size
+- Word 3: end offset
+- Word 4: switchd VA base
+- Word 5: kernel VA base
+
 ---
 
 ## 8. Lessons Learned: MIIM Bus Safety
