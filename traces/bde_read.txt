@@ -1,0 +1,32 @@
+=== Searching for BAR0 base pointer ===
+Checking 0x48027000-0x4802b000 (anon pages before BAR0):
+  0x48027000 = 0x2f757372
+  0x48028000 = 0x48028750
+  0x48029000 = 0x0fe25752
+  0x4802a000 = 0x00000000
+
+=== BDE ioctl buffer at 0x4c778428 (19 words) ===
+word[0]  = 0x00000404 (dev?)
+word[1]  = 0x4c778430 (rc?)
+word[2]  = 0x4c778450 (d0?)
+word[3]  = 0x1010a5b4 (d1?)
+word[4]  = 0x20010000 (d2?)
+word[5]  = 0x113c9780 (d3?)
+word[6]  = 0x4c77845c
+word[7]  = 0x11312828
+word[8]  = 0x03000000
+word[9]  = 0x4c778450
+word[10] = 0x4c7784d0
+word[11] = 0x10761b4c
+word[12] = 0x00000000
+word[13] = 0x02004208
+word[14] = 0x4c7784d8
+word[15] = 0x4c778468
+word[16] = 0x20010000
+word[17] = 0x113c9780
+word[18] = 0x0000042c
+A debugging session is active.
+
+	Inferior 1 [process 5103] will be detached.
+
+Quit anyway? (y or n) [answered Y; input not from terminal]

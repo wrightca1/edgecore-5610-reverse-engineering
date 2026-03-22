@@ -221,28 +221,61 @@ The BAR diff during L2 operations shows **MAC/port-level register changes**, not
 
 ## 6. S-Channel Capture
 
-Only 1 transition captured by polling (67444 polls in 15 seconds). The table writes happen too fast for userspace polling to catch -- they complete in microseconds.
+Only 1 transition captured by polling (67444 polls in 15 seconds). Table writes complete in microseconds, too fast for userspace polling.
 
-**Recommendation**: Use GDB hardware watchpoint on `CMIC_CMC0_SCHAN_CTRL` (0x4802b000 + 0x32800) to capture S-Channel operations, similar to the MIIM capture approach.
+GDB breakpoints on libopennsl S-Channel functions (0x007042f0, 0x00703dc0) don't hit because Cumulus uses its own SDK, not OpenNSL. The Cumulus switchd S-Channel functions are at different addresses.
+
+GDB ioctl interception confirmed that switchd does **NOT** use BDE ioctls for register read/write -- only `WAIT_FOR_INTERRUPT` (0x20004c09) and `SEM_OP` (0x20004c0a). All register access is via **direct mmap** through BAR0.
+
+**Next approach**: Find the Cumulus switchd S-Channel function addresses via Ghidra disassembly, then use GDB breakpoints to capture table writes.
 
 ---
 
-## 7. DMA Channel State
+## 7. CRITICAL FINDING: CMICm BAR0 Register Access Model
 
-| Channel | CTRL | DESC | STAT | Status |
-|---------|------|------|------|--------|
-| PKTDMA_CH0 | 0xb3 | 0x84 | 0x4a | Active (RX?) |
-| PKTDMA_CH1 | 0xb3 | 0x84 | 0x4a | Active (TX?) |
-| PKTDMA_CH2 | 0xb3 | 0x84 | 0x4a | Active |
-| PKTDMA_CH3 | 0x00 | 0x00 | 0xf8 | Inactive |
-| SBUSDMA_CH0 | 0xf3 | 0x4a | 0x58 | Active |
-| SBUSDMA_CH1 | 0xf3 | 0x4a | 0x58 | Active |
-| SBUSDMA_CH2 | 0xf3 | 0x4a | 0x58 | Active |
-| SBUSDMA_CH3 | 0x00 | 0xf8 | 0x00 | Inactive |
+### The Problem
 
-**Note**: Values appear byte-swapped on PPC big-endian. The DESC addresses (0x84, 0x4a) are in low memory, not the DMA pool (0x04000000). This suggests the registers may need to be read with proper endian handling, or the PKTDMA registers at these offsets are not the descriptor pointers but status/control fields.
+CMIC registers at BAR0 offsets 0x31000+ show a **repeating 4-byte pattern** when read as 32-bit words:
 
-**Next step**: Read DMA registers with explicit big-endian awareness, or use GDB to read them from switchd's mapped address space where the endianness is handled correctly.
+```
+0x31100-0x313FF: repeating {0xb3, 0x84, 0x4a, 0x84} every 4 bytes
+0x32000-0x323FF: repeating {0xf3, 0x58, 0x4a, 0x58} every 4 bytes
+0x32400-0x32527: repeating {0xf8, 0x80} every 4 bytes
+```
+
+Both Python `/dev/mem` mmap reads AND GDB reads (through switchd's own address space) show identical values. Byte-swapping doesn't help.
+
+### The Explanation
+
+The BCM56846 (Trident+) uses **CMICm** architecture. BAR0 is split into two access windows:
+
+| BAR0 Range | Access Type | Works via mmap? |
+|------------|-------------|-----------------|
+| 0x00000-0x10000 | **Direct word access** (XLPORT MAC, MIIM) | YES -- 32-bit reads return correct values |
+| 0x10000-0x30000 | Direct word access (more XLPORT blocks) | YES |
+| 0x31000-0x3FFFF | **CMICm PIO indirect** (PKTDMA, SBUSDMA, SCHAN, IRQ) | NO -- reads return byte-level PIO window data |
+
+The CMIC registers above 0x31000 are accessed through the CMICm **PIO indirect window**, which requires a multi-step access protocol:
+1. Write register address to PIO address register
+2. Trigger PIO read
+3. Read result from PIO data register
+
+switchd does this transparently through its SDK abstraction layer. Direct 32-bit reads to these addresses return raw PIO window state (which is why we see repeating byte patterns).
+
+### Implications for Custom NOS
+
+- **XLPORT/MAC registers** (0x0000-0x30000): Can be read/written directly via mmap. These are correctly accessible.
+- **MIIM registers** (0x150-0x4a0): Direct mmap access works. But concurrent access crashes the switch (see lesson #8).
+- **CMIC DMA, SCHAN, IRQ registers** (0x31000+): **Cannot** be read via simple mmap. Must use the CMICm PIO indirect access protocol, or call switchd's SDK register access functions via GDB.
+- The BDE kernel module handles PIO indirection internally when switchd calls register read/write functions.
+
+### BDE ioctl Model (confirmed via GDB + strace)
+
+switchd uses ONLY two BDE ioctls during normal operation:
+- `0x20004c09` (WAIT_FOR_INTERRUPT): Thread 5113 polls for DMA/SCHAN completion interrupts
+- `0x20004c0a` (SEM_OP): Semaphore operations for thread synchronization
+
+All register access (both XLPORT direct and CMICm PIO indirect) goes through **mmap** of BAR0, with the SDK handling the PIO indirection protocol for CMIC registers internally.
 
 ---
 
