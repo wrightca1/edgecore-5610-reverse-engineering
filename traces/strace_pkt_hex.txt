@@ -1,0 +1,7 @@
+10793 read(69, 0x486c6598, 16384)       = 42
+10793 read(69, 0x486ca618, 16384)       = -1 EAGAIN (Resource temporarily unavailable)
+10792 write(71, 0x482f8304, 60)         = 60
+10793 read(69, 0x486ca618, 16384)       = 42
+10793 read(69, 0x486ce698, 16384)       = -1 EAGAIN (Resource temporarily unavailable)
+10792 write(71, 0x482fc384, 60)         = 60
+10792 write(20, 0x48300404, 78)         = 78

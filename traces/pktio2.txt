@@ -1,0 +1,7 @@
+=== Packet I/O Capture via TUN fd interception ===
+Breakpoint 1 at 0xfe32664 (2 locations)
+Breakpoint 2 at 0xfe326e8 (2 locations)
+[Switching to Thread 0x4c86a060 (LWP 10792)]
+PKT_RX: len=78 buf=0x48267104
+0x48267104:	/tmp/gdb_pktio2.gdb:27: Error in sourced command file:
+Cannot access memory at address 0x48267104

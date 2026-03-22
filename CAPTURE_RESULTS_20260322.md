@@ -331,7 +331,65 @@ The `0xaabbccdd` magic identifies BDE DMA allocation headers. Each allocation ha
 
 ---
 
-## 9. Full System Capture
+## 9. Live Packet I/O Capture (QSFP 40G Traffic)
+
+### Setup
+
+swp50 (10.50.0.1) and swp52 (10.52.0.1) connected back-to-back via QSFP cables at 40Gbps. ARP requests generated with `arping`, captured on both ends.
+
+### TUN fd Mapping (CONFIRMED)
+
+switchd opens **52 TUN fds** (fd 20-71), one per swp interface:
+
+```
+fd = 19 + swp_number
+fd 20 = swp1   (MAC 80:a2:35:81:ca:af)
+fd 69 = swp50  (MAC 80:a2:35:81:ca:e3)
+fd 71 = swp52  (MAC 80:a2:35:81:ca:eb)
+```
+
+### Packet Flow (verified via strace + tcpdump)
+
+```
+TX: kernel -> write(fd_N) -> switchd TUN read -> SDK opennsl_tx -> BDE DMA -> ASIC -> wire
+RX: wire -> ASIC -> BDE DMA -> SDK callback -> switchd TUN write(fd_N) -> kernel
+```
+
+Thread roles (from strace):
+- **Thread 10792**: RX path -- `write(fd, packet, len)` to TUN (packets FROM ASIC)
+- **Thread 10793**: TX path -- `read(fd, buf, 16384)` from TUN (packets TO ASIC)
+
+### Hex Packet Data
+
+ARP from swp50 TX, captured on swp52 RX (60 bytes, padded to 46-byte ARP by ASIC):
+```
+ffff ffff ffff 80a2 3581 cae3 0806 0001   # dst=broadcast, src=swp50 MAC
+0800 0604 0001 80a2 3581 cae3 0a32 0001   # ARP request, sender=10.50.0.1
+0000 0000 0000 0a32 0002 0000 0000 0000   # target=10.50.0.2, zero-padded
+0000 0000 0000 0000 0000 0000             # ASIC padding to 60 bytes
+```
+
+### Packet Counters (after test)
+
+| Port | TX | RX | Notes |
+|------|-----|-----|-------|
+| swp50 | 156 | 133 | TX/RX swapped with swp52 = ASIC switching confirmed |
+| swp52 | 133 | 156 | |
+| swp1 | 121 | 450 | Background LLDP/ARP from earlier tests |
+
+### DMA Pool During Traffic
+
+DMA pool scan during active traffic found:
+- BDE allocation headers at 0x04000000, 0x04003680, 0x04045700 (magic 0xaabbccdd)
+- RX buffer ring at 0x04045740: repeating `{VA=0x44047fc0, size=0x7fc}` entries
+- ASIC table masks/widths at 0x04047000+ (0xffffffff patterns)
+- Switchd SDK structures at 0x041d0000+ with code/data pointers
+
+The actual packet DMA descriptors (DCBs) are managed in **kernel space** by the BDE kernel module, not in the userspace DMA pool. switchd doesn't see raw DCBs -- it interacts via BDE ioctls (WAIT_FOR_INTERRUPT, SEM_OP) and the SDK handles DMA internally.
+
+---
+
+## 10. Full System Capture
 
 Complete system state captured to `traces/full_system_capture_20260322.txt`:
 
