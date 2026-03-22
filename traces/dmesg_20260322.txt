@@ -1,0 +1,242 @@
+fit in mapping. Attempting to cope...
+[    0.319375] Amd/Fujitsu Extended Query Table at 0x0040
+[    0.319406]   Amd/Fujitsu Extended Query version 1.3.
+[    0.319414] number of CFI chips: 1
+[    0.319420] Reducing visibility of 8192KiB chip to 4096KiB
+[    0.320778] 4 ofpart partitions found on MTD device efc00000.flash
+[    0.320786] Creating 4 MTD partitions on "efc00000.flash":
+[    0.320794] 0x000000000000-0x000000360000 : "onie"
+[    0.321176] 0x000000360000-0x000000370000 : "uboot-env"
+[    0.321508] 0x000000370000-0x000000380000 : "board_eeprom"
+[    0.321823] 0x000000380000-0x000000400000 : "uboot"
+[    0.322286] bonding: Ethernet Channel Bonding Driver: v3.7.1 (April 27, 2011)
+[    0.322778] Freescale PowerQUICC MII Bus: probed
+[    0.323830] fsl-gianfar ff724000.ethernet: eth0: mac: 80:a2:35:81:ca:ae
+[    0.323839] fsl-gianfar ff724000.ethernet: eth0: Running with NAPI enabled
+[    0.323846] fsl-gianfar ff724000.ethernet: eth0: RX BD ring size for Q[0]: 256
+[    0.323854] fsl-gianfar ff724000.ethernet: eth0: TX BD ring size for Q[0]: 256
+[    0.323869] ehci_hcd: USB 2.0 'Enhanced' Host Controller (EHCI) Driver
+[    0.323990] fsl-ehci fsl-ehci.0: Freescale On-Chip EHCI Host Controller
+[    0.324007] fsl-ehci fsl-ehci.0: new USB bus registered, assigned bus number 1
+[    0.344488] fsl-ehci fsl-ehci.0: irq 28, io mem 0xff722000
+[    0.350464] fsl-ehci fsl-ehci.0: USB 2.0 started, EHCI 1.00
+[    0.350512] usb usb1: New USB device found, idVendor=1d6b, idProduct=0002
+[    0.350520] usb usb1: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+[    0.350527] usb usb1: Product: Freescale On-Chip EHCI Host Controller
+[    0.350534] usb usb1: Manufacturer: Linux 3.2.60-1+deb7u1+cl2.5+1 ehci_hcd
+[    0.350540] usb usb1: SerialNumber: fsl-ehci.0
+[    0.350672] hub 1-0:1.0: USB hub found
+[    0.350688] hub 1-0:1.0: 1 port detected
+[    0.350785] Initializing USB Mass Storage driver...
+[    0.350833] usbcore: registered new interface driver usb-storage
+[    0.350838] USB Mass Storage support registered.
+[    0.350883] usbcore: registered new interface driver usbserial
+[    0.350889] usbserial: USB Serial Driver core
+[    0.350925] i2c /dev entries driver
+[    0.351027] mpc-i2c ff703000.i2c: timeout 10000 us
+[    0.351746] mpc-i2c ff703100.i2c: timeout 10000 us
+[    0.353523] i2c i2c-0: Added multiplexed i2c bus 2
+[    0.354031] rtc-pcf8563 2-0051: chip found, driver version 0.4.3
+[    0.355117] rtc-pcf8563 2-0051: rtc core: registered rtc-pcf8563 as rtc0
+[    0.355183] i2c i2c-0: Added multiplexed i2c bus 3
+[    0.356780] i2c i2c-0: Added multiplexed i2c bus 4
+[    0.358835] i2c i2c-0: Added multiplexed i2c bus 5
+[    0.358896] i2c i2c-0: Added multiplexed i2c bus 6
+[    0.358950] i2c i2c-0: Added multiplexed i2c bus 7
+[    0.359003] i2c i2c-0: Added multiplexed i2c bus 8
+[    0.359061] i2c i2c-0: Added multiplexed i2c bus 9
+[    0.360069] pca954x 0-0070: registered 8 multiplexed busses for I2C switch pca9548
+[    0.360266] i2c i2c-1: Added multiplexed i2c bus 10
+[    0.360835] i2c i2c-1: Added multiplexed i2c bus 11
+[    0.361372] i2c i2c-1: Added multiplexed i2c bus 12
+[    0.362003] i2c i2c-1: Added multiplexed i2c bus 13
+[    0.362514] pca954x 1-0075: registered 4 multiplexed busses for I2C switch pca9546
+[    0.362712] i2c i2c-1: Added multiplexed i2c bus 14
+[    0.363267] i2c i2c-1: Added multiplexed i2c bus 15
+[    0.363834] i2c i2c-1: Added multiplexed i2c bus 16
+[    0.366847] i2c i2c-1: Added multiplexed i2c bus 17
+[    0.368360] pca954x 1-0076: registered 4 multiplexed busses for I2C switch pca9546
+[    0.368565] i2c i2c-1: Added multiplexed i2c bus 18
+[    0.369608] i2c i2c-1: Added multiplexed i2c bus 19
+[    0.370712] i2c i2c-1: Added multiplexed i2c bus 20
+[    0.371760] i2c i2c-1: Added multiplexed i2c bus 21
+[    0.372762] pca954x 1-0077: registered 4 multiplexed busses for I2C switch pca9546
+[    0.373213] i2c i2c-10: Added multiplexed i2c bus 22
+[    0.374333] i2c i2c-10: Added multiplexed i2c bus 23
+[    0.375382] i2c i2c-10: Added multiplexed i2c bus 24
+[    0.376419] i2c i2c-10: Added multiplexed i2c bus 25
+[    0.377549] i2c i2c-10: Added multiplexed i2c bus 26
+[    0.378106] i2c i2c-10: Added multiplexed i2c bus 27
+[    0.378671] i2c i2c-10: Added multiplexed i2c bus 28
+[    0.379228] i2c i2c-10: Added multiplexed i2c bus 29
+[    0.379808] pca954x 10-0074: registered 8 multiplexed busses for I2C switch pca9548
+[    0.380250] i2c i2c-11: Added multiplexed i2c bus 30
+[    0.381301] i2c i2c-11: Added multiplexed i2c bus 31
+[    0.382348] i2c i2c-11: Added multiplexed i2c bus 32
+[    0.383474] i2c i2c-11: Added multiplexed i2c bus 33
+[    0.384529] i2c i2c-11: Added multiplexed i2c bus 34
+[    0.385088] i2c i2c-11: Added multiplexed i2c bus 35
+[    0.385722] i2c i2c-11: Added multiplexed i2c bus 36
+[    0.386278] i2c i2c-11: Added multiplexed i2c bus 37
+[    0.386799] pca954x 11-0074: registered 8 multiplexed busses for I2C switch pca9548
+[    0.387244] i2c i2c-12: Added multiplexed i2c bus 38
+[    0.388296] i2c i2c-12: Added multiplexed i2c bus 39
+[    0.389407] i2c i2c-12: Added multiplexed i2c bus 40
+[    0.390485] i2c i2c-12: Added multiplexed i2c bus 41
+[    0.391535] i2c i2c-12: Added multiplexed i2c bus 42
+[    0.392094] i2c i2c-12: Added multiplexed i2c bus 43
+[    0.392652] i2c i2c-12: Added multiplexed i2c bus 44
+[    0.393207] i2c i2c-12: Added multiplexed i2c bus 45
+[    0.393724] pca954x 12-0074: registered 8 multiplexed busses for I2C switch pca9548
+[    0.394166] i2c i2c-13: Added multiplexed i2c bus 46
+[    0.395290] i2c i2c-13: Added multiplexed i2c bus 47
+[    0.396335] i2c i2c-13: Added multiplexed i2c bus 48
+[    0.397375] i2c i2c-13: Added multiplexed i2c bus 49
+[    0.398495] i2c i2c-13: Added multiplexed i2c bus 50
+[    0.399047] i2c i2c-13: Added multiplexed i2c bus 51
+[    0.399612] i2c i2c-13: Added multiplexed i2c bus 52
+[    0.400162] i2c i2c-13: Added multiplexed i2c bus 53
+[    0.400757] pca954x 13-0074: registered 8 multiplexed busses for I2C switch pca9548
+[    0.401202] i2c i2c-14: Added multiplexed i2c bus 54
+[    0.402271] i2c i2c-14: Added multiplexed i2c bus 55
+[    0.403334] i2c i2c-14: Added multiplexed i2c bus 56
+[    0.404473] i2c i2c-14: Added multiplexed i2c bus 57
+[    0.405534] i2c i2c-14: Added multiplexed i2c bus 58
+[    0.406101] i2c i2c-14: Added multiplexed i2c bus 59
+[    0.406752] i2c i2c-14: Added multiplexed i2c bus 60
+[    0.407316] i2c i2c-14: Added multiplexed i2c bus 61
+[    0.407839] pca954x 14-0074: registered 8 multiplexed busses for I2C switch pca9548
+[    0.408292] i2c i2c-15: Added multiplexed i2c bus 62
+[    0.409348] i2c i2c-15: Added multiplexed i2c bus 63
+[    0.410475] i2c i2c-15: Added multiplexed i2c bus 64
+[    0.411535] i2c i2c-15: Added multiplexed i2c bus 65
+[    0.412645] i2c i2c-15: Added multiplexed i2c bus 66
+[    0.413704] i2c i2c-15: Added multiplexed i2c bus 67
+[    0.414761] i2c i2c-15: Added multiplexed i2c bus 68
+[    0.415878] i2c i2c-15: Added multiplexed i2c bus 69
+[    0.416874] pca954x 15-0074: registered 8 multiplexed busses for I2C switch pca9548
+[    0.417124] sdhci: Secure Digital Host Controller Interface driver
+[    0.417130] sdhci: Copyright(c) Pierre Ossman
+[    0.417134] sdhci-pltfm: SDHCI platform and OF driver helper
+[    0.417228] oprofile: using ppc/e500 performance monitoring.
+[    0.417373] ip_tables: (C) 2000-2006 Netfilter Core Team
+[    0.417436] TCP cubic registered
+[    0.417687] NET: Registered protocol family 10
+[    0.417984] ip6_tables: (C) 2000-2006 Netfilter Core Team
+[    0.418038] NET: Registered protocol family 17
+[    0.418053] NET: Registered protocol family 15
+[    0.418089] Bridge firewalling registered
+[    0.418098] Ebtables v2.0 registered
+[    0.418144] Registering the dns_resolver key type
+[    0.418191] registered taskstats version 1
+[    0.419492] rtc-pcf8563 2-0051: setting system clock to 2013-11-01 15:04:57 UTC (1383318297)
+[    0.419535] port family register OK
+[    0.419544] port mc group register OK
+[    0.420142] Freeing unused kernel memory: 280k freed
+[    0.652478] usb 1-1: new high-speed USB device number 2 using fsl-ehci
+[    0.766858] usb 1-1: New USB device found, idVendor=0424, idProduct=2513
+[    0.766867] usb 1-1: New USB device strings: Mfr=0, Product=0, SerialNumber=0
+[    0.767137] hub 1-1:1.0: USB hub found
+[    0.767224] hub 1-1:1.0: 3 ports detected
+[    1.040595] usb 1-1.3: new high-speed USB device number 3 using fsl-ehci
+[    1.128714] usb 1-1.3: New USB device found, idVendor=13fe, idProduct=4100
+[    1.128724] usb 1-1.3: New USB device strings: Mfr=1, Product=2, SerialNumber=3
+[    1.128731] usb 1-1.3: Product: USB DISK 2.0
+[    1.128737] usb 1-1.3: Manufacturer:         
+[    1.128742] usb 1-1.3: SerialNumber: 7F009544DA7CFA01
+[    1.129141] scsi0 : usb-storage 1-1.3:1.0
+[    2.131490] scsi 0:0:0:0: Direct-Access              USB DISK 2.0     PMAP PQ: 0 ANSI: 6
+[    2.132565] sd 0:0:0:0: [sda] 7831552 512-byte logical blocks: (4.00 GB/3.73 GiB)
+[    2.133428] sd 0:0:0:0: [sda] Write Protect is off
+[    2.133437] sd 0:0:0:0: [sda] Mode Sense: 23 00 00 00
+[    2.134303] sd 0:0:0:0: [sda] No Caching mode page found
+[    2.139644] sd 0:0:0:0: [sda] Assuming drive cache: write through
+[    2.148423] sd 0:0:0:0: [sda] No Caching mode page found
+[    2.153756] sd 0:0:0:0: [sda] Assuming drive cache: write through
+[    2.162683]  sda: sda1 sda2 < sda5 sda6 sda7 sda8 > sda3
+[    2.165922] sd 0:0:0:0: [sda] No Caching mode page found
+[    2.171254] sd 0:0:0:0: [sda] Assuming drive cache: write through
+[    2.177365] sd 0:0:0:0: [sda] Attached SCSI disk
+[    8.938798] linux-kernel-bde (509): Payload size of 256 bytes may not be supported by all PCIe bridges by default.
+[    9.116976] tun: Universal TUN/TAP device driver, 1.6
+[    9.116985] tun: (C) 1999-2004 Max Krasnyansky <maxk@qualcomm.com>
+[    9.184080] linux-kernel-bde 0000:01:00.0: created sysfs groups as hwmon0
+[    9.231795] accton_as5610_52x_cpld ea000000.cpld: probed & iomapped @ 0xf16d4a84
+[    9.281512] at24 3-003a: 256 byte 24c02 EEPROM, read-only, 0 bytes/write
+[    9.281561] at24 3-003e: 256 byte 24c02 EEPROM, read-only, 0 bytes/write
+[    9.281600] at24 3-0078: 256 byte 24c02 EEPROM, read-only, 0 bytes/write
+[    9.281642] at24 4-000c: 256 byte 24c02 EEPROM, read-only, 0 bytes/write
+[    9.281685] at24 4-0039: 256 byte 24c02 EEPROM, read-only, 0 bytes/write
+[    9.281722] at24 4-003d: 256 byte 24c02 EEPROM, read-only, 0 bytes/write
+[    9.281760] at24 4-0078: 256 byte 24c02 EEPROM, read-only, 0 bytes/write
+[    9.281870] at24 22-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    9.281938] at24 23-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    9.282005] at24 24-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    9.282076] at24 25-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    9.282147] at24 26-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    9.282212] at24 27-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    9.282282] at24 28-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    9.282348] at24 29-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    9.282417] at24 30-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    9.282520] at24 31-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    9.282590] at24 32-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    9.282658] at24 33-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    9.282732] at24 34-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    9.282799] at24 35-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    9.282866] at24 36-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    9.282941] at24 37-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    9.283020] at24 38-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    9.283093] at24 39-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    9.283164] at24 40-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    9.283237] at24 41-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    9.283309] at24 42-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    9.283379] at24 43-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    9.283444] at24 44-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    9.283534] at24 45-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    9.283615] at24 46-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    9.283684] at24 47-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    9.283757] at24 48-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    9.283828] at24 49-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    9.283902] at24 50-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    9.283976] at24 51-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    9.284047] at24 52-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    9.284115] at24 53-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    9.284195] at24 54-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    9.284265] at24 55-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    9.284341] at24 56-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    9.284412] at24 57-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    9.284520] at24 58-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    9.284600] at24 59-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    9.284672] at24 60-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    9.284741] at24 61-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    9.284819] at24 62-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    9.284890] at24 63-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    9.284965] at24 64-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    9.285041] at24 65-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    9.285117] at24 66-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    9.285188] at24 67-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    9.285265] at24 68-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    9.285359] at24 69-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    9.325685] sff8436 18-0050: 640 byte sff8436 EEPROM, read-only
+[    9.325730] sff8436 19-0050: 640 byte sff8436 EEPROM, read-only
+[    9.325768] sff8436 20-0050: 640 byte sff8436 EEPROM, read-only
+[    9.325817] sff8436 21-0050: 640 byte sff8436 EEPROM, read-only
+[   44.371619] ADDRCONF(NETDEV_UP): eth0: link is not ready
+[   46.362887] PHY: mdio@ff724520:01 - Link is Up - 1000/Full
+[   46.363579] ADDRCONF(NETDEV_CHANGE): eth0: link becomes ready
+[   51.412780] auditd (2316): /proc/2316/oom_adj is deprecated, please use /proc/2316/oom_score_adj instead.
+[   53.945402] 8021q: 802.1Q VLAN Support v1.8
+[  138.564195] device swp1 entered promiscuous mode
+[  158.054620] ADDRCONF(NETDEV_UP): swp1: link is not ready
+[  161.406188] ADDRCONF(NETDEV_CHANGE): swp1: link becomes ready
+[  165.077015] ADDRCONF(NETDEV_UP): swp1: link is not ready
+[  172.629254] ADDRCONF(NETDEV_CHANGE): swp1: link becomes ready
+[  693.742795] ADDRCONF(NETDEV_UP): swp49: link is not ready
+[  698.763617] ADDRCONF(NETDEV_UP): swp50: link is not ready
+[  703.781505] ADDRCONF(NETDEV_UP): swp51: link is not ready
+[  705.111458] ADDRCONF(NETDEV_CHANGE): swp50: link becomes ready
+[  708.799243] ADDRCONF(NETDEV_UP): swp52: link is not ready
+[  714.870736] ADDRCONF(NETDEV_CHANGE): swp52: link becomes ready
+[  764.403479] ADDRCONF(NETDEV_UP): swp5: link is not ready
+[  765.917859] ADDRCONF(NETDEV_UP): swp9: link is not ready
+[  767.432239] ADDRCONF(NETDEV_UP): swp13: link is not ready

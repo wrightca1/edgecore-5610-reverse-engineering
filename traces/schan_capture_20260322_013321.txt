@@ -1,0 +1,14 @@
+# S-Channel Capture - 2026-03-22 01:33:21
+# Duration: 15 seconds, 67444 polls, 1 transitions
+
+[  0.0001] CTRL=0x00000002 (was 0x00000000)
+  Header: opcode=UNKNOWN_0x00(0x00) dst_blk=0 acc_type=0 data_len=0 dma=1 bank=0
+  MSG[0] = 0x00000018
+  MSG[1] = 0x00000067
+  MSG[2] = 0x00000089
+  MSG[3] = 0x00000002
+  MSG[4] = 0x00000009
+  MSG[5] = 0x00000067
+  MSG[6] = 0x0000006f
+  MSG[7] = 0x00000002
+
