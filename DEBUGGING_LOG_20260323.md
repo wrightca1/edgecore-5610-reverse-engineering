@@ -200,3 +200,54 @@ With __raw_writel on PPC:
 | PAXB init | PCI config space writes | iowrite32 to BAR0 | __raw_writel to BAR0 |
 | Sub-windows | iproc_map with 3 AXI ranges | Only IMAP7 for high regs | Only IMAP7 (same) |
 | Userspace | mmap BAR0 directly | ioctl to kernel BDE | ioctl to kernel BDE |
+
+## Session 4: March 24, 2026 (evening) - Warpcore Block Access
+
+### Critical Discovery: iowrite32 BDE Works on Fresh Cold Boot
+
+ALL previous S-Channel and MIIM failures were from corrupted ASIC state,
+NOT from endianness or register address issues. On a fresh cold-booted ASIC:
+- MIIM_WR_START (0x91) works correctly with iowrite32
+- Block select 0xFFD0 write/readback verified
+- S-Channel: 0 errors, ASIC reset + init + switching_init all succeed
+- Warpcore PHY responds: PHY_ID = 0x0143 (WC-B0)
+
+### Warpcore Register Block Gating
+
+Only block 0x8000 (XGXSBLK0) is accessible via MIIM:
+- Block 0x8100 (XGXSSTATUS): returns zeros
+- Block 0x8300 (MISC/speed): returns zeros
+- Block 0xFFC0 (microcontroller/firmware): returns zeros
+- Block 0x8060 (TX_DRIVER): returns zeros
+
+MIIM writes to Warpcore don't modify registers (write completes but
+value unchanged on readback). This is likely because RSTB_MDIOREGS=0.
+
+### Root Cause Analysis
+
+In `bcm56840_a0_xport_reset()`:
+1. Line 248-256: Asserts ALL resets (IDDQ=1, PWRDWN=1, RSTB_HW=0, RSTB_MDIOREGS=0)
+2. Line 267-271: Clears power-down (IDDQ=0, PWRDWN=0)
+3. Line 275: Releases HW reset (RSTB_HW=1)
+4. Line 280: **Releases MDIO registers** (RSTB_MDIOREGS=1) ← THIS may fail
+5. Line 284: Releases PLL (RSTB_PLL=1)
+
+If the S-Channel write at step 4 fails, MDIO registers stay in reset:
+- Only XGXSBLK0 (base IEEE-like regs) accessible
+- All other blocks write-protected/gated
+- Firmware download writes silently fail
+- PLL can't be configured → never locks
+
+### Correct MIIM PHY Addressing (from scan)
+
+Bus 0: ports 1-24, phy = port + 0x200 (IBUS(0))
+Bus 1: ports 25-48, phy = (port-24) + 0x240 (IBUS(1))  
+Bus 2: ports 49-72, phy = (port-48) + 0x280 (IBUS(2))
+
+Responding Warpcores: ports 1,9,13,17,21,29,33,37,41,45,49,57,61,65,69
+
+### Key Lesson
+
+**COLD POWER CYCLE REQUIRED** after any register corruption. The BCM56846
+iProc PAXB state persists through warm reboot and module reload. Hours of
+debugging "endianness issues" were actually corrupted ASIC state.
