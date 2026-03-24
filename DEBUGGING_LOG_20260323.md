@@ -137,3 +137,66 @@ DS100DF410 retimers successfully programmed via I2C:
 3. Look for PCIe extended capabilities or alternate MDIO path
 4. Check if Cumulus uses a different PAXB initialization sequence
 5. Investigate if there's a S-Channel opcode for indirect MIIM write
+
+## Session 3: March 24, 2026 - Raw Access Breakthrough
+
+### Cumulus BDE Analysis (Definitive)
+
+Disassembly of extracted Cumulus linux-kernel-bde.ko:
+```
+_iproc_write (0x2EDC): uses stwx (raw PPC store, NO byte-swap)
+_iproc_read  (0x2F84): uses lwzx (raw PPC load, NO byte-swap)
+```
+
+This is fundamentally different from our iowrite32/ioread32 which do:
+- iowrite32 = out_le32 = stwbrx (byte-reversed store)
+- ioread32 = in_le32 = lwbrx (byte-reversed load)
+
+### iproc_map_default Data Structure
+
+Found at .data offset 0x120 in Cumulus BDE:
+```
+AXI range 1: 0x18000000 - 0x18000FFF (CMIC base registers)
+AXI range 2: 0x18030000 - 0x18030FFF (CMICm: SCHAN, DMA, MIIM)
+AXI range 3: 0x18012000 - 0x18012FFF (XLPORT/MAC registers?)
+```
+
+### MIIM Write Confirmed Working
+
+With __raw_writel and manual byte-swap:
+```
+1. Write MIIM_ADDRESS (0x4A0) with reg 0x1F (byte-swapped)
+2. Write MIIM_PARAM (0x158) with phy_addr + data (byte-swapped)
+3. Write SCHAN_CTRL (0x50) with 0x91000000 (BE encoding of MIIM_WR_START)
+4. MIIM_OP_DONE fires, readback confirms write reached Warpcore
+```
+
+Block select 0xFFD0 written and read back correctly = **first successful MIIM write to Warpcore PHY**.
+
+### Remaining Issue: S-Channel
+
+CDK S-Channel operations still fail because:
+1. CDK uses CMIC_SCHAN_CTRLr at 0x50 (old CMIC address)
+2. BCM56846 CMICm S-Channel is at 0x33000 (CMC2)
+3. S-Channel MSG_START written to 0x50 triggers the old CMIC which may not be functional
+4. Need to either remap in BDE or patch CDK to use CMC2 addresses
+
+### Key Insight: SYS_BE_PIO + Raw Access
+
+With __raw_writel on PPC:
+- CPU stores native big-endian bytes to PCIe MMIO
+- ASIC reads these as little-endian (byte-swapped)
+- CDK's SYS_BE_PIO=1 pre-swaps values to compensate
+- Result: ASIC sees the correct LE value
+- PAXB endianness register (0x2030) = 0xF2 and cannot be changed
+
+### BDE Differences: Cumulus vs OpenMDK
+
+| Aspect | Cumulus BDE | Our BDE (before fix) | Our BDE (after fix) |
+|--------|------------|---------------------|-------------------|
+| MMIO access | __raw_readl/__raw_writel (stwx/lwzx) | ioread32/iowrite32 (stwbrx/lwbrx) | __raw_readl/__raw_writel |
+| MIIM write | Works (raw bytes on bus) | FAILS (byte-swap corrupts bit-command) | WORKS |
+| S-Channel | Uses CMC2 at 0x33000 | Uses old CMIC at 0x50 | Uses old CMIC at 0x50 (broken) |
+| PAXB init | PCI config space writes | iowrite32 to BAR0 | __raw_writel to BAR0 |
+| Sub-windows | iproc_map with 3 AXI ranges | Only IMAP7 for high regs | Only IMAP7 (same) |
+| Userspace | mmap BAR0 directly | ioctl to kernel BDE | ioctl to kernel BDE |
