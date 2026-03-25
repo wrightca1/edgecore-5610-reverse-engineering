@@ -302,3 +302,18 @@ Blockers:
 2. No physical link (SFP not powered → no signal)
 3. Fan control needs proper CPLD register mapping
 4. GPIO numbering mismatch in platform-init
+
+### SFP/QSFP Detection Resolved
+
+SFP EEPROMs ARE accessible - wrong bus mapping assumed:
+- Bus 11-13 (not 22-24): SFP ports with FINISAR FTLX1475D3BTL-E7 (10GBASE-LR)
+- Bus 18-21: QSFP ports (DT declares sff8436, no driver loaded)
+- at24 driver claims 0x50 so i2cget fails, but sysfs eeprom file works
+
+### Fan Control Found
+
+CPLD fan PWM at eLBC 0xEA00000D (offset 0x0D):
+- Range 0-31 (0=off, 31=max)
+- Default 0x1F = full speed
+- Set 0x08 for ~25% speed
+- Cumulus driver: pwm1_store writes value/8 to CPLD+0x0D
