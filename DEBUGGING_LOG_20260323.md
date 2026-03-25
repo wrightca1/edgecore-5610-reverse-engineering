@@ -251,3 +251,54 @@ Responding Warpcores: ports 1,9,13,17,21,29,33,37,41,45,49,57,61,65,69
 **COLD POWER CYCLE REQUIRED** after any register corruption. The BCM56846
 iProc PAXB state persists through warm reboot and module reload. Hours of
 debugging "endianness issues" were actually corrupted ASIC state.
+
+## Session 5: March 25, 2026 - Firmware Fix & SFP Detection
+
+### CRITICAL FIX: Warpcore Firmware Selection Bug
+
+`_warpcore_fw_get()` only selected `wc40_ucode_bin` firmware for REV_A0/A1.
+BCM56846 is REV_B0 which left `fw_data`/`fw_size` UNINITIALIZED (stack garbage).
+Result: "firmware" was 65 bytes of random stack data instead of 27,179 bytes.
+
+Fix: Use `wc40_ucode_bin` for ALL revisions as default.
+
+### Results After Firmware Fix
+
+- Firmware downloads correctly: 27,179 bytes per Warpcore (ioerr=0)
+- `bmd_phy_staged_init` returns rv=0 (was CDK_E_TIMEOUT)
+- PLL locks on ALL ports: `lock=1 after 0-21ms xgxs=0x8b08`
+- `link_get` returns real values: `pcs=0x0082 mii=0x0109 link=0`
+- PCS reports no RX link (retimer + SFP signal path issue)
+
+### SFP/QSFP I2C Detection Failure
+
+Despite physical modules being installed:
+- SFP EEPROM (0x50) not found on ANY bus (22-69)
+- QSFP EEPROM (0x50) not found on buses 18-21
+- PCA9506 GPIO expanders respond (0x20-0x21)
+- Retimers respond (0x27) on all buses
+- PCA9538 QSFP GPIO: all combos tried, no QSFP response
+
+Platform-init GPIO errors: `export_store: invalid GPIO 160-165`
+(GPIO base mismatch: kernel assigns 480+ but platform-init uses 160+)
+
+### CPLD Status
+
+- CPLD at eLBC 0xEA000000 (NOT I2C)
+- Register space appears to be ~32 bytes repeating
+- Fan speed: wrote 0x07 to offset 0x0A (unknown if correct register)
+- No sysfs attributes from our CPLD driver (stub only)
+- Need to reverse-engineer Cumulus CPLD driver register map
+
+### Current State
+
+Everything ASIC-side works:
+- S-Channel, MIIM, DMA, firmware download, PLL lock
+- `bmd_init` + `bmd_switching_init` succeed
+- 52 TUN interfaces created
+
+Blockers:
+1. SFP/QSFP modules not detected on I2C (power enable? CPLD register?)
+2. No physical link (SFP not powered → no signal)
+3. Fan control needs proper CPLD register mapping
+4. GPIO numbering mismatch in platform-init
