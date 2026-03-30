@@ -160,9 +160,33 @@ Values per lane:
 0x29 = 10G_SFI (SFP+ fiber)
 ```
 
+## CRITICAL CORRECTION (March 30, 2026)
+
+Our debug reads were using WRONG register addresses!
+
+| Register | CDK Address | Correct CL22 | What we read | What we read was |
+|----------|-------------|---------------|-------------|------------------|
+| MISC1r | 0x8308 | blk 0x8300 reg 0x18 | blk 0x8300 reg 0x18 | **CORRECT** |
+| MISC3r | 0x833C | blk 0x8330 reg 0x1C | blk 0x8350 reg 0x18 | LP_OUI_MSB_FIELDr (WRONG!) |
+| MISC6r | 0x8349 | blk 0x8340 reg 0x19 | blk 0x8340 reg 0x15 | Wrong offset |
+
+The `speed_set` code (lines 1488-1497 of xgxs_drv.c) DOES write:
+- MISC1r FORCE_SPEED = 0x05 (bits [4:0] of 0x25)
+- MISC3r FORCE_SPEED_B5 = 1 (bit 5 of 0x25)
+- MISC3r IND_40BITIF = 1 (40-bit interface for XFI)
+
+We couldn't verify MISC3r because we were reading the wrong register.
+The speed encoding may actually be correct. The PCS no-lock issue
+may be caused by something else entirely (TX driver, retimer, or
+link partner configuration).
+
 ## Next Steps
 
-1. Extract FIRMWARE_MODEr value from Cumulus GDB capture
+1. Fix debug code to read correct MISC3r (blk 0x8330 reg 0x1C)
+2. Verify MISC3r actually has FORCE_SPEED_B5=1
+3. If speed is correct, investigate other causes of PCS no-lock
+4. Install Cumulus to verify SFPs still work (rule out hardware)
+5. Extract FIRMWARE_MODEr value from Cumulus GDB capture
 2. Compare lane-by-lane firmware mode settings
 3. If firmware mode is wrong, either:
    a. Fix the OpenMDK driver's firmware mode assignment
