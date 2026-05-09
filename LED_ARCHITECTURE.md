@@ -53,8 +53,8 @@ Each processor runs a custom bytecode program (BCM LED processor ISA):
 
 ### Per-Port LED Logic
 
-Each port outputs **2 bits** to the serial chain:
-- **Bit 1 (first pushed)**: Amber LED (always 0 = off on AS5610)
+Each port outputs **2 bits** to the serial chain (LEDs are physically bicolor green+amber):
+- **Bit 1 (first pushed)**: Amber LED — Cumulus's stock program forces this to 0 (`pushst PORTSTATUS_ZERO`), but the hardware fully supports driving it. Our `leddance` tool does exactly this — see [LED_CPU_INTERFACE.md](LED_CPU_INTERFACE.md).
 - **Bit 2 (second pushed)**: Green LED (link + activity)
 
 Green LED logic:
@@ -70,12 +70,16 @@ Effect: Green LED is solid ON when link is up, blinks OFF briefly during packet 
 
 ### LED0 vs LED1
 
-| Processor | Ports | Physical LEDs |
-|-----------|-------|---------------|
-| **LED0** | 32 SFP+ ports (hardware ports 5-36) | swp1-swp32 front panel LEDs |
-| **LED1** | 4 QSFP ports + 20 SFP+ ports (hw ports 1-4, 9, 13, 21, 25, 29-36) | swp33-swp52 + QSFP LEDs |
+| Processor | Real LEDs | Total chain bits | Front-panel ports |
+|-----------|-----------|------------------|-------------------|
+| **LED0** | 32 (all SFP+) | 64 | swp9-swp40 |
+| **LED1** | 20 (4 QSFP + 16 SFP+) + 1 non-front-panel slot | 64 (24 leading "always-1" pad bits + 40 real bits) | swp1-swp8 + swp41-swp52 |
 
-LED1 has extra padding (`pad_n_one`) to align the QSFP LEDs in the serial chain, and QSFP ports use the same LED logic as SFP+ ports.
+**Total: 52 LEDs** (matching the "-52X" naming: 48 SFP+ + 4 QSFP+).
+
+LED1 has extra padding (`pad_n_one a=24`) to push 24 "always-1" bits at the start of its chain — those drive 12 phantom LED slots that are unused on this board. Real LEDs occupy bits 24..63. QSFP ports use the same `set_led` routine as SFP+ ports (verified byte-identical in `traces/led1.asm`).
+
+The exact panel-port → (processor, chain-bit) table is verified live and documented in [LED_CPU_INTERFACE.md](LED_CPU_INTERFACE.md) §8.
 
 ### Port Number Mapping (LED0)
 
