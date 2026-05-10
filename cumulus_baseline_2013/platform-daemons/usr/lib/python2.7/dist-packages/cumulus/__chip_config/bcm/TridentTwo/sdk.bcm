@@ -1,0 +1,27 @@
+# BCM Trident2 SDK parameters
+
+polled_irq_mode=0
+bcm_stat_flags=0x1
+l2xmsg_mode=1
+#host buffer (entry count) used by the l2 mod fifo thread
+l2xmsg_hostbuf_size=8192
+miim_intr_enable=1
+tdma_intr_enable=1
+tslam_intr_enable=1
+tslam_dma_enable=1
+table_dma_enable=1
+parity_enable=1
+rate_ext_mdio_divisor=0x80
+l3_mem_entries=16384
+l2_mem_entries=32768
+
+xgxs_lcpll_xtal_refclk=1
+
+# enable alpm and set the lookup mode to 'combined' (use 1 for 'parallel')
+l3_alpm_enable=2
+
+# also required for alpm
+ipv6_lpm_128b_enable=1
+
+#disable VP LAG to prevent ecmp groups being reserved for it unnecessarily
+max_vp_lags=0

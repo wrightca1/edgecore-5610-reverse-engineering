@@ -1,0 +1,11 @@
+# BCM Triumph SDK parameters
+
+polled_irq_mode=0
+bcm_stat_flags=0x1
+l2xmsg_mode=1
+miim_intr_enable=1
+tdma_intr_enable=1
+tslam_intr_enable=1
+tslam_dma_enable=1
+table_dma_enable=1
+parity_enable=1

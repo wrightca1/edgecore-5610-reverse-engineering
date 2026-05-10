@@ -1,0 +1,6 @@
+check process pwmd with pidfile /var/run/pwmd.pid
+	    every 3 cycles
+        group networking
+        start program = "/etc/init.d/pwmd start"
+        stop program = "/etc/init.d/pwmd stop"
+        if 2 restarts within 3 cycles then unmonitor

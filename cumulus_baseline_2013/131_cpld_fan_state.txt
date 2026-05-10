@@ -1,0 +1,85 @@
+Warning: Permanently added '10.1.1.212' (ECDSA) to the list of known hosts.
+[sudo] password for cumulus: === CPLD all readable sysfs attrs ===
+bash: line 5: ": command not found
+README = 
+bash: line 5: ": command not found
+board_revision = 
+bash: line 5: ": command not found
+help = 
+bash: line 5: ": command not found
+led_diag = 
+bash: line 5: ": command not found
+led_fan = 
+bash: line 5: ": command not found
+led_locator = 
+bash: line 5: ": command not found
+led_psu1 = 
+bash: line 5: ": command not found
+led_psu2 = 
+bash: line 5: ": command not found
+modalias = 
+bash: line 5: ": command not found
+psu_pwr1_all_ok = 
+bash: line 5: ": command not found
+psu_pwr1_dc_ok = 
+bash: line 5: ": command not found
+psu_pwr1_present = 
+bash: line 5: ": command not found
+psu_pwr2_all_ok = 
+bash: line 5: ": command not found
+psu_pwr2_dc_ok = 
+bash: line 5: ": command not found
+psu_pwr2_present = 
+bash: line 5: ": command not found
+pwm1 = 
+bash: line 5: ": command not found
+pwm1_enable = 
+bash: line 5: ": command not found
+system_all_ok = 
+bash: line 5: ": command not found
+system_dc_power_ok = 
+bash: line 5: ": command not found
+system_fan_air_flow = 
+bash: line 5: ": command not found
+system_fan_ok = 
+bash: line 5: ": command not found
+system_fan_present = 
+bash: line 5: ": command not found
+uevent = 
+bash: line 5: ": command not found
+watch_dog_enable = 
+bash: line 5: ": command not found
+watch_dog_keep_alive = 
+bash: line 5: ": command not found
+watch_dog_timeout = 
+
+=== current pwm + fan state ===
+pwm1 = 64
+pwm1_enable = 1
+system_fan_present = 1
+system_fan_ok = 1
+system_fan_air_flow = front-to-back
+led_fan = green
+
+=== monit config - WHERE IS FAN CONTROL ===
+## the monitoring state across reboots. If it is on temporary filesystem, the
+## state will be lost on reboot which may be convenient in some situations.
+#
+#  NOTE: state file is now defined in /etc/default/monit, change it there
+#  set statefile /var/lib/monit/state
+#
+
+=== look at monit.d configs ===
+/etc/monit/monitrc
+/etc/monit/monitrc.d/cron
+/etc/monit/monitrc.d/cumulus
+/etc/monit/monitrc.d/ledmgrd-monit.rc
+/etc/monit/monitrc.d/lldpd-monit.rc
+/etc/monit/monitrc.d/mstpd-monit.rc
+/etc/monit/monitrc.d/openssh-server
+/etc/monit/monitrc.d/ptm-monit.rc
+/etc/monit/monitrc.d/pwmd-monit.rc
+/etc/monit/monitrc.d/smond-monit.rc
+/etc/monit/templates/rootbin
+/etc/monit/templates/rootrc
+/etc/monit/templates/rootstrict

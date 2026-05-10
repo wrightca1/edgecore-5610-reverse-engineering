@@ -1,0 +1,13 @@
+# BCM Apollo SDK parameters
+
+os=unix
+bcm_stat_flags=1
+miim_intr_enable=1
+polled_irq_mode=0
+l2xmsg_mode=1
+tdma_intr_enable=1
+tslam_intr_enable=1
+table_dma_enable=1
+xgxs_lcpll_xtal_refclk=1
+rate_ext_mdio_divisor=80
+bcm56540_4x10_2x42=1

@@ -1,0 +1,54 @@
+#-------------------------------------------------------------------------------
+#
+# datapath
+#
+#
+#-------------------------------------------------------------------------------
+
+echo "initialize the datapath"
+
+# Enable L3 MTU failure packets to go to CPU
+modreg cpu_control_1 l3_mtu_fail_tocpu=1
+
+# Enable IP packets with option to go to CPU
+modreg cpu_control_1 l3_slowpath_tocpu=1
+
+# Enable COPY_TO_CPU for L3 destination miss
+modreg cpu_control_1 v4l3dstmiss_tocpu=1
+modreg cpu_control_1 v6l3dstmiss_tocpu=1
+
+# Use TCP/UDP ports for unicast trunk hashing
+modreg hash_control use_tcp_udp_ports=1
+
+# Use lower bits of a crc-16 for L3 table lookups
+modreg hash_control l3_hash_select=4
+
+# Enable hashing for non-unicast and unknown unicast L2 forwarding
+#modreg hash_control non_uc_trunk_hash_use_rtag7=1
+
+# Use RTAG7 for ECMP hash
+modreg hash_control ecmp_hash_use_rtag7=1
+
+modreg rtag7_hash_control hash_mode_a=3
+
+# RTAG7_HASH_FIELD_BMAP_{1,2}
+#     (use bins 2,3,4,5,6,8,9,10,11)
+modreg rtag7_hash_field_bmap_1 \
+       ipv4_field_bitmap_a=0b0111101111100
+modreg rtag7_hash_field_bmap_2 \
+       ipv6_field_bitmap_a=0b0111101111100
+
+# HASH_SEED_A
+# (32-bits) can be set differently at various levels to avoid polarization.
+setreg rtag7_hash_seed_a 42
+
+# Disable l2 entry deletes being recorded to l2_mod_fifo. was resulting in l2
+# entry bcm_l2_addr_delete failures b'cos of the mod fifo overflow.
+modreg aux_arb_control l2_mod_fifo_enable_l2_delete=0
+
+# remark_outer_dot1p is set to 1 by the sdk on all chips by default. currently 
+# rc.datapath overwrites it using the config in traffic.conf (which by default
+# turns off remark). however traffic.conf is currently not available on 
+# triumph; so we explicitly turn it off here. Reference bug: CM-2343
+modreg egr_vlan_control_1 remark_outer_dot1p=0
+

@@ -1,0 +1,6 @@
+check process smond with pidfile /var/run/smond.pid
+	    every 6 cycles
+        group networking
+        start program = "/etc/init.d/smond start"
+        stop program = "/etc/init.d/smond stop"
+        if 2 restarts within 3 cycles then unmonitor

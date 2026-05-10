@@ -1,0 +1,1221 @@
+[sudo] password for cumulus: 
+############################################################
+## 1. CPLD - direct register dump via /sys
+############################################################
+
+==== find CPLD device(s) ====
+/sys/devices/ff705000.localbus/ea000000.cpld
+/sys/bus/platform/drivers/accton_as5610_52x_cpld
+/sys/module/accton_as5610_52x_cpld
+
+==== CPLD sysfs attributes if any ====
+
+==== CPLD module info ====
+filename:       /lib/modules/3.2.60-1+deb7u1+cl2.5/extra/accton_as5610_52x_cpld.ko
+version:        1.0
+license:        GPL
+description:    CPLD driver for Accton Technology Corporation, AS5610_52X
+author:         Puneet Shenoy <puneet@cumulusnetworks.com>
+srcversion:     34773A0D6D6F29FE7C7CD18
+depends:        
+vermagic:       3.2.60-1+deb7u1+cl2.5 SMP mod_unload modversions 
+
+############################################################
+## 2. BCM internal registers - systematic dump
+############################################################
+
+==== CMIC registers ====
+CMIC_CONFIG                         = /usr/bin/tail.coreutils: option used in invalid context -- 1
+?
+CMIC_MISC_CONFIG                    = /usr/bin/tail.coreutils: option used in invalid context -- 1
+?
+CMIC_REVISION                       = /usr/bin/tail.coreutils: option used in invalid context -- 1
+?
+CMIC_BS_OFFSET                      = /usr/bin/tail.coreutils: option used in invalid context -- 1
+?
+CMIC_INTERRUPT_LO                   = /usr/bin/tail.coreutils: option used in invalid context -- 1
+?
+CMIC_INTERRUPT_HI                   = /usr/bin/tail.coreutils: option used in invalid context -- 1
+?
+CMIC_INTERRUPT_ENABLE_LO            = /usr/bin/tail.coreutils: option used in invalid context -- 1
+?
+CMIC_INTERRUPT_ENABLE_HI            = /usr/bin/tail.coreutils: option used in invalid context -- 1
+?
+CMIC_CMC_INTR_STAT                  = /usr/bin/tail.coreutils: option used in invalid context -- 1
+?
+CMIC_CMC_INTR_ENABLE                = /usr/bin/tail.coreutils: option used in invalid context -- 1
+?
+CMIC_LINK_STATUS                    = /usr/bin/tail.coreutils: option used in invalid context -- 1
+?
+CMIC_LINK_STATUS_CHG                = /usr/bin/tail.coreutils: option used in invalid context -- 1
+?
+CMIC_RATE_ADJUST                    = /usr/bin/tail.coreutils: option used in invalid context -- 1
+?
+CMIC_TXBUF_THRESHOLD                = /usr/bin/tail.coreutils: option used in invalid context -- 1
+?
+CMIC_RXBUF_THRESHOLD                = /usr/bin/tail.coreutils: option used in invalid context -- 1
+?
+CMIC_SBUS_TIMEOUT                   = /usr/bin/tail.coreutils: option used in invalid context -- 1
+?
+CMIC_SCHAN_CTRL                     = /usr/bin/tail.coreutils: option used in invalid context -- 1
+?
+CMIC_SOFT_RESET                     = /usr/bin/tail.coreutils: option used in invalid context -- 1
+?
+
+==== port 0 (CMIC) tables ====
+ERROR: Invalid block specified 
+
+############################################################
+## 3. PCI - full enumeration
+############################################################
+
+==== lspci tree ====
+-[0000:00]---00.0-[01]----00.0
+
+==== lspci -nn ====
+00:00.0 PCI bridge [0604]: Freescale Semiconductor Inc P2020 [1957:0071] (rev 21)
+01:00.0 Ethernet controller [0200]: Broadcom Corporation Device [14e4:b846] (rev 02)
+
+==== PCI BAR sizes ====
+00:00.0 PCI bridge: Freescale Semiconductor Inc P2020 (rev 21) (prog-if 00 [Normal decode])
+	Region 0: Memory at <ignored> (32-bit, non-prefetchable)
+01:00.0 Ethernet controller: Broadcom Corporation Device b846 (rev 02)
+	Region 0: Memory at a0000000 (64-bit, non-prefetchable) [size=256K]
+
+############################################################
+## 4. iProc (BCM internal ARM) - if accessible
+############################################################
+
+==== iProc check via mdio / cmicm ====
+Broadcom Command Monitor: Copyright (c) 1998-2010 Broadcom Corporation
+Release: sdk-6.3.8 built 20150108 (Thu Jan  8 19:42:14 2015)
+From build@monster-07.cumulusnetworks.com:/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/build/powerpc/bcm-sdk
+Platform: Cumulus_Networks_LLC
+OS: Unix (Posix)
+Chips:
+      
+      
+      
+      
+       BCM56634_A0, BCM56634_B0,
+      
+       BCM56840_A0,
+       BCM56840_B0,
+      
+      
+       BCM56640_A0,
+       BCM56850_A0,
+       BCM56340_A0,
+PHYs:  BCM5218, BCM5220/21, BCM5226, BCM5228,
+    BCM5238, BCM5248, BCM5324/FE, BCM5348/FE,
+    BCM53242/FE, BCM53262/FE, BCM53101/FE, BCM53280/FE,
+    BCM53600/FE, BCM5400, BCM5401, BCM5402,
+    BCM5404, BCM5424/34, BCM5411, BCM5461,
+    BCM5464, BCM5466, BCM5478, BCM5488,
+    BCM54980, BCM54980, BCM54980, BCM54980,
+    BCM53314, BCM5482/801x, BCM54684, BCM54640,
+    BCM54682E, BCM54684E, BCM54685, BCM54616,
+    BCM54618E, BCM54618SE, BCM84707, BCM84073,
+    BCM84074, BCM84728, BCM84748, BCM84727,
+    BCM84747, BCM84762, BCM84764, BCM84042,
+    BCM84044, BCM54210, BCM54220, BCM54280,
+    BCM54282, BCM54240, BCM54285, BCM5428X,
+    BCM54290, BCM54292, BCM54294, BCM54295,
+    BCM5421S, BCM54680, BCM53324, BCM53125
+    BCM53128, BCM53010, BCM53018, BCM5302X,
+    BCM54880, BCM54881, BCM54810, BCM54811,
+    BCM89500, BCM54640E, BCM54880E, BCM54680E,
+    BCM52681E, BCM8703, BCM8704, BCM8705/24/25,
+    BCM8706/8726, BCM8727, BCM8728/8747, BCM8072,
+    BCM8073, BCM8074, BCM8040, BCM8481X,
+    BCM84812, BCM84821, BCM84822, BCM84823,
+    BCM84833, BCM84834, BCM84835, BCM84836,
+    BCM84844, BCM84846, BCM84848, BCM84858,
+    BCM8750, BCM8752, BCM8754, BCM84740,
+    BCM84164, BCM84758, BCM84780, BCM84784,
+    BCM84318, BCM84328, BCM84793, BCM82328,
+    copper sfp
+   
+Unknown command: rev
+SHOW: Error: Invalid option socinfo
+Unknown command: iproc
+
+############################################################
+## 5. Switchd state - deep introspection
+############################################################
+
+==== switchd process status ====
+  PID  PPID CMD                             ELAPSED %CPU %MEM    VSZ   RSS
+14242     1 /usr/sbin/switchd -d           03:38:53 14.1  1.6  90680 33976
+
+==== switchd open files (cat list) ====
+75
+.
+..
+/dev/fuse
+/dev/linux-user-bde
+/dev/mem
+/dev/net/tun
+/dev/null
+/var/log/switchd.log
+0
+pipe:[28966]
+pipe:[29967]
+socket:[28967]
+socket:[28968]
+socket:[28969]
+socket:[28970]
+socket:[28971]
+socket:[28972]
+socket:[28974]
+socket:[28975]
+socket:[28976]
+socket:[29971]
+socket:[29972]
+socket:[29973]
+
+==== switchd memory maps ====
+Name:	switchd
+State:	S (sleeping)
+Tgid:	14242
+Pid:	14242
+PPid:	1
+TracerPid:	0
+Uid:	0	0	0	0
+Gid:	0	0	0	0
+FDSize:	256
+Groups:	0 27 
+VmPeak:	  157120 kB
+VmSize:	   90680 kB
+VmLck:	       0 kB
+VmPin:	       0 kB
+VmHWM:	   33976 kB
+VmRSS:	   33976 kB
+VmData:	   55616 kB
+VmStk:	     136 kB
+VmExe:	   24608 kB
+VmLib:	    3164 kB
+
+==== switchd network namespaces ====
+ipc
+net
+uts
+
+############################################################
+## 6. Per-port deep state for linked ports
+############################################################
+
+==== xe0 detailed ====
+  xe0(  1)   143  bff0    d1    d1              WC-B0/16/0     250000  
+Syntax error parsing "xe0"
+
+==== xe1 detailed ====
+  xe1(  2)   143  bff0    d1    d1              WC-B0/16/1     250000  
+Syntax error parsing "xe1"
+
+==== xe48 detailed ====
+ xe48( 49)   143  bff0    c1    c1              WC-B0/12/4     250000  
+Syntax error parsing "xe48"
+
+==== xe49 detailed ====
+ xe49( 50)   143  bff0    b5    b5              WC-B0/11/4     250000  
+Syntax error parsing "xe49"
+
+############################################################
+## 7. BCM tables - forwarding state
+############################################################
+
+==== MAC table ====
+
+==== VLAN table ====
+vlan 1	ports none (0x0000000000000000000000000000000000000000000000000000000000000000), untagged none (0x0000000000000000000000000000000000000000000000000000000000000000) MCAST_FLOOD_UNKNOWN
+vlan 3301	ports cpu,xe0 (0x0000000000000000000000000000000000000000000000000000000000000003), untagged xe0 (0x0000000000000000000000000000000000000000000000000000000000000002) MCAST_FLOOD_ALL
+vlan 3302	ports cpu,xe1 (0x0000000000000000000000000000000000000000000000000000000000000005), untagged xe1 (0x0000000000000000000000000000000000000000000000000000000000000004) MCAST_FLOOD_ALL
+vlan 3303	ports cpu,xe2 (0x0000000000000000000000000000000000000000000000000000000000000009), untagged xe2 (0x0000000000000000000000000000000000000000000000000000000000000008) MCAST_FLOOD_ALL
+vlan 3304	ports cpu,xe3 (0x0000000000000000000000000000000000000000000000000000000000000011), untagged xe3 (0x0000000000000000000000000000000000000000000000000000000000000010) MCAST_FLOOD_ALL
+vlan 3305	ports cpu,xe4 (0x0000000000000000000000000000000000000000000000000000000000000021), untagged xe4 (0x0000000000000000000000000000000000000000000000000000000000000020) MCAST_FLOOD_ALL
+vlan 3306	ports cpu,xe5 (0x0000000000000000000000000000000000000000000000000000000000000041), untagged xe5 (0x0000000000000000000000000000000000000000000000000000000000000040) MCAST_FLOOD_ALL
+vlan 3307	ports cpu,xe6 (0x0000000000000000000000000000000000000000000000000000000000000081), untagged xe6 (0x0000000000000000000000000000000000000000000000000000000000000080) MCAST_FLOOD_ALL
+vlan 3308	ports cpu,xe7 (0x0000000000000000000000000000000000000000000000000000000000000101), untagged xe7 (0x0000000000000000000000000000000000000000000000000000000000000100) MCAST_FLOOD_ALL
+vlan 3309	ports cpu,xe8 (0x0000000000000000000000000000000000000000000000000000000000000201), untagged xe8 (0x0000000000000000000000000000000000000000000000000000000000000200) MCAST_FLOOD_ALL
+vlan 3310	ports cpu,xe9 (0x0000000000000000000000000000000000000000000000000000000000000401), untagged xe9 (0x0000000000000000000000000000000000000000000000000000000000000400) MCAST_FLOOD_ALL
+vlan 3311	ports cpu,xe10 (0x0000000000000000000000000000000000000000000000000000000000000801), untagged xe10 (0x0000000000000000000000000000000000000000000000000000000000000800) MCAST_FLOOD_ALL
+vlan 3312	ports cpu,xe11 (0x0000000000000000000000000000000000000000000000000000000000001001), untagged xe11 (0x0000000000000000000000000000000000000000000000000000000000001000) MCAST_FLOOD_ALL
+vlan 3313	ports cpu,xe12 (0x0000000000000000000000000000000000000000000000000000000000002001), untagged xe12 (0x0000000000000000000000000000000000000000000000000000000000002000) MCAST_FLOOD_ALL
+vlan 3314	ports cpu,xe13 (0x0000000000000000000000000000000000000000000000000000000000004001), untagged xe13 (0x0000000000000000000000000000000000000000000000000000000000004000) MCAST_FLOOD_ALL
+vlan 3315	ports cpu,xe14 (0x0000000000000000000000000000000000000000000000000000000000008001), untagged xe14 (0x0000000000000000000000000000000000000000000000000000000000008000) MCAST_FLOOD_ALL
+vlan 3316	ports cpu,xe15 (0x0000000000000000000000000000000000000000000000000000000000010001), untagged xe15 (0x0000000000000000000000000000000000000000000000000000000000010000) MCAST_FLOOD_ALL
+vlan 3317	ports cpu,xe16 (0x0000000000000000000000000000000000000000000000000000000000020001), untagged xe16 (0x0000000000000000000000000000000000000000000000000000000000020000) MCAST_FLOOD_ALL
+vlan 3318	ports cpu,xe17 (0x0000000000000000000000000000000000000000000000000000000000040001), untagged xe17 (0x0000000000000000000000000000000000000000000000000000000000040000) MCAST_FLOOD_ALL
+vlan 3319	ports cpu,xe18 (0x0000000000000000000000000000000000000000000000000000000000080001), untagged xe18 (0x0000000000000000000000000000000000000000000000000000000000080000) MCAST_FLOOD_ALL
+vlan 3320	ports cpu,xe19 (0x0000000000000000000000000000000000000000000000000000000000100001), untagged xe19 (0x0000000000000000000000000000000000000000000000000000000000100000) MCAST_FLOOD_ALL
+vlan 3321	ports cpu,xe20 (0x0000000000000000000000000000000000000000000000000000000000200001), untagged xe20 (0x0000000000000000000000000000000000000000000000000000000000200000) MCAST_FLOOD_ALL
+vlan 3322	ports cpu,xe21 (0x0000000000000000000000000000000000000000000000000000000000400001), untagged xe21 (0x0000000000000000000000000000000000000000000000000000000000400000) MCAST_FLOOD_ALL
+vlan 3323	ports cpu,xe22 (0x0000000000000000000000000000000000000000000000000000000000800001), untagged xe22 (0x0000000000000000000000000000000000000000000000000000000000800000) MCAST_FLOOD_ALL
+vlan 3324	ports cpu,xe23 (0x0000000000000000000000000000000000000000000000000000000001000001), untagged xe23 (0x0000000000000000000000000000000000000000000000000000000001000000) MCAST_FLOOD_ALL
+vlan 3325	ports cpu,xe24 (0x0000000000000000000000000000000000000000000000000000000002000001), untagged xe24 (0x0000000000000000000000000000000000000000000000000000000002000000) MCAST_FLOOD_ALL
+vlan 3326	ports cpu,xe25 (0x0000000000000000000000000000000000000000000000000000000004000001), untagged xe25 (0x0000000000000000000000000000000000000000000000000000000004000000) MCAST_FLOOD_ALL
+vlan 3327	ports cpu,xe26 (0x0000000000000000000000000000000000000000000000000000000008000001), untagged xe26 (0x0000000000000000000000000000000000000000000000000000000008000000) MCAST_FLOOD_ALL
+vlan 3328	ports cpu,xe27 (0x0000000000000000000000000000000000000000000000000000000010000001), untagged xe27 (0x0000000000000000000000000000000000000000000000000000000010000000) MCAST_FLOOD_ALL
+vlan 3329	ports cpu,xe28 (0x0000000000000000000000000000000000000000000000000000000020000001), untagged xe28 (0x0000000000000000000000000000000000000000000000000000000020000000) MCAST_FLOOD_ALL
+
+==== STP state ====
+STG 0: contains 0 VLANs
+  Disable: xe
+STG 1: contains 53 VLANs (1,3301-3352)
+  Disable: xe2-xe47
+  Forward: xe0-xe1,xe48-xe51
+
+==== Multicast ====
+
+==== IP route table ====
+Unit 0, Total Number of IPv6 routes: 9
+	3 routes with a prefix mask length up to 64 bits
+	6 routes with a prefix mask longer than 64 bits
+Max number of ECMP paths 52
+#     VRF     Net addr                                     Next Hop Mac        INTF MODID PORT PRIO CLASS HIT VLAN
+512   0        fe80:0000:0000:0000:0000:0000:0000:0000/64  00:00:00:00:00:00 100002    0     0     0    0 n
+Unit 0, Total Number of IPv4 routes: 18
+#     VRF     Net addr             Next Hop Mac        INTF MODID PORT PRIO CLASS HIT VLAN
+2560  0        10.1.1.0/32          00:00:00:00:00:00 100002    0     0     0    2 n
+2560  0        10.1.1.212/32        00:00:00:00:00:00 100002    0     0     0    2 n
+2561  0        10.1.1.255/32        00:00:00:00:00:00 100002    0     0     0    2 n
+2561  0        10.101.101.0/32      00:00:00:00:00:00 100002    0     0     0    2 n
+2562  0        10.101.101.1/32      00:00:00:00:00:00 100002    0     0     0    2 y
+2562  0        10.101.101.7/32      00:00:00:00:00:00 100002    0     0     0    2 n
+2563  0        10.101.101.8/32      00:00:00:00:00:00 100002    0     0     0    2 n
+2563  0        10.101.101.10/32     00:00:00:00:00:00 100002    0     0     0    2 y
+2564  0        10.101.101.15/32     00:00:00:00:00:00 100002    0     0     0    2 n
+2564  0        10.101.101.241/32    00:00:00:00:00:00 100002    0     0     0    2 n
+2565  0        10.49.49.0/32        00:00:00:00:00:00 100002    0     0     0    2 n
+2565  0        10.49.49.1/32        00:00:00:00:00:00 100002    0     0     0    2 n
+2566  0        10.49.49.3/32        00:00:00:00:00:00 100002    0     0     0    2 n
+2691  0        10.49.49.0/30        00:00:00:00:00:00 100002    0     0     0    0 n
+2817  0        10.101.101.0/29      00:00:00:00:00:00 100002    0     0     0    0 n
+2817  0        10.101.101.8/29      00:00:00:00:00:00 100002    0     0     0    0 n
+3072  0        10.1.1.0/24          00:00:00:00:00:00 100002    0     0     0    0 n
+4096  0        0.0.0.0/0            00:00:00:00:00:00 100002    0     0     0    0 n
+
+==== L3 host table ====
+Unit 0, free IPv6 table entries: 8190
+Entry VRF IP address                                   Mac Address        INTF MOD PORT     CLASS HIT
+
+Unit 0, free L3 table entries: 16380
+Entry VRF IP address       Mac Address           INTF MOD PORT    CLASS HIT
+1     0    10.1.1.1         00:00:00:00:00:00  100002    0    0         0 n
+2     0    10.101.101.2     00:00:00:00:00:00  100003    0    0         0 n
+3     0    10.101.101.9     00:00:00:00:00:00  100004    0    0         0 n
+4     0    10.1.1.30        00:00:00:00:00:00  100002    0    0         0 n
+
+############################################################
+## 8. TCAM / Field processor
+############################################################
+
+==== FP (Field Processor) groups ====
+Usage (FieldProcessor):  Where <cmd> is:
+	action <add|get|remove> <eid> [act] [p0] [p1]
+	action ports <add|get> <eid> <act> [<pbmp>]
+	action mac <add|get> <eid> <act> [<mac>]
+	aset <add|delete|show|clear> <gid> [action|action list]
+	control <ctrl_num> [<status>]
+	detach
+	entry create <gid> [<eid>]
+	entry copy <src_eid> [<dst_eid>]
+	entry install|reinstall|remove|destroy <eid>
+	entry enable|disable <eid>
+	entry prio <eid> [highest|lowest|dontcare|default|<priority>]
+	entry oper <eid> [backup|restore|cleanup]
+	group create <pri> [<gid>] [mode] [pbmp] [size]
+	group destroy|get|set <gid>
+	group compress <gid>
+	init
+	list actions|qualifiers [stage]
+	range create [<rid>] [<flags>] [<min>] [<max>]
+	range group create [<rid>] [<flags>] [<min>] [<max>] [<group>]
+	range get|destroy <rid>
+	resync
+	policer create PolId=<polcerid> mode=<mode> cbs=<cbs> 
+	        cir=<cir> ebs=<ebs> eir=<eir> ColorBlind=<bool> 
+	        ColorMergeOr=<bool> PacketBased=<bool>
+	policer set PolId=<polcerid> mode=<mode> cbs=<cbs> 
+	        cir=<cir> ebs=<ebs> eir=<eir> ColorBlind=<bool> 
+	        ColorMergeOr=<bool> PacketBased=<bool>
+	policer destroy [all] or PolId=<polcerid>] 
+	policer attach entry=<eid> level=<level> PolId=<polcerid> 
+
+==== FP entries (slices) ====
+
+############################################################
+## 9. EEPROMs - read everything
+############################################################
+
+==== system EEPROM (decode-syseeprom) ====
+TlvInfo Header:
+   Id String:    TlvInfo
+   Version:      1
+   Total Length: 171
+TLV Name             Code Len Value
+-------------------- ---- --- -----
+Serial Number        0x23  14 561052X1916063
+Label Revision       0x27   4 R02B
+Platform Name        0x28  28 powerpc-accton_as5610_52x-r0
+Manufacturer         0x2B   6 Accton
+Manufacture Country  0x2C   2 TW
+Vendor Name          0x2D   8 Edgecore
+Diag Version         0x2E   8 0.0.0.13
+Base MAC Address     0x24   6 80:A2:35:81:CA:AE
+Part Number          0x22  13 FP1ZZ5652045A
+Product Name         0x21  16 5610-52X-OI-AC-F
+Manufacture Date     0x25  19 05/25/2019 08:39:38
+MAC Addresses        0x2A   2 65
+ONIE Version         0x29  13 2017.02.00.07
+CRC-32               0xFE   4 0xAF059140
+(checksum valid)
+
+==== system EEPROM raw ====
+
+==== SFP+ EEPROMs (A0 page = ID, A2 page = DOM) for all 48 SFP+ slots ====
+i2c-18 (sff8436): size=640 vendor="\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"
+i2c-19 (sff8436): size=640 vendor="\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"
+i2c-20 (sff8436): size=640 vendor="\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"
+i2c-21 (sff8436): size=640 vendor="\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"
+i2c-22 (24c04): size=512 vendor="FINISARCORP."
+i2c-23 (24c04): size=512 vendor="FINISARCORP."
+i2c-24 (24c04): size=512 vendor="FINISARCORP."
+i2c-25 (24c04): size=512 vendor=""
+i2c-26 (24c04): size=512 vendor=""
+i2c-27 (24c04): size=512 vendor=""
+i2c-28 (24c04): size=512 vendor=""
+i2c-29 (24c04): size=512 vendor=""
+i2c-30 (24c04): size=512 vendor=""
+i2c-31 (24c04): size=512 vendor=""
+i2c-32 (24c04): size=512 vendor=""
+i2c-33 (24c04): size=512 vendor=""
+i2c-34 (24c04): size=512 vendor=""
+i2c-35 (24c04): size=512 vendor=""
+i2c-36 (24c04): size=512 vendor=""
+i2c-37 (24c04): size=512 vendor=""
+i2c-38 (24c04): size=512 vendor=""
+i2c-39 (24c04): size=512 vendor=""
+i2c-40 (24c04): size=512 vendor=""
+i2c-41 (24c04): size=512 vendor=""
+i2c-42 (24c04): size=512 vendor=""
+i2c-43 (24c04): size=512 vendor=""
+i2c-44 (24c04): size=512 vendor=""
+i2c-45 (24c04): size=512 vendor=""
+i2c-46 (24c04): size=512 vendor=""
+i2c-47 (24c04): size=512 vendor=""
+i2c-48 (24c04): size=512 vendor=""
+i2c-49 (24c04): size=512 vendor=""
+i2c-50 (24c04): size=512 vendor=""
+i2c-51 (24c04): size=512 vendor=""
+i2c-52 (24c04): size=512 vendor=""
+i2c-53 (24c04): size=512 vendor=""
+i2c-54 (24c04): size=512 vendor=""
+i2c-55 (24c04): size=512 vendor=""
+i2c-56 (24c04): size=512 vendor=""
+i2c-57 (24c04): size=512 vendor=""
+i2c-58 (24c04): size=512 vendor=""
+i2c-59 (24c04): size=512 vendor=""
+i2c-60 (24c04): size=512 vendor=""
+i2c-61 (24c04): size=512 vendor=""
+i2c-62 (24c04): size=512 vendor=""
+i2c-63 (24c04): size=512 vendor=""
+i2c-64 (24c04): size=512 vendor=""
+i2c-65 (24c04): size=512 vendor=""
+i2c-66 (24c04): size=512 vendor=""
+i2c-67 (24c04): size=512 vendor=""
+i2c-68 (24c04): size=512 vendor=""
+i2c-69 (24c04): size=512 vendor=""
+
+############################################################
+## 10. U-Boot environment
+############################################################
+/usr/sbin/fw_printenv
+
+==== fw_env.config ====
+# MTD device name       Device offset   Env. size       Flash sector size
+/dev/mtd1               0x00000000      0x00010000         0x00010000
+
+==== all U-Boot env vars ====
+baudrate=115200
+bootcmd=run check_boot_reason; run nos_bootcmd; run onie_bootcmd
+check_boot_reason=if test -n $onie_boot_reason; then setenv onie_bootargs boot_reason=$onie_boot_reason; run onie_bootcmd; fi;
+consoledev=ttyS0
+dhcp_user-class=powerpc-accton_as5610_52x-r0_uboot
+dhcp_vendor-class-identifier=powerpc-accton_as5610_52x-r0
+ethact=eth0
+ethaddr=80:A2:35:81:CA:AE
+ethprime=eth0
+gatewayip=192.168.1.10
+hostname=as5610_52x-unknown
+ipaddr=192.168.1.10
+loadaddr=0x2000000
+loads_echo=1
+netmask=255.255.255.0
+onie_args=run onie_initargs onie_platformargs
+onie_bootcmd=echo Loading Open Network Install Environment ...; echo Platform: $onie_platform ; echo Version : $onie_version ; cp.b $onie_start $loadaddr ${onie_sz.b} && run onie_args && bootm ${loadaddr}
+onie_initargs=setenv bootargs quiet console=$consoledev,$baudrate
+onie_machine=accton_as5610_52x
+onie_machine_rev=0
+onie_platform=powerpc-accton_as5610_52x-r0
+onie_platformargs=setenv bootargs $bootargs serial_num=${serial#} eth_addr=$ethaddr $onie_bootargs $onie_debugargs 
+onie_rescue=setenv onie_boot_reason rescue && boot
+onie_start=0xefc00000
+onie_sz.b=0x00360000
+onie_uninstall=setenv onie_boot_reason uninstall && boot
+onie_update=setenv onie_boot_reason update && boot
+onie_vendor_id=259
+onie_version=2017.02.00.07
+pcidelay=1000
+platform=powerpc-accton_as5610_52x-r0
+serial#=561052X1916063
+serverip=192.168.1.99
+ver=U-Boot 2013.01.01-gb4d916c (Jun 06 2017 - 10:45:46) - 3.0.3.15
+onie_dropbear_rsa_host_key=begin-base64@600@r#AAAAB3NzaC1yc2EAAAADAQABAAAAgQCHA96F/tcRQq3Jq2mhPlpyg3NjdY8j#/b2mS50YjWhSJUBsYXPzlz5iwK3U7pBb6HW/QDkilsMC3nHnBPU/ZuDgcaUz#V9Q4gaUO9AXWpp4GRn9lq0MVQIVjn31EwY7e6m/do7gjD5yZ/h5EQyD7Nq6q#q2x2Io3n1ZxTh3d281ZYewAAAIAONHmCho6RHyn9WFQGO3MKWPXYcS4XXs3H#w8J/qqJfANKs3ySdwdFgqXNV6P2g4IMW6pu4SGgJvWaleYTmCp2+crxBymCR#h4F3D9W6vau4H5lyOUgH4f9UCGhXfYbAGTpEOApKLW1P8S2fKTLC6yrQ7EdY#TKVfhTkvE5x7tZTBeQAAAEEApHZd76k7DIyUgrFw+hBgeag7W9Gu4eOtB/0g#lHdijKFJyhh3TZ4lZKUa31idOpJFwxuUYR6VwMYXm+29KfUNEwAAAEEA0ims#BGY5ZZ0Z6zIoGhMY+exKindXIkxE/ENPz94+Na7w1KLM1I7eGPdzVGCvMpSf#NNm2UrCKjHXKYSlnu4n7+Q==#====#
+onie_dropbear_dss_host_key=begin-base64@600@d#AAAAB3NzaC1kc3MAAACBALtp8kBm3mb73pLs1/EYhBG5wAqRbPqTQQPrsUyX#hMqCr2oLNw9Zrdtg35t0xfNXWZ60WjOGXFeojwQt5lg3FetcFPrv9VJKDdwI#KIwlhlgVkEblWI4AY3xhEQHegbhRWz7ByUL6Rw/pw3M2v/2cUK1Lb6PdUIYa#JjJ2QhqIs3jLAAAAFQDuPh2AWKMRy3qyZZnZgzAW2BFohwAAAIBicL3TS5lN#HUDvUowQ6DsocEpUzML3YqyTnzMrM1A8CufHVUGgInReS5F6/OJjpz6BAThh#SCACCNwmAVYvwqu+qomtvhq+OnuvFpY6GrLjmojR3BX5+kzpPhAAvY1fTBVH#Twsb+/19eJWQlNYafJe7EKPWYppqCIfSEO4f2VWgdwAAAIBY3DTZYSQNmGA9#3N1E0KlAwwx3dZt2KcNV/l7Ti1dwWyb/nyzg0VBTQ/pxJNVq6NEQ1HWySNKf#pSGYv8xxUk0Eey+npeSDb2L5U/WCxvLaYTi4nJwpdX0cH9lk6YH28UrMWkTt#G8ruHt5xKBBuipXlBHhj0bLVqkVj398lFtJy1wAAABQnOtbinQ1jtYs+EzA5#cllfcOKlNg==#====#
+fdt_high=0xffffffff
+initrd_high=0xffffffff
+boot_count=0
+slot_state1=0
+cl.ver1=2.5.0-199c587-201501081931-build
+slot_state2=0
+cl.ver2=2.5.0-199c587-201501081931-build
+env_version=1
+nos_bootcmd=if test -n $bootsource; then run lbootcmd; else run bootorder1; fi
+lbootcmd=echo ** local boot **;if test $bootsource = flashboot; then run flashboot; else dhcp; tftpboot $bootsource && source $loadaddr; fi; sleep 1 && run bootorder1
+bootorder1=echo ** trying ${ethaddr}.img **; dhcp; tftpboot $loadaddr ${ethaddr}.img; if imi $loadaddr; then source $loadaddr || bootm ${loadaddr}#${cl.platform}; fi; sleep 1 && run bootorder2
+bootorder2=echo ** trying DHCP bootfile **; dhcp; tftpboot $loadaddr $bootfile; if imi $loadaddr; then source $loadaddr || bootm ${loadaddr}#${cl.platform}; fi; sleep 1 && run bootorder3
+bootorder3=echo ** trying ${cl.platform}.img **; tftpboot ${cl.platform}.img; if imi $loadaddr; then source $loadaddr || bootm ${loadaddr}#${cl.platform}; fi; sleep 1 && run bootorder4
+bootorder4=echo ** trying primary image **; run flashboot; sleep 1 && run bootorder5
+bootorder5=echo ** trying alternate image **; run flashboot_alt; sleep 1 && run bootorder1
+bootdelay=3
+autoload=no
+initargs=setenv bootargs quiet console=$consoledev,$baudrate $lbootargs $debugargs
+set_active1=setenv bootargs ${bootargs} active=1; run hw_active1
+set_active2=setenv bootargs ${bootargs} active=2; run hw_active2
+boot_active=if test ${cl.active} = 1; then run set_active1; else run set_active2; fi
+boot_alt=if test ${cl.active} = 1; then run set_active2; else run set_active1; fi
+flashboot=echo "Booting primary image..." && run initargs boot_active
+flashboot_alt=echo "Booting alternate image..." && run initargs boot_alt
+
+############################################################
+## 11. /proc/device-tree (PowerPC FDT)
+############################################################
+
+==== model + compatible ====
+
+==== top-level nodes ====
+#address-cells
+#size-cells
+aliases
+bcm_dma
+chosen
+compatible
+cpus
+interrupt-parent
+localbus@ff705000
+memory
+model
+name
+pcie@ff70a000
+soc@ff700000
+
+==== soc node summary ====
+#address-cells
+#size-cells
+bus-frequency
+compatible
+device_type
+ethernet@24000
+global-utilities@e0000
+i2c@3000
+i2c@3100
+l2-cache-controller@20000
+mdio@24520
+memory-controller@2000
+name
+pic@40000
+ranges
+serial@4500
+usb@22000
+
+############################################################
+## 12. Kernel state
+############################################################
+
+==== command line ====
+quiet console=ttyS0,115200 active=1
+
+==== modules with parameters ====
+
+############################################################
+## 13. dmesg full boot
+############################################################
+number of CFI chips: 1
+[    0.315105] Reducing visibility of 8192KiB chip to 4096KiB
+[    0.316436] 4 ofpart partitions found on MTD device efc00000.flash
+[    0.316443] Creating 4 MTD partitions on "efc00000.flash":
+[    0.316452] 0x000000000000-0x000000360000 : "onie"
+[    0.316859] 0x000000360000-0x000000370000 : "uboot-env"
+[    0.317169] 0x000000370000-0x000000380000 : "board_eeprom"
+[    0.317478] 0x000000380000-0x000000400000 : "uboot"
+[    0.317959] bonding: Ethernet Channel Bonding Driver: v3.7.1 (April 27, 2011)
+[    0.318433] Freescale PowerQUICC MII Bus: probed
+[    0.319752] fsl-gianfar ff724000.ethernet: eth0: mac: 80:a2:35:81:ca:ae
+[    0.319761] fsl-gianfar ff724000.ethernet: eth0: Running with NAPI enabled
+[    0.319769] fsl-gianfar ff724000.ethernet: eth0: RX BD ring size for Q[0]: 256
+[    0.319777] fsl-gianfar ff724000.ethernet: eth0: TX BD ring size for Q[0]: 256
+[    0.319792] ehci_hcd: USB 2.0 'Enhanced' Host Controller (EHCI) Driver
+[    0.319912] fsl-ehci fsl-ehci.0: Freescale On-Chip EHCI Host Controller
+[    0.319929] fsl-ehci fsl-ehci.0: new USB bus registered, assigned bus number 1
+[    0.340638] fsl-ehci fsl-ehci.0: irq 28, io mem 0xff722000
+[    0.346615] fsl-ehci fsl-ehci.0: USB 2.0 started, EHCI 1.00
+[    0.346664] usb usb1: New USB device found, idVendor=1d6b, idProduct=0002
+[    0.346672] usb usb1: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+[    0.346678] usb usb1: Product: Freescale On-Chip EHCI Host Controller
+[    0.346685] usb usb1: Manufacturer: Linux 3.2.60-1+deb7u1+cl2.5 ehci_hcd
+[    0.346691] usb usb1: SerialNumber: fsl-ehci.0
+[    0.346822] hub 1-0:1.0: USB hub found
+[    0.346838] hub 1-0:1.0: 1 port detected
+[    0.346935] Initializing USB Mass Storage driver...
+[    0.346984] usbcore: registered new interface driver usb-storage
+[    0.346989] USB Mass Storage support registered.
+[    0.347033] usbcore: registered new interface driver usbserial
+[    0.347039] usbserial: USB Serial Driver core
+[    0.347075] i2c /dev entries driver
+[    0.347182] mpc-i2c ff703000.i2c: timeout 10000 us
+[    0.347901] mpc-i2c ff703100.i2c: timeout 10000 us
+[    0.349668] i2c i2c-0: Added multiplexed i2c bus 2
+[    0.350172] rtc-pcf8563 2-0051: chip found, driver version 0.4.3
+[    0.351249] rtc-pcf8563 2-0051: rtc core: registered rtc-pcf8563 as rtc0
+[    0.351316] i2c i2c-0: Added multiplexed i2c bus 3
+[    0.352852] i2c i2c-0: Added multiplexed i2c bus 4
+[    0.354915] i2c i2c-0: Added multiplexed i2c bus 5
+[    0.354984] i2c i2c-0: Added multiplexed i2c bus 6
+[    0.355038] i2c i2c-0: Added multiplexed i2c bus 7
+[    0.355092] i2c i2c-0: Added multiplexed i2c bus 8
+[    0.355151] i2c i2c-0: Added multiplexed i2c bus 9
+[    0.356128] pca954x 0-0070: registered 8 multiplexed busses for I2C switch pca9548
+[    0.356327] i2c i2c-1: Added multiplexed i2c bus 10
+[    0.356927] i2c i2c-1: Added multiplexed i2c bus 11
+[    0.357458] i2c i2c-1: Added multiplexed i2c bus 12
+[    0.358018] i2c i2c-1: Added multiplexed i2c bus 13
+[    0.358505] pca954x 1-0075: registered 4 multiplexed busses for I2C switch pca9546
+[    0.358706] i2c i2c-1: Added multiplexed i2c bus 14
+[    0.359252] i2c i2c-1: Added multiplexed i2c bus 15
+[    0.359870] i2c i2c-1: Added multiplexed i2c bus 16
+[    0.362871] i2c i2c-1: Added multiplexed i2c bus 17
+[    0.364304] pca954x 1-0076: registered 4 multiplexed busses for I2C switch pca9546
+[    0.364505] i2c i2c-1: Added multiplexed i2c bus 18
+[    0.365533] i2c i2c-1: Added multiplexed i2c bus 19
+[    0.366648] i2c i2c-1: Added multiplexed i2c bus 20
+[    0.367679] i2c i2c-1: Added multiplexed i2c bus 21
+[    0.368670] pca954x 1-0077: registered 4 multiplexed busses for I2C switch pca9546
+[    0.369128] i2c i2c-10: Added multiplexed i2c bus 22
+[    0.370177] i2c i2c-10: Added multiplexed i2c bus 23
+[    0.371213] i2c i2c-10: Added multiplexed i2c bus 24
+[    0.372314] i2c i2c-10: Added multiplexed i2c bus 25
+[    0.373342] i2c i2c-10: Added multiplexed i2c bus 26
+[    0.373909] i2c i2c-10: Added multiplexed i2c bus 27
+[    0.374454] i2c i2c-10: Added multiplexed i2c bus 28
+[    0.375082] i2c i2c-10: Added multiplexed i2c bus 29
+[    0.375575] pca954x 10-0074: registered 8 multiplexed busses for I2C switch pca9548
+[    0.376017] i2c i2c-11: Added multiplexed i2c bus 30
+[    0.377070] i2c i2c-11: Added multiplexed i2c bus 31
+[    0.378163] i2c i2c-11: Added multiplexed i2c bus 32
+[    0.379197] i2c i2c-11: Added multiplexed i2c bus 33
+[    0.380248] i2c i2c-11: Added multiplexed i2c bus 34
+[    0.380874] i2c i2c-11: Added multiplexed i2c bus 35
+[    0.381426] i2c i2c-11: Added multiplexed i2c bus 36
+[    0.381991] i2c i2c-11: Added multiplexed i2c bus 37
+[    0.382485] pca954x 11-0074: registered 8 multiplexed busses for I2C switch pca9548
+[    0.382932] i2c i2c-12: Added multiplexed i2c bus 38
+[    0.384039] i2c i2c-12: Added multiplexed i2c bus 39
+[    0.385088] i2c i2c-12: Added multiplexed i2c bus 40
+[    0.386128] i2c i2c-12: Added multiplexed i2c bus 41
+[    0.387222] i2c i2c-12: Added multiplexed i2c bus 42
+[    0.387780] i2c i2c-12: Added multiplexed i2c bus 43
+[    0.388315] i2c i2c-12: Added multiplexed i2c bus 44
+[    0.388872] i2c i2c-12: Added multiplexed i2c bus 45
+[    0.389361] pca954x 12-0074: registered 8 multiplexed busses for I2C switch pca9548
+[    0.389809] i2c i2c-13: Added multiplexed i2c bus 46
+[    0.390870] i2c i2c-13: Added multiplexed i2c bus 47
+[    0.391906] i2c i2c-13: Added multiplexed i2c bus 48
+[    0.392992] i2c i2c-13: Added multiplexed i2c bus 49
+[    0.394029] i2c i2c-13: Added multiplexed i2c bus 50
+[    0.394571] i2c i2c-13: Added multiplexed i2c bus 51
+[    0.395138] i2c i2c-13: Added multiplexed i2c bus 52
+[    0.395713] i2c i2c-13: Added multiplexed i2c bus 53
+[    0.396217] pca954x 13-0074: registered 8 multiplexed busses for I2C switch pca9548
+[    0.396678] i2c i2c-14: Added multiplexed i2c bus 54
+[    0.397714] i2c i2c-14: Added multiplexed i2c bus 55
+[    0.398818] i2c i2c-14: Added multiplexed i2c bus 56
+[    0.399872] i2c i2c-14: Added multiplexed i2c bus 57
+[    0.400927] i2c i2c-14: Added multiplexed i2c bus 58
+[    0.401476] i2c i2c-14: Added multiplexed i2c bus 59
+[    0.402123] i2c i2c-14: Added multiplexed i2c bus 60
+[    0.402705] i2c i2c-14: Added multiplexed i2c bus 61
+[    0.403201] pca954x 14-0074: registered 8 multiplexed busses for I2C switch pca9548
+[    0.403669] i2c i2c-15: Added multiplexed i2c bus 62
+[    0.404719] i2c i2c-15: Added multiplexed i2c bus 63
+[    0.405768] i2c i2c-15: Added multiplexed i2c bus 64
+[    0.406812] i2c i2c-15: Added multiplexed i2c bus 65
+[    0.407914] i2c i2c-15: Added multiplexed i2c bus 66
+[    0.408965] i2c i2c-15: Added multiplexed i2c bus 67
+[    0.410013] i2c i2c-15: Added multiplexed i2c bus 68
+[    0.411116] i2c i2c-15: Added multiplexed i2c bus 69
+[    0.412090] pca954x 15-0074: registered 8 multiplexed busses for I2C switch pca9548
+[    0.412341] sdhci: Secure Digital Host Controller Interface driver
+[    0.412346] sdhci: Copyright(c) Pierre Ossman
+[    0.412351] sdhci-pltfm: SDHCI platform and OF driver helper
+[    0.412445] oprofile: using ppc/e500 performance monitoring.
+[    0.413060] ip_tables: (C) 2000-2006 Netfilter Core Team
+[    0.413122] TCP cubic registered
+[    0.413350] NET: Registered protocol family 10
+[    0.415017] ip6_tables: (C) 2000-2006 Netfilter Core Team
+[    0.415072] NET: Registered protocol family 17
+[    0.415089] NET: Registered protocol family 15
+[    0.415207] Bridge firewalling registered
+[    0.415216] Ebtables v2.0 registered
+[    0.415260] Registering the dns_resolver key type
+[    0.415314] registered taskstats version 1
+[    0.416593] rtc-pcf8563 2-0051: setting system clock to 2026-05-10 16:16:10 UTC (1778429770)
+[    0.416646] port family register OK
+[    0.416656] port mc group register OK
+[    0.417261] Freeing unused kernel memory: 280k freed
+[    0.648629] usb 1-1: new high-speed USB device number 2 using fsl-ehci
+[    0.762930] usb 1-1: New USB device found, idVendor=0424, idProduct=2513
+[    0.762939] usb 1-1: New USB device strings: Mfr=0, Product=0, SerialNumber=0
+[    0.763207] hub 1-1:1.0: USB hub found
+[    0.763297] hub 1-1:1.0: 3 ports detected
+[    1.036668] usb 1-1.3: new high-speed USB device number 3 using fsl-ehci
+[    1.124911] usb 1-1.3: New USB device found, idVendor=13fe, idProduct=4100
+[    1.124921] usb 1-1.3: New USB device strings: Mfr=1, Product=2, SerialNumber=3
+[    1.124928] usb 1-1.3: Product: USB DISK 2.0
+[    1.124933] usb 1-1.3: Manufacturer:         
+[    1.124939] usb 1-1.3: SerialNumber: 7F009544DA7CFA01
+[    1.125336] scsi0 : usb-storage 1-1.3:1.0
+[    2.128694] scsi 0:0:0:0: Direct-Access              USB DISK 2.0     PMAP PQ: 0 ANSI: 6
+[    2.129761] sd 0:0:0:0: [sda] 7831552 512-byte logical blocks: (4.00 GB/3.73 GiB)
+[    2.130637] sd 0:0:0:0: [sda] Write Protect is off
+[    2.130646] sd 0:0:0:0: [sda] Mode Sense: 23 00 00 00
+[    2.131501] sd 0:0:0:0: [sda] No Caching mode page found
+[    2.136841] sd 0:0:0:0: [sda] Assuming drive cache: write through
+[    2.145634] sd 0:0:0:0: [sda] No Caching mode page found
+[    2.150961] sd 0:0:0:0: [sda] Assuming drive cache: write through
+[    2.160005]  sda: sda1 sda2 < sda5 sda6 sda7 sda8 > sda3
+[    2.163370] sd 0:0:0:0: [sda] No Caching mode page found
+[    2.168706] sd 0:0:0:0: [sda] Assuming drive cache: write through
+[    2.174817] sd 0:0:0:0: [sda] Attached SCSI disk
+[    4.909218] linux-kernel-bde (559): Payload size of 256 bytes may not be supported by all PCIe bridges by default.
+[    5.105069] tun: Universal TUN/TAP device driver, 1.6
+[    5.105078] tun: (C) 1999-2004 Max Krasnyansky <maxk@qualcomm.com>
+[    5.152877] linux-kernel-bde 0000:01:00.0: created sysfs groups as hwmon0
+[    5.185397] accton_as5610_52x_cpld ea000000.cpld: probed & iomapped @ 0xf16d7a84
+[    5.252974] at24 3-003a: 256 byte 24c02 EEPROM, read-only, 0 bytes/write
+[    5.253014] at24 3-003e: 256 byte 24c02 EEPROM, read-only, 0 bytes/write
+[    5.253049] at24 3-0078: 256 byte 24c02 EEPROM, read-only, 0 bytes/write
+[    5.253085] at24 4-000c: 256 byte 24c02 EEPROM, read-only, 0 bytes/write
+[    5.253125] at24 4-0039: 256 byte 24c02 EEPROM, read-only, 0 bytes/write
+[    5.253161] at24 4-003d: 256 byte 24c02 EEPROM, read-only, 0 bytes/write
+[    5.253197] at24 4-0078: 256 byte 24c02 EEPROM, read-only, 0 bytes/write
+[    5.253302] at24 22-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.253372] at24 23-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.253440] at24 24-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.253508] at24 25-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.253583] at24 26-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.253671] at24 27-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.253740] at24 28-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.253812] at24 29-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.253884] at24 30-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.253957] at24 31-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.254026] at24 32-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.254094] at24 33-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.254165] at24 34-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.254237] at24 35-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.254304] at24 36-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.254385] at24 37-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.254460] at24 38-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.254541] at24 39-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.254654] at24 40-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.254729] at24 41-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.254797] at24 42-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.254873] at24 43-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.254941] at24 44-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.255007] at24 45-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.255094] at24 46-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.255177] at24 47-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.255262] at24 48-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.255345] at24 49-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.255417] at24 50-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.255501] at24 51-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.255581] at24 52-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.255685] at24 53-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+
+############################################################
+## 14. /var/log syslog highlights
+############################################################
+/usr/bin/tail.coreutils: option used in invalid context -- 1
+
+############################################################
+## 15. Routing / quagga / zebra
+############################################################
+
+==== kernel routing ====
+default via 10.1.1.1 dev eth0 
+10.1.1.0/24 dev eth0  proto kernel  scope link  src 10.1.1.212 
+10.49.49.0/30 dev swp49  proto kernel  scope link  src 10.49.49.1 
+10.101.101.0/29 dev swp1  proto kernel  scope link  src 10.101.101.1 
+10.101.101.8/29 dev swp2  proto kernel  scope link  src 10.101.101.10 
+
+==== any zebra/quagga config ====
+bgpd.conf
+daemons
+debian.conf
+ospf6d.conf
+ospfd.conf
+vtysh.conf
+zebra.conf
+hostname zebra
+password cn321
+enable password cn321
+log file /var/log/quagga/zebra.log
+hostname ospfd
+password cn321
+enable password cn321
+log timestamp precision 6
+log file /var/log/quagga/ospfd.log
+
+############################################################
+## 16. Network interfaces
+############################################################
+
+==== all interfaces summary ====
+lo           UNKNOWN  00:00:00:00:00:00  <LOOPBACK,UP,LOWER_UP>
+eth0         UP       80:a2:35:81:ca:ae  <BROADCAST,MULTICAST,UP,LOWER_UP>
+swp1         UP       80:a2:35:81:ca:af  <BROADCAST,MULTICAST,UP,LOWER_UP>
+swp2         UP       80:a2:35:81:ca:b0  <BROADCAST,MULTICAST,UP,LOWER_UP>
+swp3         DOWN     80:a2:35:81:ca:b1  <BROADCAST,MULTICAST>
+swp4         DOWN     80:a2:35:81:ca:b2  <BROADCAST,MULTICAST>
+swp5         DOWN     80:a2:35:81:ca:b3  <BROADCAST,MULTICAST>
+swp6         DOWN     80:a2:35:81:ca:b4  <BROADCAST,MULTICAST>
+swp7         DOWN     80:a2:35:81:ca:b5  <BROADCAST,MULTICAST>
+swp8         DOWN     80:a2:35:81:ca:b6  <BROADCAST,MULTICAST>
+swp9         DOWN     80:a2:35:81:ca:b7  <BROADCAST,MULTICAST>
+swp10        DOWN     80:a2:35:81:ca:b8  <BROADCAST,MULTICAST>
+swp11        DOWN     80:a2:35:81:ca:b9  <BROADCAST,MULTICAST>
+swp12        DOWN     80:a2:35:81:ca:ba  <BROADCAST,MULTICAST>
+swp13        DOWN     80:a2:35:81:ca:bb  <BROADCAST,MULTICAST>
+swp14        DOWN     80:a2:35:81:ca:bc  <BROADCAST,MULTICAST>
+swp15        DOWN     80:a2:35:81:ca:bd  <BROADCAST,MULTICAST>
+swp16        DOWN     80:a2:35:81:ca:be  <BROADCAST,MULTICAST>
+swp17        DOWN     80:a2:35:81:ca:bf  <BROADCAST,MULTICAST>
+swp18        DOWN     80:a2:35:81:ca:c0  <BROADCAST,MULTICAST>
+swp19        DOWN     80:a2:35:81:ca:c1  <BROADCAST,MULTICAST>
+swp20        DOWN     80:a2:35:81:ca:c2  <BROADCAST,MULTICAST>
+swp21        DOWN     80:a2:35:81:ca:c3  <BROADCAST,MULTICAST>
+swp22        DOWN     80:a2:35:81:ca:c4  <BROADCAST,MULTICAST>
+swp23        DOWN     80:a2:35:81:ca:c5  <BROADCAST,MULTICAST>
+swp24        DOWN     80:a2:35:81:ca:c6  <BROADCAST,MULTICAST>
+swp25        DOWN     80:a2:35:81:ca:c7  <BROADCAST,MULTICAST>
+swp26        DOWN     80:a2:35:81:ca:c8  <BROADCAST,MULTICAST>
+swp27        DOWN     80:a2:35:81:ca:c9  <BROADCAST,MULTICAST>
+swp28        DOWN     80:a2:35:81:ca:ca  <BROADCAST,MULTICAST>
+swp29        DOWN     80:a2:35:81:ca:cb  <BROADCAST,MULTICAST>
+swp30        DOWN     80:a2:35:81:ca:cc  <BROADCAST,MULTICAST>
+swp31        DOWN     80:a2:35:81:ca:cd  <BROADCAST,MULTICAST>
+swp32        DOWN     80:a2:35:81:ca:ce  <BROADCAST,MULTICAST>
+swp33        DOWN     80:a2:35:81:ca:cf  <BROADCAST,MULTICAST>
+swp34        DOWN     80:a2:35:81:ca:d0  <BROADCAST,MULTICAST>
+swp35        DOWN     80:a2:35:81:ca:d1  <BROADCAST,MULTICAST>
+swp36        DOWN     80:a2:35:81:ca:d2  <BROADCAST,MULTICAST>
+swp37        DOWN     80:a2:35:81:ca:d3  <BROADCAST,MULTICAST>
+swp38        DOWN     80:a2:35:81:ca:d4  <BROADCAST,MULTICAST>
+swp39        DOWN     80:a2:35:81:ca:d5  <BROADCAST,MULTICAST>
+swp40        DOWN     80:a2:35:81:ca:d6  <BROADCAST,MULTICAST>
+swp41        DOWN     80:a2:35:81:ca:d7  <BROADCAST,MULTICAST>
+swp42        DOWN     80:a2:35:81:ca:d8  <BROADCAST,MULTICAST>
+swp43        DOWN     80:a2:35:81:ca:d9  <BROADCAST,MULTICAST>
+swp44        DOWN     80:a2:35:81:ca:da  <BROADCAST,MULTICAST>
+swp45        DOWN     80:a2:35:81:ca:db  <BROADCAST,MULTICAST>
+swp46        DOWN     80:a2:35:81:ca:dc  <BROADCAST,MULTICAST>
+swp47        DOWN     80:a2:35:81:ca:dd  <BROADCAST,MULTICAST>
+swp48        DOWN     80:a2:35:81:ca:de  <BROADCAST,MULTICAST>
+swp49        UP       80:a2:35:81:ca:df  <BROADCAST,MULTICAST,UP,LOWER_UP>
+swp50        UP       80:a2:35:81:ca:e3  <BROADCAST,MULTICAST,UP,LOWER_UP>
+swp51        DOWN     80:a2:35:81:ca:e7  <NO-CARRIER,BROADCAST,MULTICAST,UP>
+swp52        DOWN     80:a2:35:81:ca:eb  <NO-CARRIER,BROADCAST,MULTICAST,UP>
+
+############################################################
+## 17. switchd config and state files
+############################################################
+
+==== switchd.conf ====
+# 
+# /etc/cumulus/switchd.conf - switchd configuration file
+#
+
+# Statistic poll interval (in msec)
+#stats.poll_interval = 5000
+
+# Buffer utilization poll interval (in msec), 0 means disable
+#buf_util.poll_interval = 0
+
+# Buffer utilization measurement interval (in mins)
+#buf_util.measure_interval = 0
+
+# Optimize ACL HW resources for better utilization
+#acl.optimize_hw = FALSE
+
+# Send ARPs for next hops
+#arp.next_hops = TRUE
+
+# Kernel routing table ID, range 1 - 2^31, default 254
+#route.table = 254
+
+# Maximum hardware neighbor table occupancy (percent of hardware table size)
+#route.host_max_percent = 50
+
+# Coalescing reduction factor for accumulating changes to reduce CPU load
+#coalescing.reducer = 1
+
+# Coalescing time limit, in seconds
+#coalescing.timeout = 10
+
+# Ignore routes that point to non-swp interfaces
+#ignore_non_swps = FALSE
+
+# Disables restart after parity error
+#disable_internal_parity_restart = TRUE
+
+# Disables restart after an unrecoverable hardware error
+#disable_internal_hw_err_restart = FALSE
+
+# Log messages using the given BACKEND=LEVEL,
+# space separate multiple BACKEND=LEVEL pairs.
+# BACKEND := {stderr, file:filename, syslog, program:executable},
+# LEVEL := {CRIT, ERR, WARN, INFO, DEBUG}
+logging = file:/var/log/switchd.log=INFO
+
+# Storm Control setting on a port, in pps, 0 means disable
+#interface.swp1.storm_control.broadcast = 400
+#interface.swp1.storm_control.multicast = 3000
+
+# Maximum route limit
+#route.max_total_routes = 32768
+
+# Enable HW statistics 
+# level specifies type of stats needed per-hw resource type.
+# LEVEL := {NONE, BRIEF, DETAIL}
+#stats.vlan.aggregate = BRIEF
+#stats.vxlan.aggregate = DETAIL
+#stats.vxlan.member = BRIEF
+
+#stats.vlan.show_internal_vlans = FALSE
+
+# Virtual devices hw-stat poll interval (in seconds)
+#stats.vdev_hw_poll_interval = 5
+
+# Internal VLAN range
+# minimum range size is 300
+#resv_vlan_range = 3300-3999
+
+# Netlink
+# netlink socket buf size (90 * 1024 * 1024 = 90MB)
+#netlink.buf_size=94371840
+
+# delete routes on interfaces when carrier is down
+#route.delete_dead_routes = TRUE
+
+# default TTL to use in vxlan header
+#vxlan.default_ttl = 64
+
+# bridge broadcast frame to cpu even if SVI is not enabled 
+#bridge.broadcast_frame_to_cpu = FALSE
+
+==== any cumulus state files ====
+phytab
+porttab
+rc.datapath_0
+sfptab
+/var/lib/cumulus/porttab
+/var/lib/cumulus/phytab
+/var/lib/cumulus/sfptab
+/var/lib/cumulus/rc.datapath_0
+/var/cache/cumulus/acltool/aclinit.out
+/var/cache/cumulus/platform-config/backup/modules
+/var/cache/cumulus/platform-config/platform
+/var/cache/cumulus/unit_state/Temp1/state
+/var/cache/cumulus/unit_state/Temp1/dump
+/var/cache/cumulus/unit_state/Temp2/state
+/var/cache/cumulus/unit_state/Temp2/dump
+/var/cache/cumulus/unit_state/Temp3/state
+/var/cache/cumulus/unit_state/Temp3/dump
+/var/cache/cumulus/unit_state/Temp4/state
+/var/cache/cumulus/unit_state/Temp4/dump
+/var/cache/cumulus/unit_state/Temp5/state
+/var/cache/cumulus/unit_state/Temp5/dump
+/var/cache/cumulus/unit_state/Temp6/state
+/var/cache/cumulus/unit_state/Temp6/dump
+/var/cache/cumulus/unit_state/Temp7/state
+
+############################################################
+## 18. Filesystem - boot/ partitions
+############################################################
+Filesystem      Size  Used Avail Use% Mounted on
+dev              10M     0   10M   0% /dev
+/dev/sysroot1    89M   89M     0 100% /mnt/root-ro
+/dev/sda3       3.3G   97M  3.1G   4% /mnt/root-rw
+overlayfs:root  3.3G   97M  3.1G   4% /
+tmpfs            10M   96K   10M   1% /run
+tmpfs            10M     0   10M   0% /run/lock
+tmpfs           100M  272K  100M   1% /tmp
+tmpfs           100M  4.0K  100M   1% /var/tmp
+tmpfs           981M     0  981M   0% /run/shm
+initramfs       981M  2.1M  979M   1% /mnt/initramfs
+/dev/persist    124M   16K  118M   1% /mnt/persist
+---
+major minor  #blocks  name
+
+  31        0       3456 mtdblock0
+  31        1         64 mtdblock1
+  31        2         64 mtdblock2
+  31        3        512 mtdblock3
+   8        0    3915776 sda
+   8        1     131041 sda1
+   8        2          1 sda2
+   8        3    3485696 sda3
+   8        5      16353 sda5
+   8        6     131041 sda6
+   8        7      16353 sda7
+   8        8     131041 sda8
+---
+System.map-3.2.60-1+deb7u1+cl2.5
+uImage-3.2.60-1+deb7u1+cl2.5-powerpc.itb
+uImage-3.2.60-1+deb7u1+cl2.5-powerpc.itb.sha1
+uImage.itb
+
+############################################################
+## 19. CPU + clocks
+############################################################
+processor	: 0
+cpu		: e500v2
+clock		: 1200.000000MHz
+revision	: 5.1 (pvr 8021 1051)
+physical id	: 0
+core id		: 0
+bogomips	: 150.00
+
+processor	: 1
+cpu		: e500v2
+clock		: 1200.000000MHz
+revision	: 5.1 (pvr 8021 1051)
+physical id	: 0
+core id		: 1
+bogomips	: 150.00
+
+total bogomips	: 300.00
+timebase	: 75000000
+platform	: Accton Technology Corporation AS5610_52X
+model		: accton,as5610_52x
+---
+available_clocksource
+current_clocksource
+timebase
+
+############################################################
+## 20. all kernel module files in cumulus dir
+############################################################
+/lib/modules/3.2.60-1+deb7u1+cl2.5/extra
+/lib/modules/3.2.60-1+deb7u1+cl2.5/extra/accton_5652_cpld.ko
+/lib/modules/3.2.60-1+deb7u1+cl2.5/extra/accton_as4600_54t_cpld.ko
+/lib/modules/3.2.60-1+deb7u1+cl2.5/extra/accton_as5610_52x_cpld.ko
+/lib/modules/3.2.60-1+deb7u1+cl2.5/extra/accton_as670x_32x_fanpld.ko
+/lib/modules/3.2.60-1+deb7u1+cl2.5/extra/accton_as670x_32x_syspld.ko
+/lib/modules/3.2.60-1+deb7u1+cl2.5/extra/cel_kennisis_cpld.ko
+/lib/modules/3.2.60-1+deb7u1+cl2.5/extra/cel_redstone_cpld.ko
+/lib/modules/3.2.60-1+deb7u1+cl2.5/extra/dni_6448_cpld.ko
+/lib/modules/3.2.60-1+deb7u1+cl2.5/extra/dni_7448_cpld.ko
+/lib/modules/3.2.60-1+deb7u1+cl2.5/extra/dni_c7448n_cpld.ko
+/lib/modules/3.2.60-1+deb7u1+cl2.5/extra/linux-bde-i2c.ko
+/lib/modules/3.2.60-1+deb7u1+cl2.5/extra/linux-bde-tmon.ko
+/lib/modules/3.2.60-1+deb7u1+cl2.5/extra/linux-kernel-bde.ko
+/lib/modules/3.2.60-1+deb7u1+cl2.5/extra/linux-user-bde.ko
+/lib/modules/3.2.60-1+deb7u1+cl2.5/extra/quanta_ly6_p2020_cpld.ko
+
+############################################################
+## 21. ALL services - what's running
+############################################################
+ [ ? ]  aclinit
+ [ ? ]  acltool
+ [ + ]  arp_refresh
+ [ + ]  auditd
+ [ ? ]  autoprovision
+ [ - ]  bootlogd
+ [ - ]  bootlogs
+ [ ? ]  bootmisc.sh
+ [ ? ]  checkfs.sh
+ [ ? ]  checkroot-bootclean.sh
+ [ - ]  checkroot.sh
+ [ ? ]  cl-l2tune
+ [ + ]  clagd
+ [ ? ]  clcmd_server
+ [ ? ]  clinit
+ [ + ]  cron
+ [ - ]  hostname.sh
+ [ ? ]  hw_init
+ [ ? ]  hwclock.sh
+ [ ? ]  isc-dhcp-relay
+ [ - ]  isc-dhcp-server
+ [ ? ]  killprocs
+ [ ? ]  kmod
+ [ + ]  ledmgrd
+ [ + ]  lldpd
+ [ - ]  lm-sensors
+ [ + ]  monit
+ [ - ]  motd
+ [ ? ]  mountall-bootclean.sh
+ [ ? ]  mountall.sh
+
+==== systemd/sysvinit ====
+README
+aclinit
+acltool
+arp_refresh
+auditd
+autoprovision
+bootlogd
+bootlogs
+bootmisc.sh
+checkfs.sh
+checkroot-bootclean.sh
+checkroot.sh
+cl-l2tune
+clagd
+clcmd_server
+clinit
+cron
+halt
+hostname.sh
+hw_init
+hwclock.sh
+isc-dhcp-relay
+isc-dhcp-server
+killprocs
+kmod
+ledmgrd
+lldpd
+lm-sensors
+monit
+motd
+mountall-bootclean.sh
+mountall.sh
+mountdevsubfs.sh
+mountkernfs.sh
+mountnfs-bootclean.sh
+mountnfs.sh
+mstpd
+mtab.sh
+networking
+ntp
+
+############################################################
+## 22. Persisting filesystem layout
+############################################################
+proc on /proc type proc (rw,nosuid,nodev,noexec,relatime)
+sysfs on /sys type sysfs (rw,nosuid,nodev,noexec,relatime)
+dev on /dev type tmpfs (rw,relatime,size=10240k,mode=755)
+/dev/sysroot1 on /mnt/root-ro type squashfs (ro,relatime)
+/dev/sda3 on /mnt/root-rw type ext2 (rw,noatime,errors=continue)
+overlayfs:root on / type overlayfs (rw,noatime,lowerdir=/mnt/root-ro,upperdir=/mnt/root-rw/config1)
+tmpfs on /run type tmpfs (rw,noatime,size=10240k)
+tmpfs on /run/lock type tmpfs (rw,noatime,size=10240k)
+tmpfs on /tmp type tmpfs (rw,noatime,size=102400k)
+tmpfs on /var/tmp type tmpfs (rw,noatime,size=102400k)
+sysfs on /sys type sysfs (rw,nosuid,nodev,noexec,relatime)
+tmpfs on /run/shm type tmpfs (rw,nosuid,nodev,relatime)
+devpts on /dev/pts type devpts (rw,nosuid,noexec,relatime,gid=5,mode=620)
+initramfs on /mnt/initramfs type tmpfs (ro,relatime)
+/dev/persist on /mnt/persist type ext2 (rw,relatime,errors=continue)
+/dev/fuse on /cumulus/switchd type fuse (rw,nosuid,nodev,allow_other,default_permissions)
+#
+# /etc/fstab: static file system information.
+#
+# file system   mount             type    options           dump    pass
+proc            /proc             proc    defaults          0       0
+devpts          /dev/pts          devpts  gid=5,mode=620    0       0
+sysfs           /sys              sysfs   defaults          0       0
+
+############################################################
+## 23. PHY firmware version (Warpcore)
+############################################################
+Phy mapping dump:
+      port   id0   id1  addr iaddr                    name    timeout
+  xe0(  1)   143  bff0    d1    d1              WC-B0/16/0     250000  
+
+############################################################
+## 24. Resource/buffer config
+############################################################
+SHOW: Error: Invalid option buffer
+MC_PERQ_PKT(0).cpu0	:		  1,052 	     +1,052
+MC_PERQ_PKT(2).cpu0	:		    315 	       +315
+MC_PERQ_PKT(6).cpu0	:		    458 	       +458
+MC_PERQ_BYTE(0).cpu0	:		 90,496 	    +90,496
+MC_PERQ_BYTE(2).cpu0	:		 32,984 	    +32,984
+MC_PERQ_BYTE(6).cpu0	:		 83,422 	    +83,422
+RIPC4.xe0		:		    152 	       +152
+RUC.xe0 		:		    156 	       +156
+RDBGC1.xe0		:		    524 	       +524
+R64.xe0 		:		      4 		 +4
+SHOW: Error: Invalid option l3
+
+############################################################
+## 25. Anything unusual we may have missed
+############################################################
+
+==== all files in /etc/cumulus ====
+/etc/cumulus/acl/acl.conf
+/etc/cumulus/acl/policy.conf
+/etc/cumulus/acl/policy.d/00control_plane.rules
+/etc/cumulus/acl/policy.d/99control_plane_catch_all.rules
+/etc/cumulus/datapath/README
+/etc/cumulus/datapath/traffic.conf
+/etc/cumulus/etc.replace/lsb-release
+/etc/cumulus/etc.replace/os-release
+/etc/cumulus/nice.conf
+/etc/cumulus/ns.conf
+/etc/cumulus/ssmonitor.d/clagd-monit.rc
+/etc/cumulus/ssmonitor.d/switchd-monit.rc
+/etc/cumulus/ssmonitor.d/watchquagga-monit.rc
+/etc/cumulus/switchd.conf
+/etc/cumulus/init/accton_as4600_54t/platform.fdisk
+/etc/cumulus/init/accton_as4600_54t/platform.conf
+/etc/cumulus/init/accton_as5610_52x/platform.fdisk
+/etc/cumulus/init/accton_as5610_52x/platform.conf
+/etc/cumulus/init/accton_as5712_54x/platform.fdisk
+/etc/cumulus/init/accton_as5712_54x/platform.conf
+/etc/cumulus/init/accton_as6700_32x/platform.fdisk
+/etc/cumulus/init/accton_as6700_32x/platform.conf
+/etc/cumulus/init/accton_as6701_32x/platform.fdisk
+/etc/cumulus/init/accton_as6701_32x/platform.conf
+/etc/cumulus/init/accton_es5652bt1/platform.fdisk
+/etc/cumulus/init/accton_es5652bt1/platform.conf
+/etc/cumulus/init/amd64-init.conf
+/etc/cumulus/init/arch.conf
+/etc/cumulus/init/cel_kennisis/platform.conf
+/etc/cumulus/init/cel_redstone/platform.conf
+
+==== files under /var/lib/openbsd-inetd /etc/network ====
+if-down.d
+if-post-down.d
+if-post-up.d
+if-pre-down.d
+if-pre-up.d
+if-up.d
+ifupdown2
+interfaces
+interfaces.d
+run
+
+########### DEEP DIVE COMPLETE ###########

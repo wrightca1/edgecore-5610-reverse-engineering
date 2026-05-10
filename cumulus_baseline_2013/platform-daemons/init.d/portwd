@@ -1,0 +1,77 @@
+#! /bin/sh
+### BEGIN INIT INFO
+# Provides:          portwd
+# Required-Start:    switchd $syslog
+# Required-Stop:     $local_fs
+# X-Start-Before:    $networking
+# X-Stop-After:      $networking
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Port Watch Event Daemon
+# Description:       Debian init script for portwd
+### END INIT INFO
+
+PATH=/sbin:/bin
+DESC="Port Watch Event Daemon"
+NAME=portwd
+DAEMON=/usr/sbin/$NAME
+PIDFILE=/var/run/$NAME.pid
+SCRIPTNAME=/etc/init.d/$NAME
+
+[ -x "$DAEMON" ] || exit 0
+. /lib/init/vars.sh
+. /lib/lsb/init-functions
+
+do_start() {
+        start-stop-daemon --start --quiet --user root --group root \
+                          --pidfile $PIDFILE --startas /usr/bin/python -- $DAEMON
+	return $?
+}
+
+do_stop() {
+        start-stop-daemon --stop --quiet --pidfile $PIDFILE
+	return $?
+}
+
+case "$1" in
+  start)
+        log_daemon_msg "Starting $DESC" "$NAME"
+        if do_start; then
+                log_end_msg 0
+        else
+                log_end_msg 1
+	fi
+        ;;
+
+  stop)
+        log_daemon_msg "Stopping $DESC" "$NAME"
+        if do_stop; then
+                log_end_msg 0
+        else
+                log_end_msg 1
+	fi
+        ;;
+
+  status)
+        if start-stop-daemon --status --pidfile $PIDFILE --name $NAME; then
+            log_action_msg "running"
+        else
+            log_action_msg "not running"
+        fi
+        ;;
+
+  restart)
+        log_daemon_msg "Restarting $DESC" "$NAME"
+        do_stop
+        if do_start; then
+                log_end_msg 0
+        else
+                log_end_msg 1
+	fi
+        ;;
+  *)
+        log_action_msg "Usage: /etc/init.d/portwd {start|stop|status|restart}" 
+        ;;
+esac
+
+:

@@ -1,0 +1,10 @@
+check process ptmd with pidfile /var/run/ptmd.pid
+        every 12 cycles
+        group networking
+        start program = "/etc/init.d/ptmd start"
+        stop program = "/etc/init.d/ptmd stop"
+        if 2 restarts within 3 cycles then unmonitor
+	depends on topology.dot
+
+check file topology.dot with path /etc/ptm.d/topology.dot
+    if does not exist then unmonitor

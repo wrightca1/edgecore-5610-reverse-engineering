@@ -1,0 +1,55 @@
+###############################################################################
+## Cumulus specific Monit control file
+###############################################################################
+##
+## Comments begin with a '#' and extend through the end of the line. Keywords
+## are case insensitive. All path's MUST BE FULLY QUALIFIED, starting with '/'.
+##
+
+###############################################################################
+## Services
+###############################################################################
+##
+## Check general system resources such as load average, cpu and memory
+## usage. Each test specifies a resource, conditions and the action to be
+## performed should a test fail.
+#
+check system localhost
+   if cpu usage (user) > 70% then alert
+   if cpu usage (system) > 30% then alert
+   if cpu usage (wait) > 20% then alert
+   if memory usage > 90% for 1 cycles then exec "/usr/cumulus/bin/cl-support memory usage above 90 percent"
+   if memory usage > 90% for 2 cycles then unmonitor
+
+check program system.loadavg with path "/usr/share/monit/scripts/loadavg_good.sh"
+   if status != 0 for 8 cycles then alert
+
+## Configurations for switchd, pwmd, ledmgrd, smond, lldpd, mstpd, ptm
+## included by respective packages in /etc/monit/monitrd.d (the default)
+## -or- /etc/monit/cumulus.d (for start-stop-monitor monit aware service restarts)
+
+check directory core with path /var/support/core
+	every 12 cycles
+	if changed timestamp then exec /usr/share/monit/scripts/core_check.sh /var/support/core
+
+#
+# Cleanup disk every hr
+#
+check directory support with path /var/support/
+	every 24 cycles
+	if changed timestamp then exec /usr/share/monit/scripts/support_cleanup.py
+
+##
+## Verify that acl tool was run
+##
+
+check program chk_acl with path "/usr/share/monit/scripts/acl_check.sh"
+	if status != 0 then alert
+	if status != 0 for 3 cycles then unmonitor
+
+###############################################################################
+## Includes
+###############################################################################
+##
+
+include /etc/monit/cumulus.d/*

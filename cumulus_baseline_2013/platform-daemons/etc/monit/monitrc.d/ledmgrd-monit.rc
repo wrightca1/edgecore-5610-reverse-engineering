@@ -1,0 +1,6 @@
+check process ledmgrd with pidfile /var/run/ledmgrd.pid
+	    every 3 cycles
+        group networking
+        start program = "/etc/init.d/ledmgrd start"
+        stop program = "/etc/init.d/ledmgrd stop"
+        if 2 restarts within 3 cycles then unmonitor

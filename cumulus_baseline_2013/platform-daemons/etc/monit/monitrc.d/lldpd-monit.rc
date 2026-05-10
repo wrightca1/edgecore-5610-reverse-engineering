@@ -1,0 +1,5 @@
+check process lldpd with pidfile /var/run/lldpd.pid
+        every 12 cycles
+        group networking
+        start program = "/etc/init.d/lldpd start"
+        stop program = "/etc/init.d/lldpd stop"

@@ -1,0 +1,1210 @@
+#!/usr/bin/python
+#
+# Copyright 2014.  Cumulus Networks, Inc.
+#
+
+import os
+import ctypes
+import daemon
+import daemon.pidlockfile
+import lockfile
+import time
+import logging
+import logging.handlers
+import traceback
+import sys
+import subprocess
+import errno
+import bcmshell
+import struct
+import io
+import cumulus.porttab
+
+logger = None
+log_handlers = []
+
+class Port(object):
+    '''
+    Port - designed as a temporary mirror of the cumulus/portconfig physical
+    port class
+    '''
+    IF_UP = 0x1 # interface is up
+
+    def __init__(self, *args, **kwargs):
+        self.label = kwargs['label']
+        self.driver = kwargs['driver']
+        if 'config' in kwargs.keys():
+            self.config = kwargs['config']
+        else:
+            self.config = None
+
+    def __str__(self):
+        return 'port-%s' % self.label
+
+    def _swp_flags(self, sub=''):
+        return int(open('/sys/class/net/swp%s%s/flags' % (self.label, sub)).read(), 0)
+
+    def _swp_carrier(self, sub=''):
+        try:
+            return int(open('/sys/class/net/swp%s%s/carrier' % (self.label, sub)).read(), 0)
+        except IOError, e:
+            if e.errno == errno.EINVAL:
+                # interface is not administratively up, carrier is invalid
+                return 0
+            raise e
+
+    @property
+    def _port_flags(self):
+        base = 'swp%s' % self.label
+        try:
+            return (self._swp_flags(), )
+        except IOError, e:
+            if e.errno != errno.ENOENT:
+                raise e
+
+        try:
+            return (self._swp_flags(sub='s0'), 
+                    self._swp_flags(sub='s1'),
+                    self._swp_flags(sub='s2'),
+                    self._swp_flags(sub='s3'))
+        except IOError, e:
+            if e.errno != errno.ENOENT:
+                raise e
+
+        raise RuntimeError('failed to get flags for port: %s' % self.label)
+
+    @property
+    def _port_carrier(self):
+        base = 'swp%s' % self.label
+        try:
+            return (self._swp_carrier(), )
+        except IOError, e:
+            if e.errno != errno.ENOENT:
+                raise e
+
+        try:
+            return (self._swp_carrier(sub='s0'), 
+                    self._swp_carrier(sub='s1'),
+                    self._swp_carrier(sub='s2'),
+                    self._swp_carrier(sub='s3'))
+        except IOError, e:
+            if e.errno != errno.ENOENT:
+                raise e
+
+        raise RuntimeError('failed to get carrier for port: %s' % self.label)
+
+    @property
+    def admin_up(self):
+        return [ x & self.IF_UP != 0 for x in self._port_flags ]
+
+    @property
+    def carrier(self):
+        return [ x != 0 for x in self._port_carrier ]
+
+class PortConfig(object):
+    pass
+
+class PortDriver(object):
+    def toggle_reset(self, timing):
+        raise NotImplementedError
+
+    def _set_reset(self, logical):
+        raise NotImplementedError
+
+    def _get_reset(self):
+        raise NotImplementedError
+
+    reset = property(_get_reset, _set_reset)
+
+    def _set_pmod(self, power_mode):
+        raise NotImplementedError
+
+    def _get_pmod(self):
+        raise NotImplementedError
+
+    power_mode = property(_get_pmod, _set_pmod)
+
+    @property
+    def present(self):
+        raise NotImplementedError
+
+    @property
+    def admin_up(self):
+        raise NotImplementedError
+
+    @property
+    def eeprom(self):
+        raise NotImplementedError
+
+class FilePortDriver(PortDriver):
+    def __init__(self, reset, lpmod, present, cable=None):
+        self._reset = reset
+        self._lpmod = lpmod
+        self._present = present
+
+        self.cable = cable
+
+    @property
+    def present(self):
+        if self._present.logical:
+            return True
+        else:
+            return False
+
+    def _set_reset(self, logical):
+        self._reset.logical = logical
+
+    def _get_reset(self):
+        return self._reset.logical
+
+    reset = property(_get_reset, _set_reset)
+
+    def _set_pmod(self, power_mode):
+        if power_mode not in ('high', 'low'):
+            raise ValueError('power mode must be "high" or "low"')
+
+        if power_mode == 'high':
+            self._lpmod.logical = 0
+        else:
+            self._lpmod.logical = 1
+
+    def _get_pmod(self):
+        if self._lpmod.logical == 1:
+            return 'low'
+        else:
+            return 'high'
+
+    power_mode = property(_get_pmod, _set_pmod)
+
+class SysFSPortDriver(FilePortDriver):
+    def _find_eeprom(self, portnum):
+        eeprom_path = None
+        for root, dirs, files in os.walk('/sys/class/eeprom_dev'):
+            for eeprom_dir in dirs:
+                label = open(os.path.join(root, eeprom_dir, 'label'), 'r').read().strip()
+                if label == 'port%u' % portnum:
+                    return SysFSEEPROM(os.path.join(root, eeprom_dir, 'device', 'eeprom'))
+
+        raise RuntimeError('no such port: port-%s' % portnum)
+
+class SysFSEEPROM(object):
+    def __init__(self, path):
+        self.path = path
+
+    def _getslice(self, sl):
+        # eeproms are slow, only read exactly the number of bytes requested.
+        # (no buffering)
+        eeprom = io.open(self.path, 'rb', buffering=0)
+        eeprom.seek(sl.start)
+        try:
+            return eeprom.read(sl.stop - sl.start)
+        except IOError, e:
+            if e.errno == errno.ETIMEDOUT:
+                logger.debug('timeout reading eeprom at: %s' % self.path)
+                return ''
+            else:
+                raise e
+
+    def __getitem__(self, key):
+        if isinstance(key, slice):
+            return self._getslice(key)
+        else:
+            return self._getslice(slice(key, key + 1))
+
+class GPIOPortDriver(SysFSPortDriver):
+    pass
+
+class Signal(object):
+    pass
+
+class BinaryFileSignal(Signal):
+    def __init__(self, path, ctype, bit, active='high'):
+        self.path = path
+        self.ctype = ctype
+        self.bit = bit
+
+        if active not in ('high', 'low'):
+            raise RuntimeError
+
+        self.active = active
+
+    @property
+    def cache(self):
+        # not implemented - to be used to coalesce single-bit reads/writes to
+        # multi-bit files.  For example, when a file contains 32 bits that
+        # represent signals from 32 ports.
+        return None
+
+    @property
+    def mask(self):
+        return 1 << self.bit
+
+    def _read(self):
+        f = open(self.path, 'r')
+        value = int(f.read(), base=0)
+        f.close()
+        return value
+
+    def _write(self, value):
+        f = open(self.path, 'w')
+        f.write('0x%x\n' % self.ctype(value).value)
+        f.close()
+
+    def _rmw(self, value):
+        # XXX consider file locking on self.path
+        self._write((self._read() & ~self.mask) | (value & self.mask))
+
+    def _physical(self, value):
+        # conditionally invert our mask bit in a given value
+        if self.active == 'high':
+            return value
+        elif self.active == 'low':
+            return value ^ self.mask
+        
+        raise RuntimeError
+
+    def _convert(self, value):
+        # convert a myriad of logical levels to binary with our mask bit set to
+        # 1 or 0
+        if value in ('1', True, 'high', 'asserted'):
+            return self.mask
+        elif value in ('0', False, 'low', 'deasserted'):
+            return 0
+        else:
+            return value
+
+    def _set_level(self, value):
+        self._rmw(self._convert(value))
+
+    def _get_level(self):
+        if self._read() & self.mask == 0:
+            return 0
+        else:
+            return 1
+
+    level = property(_get_level, _set_level)
+
+    def _set_logical(self, value):
+        self._set_level(self._physical(self._convert(value)))
+
+    def _get_logical(self):
+        level = self._get_level()
+        if self.active == 'high':
+            return level
+        else:
+            return ~level & 1
+
+    logical = property(_get_logical, _set_logical)
+
+class GPIOSignal(BinaryFileSignal):
+    _base = '/sys/class/gpio'
+
+    def _export(self, gpiopin):
+        try:
+            unexportf = open(self._base + '/unexport', 'w')
+            unexportf.write('%u\n' % gpiopin)
+            unexportf.close()
+        except IOError, e:
+            if e.errno == errno.EINVAL: # Invalid Argument (probably already unexported)
+                pass
+            else:
+                raise e
+            
+        exportf = open(self._base + '/export', 'w')
+        exportf.write('%u\n' % gpiopin)
+        exportf.close()
+        
+    def _set_direction(self, gpiopin, direction):
+        dirpath = self._base + '/gpio%u/direction' % gpiopin
+
+        # Avoid unnecesary writes to direction.  They will cause gpio/value to
+        # reset to 0.
+        current_direction = open(dirpath).read().strip()
+        if direction != current_direction:
+            dirf = open(dirpath, 'w')
+            dirf.write(direction + '\n')
+            dirf.close()
+
+    def __init__(self, gpiopin, active='high', direction='in'):
+        self._export(gpiopin)
+        self._set_direction(gpiopin, direction)
+        BinaryFileSignal.__init__(self, self._base + '/gpio%u/value' % gpiopin,
+                                  ctype=ctypes.c_bool, bit=0, active=active)
+
+class GPIOSignalNamed(BinaryFileSignal):
+    _base = '/sys/class/gpio'
+
+    def __init__(self, gpiopin, active):
+        path = self._base + '/' + gpiopin + '/value'
+        BinaryFileSignal.__init__(self, path, ctype=ctypes.c_bool, bit=0,
+                                  active=active)
+
+class SFF8436:
+    ADDR_CONNECTOR_CODE = 130 # external connector (8-bit enum)
+    CONNECTOR_CODE_MAP = { 0x00 : 'unknown',
+                           0x0c : 'mpo',
+                           0x20 : 'hssdc2',
+                           0x21 : 'copper-pigtail',
+                           0x22 : 'rj45',
+                           0x23 : 'none' }
+    ADDR_ETH_CODE = 131 # ethernet compliance code (8-bit, mask)
+    ETH_CODE_MAP = { 0 : '40g-active',     # 40G active (xlppi)
+                     1 : '40g-lr4',        # 40G LR4
+                     2 : '40g-sr4',        # 40G SR4
+                     3 : '40g-cr4',        # 40G CR4
+                     4 : '10g-sr',         # 10G SR
+                     5 : '10g-lr',         # 10G LR
+                     6 : '10g-lrm' }       # 10G LRM
+    ADDR_ASSY_LENGTH = 146 # cable assembly (copper or active) length, units of meters
+
+    def __init__(self, eeprom):
+        self.eeprom = eeprom
+
+    @property
+    def length(self):
+        data = self.eeprom[self.ADDR_ASSY_LENGTH]
+        if len(data) == 1:
+            return struct.unpack('B', data)[0]
+        else:
+            return None
+
+    @property
+    def media(self):
+        data = self.eeprom[self.ADDR_ETH_CODE]
+        if len(data) == 1:
+            ethcode = struct.unpack('B', data)[0]
+            return tuple([ self.ETH_CODE_MAP[x] for x in range(7) if (1 << x) & ethcode ])
+        else:
+            return None
+
+class SimpleCPLDQSFPDriver(SysFSPortDriver):
+    _base = None
+
+    def __init__(self, control_bit, port):
+        SysFSPortDriver.__init__(self, reset=BinaryFileSignal(self._base + '/qsfp_reset',
+                                                              ctype=ctypes.c_uint32,
+                                                              bit=control_bit,
+                                                              active='low'),
+                                       lpmod=BinaryFileSignal(self._base + '/qsfp_lpmod',
+                                                              ctype=ctypes.c_uint32,
+                                                              bit=control_bit,
+                                                              active='high'),
+                                       present=BinaryFileSignal(self._base + '/qsfp_present',
+                                                                ctype=ctypes.c_uint32,
+                                                                bit=control_bit,
+                                                                active='low'),
+                                       cable=SFF8436(self._find_eeprom(port)))
+
+class CelSmallstoneQSFPDriver(SimpleCPLDQSFPDriver):
+    _base = '/sys/devices/ffe05000.localbus/ffb40000.CPLD23'
+
+class CelRedstoneQSFPDriver(SysFSPortDriver):
+    _base = '/sys/devices/ffe05000.localbus/ffb40000.CPLD234'
+
+    def __init__(self, sysfs_file, port):
+        SysFSPortDriver.__init__(self, reset=BinaryFileSignal(self._base + '/' + sysfs_file,
+                                                              ctype=ctypes.c_uint8,
+                                                              bit=0,
+                                                              active='low'),
+                                       lpmod=BinaryFileSignal(self._base + '/' + sysfs_file,
+                                                              ctype=ctypes.c_uint8,
+                                                              bit=1,
+                                                              active='high'),
+                                       present=BinaryFileSignal(self._base + '/' + sysfs_file,
+                                                                ctype=ctypes.c_uint8,
+                                                                bit=2,
+                                                                active='low'),
+                                       cable=SFF8436(self._find_eeprom(port)))
+
+class CelSmallstoneXPQSFPDriver(SimpleCPLDQSFPDriver):
+        _base = '/sys/devices/platform/cel_smallstone_xp_cpld.0'
+        def __init__(self, control_bit, port):
+                SysFSPortDriver.__init__(self, reset=BinaryFileSignal(self._base + '/qsfp_reset',
+                                                                      ctype=ctypes.c_uint32,
+                                                                      bit=control_bit,
+                                                                      active='high'),
+                                         lpmod=BinaryFileSignal(self._base + '/qsfp_lp_mode',
+                                                                ctype=ctypes.c_uint32,
+                                                                bit=control_bit,
+                                                                active='high'),
+                                         present=BinaryFileSignal(self._base + '/qsfp_present',
+                                                                  ctype=ctypes.c_uint32,
+                                                                  bit=control_bit,
+                                                                  active='high'),
+                                         cable=SFF8436(self._find_eeprom(port)))
+
+class CelRedstoneXPQSFPDriver(SimpleCPLDQSFPDriver):
+    _base = '/sys/devices/platform/cel_redstone_xp_cpld.0'
+    def __init__(self, control_bit, port):
+        SysFSPortDriver.__init__(self, reset=BinaryFileSignal(self._base + '/qsfp_reset',
+                                                              ctype=ctypes.c_uint8,
+                                                              bit=control_bit,
+                                                              active='high'),
+                                       lpmod=BinaryFileSignal(self._base + '/qsfp_lp_mode',
+                                                              ctype=ctypes.c_uint8,
+                                                              bit=control_bit,
+                                                              active='high'),
+                                       present=BinaryFileSignal(self._base + '/qsfp_present',
+                                                                ctype=ctypes.c_uint8,
+                                                                bit=control_bit,
+                                                                active='high'),
+                                       cable=SFF8436(self._find_eeprom(port)))
+
+class AS5712QSFPDriver(SimpleCPLDQSFPDriver):
+    _base = '/sys/devices/platform/accton_as5712_54x_cpld.0/'
+    def __init__(self, control_bit, port):
+        SysFSPortDriver.__init__(self, reset=BinaryFileSignal(self._base + '/qsfp_reset',
+                                                              ctype=ctypes.c_uint8,
+                                                              bit=control_bit,
+                                                              active='high'),
+                                       lpmod=BinaryFileSignal(self._base + '/qsfp_lp_mode',
+                                                              ctype=ctypes.c_uint8,
+                                                              bit=control_bit,
+                                                              active='high'),
+                                       present=BinaryFileSignal(self._base + '/qsfp_present',
+                                                                ctype=ctypes.c_uint8,
+                                                                bit=control_bit,
+                                                                active='high'),
+                                       cable=SFF8436(self._find_eeprom(port)))
+
+
+class DellS6000QSFPDriver(SimpleCPLDQSFPDriver):
+    _base = '/sys/devices/platform/dell_s6000_cpld.0'
+
+class QuantaLY2RQSFPDriver(GPIOPortDriver):
+    def __init__(self, base_pin, port):
+        GPIOPortDriver.__init__(self, reset=GPIOSignal(base_pin + 3,
+                                                       active='low',
+                                                       direction='out'),
+                                      lpmod=None,
+                                      present=GPIOSignal(base_pin + 2,
+                                                         active='low',
+                                                         direction='in'),
+                                      cable=SFF8436(self._find_eeprom(port)))
+
+class QuantaLY8QSFPDriver(GPIOPortDriver):
+    def __init__(self, port):
+        name = 'qsfp%s' %port
+        GPIOPortDriver.__init__(self, reset=GPIOSignalNamed(name + '_reset',
+                                                        active='low'),
+                                      lpmod=GPIOSignalNamed(name + '_lpmode',
+                                                        active='high'),
+                                      present=GPIOSignalNamed(name + '_present',
+                                                        active='low'),
+                                      cable=SFF8436(self._find_eeprom(port)))
+
+class QuantaLY9RangeleyQSFPDriver(SysFSPortDriver):
+    _base = '/sys/devices/pci0000:00/0000:00:1f.3'
+
+    def _find(self, signal):
+        for root, dirs, files in os.walk(self._base):
+            if signal in files:
+                return os.path.join(root, signal)
+
+    def __init__(self, port):
+        name = 'qsfp%s' %port
+        SysFSPortDriver.__init__(self,
+                                 reset=BinaryFileSignal(self._find(name + '_reset'),
+                                                             ctype=ctypes.c_uint32,
+                                                             bit=0,
+                                                             active='low'),
+                                  lpmod=BinaryFileSignal(self._find(name + '_lpmode'),
+                                                             ctype=ctypes.c_uint32,
+                                                             bit=0,
+                                                             active='high'),
+                                  present=BinaryFileSignal(self._find(name + '_present'),
+                                                             ctype=ctypes.c_uint32,
+                                                             bit=0,
+                                                             active='high'),
+                                  cable=SFF8436(self._find_eeprom(port)))
+
+class QuantaLY6QSFPDriver(SimpleCPLDQSFPDriver):
+
+    def _find(self, base, signal):
+        for root, dirs, files in os.walk(base):
+            if signal in files:
+                return os.path.join(root, signal)
+
+    def __init__(self, base, control_bit, port, reset, lp_mode, present):
+        SysFSPortDriver.__init__(self, reset=BinaryFileSignal(self._find(base, reset),
+                                                              ctype=ctypes.c_uint16,
+                                                              bit=control_bit,
+                                                              active='high'),
+                                       lpmod=BinaryFileSignal(self._find(base, lp_mode),
+                                                              ctype=ctypes.c_uint16,
+                                                              bit=control_bit,
+                                                              active='high'),
+                                       present=BinaryFileSignal(self._find(base, present),
+                                                                ctype=ctypes.c_uint16,
+                                                                bit=control_bit,
+                                                                active='high'),
+                                       cable=SFF8436(self._find_eeprom(port)))
+
+class BCMConfig(PortConfig):
+    _compliance_map = { '40g-active' : 'sr',
+                        '40g-lr4'    : 'sr',
+                        '40g-sr4'    : 'sr',
+                        '40g-cr4'    : 'cr',
+                        '10g-sr'     : 'sr',
+                        '10g-lr'     : 'sr',
+                        '10g-lrm'    : 'sr' }
+    # XGMII is the default BCM SDK interface mode, but should never be
+    # configured.
+    _switchd_map = { 'XGMII' : None,
+                     'XLAUI' : 'xlaui',
+                     'SFI'   : 'cr',
+                     'XFI'   : 'sr',
+                     'CR'    : 'cr',
+                     'CR4'   : 'cr',
+                     'SR'    : 'sr',
+                     'SR4'   : 'sr',
+                     'LR'    : 'lr',
+                     'LR4'   : 'lr',
+                     'ZR'    : 'lr' }
+    _iftype_map = { 'XGMII' : 6 ,
+                    'XLAUI' : 15,
+                    'SFI'   : 9 ,
+                    'XFI'   : 10,
+                    'CR'    : 13,
+                    'CR4'   : 14,
+                    'SR'    : 16,
+                    'SR4'   : 28,
+                    'LR'    : 26,
+                    'LR4'   : 27,
+                    'ZR'    : 30 }
+
+    def __init__(self, port_num, port_type, phyless, chip):
+        self.port_num = port_num
+        self.port_type = port_type
+        self.phyless = phyless
+        self.chip = chip
+
+        if self.port_type != 'QSFP+':
+            raise NotImplementedError
+
+        if self.phyless != True:
+            raise NotImplementedError
+
+        if self.chip not in ('Trident', 'Trident2'):
+            raise NotImplementedError
+
+    @property
+    def bcm_interfaces(self):
+        porttab = cumulus.porttab.porttab()
+        try:
+            return (porttab.linux2bcm('swp%u' % self.port_num), )
+        except cumulus.porttab.NoSuchLinuxInterface:
+            pass
+
+        try:
+            return tuple([ porttab.linux2bcm('swp%us%u' % (self.port_num, x)) for x in range(4) ])
+        except cumulus.porttab.NoSuchLinuxInterface:
+            pass
+
+        return None
+
+    @property
+    def linux_interfaces(self):
+        porttab = cumulus.porttab.porttab()
+        try:
+            intf = 'swp%u' % self.port_num
+            porttab.linux2bcm(intf)
+            return (intf, )
+        except cumulus.porttab.NoSuchLinuxInterface:
+            pass
+
+        try:
+            intfs = [ 'swp%us%u' % (self.port_num, x) for x in range(4) ]
+            for intf in intfs:
+                porttab.linux2bcm(intf)
+            return tuple(intfs)
+        except cumulus.porttab.NoSuchLinuxInterface:
+            pass
+
+        return None
+
+    def _get_ifmode(self):
+        interfaces = self.linux_interfaces
+        if interfaces is None:
+            return 'unknown'
+
+        intf = interfaces[0]
+
+        try:
+            ifmode = open('/cumulus/switchd/config/interface/%s/interface_mode' % intf, 'r').read().strip()
+        except (IOError, SystemError), e:
+            if not (hasattr(e, 'errno') and e.errno in (errno.ENOENT, errno.ENOTCONN, errno.ECONNABORTED,
+                                                        errno.EINVAL, errno.ENXIO)):
+                (exc_type, exc_value, exc_traceback) = sys.exc_info()
+                logger.exception(traceback.format_tb(exc_traceback))
+            return 'unknown'
+        except Exception, e:
+            (exc_type, exc_value, exc_traceback) = sys.exc_info()
+            logger.exception(traceback.format_tb(exc_traceback))
+            return 'unknown'
+
+        return self._switchd_map.get(ifmode, 'unknown')
+
+    def _ifmode2switchd(self, mode, num_interfaces):
+        if self.chip == 'Trident':
+            return self._ifmode2switchd_trident(mode, num_interfaces)
+        elif self.chip == 'Trident2':
+            return self._ifmode2switchd_trident2(mode, num_interfaces)
+
+    def _ifmode2switchd_trident2(self, mode, num_interfaces):
+        if mode == None:
+            return None
+
+        switchd_mode = mode.upper()
+
+        # Account for 40G breakout cables by translating between 4-lane and
+        # 1-lane modes.  This is chip (internal phy driver) specific.
+
+        if num_interfaces == 1:
+            # 40G (4 lanes)
+            if switchd_mode in ('CR', 'SR', 'LR'):
+                switchd_mode += '4'
+            elif switchd_mode in ('XFI', 'XGMII'):
+                switchd_mode = 'SR4'
+            elif switchd_mode in ('SFI',):
+                switchd_mode = 'CR4'
+        else:
+            # 10G (1 lane)
+            if switchd_mode in ('XLAUI', 'SR', 'LR'):
+                switchd_mode = 'XFI'
+            elif switchd_mode in ('CR',):
+                switchd_mode = 'SFI'
+        
+        return switchd_mode
+
+    def _ifmode2switchd_trident(self, mode, num_interfaces):
+        switchd_mode = self._ifmode2switchd_trident2(mode, num_interfaces)
+        # SR4 is not valid for the Trident internal phy driver.  SR is the
+        # equivalent and is handled correctly for ports using 1 or 4 lanes.
+        if switchd_mode == 'SR4':
+            switchd_mode = 'SR'
+
+        return switchd_mode
+
+    def _set_ifmode(self, mode):
+        interfaces = self.linux_interfaces
+        if interfaces is None:
+            return
+
+        switchd_mode = self._ifmode2switchd(mode, len(interfaces))
+
+        for intf in interfaces:
+            try:
+                switchd_old = open('/cumulus/switchd/config/interface/%s/interface_mode' %
+                                   intf, 'r').read().strip()
+            except (IOError, SystemError), e:
+                if not (hasattr(e, 'errno') and e.errno in (errno.ENOENT, errno.ENOTCONN, errno.ECONNABORTED,
+                                                            errno.EINVAL, errno.ENXIO)):
+                    (exc_type, exc_value, exc_traceback) = sys.exc_info()
+                    logger.exception(traceback.format_tb(exc_traceback))
+                return
+            except Exception, e:
+                (exc_type, exc_value, exc_traceback) = sys.exc_info()
+                logger.exception(traceback.format_tb(exc_traceback))
+                return
+
+            # Avoid expensive no-op interface changes.  It takes a long time
+            # and will flap the link.
+            if switchd_old == switchd_mode:
+                continue
+
+            logger.debug('set ifmode: %s %s->%s' % (intf, switchd_old, switchd_mode))
+
+            try:
+                ifmode = open('/cumulus/switchd/config/interface/%s/interface_mode' % intf, 'w')
+                ifmode.write(switchd_mode)
+                ifmode.close()
+            except (IOError, SystemError), e:
+                if not (hasattr(e, 'errno') and e.errno in (errno.ENOENT, errno.ENOTCONN, errno.ECONNABORTED,
+                                                            errno.EINVAL, errno.ENXIO)):
+                    (exc_type, exc_value, exc_traceback) = sys.exc_info()
+                    logger.exception(traceback.format_tb(exc_traceback))
+                return
+            except Exception, e:
+                (exc_type, exc_value, exc_traceback) = sys.exc_info()
+                logger.exception(traceback.format_tb(exc_traceback))
+                return
+
+    ifmode = property(_get_ifmode, _set_ifmode)
+
+    def comply(self, compliance_code, dry_run=False):
+        compliance_ifmode = self._compliance_map[compliance_code]
+        if compliance_ifmode != self.ifmode:
+            if not dry_run:
+                self.ifmode = compliance_ifmode
+            return True
+
+        return False
+
+    def ifmode2iftype(self, ifmode):
+            switchd_mode = self._ifmode2switchd(ifmode, len(self.bcm_interfaces))
+            return self._iftype_map[switchd_mode]
+
+    def iftype(self, compliance_code):
+        compliance_ifmode = self._compliance_map[compliance_code]
+        return self.ifmode2iftype(compliance_ifmode)
+
+class UnknownPlatform(RuntimeError):
+    pass
+
+class PortWD:
+    '''
+    portwd - port watch event daemon
+    '''
+    poll_interval = 5 # seconds
+    port_reset_timing = 0.1 # seconds to hold reset low
+
+    def __init__(self):
+        self._enable_ifmode = False
+        self._log_interval = 0
+        self._log_last = ''
+        self._log_skip_count = 0
+
+        self._platform_detect()
+        self._setup_hooks()
+
+    def _log_throttle(self, msg):
+        if msg != self._log_last:
+            self._log_last = msg
+            self._log_skip_count = 0
+            self._log_interval = 0
+            return 1
+
+        self._log_skip_count += 1
+        skipped = self._log_skip_count
+        if self._log_skip_count >= 2**self._log_interval:
+            if self._log_interval < 10:
+                self._log_interval += 1
+            self._log_skip_count = 0
+            return skipped
+        else:
+            return 0
+
+    def _smallstone_ports(self):
+        return tuple([ Port(label='%s' % (x + 1),
+                            driver=CelSmallstoneQSFPDriver(control_bit=x, port=x + 1),
+                            config=BCMConfig(x + 1, 'QSFP+',
+                                             phyless=True, chip='Trident2')) for x in range(32) ])
+
+    def _redstone_ports(self):
+        return (Port(label="49", driver=CelRedstoneQSFPDriver(sysfs_file='qsfp1_control', port=49),
+                     config=BCMConfig(49, 'QSFP+', phyless=True, chip='Trident')),
+                Port(label="50", driver=CelRedstoneQSFPDriver(sysfs_file='qsfp2_control', port=50),
+                     config=BCMConfig(50, 'QSFP+', phyless=True, chip='Trident')),
+                Port(label="51", driver=CelRedstoneQSFPDriver(sysfs_file='qsfp3_control', port=51),
+                     config=BCMConfig(51, 'QSFP+', phyless=True, chip='Trident')),
+                Port(label="52", driver=CelRedstoneQSFPDriver(sysfs_file='qsfp4_control', port=52),
+                     config=BCMConfig(52, 'QSFP+', phyless=True, chip='Trident')))
+
+
+    def _smallstonexp_ports(self):
+        return tuple([ Port(label='%s' % (x + 1),
+                            driver=CelSmallstoneXPQSFPDriver(control_bit=x, port=x + 1),
+                            config=BCMConfig(x + 1, 'QSFP+',
+                                             phyless=True, chip='Trident2')) for x in range(32) ])
+
+    def _redstonexp_ports(self):
+        return tuple([ Port(label='%s' % x, driver=CelRedstoneXPQSFPDriver(control_bit=(x - 49), port=x),
+                            config=BCMConfig(x, 'QSFP+',
+                                             phyless=True, chip='Trident2')) for x in range(49,55) ])
+
+    def _as5712_ports(self):
+        # TODO: Need to map these as the silkscreen has changed.
+        return tuple([ Port(label='%s' % x, driver=AS5712QSFPDriver(control_bit=(x - 49), port=x),
+                            config=BCMConfig(x, 'QSFP+',
+                                             phyless=True, chip='Trident2')) for x in range(49,55) ])
+
+    def _ly2r_ports(self):
+        return (Port(label='49', driver=QuantaLY2RQSFPDriver(base_pin=168, port=49),
+                     config=BCMConfig(49, 'QSFP+', phyless=True, chip='Trident')),
+                Port(label='50', driver=QuantaLY2RQSFPDriver(base_pin=176, port=50),
+                     config=BCMConfig(50, 'QSFP+', phyless=True, chip='Trident')),
+                Port(label='51', driver=QuantaLY2RQSFPDriver(base_pin=184, port=51),
+                     config=BCMConfig(51, 'QSFP+', phyless=True, chip='Trident')),
+                Port(label='52', driver=QuantaLY2RQSFPDriver(base_pin=192, port=52),
+                     config=BCMConfig(52, 'QSFP+', phyless=True, chip='Trident')))
+
+    def _ly6_ports(self, base):
+        return tuple([ Port(label='%s' % (x + 1), driver=QuantaLY6QSFPDriver(base, control_bit=x,
+                        port=x + 1, reset='qsfp1_reset', lp_mode='qsfp1_lp_mode', present='qsfp1_present'),
+                        config=BCMConfig(x + 1, 'QSFP+', phyless=True, chip='Trident2'))
+                       for x in range(16) ] +
+                     [ Port(label='%s' % (x + 1), driver=QuantaLY6QSFPDriver(base, control_bit=(x-16),
+                        port=x + 1, reset='qsfp2_reset', lp_mode='qsfp2_lp_mode', present='qsfp2_present'),
+                        config=BCMConfig(x + 1, 'QSFP+', phyless=True, chip='Trident2'))
+                       for x in range(16,32) ])
+
+    def _ly6_p2020_ports(self):
+        base = '/sys/devices/soc.0/ffe03000.i2c'
+        return self._ly6_ports(base)
+
+    def _ly6_rangeley_ports(self):
+        base = '/sys/devices/pci0000:00/0000:00:1f.3'
+        return self._ly6_ports(base)
+
+    def _ly8_ports(self):
+        return tuple([ Port(label='%s' % x, driver=QuantaLY8QSFPDriver(port=x),
+                            config=BCMConfig(x, 'QSFP+', phyless=True, chip='Trident2')) for x in range(49,53) ])
+
+    def _ly9_rangeley_ports(self):
+        return tuple([ Port(label='%s' % x, driver=QuantaLY9RangeleyQSFPDriver(port=x),
+                            config=BCMConfig(x, 'QSFP+', phyless=True, chip='Trident2')) for x in range(49,53) ])
+
+    def _s6000_ports(self):
+        # account for silk-screen changes in cpld control bits
+        control_bit_map = (1,0,3,2,5,4,7,6,9,8,11,10,13,12,15,14,17,16,
+                           19,18,21,20,23,22,25,24,27,26,29,28,31,30)
+        return tuple([ Port(label='%s' % (x + 1),
+                            driver=DellS6000QSFPDriver(control_bit=control_bit_map[x], port=x + 1),
+                            config=BCMConfig(x + 1, 'QSFP+', phyless=True, chip='Trident2'))
+                       for x in range(32) ])
+
+    def _platform_detect(self):
+        platform = subprocess.check_output('/usr/bin/platform-detect').strip()
+        if platform == 'cel,smallstone':
+            self._enable_ifmode = True
+            self.ports = self._smallstone_ports()
+            logger.info('Celestica Smallstone detected')
+        elif platform == 'cel,redstone':
+            self._enable_ifmode = True
+            self.ports = self._redstone_ports()
+            logger.info('Celestica Redstone detected')
+        elif platform == 'cel,smallstone_xp':
+            self._enable_ifmode = True
+            self.ports = self._smallstonexp_ports()
+            logger.info('Celestica Smallstone XP detected')
+        elif platform == 'cel,redstone_xp':
+            self._enable_ifmode = True
+            self.ports = self._redstonexp_ports()
+            logger.info('Celestica Redstone XP detected')
+        elif platform == 'quanta,ly8_rangeley':
+            self._enable_ifmode = True
+            self.ports = self._ly8_ports()
+            logger.info('Quanta LY8 detected')
+        elif platform == 'quanta,ly9_rangeley':
+            self._enable_ifmode = True
+            self.ports = self._ly9_rangeley_ports()
+            logger.info('Quanta LY9 Rangeley detected')
+        elif platform == 'accton,as5712_54x':
+            self.ports = self._as5712_ports()
+            logger.info('Accton AS5712 detected')
+        elif platform == 'dell,s6000_s1220':
+            self._enable_ifmode = True
+            self.ports = self._s6000_ports()
+            logger.info('Dell S6000 detected')
+        elif platform == 'quanta,ly2r':
+            self._enable_ifmode = True
+            self.ports = self._ly2r_ports()
+            logger.info('Quanta LY2R detected')
+        elif platform == 'quanta,ly6_p2020':
+            self._enable_ifmode = True
+            self.ports = self._ly6_p2020_ports()
+            logger.info('Quanta LY6 P2020 detected')
+        elif platform == 'quanta,ly6_rangeley':
+            self._enable_ifmode = True
+            self.ports = self._ly6_rangeley_ports()
+            logger.info('Quanta LY6 Rangeley detected')
+        else:
+            raise UnknownPlatform(platform)
+
+    @property
+    def _switchd_pid(self):
+        try:
+            readypid = open('/var/run/switchd.ready').read().strip()
+        except:
+            readypid = 0
+
+        return readypid
+
+    def _setup_hooks(self):
+        self._state_presence = [ False ] * len(self.ports)
+        self._state_admin_up = [ False ] * len(self.ports)
+        self._state_cable = [ (False, False) ] * len(self.ports) # (media, length)
+        self._state_switchd_pid = 0
+
+        if len(self.ports):
+            self._insert_hooks = [ self._reset_ports ]
+            self._admin_up_hooks = [ self._reset_ports ]
+            if self._enable_ifmode:
+                self._cable_hooks = [ self._set_ifmode ]
+                self._switchd_restart_hooks = [ self._set_ifmode ]
+            else:
+                self._cable_hooks = tuple()
+                self._switchd_restart_hooks = tuple()
+
+    def _poll_presence(self):
+        # returns all ports where presence has changed since the last poll
+        changed = set()
+        for port_index in range(len(self.ports)):
+            present = self.ports[port_index].driver.present
+
+            if present != self._state_presence[port_index]:
+                changed.add(self.ports[port_index])
+
+            self._state_presence[port_index] = present
+
+        return changed
+
+    def _poll_admin_up(self):
+        # returns all ports where administrative state has changed since the last poll
+        changed = set()
+        for port_index in range(len(self.ports)):
+            admin_up = self.ports[port_index].admin_up
+
+            if admin_up != self._state_admin_up[port_index]:
+                changed.add(self.ports[port_index])
+
+            self._state_admin_up[port_index] = admin_up
+
+        return changed
+
+    def _poll_cable(self):
+        # returns all ports where the cable media or length has changed since
+        # the last poll
+        changed = set()
+        for port_index in range(len(self.ports)):
+            port = self.ports[port_index]
+
+            if port.driver.present:
+                media = port.driver.cable.media
+                # Length does not determine the mode calculation, but may be
+                # useful for retimer programming later.
+                #length = port.driver.cable.length
+                length = None
+
+                if (media != self._state_cable[port_index][0] or
+                    length != self._state_cable[port_index][1]):
+
+                    logger.debug('cable change on %s, compliance code: %s' %
+                                 (str(self.ports[port_index]), media))
+                    changed.add(self.ports[port_index])
+            else:
+                media = None
+                length = None
+
+            self._state_cable[port_index] = (media, length)
+
+        return changed
+
+    def _poll_switchd_pid(self):
+        # returns all ports that have been affected by a switchd restart
+        switchd_pid = self._switchd_pid
+
+        try:
+            if switchd_pid == 0:
+                return set()
+
+            if switchd_pid != self._state_switchd_pid:
+                return set(self.ports)
+            else:
+                return set()
+        finally:
+            self._state_switchd_pid = switchd_pid
+
+    def _call_hooks(self, ports, hooks):
+        return [ hook(ports) for hook in hooks ]
+
+    def _reset_ports(self, ports, verbose=False):
+        reset = set()
+        for port in ports:
+            port.driver.reset = 1
+            reset.add(port)
+
+        time.sleep(self.port_reset_timing)
+
+        for port in reset:
+            port.driver.reset = 0
+
+        if verbose and len(reset):
+            logger.debug('reset: ' + ', '.join([ str(x) for x in reset ]))
+
+    def _config_ifmode(self, ports):
+        configs = []
+
+        for port in ports:
+            compliance_codes = port.driver.cable.media
+            if not compliance_codes or len(compliance_codes) < 1:
+                compliance_code = '40g-cr4'
+            else:
+                compliance_code = compliance_codes[0]
+
+            for intf in port.config.bcm_interfaces:
+                configs.append('serdes_if_type_%s=%d' %
+                               (intf, port.config.iftype(compliance_code)))
+
+        return '\n'.join(configs)
+
+    def _set_ifmode(self, ports):
+        logger.debug('set ifmode: %s' % ', '.join([ str(x) for x in ports ]))
+        for port in ports:
+            if not port.driver.present:
+                continue
+
+            # XXX - using the first compliance code in the set.
+            compliance_codes = port.driver.cable.media
+            if compliance_codes and len(compliance_codes) > 0:
+                if port.config.comply(compliance_codes[0], dry_run=True):
+                    port.driver.reset = 1
+                    port.config.comply(compliance_codes[0])
+                    port.driver.reset = 0
+            else:
+                port.driver.reset = 1
+                port.config.ifmode = 'sr'
+                port.driver.reset = 0
+
+
+    def _reset_fallback(self, ports):
+        reset = set()
+
+        for port in ports:
+            # If the port, or any sub-port has carrier, skip
+            if True in port.carrier:
+                continue
+            # If none of the ports are administratively up, skip
+            if not (True in port.admin_up):
+                continue
+            # If no cable is present, skip (this is the most expensive check)
+            if not port.driver.present:
+                continue
+
+            reset.add(port)
+
+        verbose = self._log_throttle(':'.join([ str(x) for x in reset ]))
+
+        if verbose:
+            for port in reset:
+                logger.debug('port administratively up with cable present but no carrier: ' + str(port))
+
+        self._reset_ports(reset, verbose)
+
+        if len(reset) and verbose > 1:
+            logger.debug('message repeated %u times' % verbose)
+
+    def config(self):
+        return self._config_ifmode(self.ports)
+
+    def run_once(self):
+        if len(self._switchd_restart_hooks):
+            switchd_changed = self._poll_switchd_pid()
+            if len(switchd_changed):
+                self._call_hooks(switchd_changed, self._switchd_restart_hooks)
+
+        if len(self._cable_hooks):
+            cable_changed = self._poll_cable()
+            if len(cable_changed):
+                self._call_hooks(cable_changed, self._cable_hooks)
+
+        return True
+
+    def run(self, oneshot=False):
+        if oneshot:
+            logger.info('started, one shot for %d ports' % len(self.ports))
+            self.run_once()
+        else:
+            logger.info('started, watching %d ports' % len(self.ports))
+            while True:
+                self.run_once()
+                time.sleep(self.poll_interval)
+
+        return True
+
+def start_logging(syslog=True, console=False, quiet=False):
+    global logger
+    global log_handlers
+    logger = logging.getLogger('portwd')
+    fmt = logging.Formatter(fmt='portwd: %(message)s')
+
+    if console:
+        console = logging.StreamHandler(sys.stdout)
+        console.setFormatter(fmt)
+        logger.addHandler(console)
+        log_handlers.append(console)
+
+    if syslog:
+        syslog = logging.handlers.SysLogHandler(address='/dev/log')
+        syslog.setFormatter(fmt)
+        logger.addHandler(syslog)
+        log_handlers.append(syslog)
+
+    if quiet:
+        logger.setLevel(logging.ERROR)
+    else:
+        logger.setLevel(logging.DEBUG)
+
+def stop_logging():
+    global logger
+    global log_handlers
+    for handler in log_handlers:
+        handler.close()
+        logger.removeHandler(handler)
+    log_handlers = []
+
+def service():
+    start_logging()
+    try:
+        portwd = PortWD()
+    except UnknownPlatform, e:
+        logger.info('not running on platform: %s' % str(e))
+        return 0
+
+    try:
+        portwd.run_once()
+    except cumulus.porttab.NotConfigured:
+        logger.error('porttab not configured')
+	return -1
+    stop_logging()
+
+    dc = daemon.DaemonContext(working_directory='/var/run',
+                              pidfile=daemon.pidlockfile.PIDLockFile('/var/run/portwd.pid'))
+    with dc:
+        start_logging()
+
+        try:
+            portwd.run()
+        except Exception, e:
+            (exc_type, exc_value, exc_traceback) = sys.exc_info()
+            logger.exception(traceback.format_tb(exc_traceback))
+            return -1
+
+        logger.info('exiting')
+        return 0
+
+def oneshot():
+    start_logging(syslog=False, console=True)
+    try:
+        PortWD().run(oneshot=True)
+    except UnknownPlatform, e:
+        logger.info('not running on platform: %s' % str(e))
+    except cumulus.porttab.NotConfigured:
+        logger.info('porttab not configured')
+        return -1
+
+    return 0
+
+def config():
+    start_logging(syslog=True, console=False, quiet=True)
+    try:
+        sys.stdout.write(PortWD().config())
+    except UnknownPlatform:
+        pass
+    except cumulus.porttab.NotConfigured:
+        logger.error('porttab not configured')
+	return -1
+    return 0
+
+if __name__ == '__main__':
+    if len(sys.argv) <= 1:
+        sys.exit(service())
+
+    if sys.argv[1] == '--oneshot':
+        sys.exit(oneshot())
+    elif sys.argv[1] == '--config':
+        sys.exit(config())
+    else:
+        sys.stderr.write('Usage: portwd (--oneshot|--config)\n')
+        sys.exit(-1)

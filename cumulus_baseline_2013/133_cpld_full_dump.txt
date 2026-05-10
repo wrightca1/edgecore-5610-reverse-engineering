@@ -1,0 +1,79 @@
+Warning: Permanently added '10.1.1.212' (ECDSA) to the list of known hosts.
+[sudo] password for cumulus: === FULL CPLD ATTR DUMP ===
+README                                   = Description of the CPLD driver files:
+
+board_revision
+
+  Read-Only:
+
+  Concatenation of model type, HW revision and cpld version registers,
+  using the following format:
+
+  model.hw_revision:cpld_vers
+board_revision                           = 0.2:7-eng
+help                                     = Description of the CPLD driver files:
+
+board_revision
+
+  Read-Only:
+
+  Concatenation of model type, HW revision and cpld version registers,
+  using the following format:
+
+  model.hw_revision:cpld_vers
+led_diag                                 = yellow
+led_fan                                  = green
+led_locator                              = off
+led_psu1                                 = green
+led_psu2                                 = yellow
+modalias                                 = platform:ea000000.cpld
+psu_pwr1_all_ok                          = 1
+psu_pwr1_dc_ok                           = 1
+psu_pwr1_present                         = 1
+psu_pwr2_all_ok                          = 0
+psu_pwr2_dc_ok                           = 0
+psu_pwr2_present                         = 1
+pwm1                                     = 64
+pwm1_enable                              = 1
+system_all_ok                            = 0
+system_dc_power_ok                       = 0
+system_fan_air_flow                      = front-to-back
+system_fan_ok                            = 1
+system_fan_present                       = 1
+uevent                                   = 
+watch_dog_enable                         = 0
+watch_dog_keep_alive                     = 0
+watch_dog_timeout                        = 8 seconds to NMI.
+
+=== smonctl - cumulus sensor status tool ===
+/usr/sbin/smonctl
+Fan       (System Fan                            ):  OK
+PSU1                                              :  OK
+PSU2                                              :  BAD
+Temp1     (Networking ASIC Die Temp Sensor       ):  OK
+Temp10    (Temp Sensor close to Networking ASIC  ):  OK
+Temp2     (Board Temperature Sensor              ):  OK
+Temp3     (Board Temperature Sensor              ):  OK
+Temp4     (Board Temperature Sensor              ):  OK
+Temp5     (Board Temperature Sensor              ):  OK
+Temp6     (Board Temperature Sensor              ):  OK
+Temp7     (Board Temperature Sensor              ):  OK
+Temp8     (Board Temperature Sensor              ):  OK
+Temp9     (NE1617A Sensor Temperature            ):  OK
+
+=== pwmd display mode ===
+AcctonAS5610_52xPWM1
+	Fans:
+		Fan PWM: 64     Measured RPM: unknown
+	Temps:
+		Temp1 42 C
+		Temp2 26 C
+		Temp3 31 C
+		Temp4 25 C
+		Temp5 31 C
+		Temp6 31 C
+		Temp7 25 C
+		Temp8 27 C
+		Temp9 22 C
+		Temp10 54 C
+Use smonctl to get more info on temps and fans

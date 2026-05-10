@@ -1,0 +1,127 @@
+Warning: Permanently added '10.1.1.212' (ECDSA) to the list of known hosts.
+[sudo] password for cumulus: === ALL PROCESSES full cmdline ===
+    1 root     init [3]  
+   13 root     [cpuset]
+   16 root     [sync_supers]
+   17 root     [bdi-default]
+   19 root     [ata_sff]
+   20 root     [khubd]
+   21 root     [rpciod]
+   23 root     [khungtaskd]
+   24 root     [kswapd0]
+   25 root     [fsnotify_mark]
+   26 root     [nfsiod]
+   27 root     [crypto]
+   45 root     [mtdblock0]
+   46 root     [mtdblock1]
+   47 root     [mtdblock2]
+   48 root     [mtdblock3]
+  296 root     [scsi_eh_0]
+  297 root     [usb-storage]
+  699 root     /usr/sbin/rsyslogd -c4
+  920 root     [flush-8:0]
+ 1269 root     /sbin/mstpd -v2
+ 1368 root     /sbin/dhclient -pf /run/dhclient.eth0.pid -lf /var/lib/dhcp/dhclient.eth0.leases eth0
+ 1454 root     /bin/bash /usr/bin/arp_refresh
+ 1551 root     /usr/bin/python /usr/sbin/ledmgrd
+ 1646 root     /usr/bin/python /usr/sbin/smond
+ 1768 root     /sbin/auditd
+ 1770 root     /sbin/audispd
+ 1771 root     [kauditd]
+ 1806 root     /usr/sbin/cron
+ 2362 root     /usr/bin/python /usr/lib/cumulus/ztp-usb
+ 2594 root     /usr/sbin/sshd
+ 2743 root     /usr/bin/monit -p /var/run/monit.pid -s /var/run/monit/state -c /etc/monit/monitrc
+ 2841 root     /bin/login --        
+ 4919 root     sleep 30
+ 4920 root     [loadavg_good.sh] <defunct>
+ 4935 root     sshd: cumulus [priv]
+ 4937 cumulus  sshd: cumulus@notty
+ 4944 root     head -50
+ 9838 cumulus  -bash
+11740 root     script -qfc /usr/cumulus/bin/cl-license -i /tmp/license.txt /tmp/lic.out
+11741 root     /bin/bash /usr/cumulus/bin/cl-license -i /tmp/license.txt
+11752 root     more /usr/share/cumulus/EULA.txt
+14242 root     /usr/sbin/switchd -d
+31655 root     /usr/sbin/lldpd -c
+31680 _lldpd   /usr/sbin/lldpd -c
+
+=== look for fan/thermal/cpld attrs anywhere ===
+/sys/devices/ff705000.localbus/ea000000.cpld/system_fan_present
+/sys/devices/ff705000.localbus/ea000000.cpld/system_fan_ok
+/sys/devices/ff705000.localbus/ea000000.cpld/system_fan_air_flow
+/sys/devices/ff705000.localbus/ea000000.cpld/led_fan
+---
+/sys/devices/ff705000.localbus/ea000000.cpld/pwm1
+/sys/devices/ff705000.localbus/ea000000.cpld/pwm1_enable
+---
+/sys/class/thermal
+
+=== CPLD module info ===
+filename:       /lib/modules/3.2.60-1+deb7u1+cl2.5/extra/accton_as5610_52x_cpld.ko
+version:        1.0
+license:        GPL
+description:    CPLD driver for Accton Technology Corporation, AS5610_52X
+author:         Puneet Shenoy <puneet@cumulusnetworks.com>
+srcversion:     34773A0D6D6F29FE7C7CD18
+depends:        
+vermagic:       3.2.60-1+deb7u1+cl2.5 SMP mod_unload modversions 
+
+=== CPLD driver attrs ===
+/sys/bus/platform/drivers/accton_as5610_52x_cpld
+/sys/bus/platform/drivers/accton_as5610_52x_cpld/ea000000.cpld
+/sys/bus/platform/drivers/accton_as5610_52x_cpld/module
+/sys/bus/platform/drivers/accton_as5610_52x_cpld/uevent
+/sys/module/accton_as5610_52x_cpld
+/sys/module/accton_as5610_52x_cpld/holders
+/sys/module/accton_as5610_52x_cpld/version
+/sys/module/accton_as5610_52x_cpld/srcversion
+/sys/module/accton_as5610_52x_cpld/initstate
+/sys/module/accton_as5610_52x_cpld/uevent
+/sys/module/accton_as5610_52x_cpld/refcnt
+/sys/module/accton_as5610_52x_cpld/sections
+/sys/module/accton_as5610_52x_cpld/sections/.note.gnu.build-id
+/sys/module/accton_as5610_52x_cpld/sections/.text
+/sys/module/accton_as5610_52x_cpld/sections/.devinit.text
+/sys/module/accton_as5610_52x_cpld/sections/.init.text
+/sys/module/accton_as5610_52x_cpld/sections/.exit.text
+/sys/module/accton_as5610_52x_cpld/sections/.rodata
+/sys/module/accton_as5610_52x_cpld/sections/.rodata.str1.1
+/sys/module/accton_as5610_52x_cpld/sections/.data
+/sys/module/accton_as5610_52x_cpld/sections/.gnu.linkonce.this_module
+/sys/module/accton_as5610_52x_cpld/sections/.bss
+/sys/module/accton_as5610_52x_cpld/sections/.plt
+/sys/module/accton_as5610_52x_cpld/sections/.init.plt
+/sys/module/accton_as5610_52x_cpld/sections/.symtab
+/sys/module/accton_as5610_52x_cpld/sections/.strtab
+/sys/module/accton_as5610_52x_cpld/notes
+/sys/module/accton_as5610_52x_cpld/notes/.note.gnu.build-id
+/sys/module/accton_as5610_52x_cpld/drivers
+/sys/module/accton_as5610_52x_cpld/drivers/platform:accton_as5610_52x_cpld
+
+=== ANY hwmon attr ===
+/sys/devices/pci0000:00/0000:00:00.0/0000:01:00.0/hwmon/hwmon0/uevent
+/sys/devices/soc.0/ff703000.i2c/i2c-0/i2c-9/9-004d/hwmon/hwmon1/uevent
+/sys/devices/soc.0/ff703000.i2c/i2c-0/i2c-9/9-0018/hwmon/hwmon2/uevent
+
+=== platform devices ===
+alarmtimer
+ea000000.cpld
+efc00000.flash
+ff702000.memory-controller
+ff703000.i2c
+ff703100.i2c
+ff704500.serial
+ff705000.localbus
+ff720000.l2-cache-controller
+ff722000.usb
+ff724000.ethernet
+ff724520.mdio
+ff740000.pic
+ff7e0000.global-utilities
+fsl-ehci.0
+serial8250
+serial8250.0
+soc.0
+
+=== iostat fans - what touches the fan/pwm files ===

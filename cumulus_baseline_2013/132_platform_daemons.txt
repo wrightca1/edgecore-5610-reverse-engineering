@@ -1,0 +1,111 @@
+Warning: Permanently added '10.1.1.212' (ECDSA) to the list of known hosts.
+[sudo] password for cumulus: === platform daemons ===
+ledmgrd
+pwmd
+smond
+
+=== monit configs - the rc files ===
+--- /etc/monit/monitrc.d/ledmgrd-monit.rc ---
+check process ledmgrd with pidfile /var/run/ledmgrd.pid
+	    every 3 cycles
+        group networking
+        start program = "/etc/init.d/ledmgrd start"
+        stop program = "/etc/init.d/ledmgrd stop"
+        if 2 restarts within 3 cycles then unmonitor
+--- /etc/monit/monitrc.d/lldpd-monit.rc ---
+check process lldpd with pidfile /var/run/lldpd.pid
+        every 12 cycles
+        group networking
+        start program = "/etc/init.d/lldpd start"
+        stop program = "/etc/init.d/lldpd stop"
+--- /etc/monit/monitrc.d/mstpd-monit.rc ---
+check process mstpd with pidfile /var/run/mstpd.pid
+        group networking
+        start program = "/etc/init.d/mstpd start"
+        stop program = "/etc/init.d/mstpd stop"
+        if 3 restarts within 6 cycles then exec /lib/mstpctl-utils/mstpctl_monit_undo_cfg.sh
+
+check file mstpd.ready with path /var/run/mstpd.ready
+        group networking
+        start program = "/etc/init.d/mstpd start"
+        stop program = "/etc/init.d/mstpd stop"
+        if timestamp > 1 minutes then restart
+        if does not exist for 4 cycles then restart
+--- /etc/monit/monitrc.d/ptm-monit.rc ---
+check process ptmd with pidfile /var/run/ptmd.pid
+        every 12 cycles
+        group networking
+        start program = "/etc/init.d/ptmd start"
+        stop program = "/etc/init.d/ptmd stop"
+        if 2 restarts within 3 cycles then unmonitor
+	depends on topology.dot
+
+check file topology.dot with path /etc/ptm.d/topology.dot
+    if does not exist then unmonitor
+--- /etc/monit/monitrc.d/pwmd-monit.rc ---
+check process pwmd with pidfile /var/run/pwmd.pid
+	    every 3 cycles
+        group networking
+        start program = "/etc/init.d/pwmd start"
+        stop program = "/etc/init.d/pwmd stop"
+        if 2 restarts within 3 cycles then unmonitor
+--- /etc/monit/monitrc.d/smond-monit.rc ---
+check process smond with pidfile /var/run/smond.pid
+	    every 6 cycles
+        group networking
+        start program = "/etc/init.d/smond start"
+        stop program = "/etc/init.d/smond stop"
+        if 2 restarts within 3 cycles then unmonitor
+--- /etc/monit/monitrc.d/cumulus ---
+###############################################################################
+## Cumulus specific Monit control file
+###############################################################################
+##
+## Comments begin with a '#' and extend through the end of the line. Keywords
+## are case insensitive. All path's MUST BE FULLY QUALIFIED, starting with '/'.
+##
+
+###############################################################################
+## Services
+###############################################################################
+##
+## Check general system resources such as load average, cpu and memory
+## usage. Each test specifies a resource, conditions and the action to be
+## performed should a test fail.
+#
+check system localhost
+   if cpu usage (user) > 70% then alert
+   if cpu usage (system) > 30% then alert
+   if cpu usage (wait) > 20% then alert
+   if memory usage > 90% for 1 cycles then exec "/usr/cumulus/bin/cl-support memory usage above 90 percent"
+   if memory usage > 90% for 2 cycles then unmonitor
+
+check program system.loadavg with path "/usr/share/monit/scripts/loadavg_good.sh"
+   if status != 0 for 8 cycles then alert
+
+## Configurations for switchd, pwmd, ledmgrd, smond, lldpd, mstpd, ptm
+## included by respective packages in /etc/monit/monitrd.d (the default)
+## -or- /etc/monit/cumulus.d (for start-stop-monitor monit aware service restarts)
+
+
+=== processes ===
+root      1551  0.0  0.5  16616 11896 ?        S    09:28   0:16 /usr/bin/python /usr/sbin/ledmgrd
+root      1606  0.1  0.6  16960 12156 ?        S    09:28   0:23 /usr/bin/python /usr/sbin/pwmd
+root      1646  0.5  0.5  16620 11928 ?        S    09:28   1:44 /usr/bin/python /usr/sbin/smond
+
+=== what daemons are actually running ===
+ [ + ]  arp_refresh
+ [ + ]  auditd
+ [ + ]  clagd
+ [ + ]  cron
+ [ + ]  ledmgrd
+ [ + ]  lldpd
+ [ + ]  monit
+ [ + ]  mstpd
+ [ + ]  portwd
+ [ + ]  pwmd
+ [ + ]  rsyslog
+ [ + ]  smond
+ [ + ]  ssh
+ [ + ]  switchd
+ [ + ]  ztp-usb

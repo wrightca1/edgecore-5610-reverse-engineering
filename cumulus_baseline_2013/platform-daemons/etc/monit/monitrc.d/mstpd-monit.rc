@@ -1,0 +1,12 @@
+check process mstpd with pidfile /var/run/mstpd.pid
+        group networking
+        start program = "/etc/init.d/mstpd start"
+        stop program = "/etc/init.d/mstpd stop"
+        if 3 restarts within 6 cycles then exec /lib/mstpctl-utils/mstpctl_monit_undo_cfg.sh
+
+check file mstpd.ready with path /var/run/mstpd.ready
+        group networking
+        start program = "/etc/init.d/mstpd start"
+        stop program = "/etc/init.d/mstpd stop"
+        if timestamp > 1 minutes then restart
+        if does not exist for 4 cycles then restart
