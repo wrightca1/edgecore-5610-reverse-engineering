@@ -1,0 +1,88 @@
+Warning: Permanently added '10.1.1.212' (ECDSA) to the list of known hosts.
+[sudo] password for cumulus: --- bcmcmd "led status" ---
+ 1  xe0                        HD 1:29
+ 2  xe1                        HD 1:30
+ 3  xe2                        HD 1:31
+ 4  xe3                        HD 1:32
+ 5  xe4                        HD 1:33
+ 6  xe5                        HD 1:34
+ 7  xe6                        HD 1:35
+ 8  xe7                        HD 1:36
+ 9  xe8                        HD 1:5
+10  xe9                        HD 1:6
+11 xe10                        HD 1:7
+12 xe11                        HD 1:8
+13 xe12                        HD 1:9
+14 xe13                        HD 1:10
+15 xe14                        HD 1:11
+--- bcmcmd "led show" ---
+Usage (LED): Parameters: [num] [status | start | stop | load <file.hex> |
+	            [auto [on | off]] | prog <hexdata> | dump
+	Load the LED Microprocessor with the program specified in <file.hex>.
+	Option 'auto' turns on (by default) or off automatic linkscan
+	    updates to the LED processor.
+	Option 'num' selects the specific LED processor. The default is 0
+--- bcmcmd "led dump" ---
+ 02 06 67 9b 02 05 67 9b 02 08 67 9b 02 07 67 9b
+ 02 1e 67 9b 02 1f 67 9b 02 20 67 9b 02 1d 67 9b
+ 02 24 67 9b 02 23 67 9b 02 22 67 9b 02 21 67 9b
+ 02 1c 67 9b 02 1b 67 9b 02 1a 67 9b 02 19 67 9b
+ 02 17 67 9b 02 18 67 9b 02 15 67 9b 02 16 67 9b
+ 02 10 67 9b 02 0f 67 9b 02 0e 67 9b 02 0d 67 9b
+ 02 0a 67 9b 02 09 67 9b 02 0c 67 9b 02 0b 67 9b
+ 02 13 67 9b 02 14 67 9b 02 11 67 9b 02 12 67 9b
+ 67 84 3a 40 06 f0 d2 00 70 8e 90 60 f0 57 06 f1
+ a2 01 c2 01 60 f1 02 03 60 f0 57 2a 01 32 0e 87
+ 28 12 80 f8 15 1a 04 27 1a 05 27 b7 26 f1 c7 d7
+ 32 08 c7 87 57
+--- bcmcmd "linkscan" ---
+LINKscan: Linkscan enabled
+LINKscan:   Software polling interval: 250000 usec
+LINKscan:   Software Port BitMap 0x000000000000000000000000000000000000000000000000001ffffffffffffe: xe
+LINKscan:   Hardware Port BitMap 0x0000000000000000000000000000000000000000000000000000000000000000: none
+LINKscan:   Disabled Port BitMap 0x0000000000000000000000000000000000000000000000000000000000000000: none
+--- bcmcmd "show led" ---
+SHOW: Error: Invalid option led
+--- bcmcmd "led 0 list" ---
+Usage (LED): Parameters: [num] [status | start | stop | load <file.hex> |
+	            [auto [on | off]] | prog <hexdata> | dump
+	Load the LED Microprocessor with the program specified in <file.hex>.
+	Option 'auto' turns on (by default) or off automatic linkscan
+	    updates to the LED processor.
+	Option 'num' selects the specific LED processor. The default is 0
+--- bcmcmd "led 0 dump" ---
+ 02 06 67 9b 02 05 67 9b 02 08 67 9b 02 07 67 9b
+ 02 1e 67 9b 02 1f 67 9b 02 20 67 9b 02 1d 67 9b
+ 02 24 67 9b 02 23 67 9b 02 22 67 9b 02 21 67 9b
+ 02 1c 67 9b 02 1b 67 9b 02 1a 67 9b 02 19 67 9b
+ 02 17 67 9b 02 18 67 9b 02 15 67 9b 02 16 67 9b
+ 02 10 67 9b 02 0f 67 9b 02 0e 67 9b 02 0d 67 9b
+ 02 0a 67 9b 02 09 67 9b 02 0c 67 9b 02 0b 67 9b
+ 02 13 67 9b 02 14 67 9b 02 11 67 9b 02 12 67 9b
+ 67 84 3a 40 06 f0 d2 00 70 8e 90 60 f0 57 06 f1
+ a2 01 c2 01 60 f1 02 03 60 f0 57 2a 01 32 0e 87
+ 28 12 80 f8 15 1a 04 27 1a 05 27 b7 26 f1 c7 d7
+ 32 08 c7 87 57
+--- bcmcmd "led 1 list" ---
+Usage (LED): Parameters: [num] [status | start | stop | load <file.hex> |
+	            [auto [on | off]] | prog <hexdata> | dump
+	Load the LED Microprocessor with the program specified in <file.hex>.
+	Option 'auto' turns on (by default) or off automatic linkscan
+	    updates to the LED processor.
+	Option 'num' selects the specific LED processor. The default is 0
+--- bcmcmd "led 1 dump" ---
+ 02 18 67 89 02 09 67 6f 02 0d 67 6f 02 15 67 6f
+ 02 19 67 6f 02 1e 67 93 02 1d 67 93 02 20 67 93
+ 02 1f 67 93 02 03 67 93 02 02 67 93 02 01 67 93
+ 02 04 67 93 02 07 67 93 02 06 67 93 02 05 67 93
+ 02 08 67 93 02 24 67 93 02 23 67 93 02 22 67 93
+ 02 21 67 93 67 58 3a 40 06 f0 d2 00 70 62 90 60
+ f0 57 06 f1 a2 01 c2 01 60 f1 02 03 60 f0 57 2a
+ 01 32 0e 87 28 12 80 f8 15 1a 04 27 1a 05 27 b7
+ 26 f1 c7 d7 32 08 c7 87 57 2a 01 32 0f 87 e2 01
+ 74 89 57 2a 01 32 0e 87 28 12 80 f8 15 1a 04 27
+ 1a 05 27 b7 26 f1 c7 d7 32 08 c7 87 57
+--- bcmcmd "ledproc dump" ---
+Unknown command: ledproc
+--- bcmcmd "led_show" ---
+Unknown command: led_show
