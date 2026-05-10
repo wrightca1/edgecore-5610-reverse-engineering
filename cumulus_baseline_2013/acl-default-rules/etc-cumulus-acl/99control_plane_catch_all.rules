@@ -1,0 +1,29 @@
+#
+# Note: These are catch-all rules that shall be last in the over all rule set.
+#
+
+INGRESS_INTF = swp+
+
+INGRESS_CHAIN = INPUT
+
+ 
+
+[iptables]
+
+-A $INGRESS_CHAIN --in-interface $INGRESS_INTF -m addrtype --dst-type LOCAL -j POLICE --set-mode pkt --set-rate 1000 --set-burst 1000 --set-class 0
+
+-A $INGRESS_CHAIN --in-interface $INGRESS_INTF -m addrtype --dst-type IPROUTER -j POLICE --set-mode pkt --set-rate 400 --set-burst 100 --set-class 0
+
+
+[ip6tables]
+
+-A $INGRESS_CHAIN --in-interface $INGRESS_INTF -m addrtype --dst-type LOCAL -j POLICE --set-mode pkt --set-rate 1000 --set-burst 1000 --set-class 0
+
+-A $INGRESS_CHAIN --in-interface $INGRESS_INTF -m addrtype --dst-type IPROUTER -j POLICE --set-mode pkt --set-rate 400 --set-burst 100 --set-class 0
+
+
+[ebtables]
+
+-A $INGRESS_CHAIN --in-interface $INGRESS_INTF -j setclass --class 0
+-A $INGRESS_CHAIN -j police --set-mode pkt --set-rate 100 --set-burst 100
+

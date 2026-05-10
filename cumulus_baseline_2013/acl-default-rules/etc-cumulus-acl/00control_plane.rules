@@ -1,0 +1,106 @@
+INGRESS_INTF = swp+
+
+INGRESS_CHAIN = INPUT
+
+INNFWD_CHAIN = INPUT,FORWARD
+
+MARTIAN_SOURCES_4 = "240.0.0.0/5,127.0.0.0/8,224.0.0.0/8,255.255.255.255/32"
+
+MARTIAN_SOURCES_6 = "ff00::/8,::/128,::ffff:0.0.0.0/96,::1/128"
+
+CLAG_PORT = 5342
+
+[iptables]
+
+-A $INNFWD_CHAIN --in-interface $INGRESS_INTF -s $MARTIAN_SOURCES_4 -j DROP
+
+-A $INGRESS_CHAIN --in-interface $INGRESS_INTF -p ospf -j SETCLASS --class 7
+-A $INGRESS_CHAIN -p ospf -j POLICE --set-mode pkt --set-rate 2000 --set-burst 2000
+
+-A $INGRESS_CHAIN --in-interface $INGRESS_INTF -p tcp --dport bgp -j SETCLASS --class 7
+-A $INGRESS_CHAIN -p tcp --dport bgp -j POLICE --set-mode pkt --set-rate 2000 --set-burst 2000
+
+-A $INGRESS_CHAIN --in-interface $INGRESS_INTF -p tcp --sport bgp -j SETCLASS --class 7
+-A $INGRESS_CHAIN -p tcp --sport bgp -j POLICE --set-mode pkt --set-rate 2000 --set-burst 2000
+
+-A $INGRESS_CHAIN --in-interface $INGRESS_INTF -p tcp --dport $CLAG_PORT -j SETCLASS --class 7
+-A $INGRESS_CHAIN -p tcp --dport $CLAG_PORT -j POLICE --set-mode pkt --set-rate 2000 --set-burst 2000
+
+-A $INGRESS_CHAIN --in-interface $INGRESS_INTF -p tcp --sport $CLAG_PORT -j SETCLASS --class 7
+-A $INGRESS_CHAIN -p tcp --sport $CLAG_PORT -j POLICE --set-mode pkt --set-rate 2000 --set-burst 2000
+
+-A $INGRESS_CHAIN --in-interface $INGRESS_INTF -p icmp -j SETCLASS --class 2
+-A $INGRESS_CHAIN -p icmp -j POLICE --set-mode pkt --set-rate 100 --set-burst 40
+ 
+-A $INGRESS_CHAIN --in-interface $INGRESS_INTF -p udp --dport bootps:bootpc -j SETCLASS --class 2
+-A $INGRESS_CHAIN -p udp --dport bootps -j POLICE --set-mode pkt --set-rate 100 --set-burst 100
+-A $INGRESS_CHAIN -p udp --dport bootpc -j POLICE --set-mode pkt --set-rate 100 --set-burst 100
+
+-A $INGRESS_CHAIN --in-interface $INGRESS_INTF -p tcp --dport bootps:bootpc -j SETCLASS --class 2
+-A $INGRESS_CHAIN -p tcp --dport bootps -j POLICE --set-mode pkt --set-rate 100 --set-burst 100
+-A $INGRESS_CHAIN -p tcp --dport bootpc -j POLICE --set-mode pkt --set-rate 100 --set-burst 100
+
+-A $INGRESS_CHAIN --in-interface $INGRESS_INTF -p igmp -j SETCLASS --class 6
+-A $INGRESS_CHAIN -p igmp -j POLICE --set-mode pkt --set-rate 300 --set-burst 100
+
+[ip6tables]
+
+-A $INNFWD_CHAIN --in-interface $INGRESS_INTF -s $MARTIAN_SOURCES_6 -j DROP
+
+-A $INGRESS_CHAIN --in-interface $INGRESS_INTF -p ospf -j POLICE --set-mode pkt --set-rate 2000 --set-burst 2000 --set-class 7
+
+-A $INGRESS_CHAIN --in-interface $INGRESS_INTF -p tcp --dport bgp -j POLICE --set-mode pkt --set-rate 2000 --set-burst 2000 --set-class 7
+
+-A $INGRESS_CHAIN --in-interface $INGRESS_INTF -p tcp --sport bgp -j POLICE --set-mode pkt --set-rate 2000 --set-burst 2000 --set-class 7
+
+-A $INGRESS_CHAIN --in-interface $INGRESS_INTF -p ipv6-icmp -m icmp6 --icmpv6-type router-solicitation -j POLICE --set-mode pkt --set-rate 100 --set-burst 100 --set-class 2
+
+-A $INGRESS_CHAIN --in-interface $INGRESS_INTF -p ipv6-icmp -m icmp6 --icmpv6-type router-advertisement -j POLICE --set-mode pkt --set-rate 100 --set-burst 100 --set-class 2
+
+-A $INGRESS_CHAIN --in-interface $INGRESS_INTF -p ipv6-icmp -m icmp6 --icmpv6-type neighbour-solicitation -j POLICE --set-mode pkt --set-rate 100 --set-burst 100 --set-class 2
+
+-A $INGRESS_CHAIN --in-interface $INGRESS_INTF -p ipv6-icmp -m icmp6 --icmpv6-type neighbour-advertisement -j POLICE --set-mode pkt --set-rate 100 --set-burst 100 --set-class 2
+
+# link-local multicast receiver: Listener Query
+-A $INGRESS_CHAIN --in-interface $INGRESS_INTF -p ipv6-icmp -m icmp6 --icmpv6-type 130 -j POLICE --set-mode pkt --set-rate 200 --set-burst 100 --set-class 6
+
+# link-local multicast receiver: Listener Reprot
+-A $INGRESS_CHAIN --in-interface $INGRESS_INTF -p ipv6-icmp -m icmp6 --icmpv6-type 131 -j POLICE --set-mode pkt --set-rate 200 --set-burst 100 --set-class 6
+
+# link-local multicast receiver: Listener Done
+-A $INGRESS_CHAIN --in-interface $INGRESS_INTF -p ipv6-icmp -m icmp6 --icmpv6-type 132 -j POLICE --set-mode pkt --set-rate 200 --set-burst 100 --set-class 6
+
+# link-local multicast receiver: Listener Report v2
+-A $INGRESS_CHAIN --in-interface $INGRESS_INTF -p ipv6-icmp -m icmp6 --icmpv6-type 143 -j POLICE --set-mode pkt --set-rate 200 --set-burst 100 --set-class 6
+
+-A $INGRESS_CHAIN --in-interface $INGRESS_INTF -p ipv6-icmp -j POLICE --set-mode pkt --set-rate 64 --set-burst 40 --set-class 2
+
+-A $INGRESS_CHAIN --in-interface $INGRESS_INTF -p udp --dport dhcpv6-client:dhcpv6-server -j POLICE --set-mode pkt --set-rate 100 --set-burst 100 --set-class 2
+
+-A $INGRESS_CHAIN --in-interface $INGRESS_INTF -p tcp --dport dhcpv6-client:dhcpv6-server -j POLICE --set-mode pkt --set-rate 100 --set-burst 100 --set-class 2
+
+[ebtables]
+
+# BPDU
+-A $INGRESS_CHAIN --in-interface $INGRESS_INTF -d 01:80:c2:00:00:00 -j setclass --class 7
+-A $INGRESS_CHAIN -d 01:80:c2:00:00:00 -j police --set-mode pkt --set-rate 2000 --set-burst 2000
+
+# LACP
+-A $INGRESS_CHAIN --in-interface $INGRESS_INTF -d 01:80:c2:00:00:02 -j setclass --class 7
+-A $INGRESS_CHAIN -d 01:80:c2:00:00:02 -j police --set-mode pkt --set-rate 2000 --set-burst 2000
+
+# LLDP
+-A $INGRESS_CHAIN --in-interface $INGRESS_INTF -d 01:80:c2:00:00:0e -j setclass --class 6
+-A $INGRESS_CHAIN -d 01:80:c2:00:00:0e -j police --set-mode pkt --set-rate 200 --set-burst 200
+
+# CDP
+-A $INGRESS_CHAIN --in-interface $INGRESS_INTF -d 01:00:0c:cc:cc:cc -j setclass --class 6
+-A $INGRESS_CHAIN -d 01:00:0c:cc:cc:cc -j police --set-mode pkt --set-rate 200 --set-burst 200
+
+# ARP
+-A $INGRESS_CHAIN --in-interface $INGRESS_INTF -p arp -j setclass --class 2
+-A $INGRESS_CHAIN -p arp -j police --set-mode pkt --set-rate 100 --set-burst 100
+
+# Cisco PVST
+-A $INGRESS_CHAIN --in-interface $INGRESS_INTF -d 01:00:0c:cc:cc:cd -j setclass --class 7
+-A $INGRESS_CHAIN -d 01:00:0c:cc:cc:cd -j police --set-mode pkt --set-rate 2000 --set-burst 2000

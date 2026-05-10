@@ -1,0 +1,283 @@
+Warning: Permanently added '10.1.1.212' (ECDSA) to the list of known hosts.
+[sudo] password for cumulus: === default ACL rules ===
+acl.conf
+policy.conf
+policy.d
+-------------------------------
+Listing rules of type iptables:
+-------------------------------
+TABLE filter :
+Chain INPUT (policy ACCEPT 48963 packets, 27M bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+    0     0 DROP       all  --  swp+   any     240.0.0.0/5          anywhere            
+    0     0 DROP       all  --  swp+   any     loopback/8           anywhere            
+    0     0 DROP       all  --  swp+   any     base-address.mcast.net/8  anywhere            
+    0     0 DROP       all  --  swp+   any     255.255.255.255      anywhere            
+ 2558  210K SETCLASS   ospf --  swp+   any     anywhere             anywhere             SETCLASS  class:7
+ 2558  220K POLICE     ospf --  any    any     anywhere             anywhere             POLICE  mode:pkt rate:2000 burst:2000
+    0     0 SETCLASS   tcp  --  swp+   any     anywhere             anywhere             tcp dpt:bgp SETCLASS  class:7
+    0     0 POLICE     tcp  --  any    any     anywhere             anywhere             tcp dpt:bgp POLICE  mode:pkt rate:2000 burst:2000
+    0     0 SETCLASS   tcp  --  swp+   any     anywhere             anywhere             tcp spt:bgp SETCLASS  class:7
+    0     0 POLICE     tcp  --  any    any     anywhere             anywhere             tcp spt:bgp POLICE  mode:pkt rate:2000 burst:2000
+    0     0 SETCLASS   tcp  --  swp+   any     anywhere             anywhere             tcp dpt:5342 SETCLASS  class:7
+    0     0 POLICE     tcp  --  any    any     anywhere             anywhere             tcp dpt:5342 POLICE  mode:pkt rate:2000 burst:2000
+    0     0 SETCLASS   tcp  --  swp+   any     anywhere             anywhere             tcp spt:5342 SETCLASS  class:7
+    0     0 POLICE     tcp  --  any    any     anywhere             anywhere             tcp spt:5342 POLICE  mode:pkt rate:2000 burst:2000
+  422 43044 SETCLASS   icmp --  swp+   any     anywhere             anywhere             SETCLASS  class:2
+  426 45032 POLICE     icmp --  any    any     anywhere             anywhere             POLICE  mode:pkt rate:100 burst:40
+    0     0 SETCLASS   udp  --  swp+   any     anywhere             anywhere             udp dpts:bootps:bootpc SETCLASS  class:2
+   34 11152 POLICE     udp  --  any    any     anywhere             anywhere             udp dpt:bootps POLICE  mode:pkt rate:100 burst:100
+    3   984 POLICE     udp  --  any    any     anywhere             anywhere             udp dpt:bootpc POLICE  mode:pkt rate:100 burst:100
+    0     0 SETCLASS   tcp  --  swp+   any     anywhere             anywhere             tcp dpts:bootps:bootpc SETCLASS  class:2
+    0     0 POLICE     tcp  --  any    any     anywhere             anywhere             tcp dpt:bootps POLICE  mode:pkt rate:100 burst:100
+    0     0 POLICE     tcp  --  any    any     anywhere             anywhere             tcp dpt:bootpc POLICE  mode:pkt rate:100 burst:100
+    0     0 SETCLASS   igmp --  swp+   any     anywhere             anywhere             SETCLASS  class:6
+  191  6112 POLICE     igmp --  any    any     anywhere             anywhere             POLICE  mode:pkt rate:300 burst:100
+    0     0 POLICE     all  --  swp+   any     anywhere             anywhere             ADDRTYPE match dst-type LOCAL POLICE  mode:pkt rate:1000 burst:1000 class:0
+    0     0 POLICE     all  --  swp+   any     anywhere             anywhere             ADDRTYPE match dst-type IPROUTER POLICE  mode:pkt rate:400 burst:100 class:0
+
+Chain FORWARD (policy ACCEPT 1 packets, 84 bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+    0     0 DROP       all  --  swp+   any     240.0.0.0/5          anywhere            
+    0     0 DROP       all  --  swp+   any     loopback/8           anywhere            
+    0     0 DROP       all  --  swp+   any     base-address.mcast.net/8  anywhere            
+    0     0 DROP       all  --  swp+   any     255.255.255.255      anywhere            
+
+Chain OUTPUT (policy ACCEPT 12985 packets, 3732K bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+
+
+
+
+TABLE mangle :
+Chain PREROUTING (policy ACCEPT 70425 packets, 29M bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+
+Chain INPUT (policy ACCEPT 49204 packets, 27M bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+
+Chain FORWARD (policy ACCEPT 1 packets, 84 bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+
+Chain OUTPUT (policy ACCEPT 12995 packets, 3736K bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+
+Chain POSTROUTING (policy ACCEPT 12996 packets, 3736K bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+
+
+
+
+TABLE raw :
+Chain PREROUTING (policy ACCEPT 70426 packets, 29M bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+
+Chain OUTPUT (policy ACCEPT 12996 packets, 3737K bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+
+
+
+
+--------------------------------
+Listing rules of type ip6tables:
+--------------------------------
+TABLE filter :
+Chain INPUT (policy ACCEPT 2321 packets, 166K bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+    0     0 DROP       all      swp+   any     ip6-mcastprefix/8    anywhere            
+    4   392 DROP       all      swp+   any     ::/128               anywhere            
+    0     0 DROP       all      swp+   any     ::ffff:0.0.0.0/96    anywhere            
+    0     0 DROP       all      swp+   any     localhost/128        anywhere            
+    0     0 POLICE     ospf     swp+   any     anywhere             anywhere             POLICE  mode:pkt rate:2000 burst:2000 class:7
+    0     0 POLICE     tcp      swp+   any     anywhere             anywhere             tcp dpt:bgp POLICE  mode:pkt rate:2000 burst:2000 class:7
+    0     0 POLICE     tcp      swp+   any     anywhere             anywhere             tcp spt:bgp POLICE  mode:pkt rate:2000 burst:2000 class:7
+    0     0 POLICE     ipv6-icmp    swp+   any     anywhere             anywhere             ipv6-icmp router-solicitation POLICE  mode:pkt rate:100 burst:100 class:2
+    0     0 POLICE     ipv6-icmp    swp+   any     anywhere             anywhere             ipv6-icmp router-advertisement POLICE  mode:pkt rate:100 burst:100 class:2
+    0     0 POLICE     ipv6-icmp    swp+   any     anywhere             anywhere             ipv6-icmp neighbour-solicitation POLICE  mode:pkt rate:100 burst:100 class:2
+    0     0 POLICE     ipv6-icmp    swp+   any     anywhere             anywhere             ipv6-icmp neighbour-advertisement POLICE  mode:pkt rate:100 burst:100 class:2
+    0     0 POLICE     ipv6-icmp    swp+   any     anywhere             anywhere             ipv6-icmptype 130 POLICE  mode:pkt rate:200 burst:100 class:6
+    0     0 POLICE     ipv6-icmp    swp+   any     anywhere             anywhere             ipv6-icmptype 131 POLICE  mode:pkt rate:200 burst:100 class:6
+    0     0 POLICE     ipv6-icmp    swp+   any     anywhere             anywhere             ipv6-icmptype 132 POLICE  mode:pkt rate:200 burst:100 class:6
+    6   604 POLICE     ipv6-icmp    swp+   any     anywhere             anywhere             ipv6-icmptype 143 POLICE  mode:pkt rate:200 burst:100 class:6
+    0     0 POLICE     ipv6-icmp    swp+   any     anywhere             anywhere             POLICE  mode:pkt rate:64 burst:40 class:2
+    0     0 POLICE     udp      swp+   any     anywhere             anywhere             udp dpts:dhcpv6-client:dhcpv6-server POLICE  mode:pkt rate:100 burst:100 class:2
+    0     0 POLICE     tcp      swp+   any     anywhere             anywhere             tcp dpts:dhcpv6-client:dhcpv6-server POLICE  mode:pkt rate:100 burst:100 class:2
+    0     0 POLICE     all      swp+   any     anywhere             anywhere             ADDRTYPE match dst-type LOCAL POLICE  mode:pkt rate:1000 burst:1000 class:0
+    0     0 POLICE     all      swp+   any     anywhere             anywhere             ADDRTYPE match dst-type IPROUTER POLICE  mode:pkt rate:400 burst:100 class:0
+
+Chain FORWARD (policy ACCEPT 0 packets, 0 bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+    0     0 DROP       all      swp+   any     ip6-mcastprefix/8    anywhere            
+    0     0 DROP       all      swp+   any     ::/128               anywhere            
+    0     0 DROP       all      swp+   any     ::ffff:0.0.0.0/96    anywhere            
+    0     0 DROP       all      swp+   any     localhost/128        anywhere            
+
+Chain OUTPUT (policy ACCEPT 273 packets, 20376 bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+
+
+
+
+TABLE mangle :
+Chain PREROUTING (policy ACCEPT 3499 packets, 251K bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+
+Chain INPUT (policy ACCEPT 2321 packets, 166K bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+
+Chain FORWARD (policy ACCEPT 0 packets, 0 bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+
+Chain OUTPUT (policy ACCEPT 273 packets, 20376 bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+
+Chain POSTROUTING (policy ACCEPT 495 packets, 36360 bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+
+
+
+
+TABLE raw :
+Chain PREROUTING (policy ACCEPT 3499 packets, 251K bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+
+Chain OUTPUT (policy ACCEPT 273 packets, 20376 bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+
+
+
+
+-------------------------------
+Listing rules of type ebtables:
+-------------------------------
+TABLE filter :
+Bridge table: filter
+
+Bridge chain: INPUT, entries: 14, policy: ACCEPT
+-d BGA -i swp+ -j setclass --class 7 , pcnt = 0 -- bcnt = 0
+-d BGA -j police --set-mode pkt --set-rate 2000 --set-burst 2000 , pcnt = 0 -- bcnt = 0
+-d 1:80:c2:0:0:2 -i swp+ -j setclass --class 7 , pcnt = 0 -- bcnt = 0
+-d 1:80:c2:0:0:2 -j police --set-mode pkt --set-rate 2000 --set-burst 2000 , pcnt = 0 -- bcnt = 0
+-d 1:80:c2:0:0:e -i swp+ -j setclass --class 6 , pcnt = 426 -- bcnt = 57510
+-d 1:80:c2:0:0:e -j police --set-mode pkt --set-rate 200 --set-burst 200 , pcnt = 426 -- bcnt = 59214
+-d 1:0:c:cc:cc:cc -i swp+ -j setclass --class 6 , pcnt = 378 -- bcnt = 100170
+-d 1:0:c:cc:cc:cc -j police --set-mode pkt --set-rate 200 --set-burst 200 , pcnt = 378 -- bcnt = 101682
+-p ARP -i swp+ -j setclass --class 2 , pcnt = 19 -- bcnt = 1228
+-p ARP -j police --set-mode pkt --set-rate 100 --set-burst 100 , pcnt = 19 -- bcnt = 1304
+-d 1:0:c:cc:cc:cd -i swp+ -j setclass --class 7 , pcnt = 0 -- bcnt = 0
+-d 1:0:c:cc:cc:cd -j police --set-mode pkt --set-rate 2000 --set-burst 2000 , pcnt = 0 -- bcnt = 0
+-i swp+ -j setclass --class 0 , pcnt = 0 -- bcnt = 0
+-j police --set-mode pkt --set-rate 100 --set-burst 100 , pcnt = 6 -- bcnt = 628
+
+Bridge chain: FORWARD, entries: 0, policy: ACCEPT
+
+Bridge chain: OUTPUT, entries: 0, policy: ACCEPT
+
+
+
+
+
+=== iptables/ip6tables/ebtables default ===
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination         
+DROP       all  --  240.0.0.0/5          anywhere            
+DROP       all  --  loopback/8           anywhere            
+DROP       all  --  base-address.mcast.net/8  anywhere            
+DROP       all  --  255.255.255.255      anywhere            
+SETCLASS   ospf --  anywhere             anywhere             SETCLASS  class:7
+POLICE     ospf --  anywhere             anywhere             POLICE  mode:pkt rate:2000 burst:2000
+SETCLASS   tcp  --  anywhere             anywhere             tcp dpt:bgp SETCLASS  class:7
+POLICE     tcp  --  anywhere             anywhere             tcp dpt:bgp POLICE  mode:pkt rate:2000 burst:2000
+SETCLASS   tcp  --  anywhere             anywhere             tcp spt:bgp SETCLASS  class:7
+POLICE     tcp  --  anywhere             anywhere             tcp spt:bgp POLICE  mode:pkt rate:2000 burst:2000
+SETCLASS   tcp  --  anywhere             anywhere             tcp dpt:5342 SETCLASS  class:7
+POLICE     tcp  --  anywhere             anywhere             tcp dpt:5342 POLICE  mode:pkt rate:2000 burst:2000
+SETCLASS   tcp  --  anywhere             anywhere             tcp spt:5342 SETCLASS  class:7
+POLICE     tcp  --  anywhere             anywhere             tcp spt:5342 POLICE  mode:pkt rate:2000 burst:2000
+SETCLASS   icmp --  anywhere             anywhere             SETCLASS  class:2
+POLICE     icmp --  anywhere             anywhere             POLICE  mode:pkt rate:100 burst:40
+SETCLASS   udp  --  anywhere             anywhere             udp dpts:bootps:bootpc SETCLASS  class:2
+POLICE     udp  --  anywhere             anywhere             udp dpt:bootps POLICE  mode:pkt rate:100 burst:100
+POLICE     udp  --  anywhere             anywhere             udp dpt:bootpc POLICE  mode:pkt rate:100 burst:100
+SETCLASS   tcp  --  anywhere             anywhere             tcp dpts:bootps:bootpc SETCLASS  class:2
+POLICE     tcp  --  anywhere             anywhere             tcp dpt:bootps POLICE  mode:pkt rate:100 burst:100
+POLICE     tcp  --  anywhere             anywhere             tcp dpt:bootpc POLICE  mode:pkt rate:100 burst:100
+SETCLASS   igmp --  anywhere             anywhere             SETCLASS  class:6
+POLICE     igmp --  anywhere             anywhere             POLICE  mode:pkt rate:300 burst:100
+POLICE     all  --  anywhere             anywhere             ADDRTYPE match dst-type LOCAL POLICE  mode:pkt rate:1000 burst:1000 class:0
+POLICE     all  --  anywhere             anywhere             ADDRTYPE match dst-type IPROUTER POLICE  mode:pkt rate:400 burst:100 class:0
+
+Chain FORWARD (policy ACCEPT)
+target     prot opt source               destination         
+DROP       all  --  240.0.0.0/5          anywhere            
+DROP       all  --  loopback/8           anywhere            
+DROP       all  --  base-address.mcast.net/8  anywhere            
+DROP       all  --  255.255.255.255      anywhere            
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination         
+---
+Chain PREROUTING (policy ACCEPT)
+target     prot opt source               destination         
+
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination         
+
+Chain FORWARD (policy ACCEPT)
+target     prot opt source               destination         
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination         
+
+Chain POSTROUTING (policy ACCEPT)
+target     prot opt source               destination         
+---
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination         
+DROP       all      ip6-mcastprefix/8    anywhere            
+DROP       all      ::/128               anywhere            
+DROP       all      ::ffff:0.0.0.0/96    anywhere            
+DROP       all      localhost/128        anywhere            
+POLICE     ospf     anywhere             anywhere             POLICE  mode:pkt rate:2000 burst:2000 class:7
+POLICE     tcp      anywhere             anywhere             tcp dpt:bgp POLICE  mode:pkt rate:2000 burst:2000 class:7
+POLICE     tcp      anywhere             anywhere             tcp spt:bgp POLICE  mode:pkt rate:2000 burst:2000 class:7
+POLICE     ipv6-icmp    anywhere             anywhere             ipv6-icmp router-solicitation POLICE  mode:pkt rate:100 burst:100 class:2
+POLICE     ipv6-icmp    anywhere             anywhere             ipv6-icmp router-advertisement POLICE  mode:pkt rate:100 burst:100 class:2
+POLICE     ipv6-icmp    anywhere             anywhere             ipv6-icmp neighbour-solicitation POLICE  mode:pkt rate:100 burst:100 class:2
+POLICE     ipv6-icmp    anywhere             anywhere             ipv6-icmp neighbour-advertisement POLICE  mode:pkt rate:100 burst:100 class:2
+POLICE     ipv6-icmp    anywhere             anywhere             ipv6-icmptype 130 POLICE  mode:pkt rate:200 burst:100 class:6
+POLICE     ipv6-icmp    anywhere             anywhere             ipv6-icmptype 131 POLICE  mode:pkt rate:200 burst:100 class:6
+POLICE     ipv6-icmp    anywhere             anywhere             ipv6-icmptype 132 POLICE  mode:pkt rate:200 burst:100 class:6
+POLICE     ipv6-icmp    anywhere             anywhere             ipv6-icmptype 143 POLICE  mode:pkt rate:200 burst:100 class:6
+POLICE     ipv6-icmp    anywhere             anywhere             POLICE  mode:pkt rate:64 burst:40 class:2
+POLICE     udp      anywhere             anywhere             udp dpts:dhcpv6-client:dhcpv6-server POLICE  mode:pkt rate:100 burst:100 class:2
+POLICE     tcp      anywhere             anywhere             tcp dpts:dhcpv6-client:dhcpv6-server POLICE  mode:pkt rate:100 burst:100 class:2
+---
+Bridge table: filter
+
+Bridge chain: INPUT, entries: 14, policy: ACCEPT
+-d BGA -i swp+ -j setclass --class 7 
+-d BGA -j police --set-mode pkt --set-rate 2000 --set-burst 2000 
+-d 1:80:c2:0:0:2 -i swp+ -j setclass --class 7 
+-d 1:80:c2:0:0:2 -j police --set-mode pkt --set-rate 2000 --set-burst 2000 
+-d 1:80:c2:0:0:e -i swp+ -j setclass --class 6 
+-d 1:80:c2:0:0:e -j police --set-mode pkt --set-rate 200 --set-burst 200 
+-d 1:0:c:cc:cc:cc -i swp+ -j setclass --class 6 
+-d 1:0:c:cc:cc:cc -j police --set-mode pkt --set-rate 200 --set-burst 200 
+-p ARP -i swp+ -j setclass --class 2 
+-p ARP -j police --set-mode pkt --set-rate 100 --set-burst 100 
+-d 1:0:c:cc:cc:cd -i swp+ -j setclass --class 7 
+-d 1:0:c:cc:cc:cd -j police --set-mode pkt --set-rate 2000 --set-burst 2000 
+-i swp+ -j setclass --class 0 
+-j police --set-mode pkt --set-rate 100 --set-burst 100 
+
+Bridge chain: FORWARD, entries: 0, policy: ACCEPT
+
+
+=== acl policy dir ===
+/etc/cumulus/acl/
+/etc/cumulus/acl/acl.conf
+/etc/cumulus/acl/policy.conf
+/etc/cumulus/acl/policy.d
+/etc/cumulus/acl/policy.d/00control_plane.rules
+/etc/cumulus/acl/policy.d/99control_plane_catch_all.rules
