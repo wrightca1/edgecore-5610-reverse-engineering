@@ -1,0 +1,139 @@
+Warning: Permanently added '10.1.1.212' (ECDSA) to the list of known hosts.
+[sudo] password for cumulus: === I2C TOPOLOGY MAP - mux tree by chip address ===
+i2c-0: name="MPC adapter" devs=[0-0070 ]
+i2c-1: name="MPC adapter" devs=[1-0075 1-0076 1-0077 ]
+i2c-2: name="i2c-0-mux (chan_id 0)" devs=[2-0051 ]
+i2c-3: name="i2c-0-mux (chan_id 1)" devs=[3-003a 3-003e 3-0078 ]
+i2c-4: name="i2c-0-mux (chan_id 2)" devs=[4-000c 4-0039 4-003d 4-0078 ]
+i2c-5: name="i2c-0-mux (chan_id 3)" devs=[]
+i2c-6: name="i2c-0-mux (chan_id 4)" devs=[]
+i2c-7: name="i2c-0-mux (chan_id 5)" devs=[]
+i2c-8: name="i2c-0-mux (chan_id 6)" devs=[]
+i2c-9: name="i2c-0-mux (chan_id 7)" devs=[9-0018 9-004d ]
+i2c-10: name="i2c-1-mux (chan_id 0)" devs=[10-0074 ]
+i2c-11: name="i2c-1-mux (chan_id 1)" devs=[11-0074 ]
+i2c-12: name="i2c-1-mux (chan_id 2)" devs=[12-0074 ]
+i2c-13: name="i2c-1-mux (chan_id 3)" devs=[13-0074 ]
+i2c-14: name="i2c-1-mux (chan_id 0)" devs=[14-0074 ]
+i2c-15: name="i2c-1-mux (chan_id 1)" devs=[15-0074 ]
+i2c-16: name="i2c-1-mux (chan_id 2)" devs=[16-0020 16-0021 16-0070 16-0071 16-0072 16-0073 ]
+i2c-17: name="i2c-1-mux (chan_id 3)" devs=[17-0020 17-0023 17-0024 ]
+i2c-18: name="i2c-1-mux (chan_id 0)" devs=[18-0027 18-0050 ]
+i2c-19: name="i2c-1-mux (chan_id 1)" devs=[19-0027 19-0050 ]
+i2c-20: name="i2c-1-mux (chan_id 2)" devs=[20-0027 20-0050 ]
+i2c-21: name="i2c-1-mux (chan_id 3)" devs=[21-0027 21-0050 ]
+i2c-22: name="i2c-10-mux (chan_id 0)" devs=[22-0027 22-0050 22-0051 ]
+i2c-23: name="i2c-10-mux (chan_id 1)" devs=[23-0027 23-0050 23-0051 ]
+i2c-24: name="i2c-10-mux (chan_id 2)" devs=[24-0027 24-0050 24-0051 ]
+i2c-25: name="i2c-10-mux (chan_id 3)" devs=[25-0027 25-0050 25-0051 ]
+i2c-26: name="i2c-10-mux (chan_id 4)" devs=[26-0050 26-0051 ]
+i2c-27: name="i2c-10-mux (chan_id 5)" devs=[27-0050 27-0051 ]
+i2c-28: name="i2c-10-mux (chan_id 6)" devs=[28-0050 28-0051 ]
+i2c-29: name="i2c-10-mux (chan_id 7)" devs=[29-0050 29-0051 ]
+i2c-30: name="i2c-11-mux (chan_id 0)" devs=[30-0027 30-0050 30-0051 ]
+i2c-31: name="i2c-11-mux (chan_id 1)" devs=[31-0027 31-0050 31-0051 ]
+i2c-32: name="i2c-11-mux (chan_id 2)" devs=[32-0027 32-0050 32-0051 ]
+i2c-33: name="i2c-11-mux (chan_id 3)" devs=[33-0027 33-0050 33-0051 ]
+i2c-34: name="i2c-11-mux (chan_id 4)" devs=[34-0050 34-0051 ]
+i2c-35: name="i2c-11-mux (chan_id 5)" devs=[35-0050 35-0051 ]
+i2c-36: name="i2c-11-mux (chan_id 6)" devs=[36-0050 36-0051 ]
+i2c-37: name="i2c-11-mux (chan_id 7)" devs=[37-0050 37-0051 ]
+i2c-38: name="i2c-12-mux (chan_id 0)" devs=[38-0027 38-0050 38-0051 ]
+i2c-39: name="i2c-12-mux (chan_id 1)" devs=[39-0027 39-0050 39-0051 ]
+i2c-40: name="i2c-12-mux (chan_id 2)" devs=[40-0027 40-0050 40-0051 ]
+i2c-41: name="i2c-12-mux (chan_id 3)" devs=[41-0027 41-0050 41-0051 ]
+i2c-42: name="i2c-12-mux (chan_id 4)" devs=[42-0050 42-0051 ]
+i2c-43: name="i2c-12-mux (chan_id 5)" devs=[43-0050 43-0051 ]
+i2c-44: name="i2c-12-mux (chan_id 6)" devs=[44-0050 44-0051 ]
+i2c-45: name="i2c-12-mux (chan_id 7)" devs=[45-0050 45-0051 ]
+i2c-46: name="i2c-13-mux (chan_id 0)" devs=[46-0027 46-0050 46-0051 ]
+i2c-47: name="i2c-13-mux (chan_id 1)" devs=[47-0027 47-0050 47-0051 ]
+i2c-48: name="i2c-13-mux (chan_id 2)" devs=[48-0027 48-0050 48-0051 ]
+i2c-49: name="i2c-13-mux (chan_id 3)" devs=[49-0027 49-0050 49-0051 ]
+i2c-50: name="i2c-13-mux (chan_id 4)" devs=[50-0050 50-0051 ]
+i2c-51: name="i2c-13-mux (chan_id 5)" devs=[51-0050 51-0051 ]
+i2c-52: name="i2c-13-mux (chan_id 6)" devs=[52-0050 52-0051 ]
+i2c-53: name="i2c-13-mux (chan_id 7)" devs=[53-0050 53-0051 ]
+i2c-54: name="i2c-14-mux (chan_id 0)" devs=[54-0027 54-0050 54-0051 ]
+i2c-55: name="i2c-14-mux (chan_id 1)" devs=[55-0027 55-0050 55-0051 ]
+i2c-56: name="i2c-14-mux (chan_id 2)" devs=[56-0027 56-0050 56-0051 ]
+i2c-57: name="i2c-14-mux (chan_id 3)" devs=[57-0027 57-0050 57-0051 ]
+i2c-58: name="i2c-14-mux (chan_id 4)" devs=[58-0050 58-0051 ]
+i2c-59: name="i2c-14-mux (chan_id 5)" devs=[59-0050 59-0051 ]
+i2c-60: name="i2c-14-mux (chan_id 6)" devs=[60-0050 60-0051 ]
+i2c-61: name="i2c-14-mux (chan_id 7)" devs=[61-0050 61-0051 ]
+i2c-62: name="i2c-15-mux (chan_id 0)" devs=[62-0027 62-0050 62-0051 ]
+i2c-63: name="i2c-15-mux (chan_id 1)" devs=[63-0027 63-0050 63-0051 ]
+i2c-64: name="i2c-15-mux (chan_id 2)" devs=[64-0027 64-0050 64-0051 ]
+i2c-65: name="i2c-15-mux (chan_id 3)" devs=[65-0027 65-0050 65-0051 ]
+i2c-66: name="i2c-15-mux (chan_id 4)" devs=[66-0027 66-0050 66-0051 ]
+i2c-67: name="i2c-15-mux (chan_id 5)" devs=[67-0027 67-0050 67-0051 ]
+i2c-68: name="i2c-15-mux (chan_id 6)" devs=[68-0027 68-0050 68-0051 ]
+i2c-69: name="i2c-15-mux (chan_id 7)" devs=[69-0027 69-0050 69-0051 ]
+
+=== pca954x muxes - by parent bus address ===
+i2c-0 addr=0x0070 name=pca9548
+i2c-1 addr=0x0075 name=pca9546
+i2c-1 addr=0x0076 name=pca9546
+i2c-1 addr=0x0077 name=pca9546
+i2c-10 addr=0x0074 name=pca9548
+i2c-11 addr=0x0074 name=pca9548
+i2c-12 addr=0x0074 name=pca9548
+i2c-13 addr=0x0074 name=pca9548
+i2c-14 addr=0x0074 name=pca9548
+i2c-15 addr=0x0074 name=pca9548
+i2c-16 addr=0x0070 name=pca9538
+i2c-16 addr=0x0071 name=pca9538
+i2c-16 addr=0x0072 name=pca9538
+i2c-16 addr=0x0073 name=pca9538
+
+=== gpio chips - stable labels ===
+gpiochip104 base=104 ngpio=40 label=pca9506
+gpiochip144 base=144 ngpio=8 label=pca9538
+gpiochip152 base=152 ngpio=8 label=pca9538
+gpiochip160 base=160 ngpio=8 label=pca9538
+gpiochip168 base=168 ngpio=8 label=pca9538
+gpiochip176 base=176 ngpio=40 label=pca9506
+gpiochip216 base=216 ngpio=40 label=pca9506
+gpiochip24 base=24 ngpio=40 label=pca9506
+gpiochip64 base=64 ngpio=40 label=pca9506
+
+=== device-tree alias names if present ===
+ethernet0
+name
+pci1
+serial0
+
+=== retimer_dev class - just labels for quick ref ===
+retimer0 = qsfp_rx_eq_0
+retimer1 = qsfp_rx_eq_1
+retimer10 = sfp_rx_eq_6
+retimer11 = sfp_rx_eq_7
+retimer12 = sfp_rx_eq_8
+retimer13 = sfp_rx_eq_9
+retimer14 = sfp_rx_eq_10
+retimer15 = sfp_rx_eq_11
+retimer16 = sfp_tx_eq_0
+retimer17 = sfp_tx_eq_1
+retimer18 = sfp_tx_eq_2
+retimer19 = sfp_tx_eq_3
+retimer2 = qsfp_rx_eq_2
+retimer20 = sfp_tx_eq_4
+retimer21 = sfp_tx_eq_5
+retimer22 = sfp_tx_eq_6
+retimer23 = sfp_tx_eq_7
+retimer24 = sfp_tx_eq_8
+retimer25 = sfp_tx_eq_9
+retimer26 = sfp_tx_eq_10
+retimer27 = sfp_tx_eq_11
+retimer28 = qsfp_tx_eq_0
+retimer29 = qsfp_tx_eq_1
+retimer3 = qsfp_rx_eq_3
+retimer30 = qsfp_tx_eq_2
+retimer31 = qsfp_tx_eq_3
+retimer4 = sfp_rx_eq_0
+retimer5 = sfp_rx_eq_1
+retimer6 = sfp_rx_eq_2
+retimer7 = sfp_rx_eq_3
+retimer8 = sfp_rx_eq_4
+retimer9 = sfp_rx_eq_5

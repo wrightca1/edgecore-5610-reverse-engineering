@@ -1,0 +1,37 @@
+Warning: Permanently added '10.1.1.212' (ECDSA) to the list of known hosts.
+[sudo] password for cumulus: === retimer labels - STABLE identifiers ===
+retimer0 label=qsfp_rx_eq_0 dev=i2c-18/18-0027 path=/sys/devices/soc.0/ff703100.i2c/i2c-1/i2c-18/18-0027
+retimer1 label=qsfp_rx_eq_1 dev=i2c-19/19-0027 path=/sys/devices/soc.0/ff703100.i2c/i2c-1/i2c-19/19-0027
+retimer10 label=sfp_rx_eq_6 dev=i2c-32/32-0027 path=/sys/devices/soc.0/ff703100.i2c/i2c-1/i2c-11/i2c-32/32-0027
+retimer11 label=sfp_rx_eq_7 dev=i2c-33/33-0027 path=/sys/devices/soc.0/ff703100.i2c/i2c-1/i2c-11/i2c-33/33-0027
+retimer12 label=sfp_rx_eq_8 dev=i2c-38/38-0027 path=/sys/devices/soc.0/ff703100.i2c/i2c-1/i2c-12/i2c-38/38-0027
+retimer13 label=sfp_rx_eq_9 dev=i2c-39/39-0027 path=/sys/devices/soc.0/ff703100.i2c/i2c-1/i2c-12/i2c-39/39-0027
+retimer14 label=sfp_rx_eq_10 dev=i2c-40/40-0027 path=/sys/devices/soc.0/ff703100.i2c/i2c-1/i2c-12/i2c-40/40-0027
+retimer15 label=sfp_rx_eq_11 dev=i2c-41/41-0027 path=/sys/devices/soc.0/ff703100.i2c/i2c-1/i2c-12/i2c-41/41-0027
+retimer16 label=sfp_tx_eq_0 dev=i2c-46/46-0027 path=/sys/devices/soc.0/ff703100.i2c/i2c-1/i2c-13/i2c-46/46-0027
+retimer17 label=sfp_tx_eq_1 dev=i2c-47/47-0027 path=/sys/devices/soc.0/ff703100.i2c/i2c-1/i2c-13/i2c-47/47-0027
+retimer18 label=sfp_tx_eq_2 dev=i2c-48/48-0027 path=/sys/devices/soc.0/ff703100.i2c/i2c-1/i2c-13/i2c-48/48-0027
+retimer19 label=sfp_tx_eq_3 dev=i2c-49/49-0027 path=/sys/devices/soc.0/ff703100.i2c/i2c-1/i2c-13/i2c-49/49-0027
+retimer2 label=qsfp_rx_eq_2 dev=i2c-20/20-0027 path=/sys/devices/soc.0/ff703100.i2c/i2c-1/i2c-20/20-0027
+retimer20 label=sfp_tx_eq_4 dev=i2c-54/54-0027 path=/sys/devices/soc.0/ff703100.i2c/i2c-1/i2c-14/i2c-54/54-0027
+retimer21 label=sfp_tx_eq_5 dev=i2c-55/55-0027 path=/sys/devices/soc.0/ff703100.i2c/i2c-1/i2c-14/i2c-55/55-0027
+retimer22 label=sfp_tx_eq_6 dev=i2c-56/56-0027 path=/sys/devices/soc.0/ff703100.i2c/i2c-1/i2c-14/i2c-56/56-0027
+retimer23 label=sfp_tx_eq_7 dev=i2c-57/57-0027 path=/sys/devices/soc.0/ff703100.i2c/i2c-1/i2c-14/i2c-57/57-0027
+retimer24 label=sfp_tx_eq_8 dev=i2c-62/62-0027 path=/sys/devices/soc.0/ff703100.i2c/i2c-1/i2c-15/i2c-62/62-0027
+retimer25 label=sfp_tx_eq_9 dev=i2c-63/63-0027 path=/sys/devices/soc.0/ff703100.i2c/i2c-1/i2c-15/i2c-63/63-0027
+retimer26 label=sfp_tx_eq_10 dev=i2c-64/64-0027 path=/sys/devices/soc.0/ff703100.i2c/i2c-1/i2c-15/i2c-64/64-0027
+retimer27 label=sfp_tx_eq_11 dev=i2c-65/65-0027 path=/sys/devices/soc.0/ff703100.i2c/i2c-1/i2c-15/i2c-65/65-0027
+retimer28 label=qsfp_tx_eq_0 dev=i2c-66/66-0027 path=/sys/devices/soc.0/ff703100.i2c/i2c-1/i2c-15/i2c-66/66-0027
+retimer29 label=qsfp_tx_eq_1 dev=i2c-67/67-0027 path=/sys/devices/soc.0/ff703100.i2c/i2c-1/i2c-15/i2c-67/67-0027
+retimer3 label=qsfp_rx_eq_3 dev=i2c-21/21-0027 path=/sys/devices/soc.0/ff703100.i2c/i2c-1/i2c-21/21-0027
+retimer30 label=qsfp_tx_eq_2 dev=i2c-68/68-0027 path=/sys/devices/soc.0/ff703100.i2c/i2c-1/i2c-15/i2c-68/68-0027
+retimer31 label=qsfp_tx_eq_3 dev=i2c-69/69-0027 path=/sys/devices/soc.0/ff703100.i2c/i2c-1/i2c-15/i2c-69/69-0027
+retimer4 label=sfp_rx_eq_0 dev=i2c-22/22-0027 path=/sys/devices/soc.0/ff703100.i2c/i2c-1/i2c-10/i2c-22/22-0027
+retimer5 label=sfp_rx_eq_1 dev=i2c-23/23-0027 path=/sys/devices/soc.0/ff703100.i2c/i2c-1/i2c-10/i2c-23/23-0027
+retimer6 label=sfp_rx_eq_2 dev=i2c-24/24-0027 path=/sys/devices/soc.0/ff703100.i2c/i2c-1/i2c-10/i2c-24/24-0027
+retimer7 label=sfp_rx_eq_3 dev=i2c-25/25-0027 path=/sys/devices/soc.0/ff703100.i2c/i2c-1/i2c-10/i2c-25/25-0027
+retimer8 label=sfp_rx_eq_4 dev=i2c-30/30-0027 path=/sys/devices/soc.0/ff703100.i2c/i2c-1/i2c-11/i2c-30/30-0027
+retimer9 label=sfp_rx_eq_5 dev=i2c-31/31-0027 path=/sys/devices/soc.0/ff703100.i2c/i2c-1/i2c-11/i2c-31/31-0027
+
+bash: -c: line 12: syntax error near unexpected token `('
+bash: -c: line 12: `echo === I2C TOPOLOGY MAP (mux tree by chip address, not by linux bus number) ==='

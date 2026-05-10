@@ -89,12 +89,25 @@ ds100df410                     # ← RETIMER DRIVER (32 instances)
 
 ### 2. GPIO init for QSFP control
 
-From `hw_init.d/S10gpio_init.sh`. Two pca9538 GPIO chips at gpio bases 160
-and 168. Configure 4 control lines per QSFP:
+From `hw_init.d/S10gpio_init.sh`. **GPIO base numbers are NOT stable
+across kernels** — Cumulus's 3.2 kernel happens to assign bases 160 and
+168 to the two QSFP pca9538 chips, but a newer kernel may number them
+differently. The platform driver should look up by `label = "pca9538"`
+and by parent I2C bus (the bus that has muxes; see `121_i2c_topology.txt`).
+
+Live captured GPIO chips:
+
+| gpiochip label | base | ngpio | role |
+|---|---|---|---|
+| `pca9506` | 24, 64, 104, 176, 216 | 40 each | 5 × 40-bit GPIO expanders for SFP+ control |
+| `pca9538` | 144, 152, **160**, **168** | 8 each | 4 × 8-bit GPIO expanders (the last two = QSFP control) |
+
+Stock Cumulus uses these gpio offsets (where 160 and 168 happen to be the
+QSFP-side pca9538 chips on this kernel):
 
 ```
-GPIOs 24-64        = 0  (SFP+ TX disable — 0 = enabled)
-GPIOs 97-104       = 0  (SFP+ TX disable — 0 = enabled, second bank)
+GPIOs 24-64        = 0  (SFP+ TX disable — 0 = enabled, pca9506 bank 1)
+GPIOs 97-104       = 0  (SFP+ TX disable — 0 = enabled, second pca9506 bank)
 GPIOs 160-163      = 1  (QSFP1-4 RST_L  — 1 = released from reset)
 GPIOs 164-167      = 0  (QSFP1-4 ModSel_L — 0 = module selected)
 GPIOs 168-171      = 0  (QSFP1-4 LPMode — 0 = full power)
@@ -106,6 +119,33 @@ the user only does `ip link set swp49 up` — the GPIO init script must run
 first (called from `/etc/init.d/hw_init`).
 
 ### 3. Retimer init for all 32 DS100DF410 chips
+
+**Numbering caveat — EdgeNOS will see different Linux bus numbers.** I2C bus
+numbers and `retimer<N>` indexes depend on kernel enumeration order, which
+changes between Cumulus's 3.2 kernel and EdgeNOS's newer kernel. Use
+**labels** as the stable identifier — they are set by the platform-config
+driver from the I2C topology, not from bus numbers.
+
+The 32 retimers split into 4 roles by label (captured live):
+
+| Role | Label range | Count | What they retime |
+|---|---|---|---|
+| QSFP RX | `qsfp_rx_eq_0..3` | 4 | RX from 4 QSFP+ cages (1 chip × 4 lanes per QSFP) |
+| SFP+ RX | `sfp_rx_eq_0..11` | 12 | RX from 48 SFP+ cages (4 ports per chip) |
+| SFP+ TX | `sfp_tx_eq_0..11` | 12 | TX to 48 SFP+ cages |
+| QSFP TX | `qsfp_tx_eq_0..3` | 4 | TX to 4 QSFP+ cages |
+
+`sfp_rx_eq_10` (i.e. SFP+ RX for ports 41-44) gets the QSFP-style EQ
+treatment — board-specific tuning, not a fluke. The init script's case
+statement is what to mirror:
+
+```bash
+case "$label" in
+    qsfp*)        set_eq2 ;;   # 8 chips total (4 QSFP RX + 4 QSFP TX)
+    sfp_rx_eq_10) set_eq2 ;;   # 1 chip — the special SFP+ RX bank
+    *)            set_eq1 ;;   # 23 other chips
+esac
+```
 
 From `hw_init.d/S20retimer_init.sh`. Iterate over `/sys/class/retimer_dev/retimer{0..31}`.
 For each, read its `label` and apply:
