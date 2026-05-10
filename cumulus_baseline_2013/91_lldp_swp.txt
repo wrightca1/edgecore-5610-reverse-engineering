@@ -1,0 +1,4 @@
+Warning: Permanently added '10.1.1.212' (ECDSA) to the list of known hosts.
+[sudo] password for cumulus: === enable lldpd on swp* by restarting ===
+Restarting LLDP daemon: lldpd.
+=== LLDP neighbors after restart - filter for swp ===

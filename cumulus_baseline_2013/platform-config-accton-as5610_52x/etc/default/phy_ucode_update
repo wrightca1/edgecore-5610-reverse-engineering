@@ -1,0 +1,9 @@
+#!/bin/sh
+
+##
+## Copyright 2012 Cumulus Networks, Inc.
+## All rights reserved.
+##
+
+## Accton 5652 does not have SPI-ROMs for microcode down.
+PHY_UPDATE_ENABLE=no

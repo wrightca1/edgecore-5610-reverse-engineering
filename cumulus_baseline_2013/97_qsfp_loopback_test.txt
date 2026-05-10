@@ -1,0 +1,64 @@
+Warning: Permanently added '10.1.1.212' (ECDSA) to the list of known hosts.
+[sudo] password for cumulus: === setup QSFP loopback test via netns ===
+=== check from ns1 ===
+51: swp49: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP qlen 500
+    link/ether 80:a2:35:81:ca:df brd ff:ff:ff:ff:ff:ff
+    inet 10.49.49.1/30 scope global swp49
+    inet6 fe80::82a2:35ff:fe81:cadf/64 scope link 
+       valid_lft forever preferred_lft forever
+=== check from ns2 ===
+52: swp50: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP qlen 500
+    link/ether 80:a2:35:81:ca:e3 brd ff:ff:ff:ff:ff:ff
+    inet 10.49.49.2/30 scope global swp50
+    inet6 fe80::82a2:35ff:fe81:cae3/64 scope link 
+       valid_lft forever preferred_lft forever
+
+=== ping nsq1 to nsq2 across QSFP loopback ===
+PING 10.49.49.2 (10.49.49.2) 56(84) bytes of data.
+
+--- 10.49.49.2 ping statistics ---
+4 packets transmitted, 0 received, 100% packet loss, time 2999ms
+
+
+=== BCM counters xe48 xe49 ===
+RIPHE6.xe48		:		      3 		 +3
+RDBGC1.xe48		:		      5 		 +5
+RDBGC5.xe48		:		      3 		 +3
+RDBGC6.xe48		:		      3 		 +3
+R127.xe48		:		      5 		 +5
+R255.xe48		:		      6 		 +6
+RPKT.xe48		:		     11 		+11
+RMCA.xe48		:		     11 		+11
+RPOK.xe48		:		     11 		+11
+RBYT.xe48		:		  1,308 	     +1,308
+T127.xe48		:		      3 		 +3
+T255.xe48		:		      7 		 +7
+TPOK.xe48		:		     10 		+10
+TPKT.xe48		:		     10 		+10
+TMCA.xe48		:		     10 		+10
+TBYT.xe48		:		  1,234 	     +1,234
+UC_PERQ_PKT(3).xe48	:		     12 		+12
+UC_PERQ_BYTE(3).xe48	:		  1,396 	     +1,396
+RIPHE6.xe49		:		      1 		 +1
+RDBGC1.xe49		:		      3 		 +3
+RDBGC5.xe49		:		      1 		 +1
+RDBGC6.xe49		:		      1 		 +1
+R127.xe49		:		      2 		 +2
+R255.xe49		:		      7 		 +7
+RPKT.xe49		:		      9 		 +9
+RMCA.xe49		:		      9 		 +9
+RPOK.xe49		:		      9 		 +9
+RBYT.xe49		:		  1,120 	     +1,120
+T127.xe49		:		      7 		 +7
+T255.xe49		:		      6 		 +6
+TPOK.xe49		:		     13 		+13
+TPKT.xe49		:		     13 		+13
+TMCA.xe49		:		     12 		+12
+TBCA.xe49		:		      1 		 +1
+TBYT.xe49		:		  1,470 	     +1,470
+UC_PERQ_PKT(3).xe49	:		     13 		+13
+UC_PERQ_BYTE(3).xe49	:		  1,470 	     +1,470
+
+=== neighbors ns1 ===
+10.49.49.2 dev swp49  INCOMPLETE
+=== neighbors ns2 ===

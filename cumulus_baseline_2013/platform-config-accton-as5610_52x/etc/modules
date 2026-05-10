@@ -1,0 +1,31 @@
+# /etc/modules: kernel modules to load at boot time.
+#
+# This file contains the names of kernel modules that should be loaded
+# at boot time, one per line. Lines beginning with "#" are ignored.
+# Parameters can be specified after the module name.
+
+loop
+
+# Broadcom SDK user<->kernel interface modules
+linux-kernel-bde himem=1
+linux-user-bde
+tun
+linux-bde-tmon
+
+# Platform status, information, and control
+accton_as5610_52x_cpld
+
+# eeproms
+at24
+sff_8436_eeprom
+
+# GPIOs
+gpio-pca953x
+
+# Hardware monitoring
+max6697
+adm1021
+
+# retimer tuning
+ds100df410
+

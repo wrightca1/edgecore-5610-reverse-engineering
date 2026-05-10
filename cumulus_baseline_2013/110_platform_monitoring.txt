@@ -1,0 +1,347 @@
+[sudo] password for cumulus: 
+============================================================
+=== hwmon devices summary
+============================================================
+/sys/class/hwmon/hwmon0 -> name=
+/sys/class/hwmon/hwmon1 -> name=
+/sys/class/hwmon/hwmon2 -> name=
+
+============================================================
+=== PER hwmon - all readable attrs
+============================================================
+
+--- /sys/class/hwmon/hwmon0 (name=) ---
+uevent = 
+
+--- /sys/class/hwmon/hwmon1 (name=) ---
+uevent = 
+
+--- /sys/class/hwmon/hwmon2 (name=) ---
+uevent = 
+
+============================================================
+=== all temperature sensors quick read
+============================================================
+
+============================================================
+=== fans
+============================================================
+
+============================================================
+=== fancontrol or fancontrold config
+============================================================
+ls: cannot access /etc/fancontrol: No such file or directory
+ls: cannot access /etc/fancontrold*: No such file or directory
+ls: cannot access /etc/cumulus/fan*: No such file or directory
+
+============================================================
+=== fancontrol service / process
+============================================================
+fancontrol: unrecognized service
+
+============================================================
+=== thermal_zone (kernel thermal framework)
+============================================================
+
+============================================================
+=== cooling devices
+============================================================
+
+============================================================
+=== LEDs - kernel led class
+============================================================
+
+============================================================
+=== PSU info - via sysfs / decode-syseeprom / i2c
+============================================================
+/sys/bus/i2c/devices/18-0050/ name=sff8436
+/sys/bus/i2c/devices/19-0050/ name=sff8436
+/sys/bus/i2c/devices/2-0051/ name=rtc8564
+/sys/bus/i2c/devices/20-0050/ name=sff8436
+/sys/bus/i2c/devices/21-0050/ name=sff8436
+/sys/bus/i2c/devices/22-0050/ name=24c04
+/sys/bus/i2c/devices/22-0051/ name=dummy
+/sys/bus/i2c/devices/23-0050/ name=24c04
+/sys/bus/i2c/devices/23-0051/ name=dummy
+/sys/bus/i2c/devices/24-0050/ name=24c04
+/sys/bus/i2c/devices/24-0051/ name=dummy
+/sys/bus/i2c/devices/25-0050/ name=24c04
+/sys/bus/i2c/devices/25-0051/ name=dummy
+/sys/bus/i2c/devices/26-0050/ name=24c04
+/sys/bus/i2c/devices/26-0051/ name=dummy
+/sys/bus/i2c/devices/27-0050/ name=24c04
+/sys/bus/i2c/devices/27-0051/ name=dummy
+/sys/bus/i2c/devices/28-0050/ name=24c04
+/sys/bus/i2c/devices/28-0051/ name=dummy
+/sys/bus/i2c/devices/29-0050/ name=24c04
+/sys/bus/i2c/devices/29-0051/ name=dummy
+/sys/bus/i2c/devices/30-0050/ name=24c04
+/sys/bus/i2c/devices/30-0051/ name=dummy
+/sys/bus/i2c/devices/31-0050/ name=24c04
+/sys/bus/i2c/devices/31-0051/ name=dummy
+/sys/bus/i2c/devices/32-0050/ name=24c04
+/sys/bus/i2c/devices/32-0051/ name=dummy
+/sys/bus/i2c/devices/33-0050/ name=24c04
+/sys/bus/i2c/devices/33-0051/ name=dummy
+/sys/bus/i2c/devices/34-0050/ name=24c04
+/sys/bus/i2c/devices/34-0051/ name=dummy
+/sys/bus/i2c/devices/35-0050/ name=24c04
+/sys/bus/i2c/devices/35-0051/ name=dummy
+/sys/bus/i2c/devices/36-0050/ name=24c04
+/sys/bus/i2c/devices/36-0051/ name=dummy
+/sys/bus/i2c/devices/37-0050/ name=24c04
+/sys/bus/i2c/devices/37-0051/ name=dummy
+/sys/bus/i2c/devices/38-0050/ name=24c04
+/sys/bus/i2c/devices/38-0051/ name=dummy
+/sys/bus/i2c/devices/39-0050/ name=24c04
+/sys/bus/i2c/devices/39-0051/ name=dummy
+/sys/bus/i2c/devices/40-0050/ name=24c04
+/sys/bus/i2c/devices/40-0051/ name=dummy
+/sys/bus/i2c/devices/41-0050/ name=24c04
+/sys/bus/i2c/devices/41-0051/ name=dummy
+/sys/bus/i2c/devices/42-0050/ name=24c04
+/sys/bus/i2c/devices/42-0051/ name=dummy
+/sys/bus/i2c/devices/43-0050/ name=24c04
+/sys/bus/i2c/devices/43-0051/ name=dummy
+/sys/bus/i2c/devices/44-0050/ name=24c04
+/sys/bus/i2c/devices/44-0051/ name=dummy
+/sys/bus/i2c/devices/45-0050/ name=24c04
+/sys/bus/i2c/devices/45-0051/ name=dummy
+/sys/bus/i2c/devices/46-0050/ name=24c04
+/sys/bus/i2c/devices/46-0051/ name=dummy
+/sys/bus/i2c/devices/47-0050/ name=24c04
+/sys/bus/i2c/devices/47-0051/ name=dummy
+/sys/bus/i2c/devices/48-0050/ name=24c04
+/sys/bus/i2c/devices/48-0051/ name=dummy
+/sys/bus/i2c/devices/49-0050/ name=24c04
+/sys/bus/i2c/devices/49-0051/ name=dummy
+/sys/bus/i2c/devices/50-0050/ name=24c04
+/sys/bus/i2c/devices/50-0051/ name=dummy
+/sys/bus/i2c/devices/51-0050/ name=24c04
+/sys/bus/i2c/devices/51-0051/ name=dummy
+/sys/bus/i2c/devices/52-0050/ name=24c04
+/sys/bus/i2c/devices/52-0051/ name=dummy
+/sys/bus/i2c/devices/53-0050/ name=24c04
+/sys/bus/i2c/devices/53-0051/ name=dummy
+/sys/bus/i2c/devices/54-0050/ name=24c04
+/sys/bus/i2c/devices/54-0051/ name=dummy
+/sys/bus/i2c/devices/55-0050/ name=24c04
+/sys/bus/i2c/devices/55-0051/ name=dummy
+/sys/bus/i2c/devices/56-0050/ name=24c04
+/sys/bus/i2c/devices/56-0051/ name=dummy
+/sys/bus/i2c/devices/57-0050/ name=24c04
+/sys/bus/i2c/devices/57-0051/ name=dummy
+/sys/bus/i2c/devices/58-0050/ name=24c04
+/sys/bus/i2c/devices/58-0051/ name=dummy
+/sys/bus/i2c/devices/59-0050/ name=24c04
+/sys/bus/i2c/devices/59-0051/ name=dummy
+/sys/bus/i2c/devices/60-0050/ name=24c04
+/sys/bus/i2c/devices/60-0051/ name=dummy
+/sys/bus/i2c/devices/61-0050/ name=24c04
+/sys/bus/i2c/devices/61-0051/ name=dummy
+/sys/bus/i2c/devices/62-0050/ name=24c04
+/sys/bus/i2c/devices/62-0051/ name=dummy
+/sys/bus/i2c/devices/63-0050/ name=24c04
+/sys/bus/i2c/devices/63-0051/ name=dummy
+/sys/bus/i2c/devices/64-0050/ name=24c04
+/sys/bus/i2c/devices/64-0051/ name=dummy
+/sys/bus/i2c/devices/65-0050/ name=24c04
+/sys/bus/i2c/devices/65-0051/ name=dummy
+/sys/bus/i2c/devices/66-0050/ name=24c04
+/sys/bus/i2c/devices/66-0051/ name=dummy
+/sys/bus/i2c/devices/67-0050/ name=24c04
+/sys/bus/i2c/devices/67-0051/ name=dummy
+/sys/bus/i2c/devices/68-0050/ name=24c04
+/sys/bus/i2c/devices/68-0051/ name=dummy
+/sys/bus/i2c/devices/69-0050/ name=24c04
+/sys/bus/i2c/devices/69-0051/ name=dummy
+--- PSU drivers ---
+/sys/bus/i2c/drivers/adm1021
+9-0018
+module
+uevent
+
+============================================================
+=== cl-psuutil if available
+============================================================
+
+============================================================
+=== monit + cumulus platform daemons
+============================================================
+ls: cannot access /etc/monit.d/: No such file or directory
+
+============================================================
+=== platform-detect / quagga / portd init scripts
+============================================================
+switchd
+accton_as4600_54t
+accton_as5610_52x
+accton_as5712_54x
+accton_as6700_32x
+accton_as6701_32x
+accton_es5652bt1
+amd64-init.conf
+arch.conf
+cel_kennisis
+cel_redstone
+cel_redstone_xp
+cel_smallstone
+cel_smallstone_xp
+cumulus_cumulus_p2020
+dell_s4000_c2338
+dell_s6000_s1220
+dni_c7448n
+dni_et-6448r
+dni_et-7448bf
+lsb-release
+mlx_sx1400_i73612
+platform.conf
+powerpc-init.conf
+quanta_lb9
+quanta_ly2
+quanta_ly2r
+quanta_ly6_p2020
+quanta_ly6_rangeley
+quanta_ly8_rangeley
+quanta_ly9_rangeley
+quanta_panther
+running
+
+============================================================
+=== lm-sensors output
+============================================================
+/usr/bin/sensors
+linux_bde_tmon-pci-0100
+Adapter: PCI adapter
+temp1:        +42.5 C  (high = +100.0 C, hyst = +65.0 C)
+
+max6697-i2c-9-4d
+Adapter: i2c-0-mux (chan_id 7)
+temp1:        +26.0 C  (high = +75.0 C)
+temp2:        +31.8 C  (high = +75.0 C, crit = +85.0 C)
+temp3:        +25.0 C  (high = +75.0 C)
+temp4:        +31.0 C  (high = +75.0 C)
+temp5:        +31.0 C  (high = +75.0 C, crit = +85.0 C)
+temp6:        +25.0 C  (high = +75.0 C, crit = +85.0 C)
+temp7:        +27.0 C  (high = +75.0 C, crit = +85.0 C)
+
+max1617-i2c-9-18
+Adapter: i2c-0-mux (chan_id 7)
+temp1:        +22.0 C  (low  =  +5.0 C, high = +75.0 C)
+temp2:        +52.0 C  (low  =  +5.0 C, high = +80.0 C)
+
+
+============================================================
+=== platform detect cumulus
+============================================================
+as4600_54t
+as5610_52x
+as5712_54x
+as6700_32x
+as6701_32x
+es5652bt1
+bin
+etc
+hw_init.d
+=== platform-config files ===
+/usr/share/platform-config/accton/as5610_52x/bin/eeprom.py
+/usr/share/platform-config/accton/as5610_52x/bin/sfputil.py
+/usr/share/platform-config/accton/as5610_52x/bin/eeprom.pyc
+/usr/share/platform-config/accton/as5610_52x/bin/sfputil.pyc
+/usr/share/platform-config/accton/as5610_52x/etc/bcm.d/backend_map
+/usr/share/platform-config/accton/as5610_52x/etc/bcm.d/config.d/01config.bcm
+/usr/share/platform-config/accton/as5610_52x/etc/bcm.d/rc.soc
+/usr/share/platform-config/accton/as5610_52x/etc/cumulus/ports.conf
+/usr/share/platform-config/accton/as5610_52x/etc/default/phy_ucode_update
+/usr/share/platform-config/accton/as5610_52x/etc/modules
+/usr/share/platform-config/accton/as5610_52x/etc/sensors.d/as5610_52x.conf
+/usr/share/platform-config/accton/as5610_52x/hw_init.d/S10gpio_init.sh
+/usr/share/platform-config/accton/as5610_52x/hw_init.d/S20retimer_init.sh
+
+============================================================
+=== look for fan-rules in platform-config
+============================================================
+/etc/init.d/lm-sensors
+/etc/rcS.d/S14lm-sensors
+/etc/sensors.d
+/etc/sensors3.conf
+/usr/share/platform-config/accton/as4600_54t/etc/sensors.d
+/usr/share/platform-config/accton/as5610_52x/etc/sensors.d
+/usr/share/platform-config/accton/as5712_54x/etc/sensors.d
+/usr/share/platform-config/accton/as6700_32x/etc/sensors.d
+/usr/share/platform-config/accton/as6701_32x/etc/sensors.d
+/usr/share/platform-config/accton/es5652bt1/etc/sensors.d
+/usr/share/platform-config/cel/kennisis/etc/sensors.d
+/usr/share/platform-config/cel/redstone/etc/sensors.d
+/usr/share/platform-config/cel/redstone_xp/etc/sensors.d
+/usr/share/platform-config/cel/smallstone/etc/sensors.d
+/usr/share/platform-config/cel/smallstone_xp/etc/sensors.d
+/usr/share/platform-config/cumulus/cumulus_p2020/etc/sensors.d
+/usr/share/platform-config/cumulus/cumulus_p2020_fc1280/etc/sensors.d
+/usr/share/platform-config/cumulus/cumulus_p2020_lc16x40/etc/sensors.d
+/usr/share/platform-config/cumulus/cumulus_p2020_lc64x10/etc/sensors.d
+/usr/share/platform-config/dell/s4000_c2338/etc/sensors.d
+/usr/share/platform-config/dell/s6000_s1220/etc/sensors.d
+/usr/share/platform-config/dni/c7448n/etc/fan_monitor
+/usr/share/platform-config/dni/c7448n/etc/fan_monitor/fan_monitor.cfg
+/usr/share/platform-config/dni/c7448n/etc/sensors.d
+/usr/share/platform-config/dni/et-6448r/etc/sensors.d
+/usr/share/platform-config/dni/et-7448bf/etc/sensors.d
+/usr/share/platform-config/mlx/sx1400_i73612/etc/sensors.d
+/usr/share/platform-config/quanta/lb8/etc/sensors.d
+/usr/share/platform-config/quanta/lb9/hw_init.d/S20fan_config.sh
+/usr/share/platform-config/quanta/ly2/hw_init.d/S20fan_config.sh
+
+============================================================
+=== running daemons relating to platform monitoring
+============================================================
+root      2743  0.0  0.0  14536  1680 ?        SNl  09:28   0:10 /usr/bin/monit -p /var/run/monit.pid -s /var/run/monit/state -c /etc/monit/monitrc
+
+============================================================
+=== CPLD interfaces - read-only sysfs
+============================================================
+alarmtimer
+serial8250
+serial8250.0
+uevent
+total 0
+drwxr-xr-x 2 root root 0 Jun  1 14:24 .
+drwxr-xr-x 4 root root 0 May 10  2026 ..
+lrwxrwxrwx 1 root root 0 Jun  1 14:24 alarmtimer -> ../../../devices/platform/alarmtimer
+lrwxrwxrwx 1 root root 0 Jun  1 14:24 ea000000.cpld -> ../../../devices/ff705000.localbus/ea000000.cpld
+lrwxrwxrwx 1 root root 0 Jun  1 14:24 efc00000.flash -> ../../../devices/ff705000.localbus/efc00000.flash
+lrwxrwxrwx 1 root root 0 Jun  1 14:24 ff702000.memory-controller -> ../../../devices/soc.0/ff702000.memory-controller
+lrwxrwxrwx 1 root root 0 Jun  1 14:24 ff703000.i2c -> ../../../devices/soc.0/ff703000.i2c
+lrwxrwxrwx 1 root root 0 Jun  1 14:24 ff703100.i2c -> ../../../devices/soc.0/ff703100.i2c
+lrwxrwxrwx 1 root root 0 Jun  1 14:24 ff704500.serial -> ../../../devices/soc.0/ff704500.serial
+lrwxrwxrwx 1 root root 0 Jun  1 14:24 ff705000.localbus -> ../../../devices/ff705000.localbus
+lrwxrwxrwx 1 root root 0 Jun  1 14:24 ff720000.l2-cache-controller -> ../../../devices/soc.0/ff720000.l2-cache-controller
+lrwxrwxrwx 1 root root 0 Jun  1 14:24 ff722000.usb -> ../../../devices/soc.0/ff722000.usb
+lrwxrwxrwx 1 root root 0 Jun  1 14:24 ff724000.ethernet -> ../../../devices/soc.0/ff724000.ethernet
+lrwxrwxrwx 1 root root 0 Jun  1 14:24 ff724520.mdio -> ../../../devices/soc.0/ff724520.mdio
+lrwxrwxrwx 1 root root 0 Jun  1 14:24 ff740000.pic -> ../../../devices/soc.0/ff740000.pic
+lrwxrwxrwx 1 root root 0 Jun  1 14:24 ff7e0000.global-utilities -> ../../../devices/soc.0/ff7e0000.global-utilities
+lrwxrwxrwx 1 root root 0 Jun  1 14:24 fsl-ehci.0 -> ../../../devices/soc.0/ff722000.usb/fsl-ehci.0
+lrwxrwxrwx 1 root root 0 Jun  1 14:24 serial8250 -> ../../../devices/platform/serial8250
+lrwxrwxrwx 1 root root 0 Jun  1 14:24 serial8250.0 -> ../../../devices/platform/serial8250.0
+
+============================================================
+=== syslog grep for thermal/fan/psu events
+============================================================
+May 10 16:16:15 cumulus kernel: [    0.315049] NOR chip too large to fit in mapping. Attempting to cope...
+May 10 16:16:15 cumulus kernel: [    5.152877] linux-kernel-bde 0000:01:00.0: created sysfs groups as hwmon0
+May 10 16:16:47 cumulus : /usr/sbin/smond : : Monitoring HW Sensors
+May 10 16:16:47 cumulus : /usr/sbin/smond : : Temp1(Networking ASIC Die Temp Sensor): state changed from UNKNOWN to OK
+May 10 16:16:47 cumulus : /usr/sbin/smond : : Temp2(Board Temperature Sensor): state changed from UNKNOWN to OK
+May 10 16:16:47 cumulus : /usr/sbin/smond : : Temp3(Board Temperature Sensor): state changed from UNKNOWN to OK
+May 10 16:16:47 cumulus : /usr/sbin/smond : : Temp4(Board Temperature Sensor): state changed from UNKNOWN to OK
+May 10 16:16:47 cumulus : /usr/sbin/smond : : Temp5(Board Temperature Sensor): state changed from UNKNOWN to OK
+May 10 16:16:47 cumulus : /usr/sbin/smond : : Temp6(Board Temperature Sensor): state changed from UNKNOWN to OK
+May 10 16:16:47 cumulus : /usr/sbin/smond : : Temp7(Board Temperature Sensor): state changed from UNKNOWN to OK
+May 10 16:16:47 cumulus : /usr/sbin/smond : : Temp8(Board Temperature Sensor): state changed from UNKNOWN to OK
+May 10 16:16:47 cumulus : /usr/sbin/smond : : Temp9(NE1617A Sensor Temperature): state changed from UNKNOWN to OK
+May 10 16:16:47 cumulus : /usr/sbin/smond : : Temp10(Temp Sensor close to Networking ASIC): state changed from UNKNOWN to OK
+May 10 16:16:47 cumulus : /usr/sbin/smond : : PSU1: state changed from UNKNOWN to OK
+May 10 16:16:47 cumulus : /usr/sbin/smond : : PSU2: state changed from UNKNOWN to BAD
+May 10 16:16:47 cumulus : /usr/sbin/smond : : PSU2:  status is dc_not_ok, all_not_ok, installed
+May 10 16:16:47 cumulus : /usr/sbin/smond : : Fan(System Fan): state changed from UNKNOWN to OK

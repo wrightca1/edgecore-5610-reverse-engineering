@@ -1,0 +1,28 @@
+Warning: Permanently added '10.1.1.212' (ECDSA) to the list of known hosts.
+[sudo] password for cumulus: === assign IPs ===
+3: swp1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP qlen 500
+    link/ether 80:a2:35:81:ca:af brd ff:ff:ff:ff:ff:ff
+    inet 10.101.101.1/29 scope global swp1
+    inet6 fe80::82a2:35ff:fe81:caaf/64 scope link 
+       valid_lft forever preferred_lft forever
+
+4: swp2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP qlen 500
+    link/ether 80:a2:35:81:ca:b0 brd ff:ff:ff:ff:ff:ff
+    inet 10.101.101.10/29 scope global swp2
+    inet6 fe80::82a2:35ff:fe81:cab0/64 scope link 
+       valid_lft forever preferred_lft forever
+=== counters BEFORE ===
+3: swp1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP mode DEFAULT qlen 500
+    link/ether 80:a2:35:81:ca:af brd ff:ff:ff:ff:ff:ff
+    RX: bytes  packets  errors  dropped overrun mcast   
+    68144      644      0       0       0       642    
+    TX: bytes  packets  errors  dropped carrier collsns 
+    20905      166      0       0       0       0      
+4: swp2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP mode DEFAULT qlen 500
+    link/ether 80:a2:35:81:ca:b0 brd ff:ff:ff:ff:ff:ff
+    RX: bytes  packets  errors  dropped overrun mcast   
+    68390      647      0       0       0       645    
+    TX: bytes  packets  errors  dropped carrier collsns 
+    20987      167      0       0       0       0      
+bash: -c: line 10: syntax error near unexpected token `('
+bash: -c: line 10: `echo === ping peer via swp1 (10.101.101.2) ==='

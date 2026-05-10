@@ -1,0 +1,24 @@
+# /etc/modules: kernel modules to load at boot time.
+#
+# This file contains the names of kernel modules that should be loaded
+# at boot time, one per line. Lines beginning with "#" are ignored.
+# Parameters can be specified after the module name.
+
+loop
+
+# Broadcom SDK user<->kernel interface modules
+#
+linux-kernel-bde himem=1
+linux-user-bde
+tun
+linux-bde-tmon
+
+# Platform status, information, and control
+#
+at24
+
+# Hardware monitoring
+#
+# changing this order will affect configuration of pwmd and sysmond
+#
+lm90

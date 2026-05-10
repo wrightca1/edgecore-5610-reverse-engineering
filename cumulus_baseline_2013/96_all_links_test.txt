@@ -1,0 +1,78 @@
+Warning: Permanently added '10.1.1.212' (ECDSA) to the list of known hosts.
+[sudo] password for cumulus: === ALL link states ===
+swp1 UP - speed=10000 mtu=1500
+swp2 UP - speed=10000 mtu=1500
+swp49 UP - speed=40000 mtu=1500
+swp50 UP - speed=40000 mtu=1500
+
+=== BCM port ps for all linked ===
+       xe0  up     10G  FD   SW  No   Forward          None    F    XFI  1518 
+       xe1  up     10G  FD   SW  No   Forward          None    F    XFI  1518 
+      xe48  up     40G  FD   SW  No   Forward          None    F    KR4  1518 
+      xe49  up     40G  FD   SW  No   Forward          None    F    KR4  1518 
+
+=== ping peer swp1 at 10.101.101.2 ===
+PING 10.101.101.2 (10.101.101.2) from 10.101.101.1 swp1: 56(84) bytes of data.
+64 bytes from 10.101.101.2: icmp_req=2 ttl=255 time=0.733 ms
+64 bytes from 10.101.101.2: icmp_req=3 ttl=255 time=0.739 ms
+64 bytes from 10.101.101.2: icmp_req=4 ttl=255 time=0.642 ms
+
+--- 10.101.101.2 ping statistics ---
+4 packets transmitted, 3 received, 25% packet loss, time 2999ms
+rtt min/avg/max/mdev = 0.642/0.704/0.739/0.053 ms
+
+=== ping peer swp2 at 10.101.101.9 ===
+PING 10.101.101.9 (10.101.101.9) from 10.101.101.10 swp2: 56(84) bytes of data.
+64 bytes from 10.101.101.9: icmp_req=2 ttl=255 time=0.823 ms
+64 bytes from 10.101.101.9: icmp_req=3 ttl=255 time=0.752 ms
+64 bytes from 10.101.101.9: icmp_req=4 ttl=255 time=0.692 ms
+
+--- 10.101.101.9 ping statistics ---
+4 packets transmitted, 3 received, 25% packet loss, time 3001ms
+rtt min/avg/max/mdev = 0.692/0.755/0.823/0.062 ms
+=== neighbors ===
+10.1.1.30 dev eth0 lladdr 40:8d:5c:18:13:bd REACHABLE
+10.1.1.1 dev eth0 lladdr 20:7c:14:f4:77:32 REACHABLE
+10.101.101.2 dev swp1 lladdr 6c:b2:ae:cd:13:33 REACHABLE
+10.101.101.9 dev swp2 lladdr 6c:b2:ae:cd:13:33 REACHABLE
+=== arp traffic during ping - BCM counters ===
+RIPC4.xe0		:		      4 		 +4		  1/s
+RUC.xe0 		:		      5 		 +5		  1/s
+RDBGC1.xe0		:		    561 		+29
+R64.xe0 		:		      3 		 +1
+R127.xe0		:		    565 		+33		  1/s
+R511.xe0		:		     85 		 +5
+RPKT.xe0		:		    653 		+39		  1/s
+RUCA.xe0		:		      5 		 +5		  1/s
+RMCA.xe0		:		    646 		+34
+RPOK.xe0		:		    653 		+39		  1/s
+RBYT.xe0		:		 69,127 	     +4,175		 90/s
+T127.xe0		:		    170 		+15		  1/s
+T255.xe0		:		      3 		 +1
+TPOK.xe0		:		    173 		+16		  1/s
+TPKT.xe0		:		    173 		+16		  1/s
+TUCA.xe0		:		      5 		 +5		  1/s
+TMCA.xe0		:		    167 		+10
+TBCA.xe0		:		      1 		 +1
+TBYT.xe0		:		 21,609 	     +1,845		 90/s
+UC_PERQ_PKT(3).xe0	:		    173 		+16		  1/s
+UC_PERQ_BYTE(3).xe0	:		 21,609 	     +1,845		 90/s
+RIPC4.xe1		:		      4 		 +4		  2/s
+RUC.xe1 		:		      5 		 +5		  2/s
+RDBGC1.xe1		:		    564 		+30
+R64.xe1 		:		      3 		 +1
+R127.xe1		:		    568 		+34		  2/s
+R511.xe1		:		     85 		 +5
+RPKT.xe1		:		    656 		+40		  2/s
+RUCA.xe1		:		      5 		 +5		  2/s
+RMCA.xe1		:		    649 		+35
+RPOK.xe1		:		    656 		+40		  2/s
+RBYT.xe1		:		 69,373 	     +4,257		179/s
+T127.xe1		:		    171 		+15		  2/s
+T255.xe1		:		      3 		 +1
+TPOK.xe1		:		    174 		+16		  2/s
+TPKT.xe1		:		    174 		+16		  2/s
+TUCA.xe1		:		      5 		 +5		  2/s
+TMCA.xe1		:		    168 		+10
+TBCA.xe1		:		      1 		 +1
+TBYT.xe1		:		 21,691 	     +1,845		179/s

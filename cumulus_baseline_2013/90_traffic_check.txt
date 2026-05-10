@@ -1,0 +1,90 @@
+Warning: Permanently added '10.1.1.212' (ECDSA) to the list of known hosts.
+[sudo] password for cumulus: === current swp1 counters ===
+3: swp1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP mode DEFAULT qlen 500
+    link/ether 80:a2:35:81:ca:af brd ff:ff:ff:ff:ff:ff
+    RX: bytes  packets  errors  dropped overrun mcast   
+    64952      614      0       0       0       612    
+    TX: bytes  packets  errors  dropped carrier collsns 
+    19764      157      0       0       0       0      
+=== swp2 counters ===
+4: swp2: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP mode DEFAULT qlen 500
+    link/ether 80:a2:35:81:ca:b0 brd ff:ff:ff:ff:ff:ff
+    RX: bytes  packets  errors  dropped overrun mcast   
+    65034      615      0       0       0       613    
+    TX: bytes  packets  errors  dropped carrier collsns 
+    19846      158      0       0       0       0      
+=== BCM port counter xe0/xe1 ===
+RDBGC1.xe0		:		    532 	       +337
+R127.xe0		:		    532 	       +337
+R511.xe0		:		     80 		+49
+RPKT.xe0		:		    614 	       +386
+RMCA.xe0		:		    612 	       +386
+RPOK.xe0		:		    614 	       +386
+RBYT.xe0		:		 64,952 	    +40,619
+T127.xe0		:		    155 		+98
+T255.xe0		:		      2 		 +1
+TPOK.xe0		:		    157 		+99
+TPKT.xe0		:		    157 		+99
+TMCA.xe0		:		    157 		+99
+TBYT.xe0		:		 19,764 	    +12,481
+UC_PERQ_PKT(3).xe0	:		    157 		+99
+UC_PERQ_BYTE(3).xe0	:		 19,764 	    +12,481
+RDBGC1.xe1		:		    534 	       +339
+R127.xe1		:		    534 	       +339
+R511.xe1		:		     80 		+49
+RPKT.xe1		:		    616 	       +388
+RMCA.xe1		:		    614 	       +388
+RPOK.xe1		:		    616 	       +388
+RBYT.xe1		:		 65,116 	    +40,783
+T127.xe1		:		    156 		+99
+T255.xe1		:		      2 		 +1
+TPOK.xe1		:		    158 	       +100
+TPKT.xe1		:		    158 	       +100
+TMCA.xe1		:		    158 	       +100
+TBYT.xe1		:		 19,846 	    +12,607
+UC_PERQ_PKT(3).xe1	:		    158 	       +100
+UC_PERQ_BYTE(3).xe1	:		 19,846 	    +12,607
+=== LLDP neighbors ===
+lldpd is running.
+-------------------------------------------------------------------------------
+LLDP neighbors:
+-------------------------------------------------------------------------------
+Interface:    eth0, via: CDPv1, RID: 1, Time: -4726 day, -1:-59:-26
+  Chassis:     
+    ChassisID:    local garageracknx1(FDO21410WT7)
+    SysName:      garageracknx1(FDO21410WT7)
+    SysDescr:     Cisco Nexus Operating System (NX-OS) Software, Version 7.0(3)I7(6) running on N9K-C93180YC-EX
+    MgmtIP:       10.1.1.106
+    Capability:   Bridge, on
+    Capability:   Router, on
+  Port:        
+    PortID:       ifname mgmt0
+    PortDescr:    mgmt0
+-------------------------------------------------------------------------------
+Interface:    eth0, via: CDPv1, RID: 3, Time: -4726 day, -1:-59:-26
+  Chassis:     
+    ChassisID:    local CRS310telcorack
+    SysName:      CRS310telcorack
+    SysDescr:     7.6 (stable) Oct/17/2022 10:55:40 running on MikroTik
+    Capability:   Router, on
+  Port:        
+    PortID:       ifname bridge/sfp-sfpplus2
+    PortDescr:    bridge/sfp-sfpplus2
+-------------------------------------------------------------------------------
+Interface:    eth0, via: CDPv1, RID: 3, Time: -4726 day, -1:-59:-26
+  Chassis:     
+    ChassisID:    local CRS310telcorack
+    SysName:      CRS310telcorack
+    SysDescr:     7.6 (stable) Oct/17/2022 10:55:40 running on MikroTik
+    Capability:   Router, on
+  Port:        
+    PortID:       ifname vlan10
+    PortDescr:    vlan10
+-------------------------------------------------------------------------------
+Interface:    eth0, via: CDPv1, RID: 3, Time: -4726 day, -1:-59:-26
+  Chassis:     
+    ChassisID:    local CRS310telcorack
+    SysName:      CRS310telcorack
+    SysDescr:     7.6 (stable) Oct/17/2022 10:55:40 running on MikroTik
+=== any switchd portd logs about port-up ===
+portd: unrecognized service

@@ -1,0 +1,53 @@
+Warning: Permanently added '10.1.1.212' (ECDSA) to the list of known hosts.
+[sudo] password for cumulus: === restore swp49 swp50 to root ns ===
+=== confirm both back up ===
+Error: either "dev" is duplicate, or "swp50" is a garbage.
+=== BCM counters fresh ===
+=== start tcpdump on swp50 in background, send broadcast from swp49 ===
+tcpdump: WARNING: swp50: no IPv4 address assigned
+tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+listening on swp50, link-type EN10MB (Ethernet), capture size 65535 bytes
+Sending broadcast pings from swp49 ===
+14:22:59.366120 80:a2:35:81:ca:e3 > 01:80:c2:00:00:0e, ethertype LLDP (0x88cc), length 131: LLDP, name cumulus, length 117
+14:22:59.366514 80:a2:35:81:ca:df > 01:80:c2:00:00:0e, ethertype LLDP (0x88cc), length 131: LLDP, name cumulus, length 117
+14:23:00.955741 80:a2:35:81:ca:df > ff:ff:ff:ff:ff:ff, ethertype ARP (0x0806), length 64: Request who-has 10.49.49.2 tell 10.49.49.1, length 50
+14:23:01.956137 80:a2:35:81:ca:df > ff:ff:ff:ff:ff:ff, ethertype ARP (0x0806), length 64: Request who-has 10.49.49.2 tell 10.49.49.1, length 50
+14:23:02.684725 80:a2:35:81:ca:e3 > 33:33:00:00:00:16, ethertype IPv6 (0x86dd), length 90: fe80::82a2:35ff:fe81:cae3 > ff02::16: HBH ICMP6, multicast listener report v2, 1 group record(s), length 28
+5 packets captured
+5 packets received by filter
+0 packets dropped by kernel
+ARPING 10.49.49.2
+
+--- 10.49.49.2 statistics ---
+3 packets transmitted, 0 packets received, 100% unanswered (0 extra)
+=== BCM xe48,xe49 counters after ===
+RDBGC1.xe48		:		      1 		 +1
+R127.xe48		:		      1 		 +1
+R255.xe48		:		      1 		 +1
+RPKT.xe48		:		      2 		 +2
+RMCA.xe48		:		      2 		 +2
+RPOK.xe48		:		      2 		 +2
+RBYT.xe48		:		    229 	       +229
+T127.xe48		:		      4 		 +4
+T255.xe48		:		      1 		 +1
+TPOK.xe48		:		      5 		 +5
+TPKT.xe48		:		      5 		 +5
+TMCA.xe48		:		      2 		 +2
+TBCA.xe48		:		      3 		 +3
+TBYT.xe48		:		    433 	       +433
+UC_PERQ_PKT(3).xe48	:		      5 		 +5
+UC_PERQ_BYTE(3).xe48	:		    433 	       +433
+RDBGC1.xe49		:		      1 		 +1
+R127.xe49		:		      4 		 +4
+R255.xe49		:		      1 		 +1
+RPKT.xe49		:		      5 		 +5
+RMCA.xe49		:		      2 		 +2
+RBCA.xe49		:		      3 		 +3
+RPOK.xe49		:		      5 		 +5
+RBYT.xe49		:		    433 	       +433
+T127.xe49		:		      1 		 +1
+T255.xe49		:		      1 		 +1
+TPOK.xe49		:		      2 		 +2
+TPKT.xe49		:		      2 		 +2
+TMCA.xe49		:		      2 		 +2
+TBYT.xe49		:		    229 	       +229

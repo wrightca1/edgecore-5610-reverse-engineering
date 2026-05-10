@@ -1,0 +1,260 @@
+Warning: Permanently added '10.1.1.212' (ECDSA) to the list of known hosts.
+[sudo] password for cumulus: === SPEED/FEC/AUTONEG for ALL linked ports ===
+--- swp1 ---
+Settings for swp1:
+	Supported ports: [ FIBRE ]
+	Supported link modes:   100baseT/Half 100baseT/Full 
+	                        1000baseT/Full 
+	                        10000baseT/Full 
+	Supported pause frame use: Symmetric Receive-only
+	Supports auto-negotiation: Yes
+	Advertised link modes:  1000baseT/Full 
+	                        10000baseT/Full 
+	Advertised pause frame use: Symmetric
+	Advertised auto-negotiation: No
+	Speed: 10000Mb/s
+	Duplex: Full
+	Port: FIBRE
+	PHYAD: 0
+	Transceiver: external
+	Auto-negotiation: off
+	Current message level: 0x00000000 (0)
+			       
+	Link detected: yes
+--- swp1 ethtool -k drivers ---
+Features for swp1:
+rx-checksumming: off [fixed]
+tx-checksumming: off
+	tx-checksum-ipv4: off [fixed]
+	tx-checksum-unneeded: off [fixed]
+--- swp1 ethtool --show-fec ---
+ethtool: bad command line argument(s)
+For more information run ethtool -h
+no FEC option in this ethtool
+--- swp1 ethtool --module-info ---
+	Identifier                                : 0x03 (SFP)
+	Extended identifier                       : 0x04 (GBIC/SFP defined by 2-wire interface ID)
+	Connector                                 : 0x07 (LC)
+	Transceiver codes                         : 0x20 0x00 0x00 0x00 0x12 0x00 0x01 0x40
+	Transceiver type                          : 10G Ethernet: 10G Base-LR
+	Transceiver type                          : FC: long distance (L)
+	Transceiver type                          : FC: Longwave laser (LC)
+	Transceiver type                          : FC: Single Mode (SM)
+	Transceiver type                          : FC: 800 MBytes/sec
+	Encoding                                  : 0x06 (64B/66B)
+	BR, Nominal                               : 10300MBd
+	Rate identifier                           : 0x00 (unspecified)
+	Length (SMF,km)                           : 10km
+	Length (SMF)                              : 10000m
+	Length (50um)                             : 0m
+	Length (62.5um)                           : 0m
+	Length (Copper)                           : 0m
+	Length (OM3)                              : 0m
+	Laser wavelength                          : 1310nm
+	Vendor name                               : FINISAR CORP.   
+	Vendor OUI                                : 00:90:65
+	Vendor PN                                 : FTLX1475D3BTL-E7
+	Vendor rev                                : A   
+	Optical diagnostics support               : Yes
+	Laser bias current                        : 13.224 mA
+--- swp2 ---
+Settings for swp2:
+	Supported ports: [ FIBRE ]
+	Supported link modes:   100baseT/Half 100baseT/Full 
+	                        1000baseT/Full 
+	                        10000baseT/Full 
+	Supported pause frame use: Symmetric Receive-only
+	Supports auto-negotiation: Yes
+	Advertised link modes:  1000baseT/Full 
+	                        10000baseT/Full 
+	Advertised pause frame use: Symmetric
+	Advertised auto-negotiation: No
+	Speed: 10000Mb/s
+	Duplex: Full
+	Port: FIBRE
+	PHYAD: 0
+	Transceiver: external
+	Auto-negotiation: off
+	Current message level: 0x00000000 (0)
+			       
+	Link detected: yes
+--- swp2 ethtool -k drivers ---
+Features for swp2:
+rx-checksumming: off [fixed]
+tx-checksumming: off
+	tx-checksum-ipv4: off [fixed]
+	tx-checksum-unneeded: off [fixed]
+--- swp2 ethtool --show-fec ---
+ethtool: bad command line argument(s)
+For more information run ethtool -h
+no FEC option in this ethtool
+--- swp2 ethtool --module-info ---
+	Identifier                                : 0x03 (SFP)
+	Extended identifier                       : 0x04 (GBIC/SFP defined by 2-wire interface ID)
+	Connector                                 : 0x07 (LC)
+	Transceiver codes                         : 0x20 0x00 0x00 0x00 0x02 0x00 0x01 0x00
+	Transceiver type                          : 10G Ethernet: 10G Base-LR
+	Transceiver type                          : FC: Longwave laser (LC)
+	Transceiver type                          : FC: Single Mode (SM)
+	Encoding                                  : 0x06 (64B/66B)
+	BR, Nominal                               : 10300MBd
+	Rate identifier                           : 0x00 (unspecified)
+	Length (SMF,km)                           : 1km
+	Length (SMF)                              : 1400m
+	Length (50um)                             : 0m
+	Length (62.5um)                           : 0m
+	Length (Copper)                           : 0m
+	Length (OM3)                              : 0m
+	Laser wavelength                          : 1310nm
+	Vendor name                               : FINISAR CORP.   
+	Vendor OUI                                : 00:90:65
+	Vendor PN                                 : FTLX1370W4BTL-E7
+	Vendor rev                                : A   
+	Optical diagnostics support               : Yes
+	Laser bias current                        : 12.928 mA
+	Laser output power                        : 0.6353 mW / -1.97 dBm
+	Receiver signal average optical power     : 0.6025 mW / -2.20 dBm
+--- swp49 ---
+Settings for swp49:
+	Supported ports: [ FIBRE ]
+	Supported link modes:   100baseT/Half 100baseT/Full 
+	                        1000baseT/Full 
+	                        10000baseT/Full 
+	                        40000baseT/Full 
+	Supported pause frame use: Symmetric Receive-only
+	Supports auto-negotiation: Yes
+	Advertised link modes:  1000baseT/Full 
+	                        10000baseT/Full 
+	                        40000baseT/Full 
+	Advertised pause frame use: Symmetric
+	Advertised auto-negotiation: No
+	Speed: 40000Mb/s
+	Duplex: Full
+	Port: FIBRE
+	PHYAD: 0
+	Transceiver: external
+	Auto-negotiation: off
+	Current message level: 0x00000000 (0)
+			       
+	Link detected: yes
+--- swp49 ethtool -k drivers ---
+Features for swp49:
+rx-checksumming: off [fixed]
+tx-checksumming: off
+	tx-checksum-ipv4: off [fixed]
+	tx-checksum-unneeded: off [fixed]
+--- swp49 ethtool --show-fec ---
+ethtool: bad command line argument(s)
+For more information run ethtool -h
+no FEC option in this ethtool
+--- swp49 ethtool --module-info ---
+	Identifier                                : 0x0d (QSFP+)
+	Extended identifier                       : 0xdc (3.5W max. Power consumption, CDR present in TX, CDR present in RX)
+	Connector                                 : 0x07 (LC)
+	Transceiver codes                         : 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00
+	Encoding                                  : 0x05 (64B/66B)
+	BR, Nominal                               : 20600Mbps
+	Rate identifier                           : 0x00
+	Length (SMF,km)                           : 0km
+	Length (OM3 50um)                         : 100m
+	Length (OM2 50um)                         : 0m
+	Length (OM1 62.5um)                       : 0m
+	Length (Copper or Active cable)           : 0m
+	Transmitter technology                    : 0x00 (850 nm VCSEL)
+	Laser wavelength                          : 850.000nm
+	Laser wavelength tolerance                : 10.000nm
+	Vendor name                               : CISCO-AVAGO     
+	Vendor OUI                                : 00:17:6a
+	Vendor PN                                 : AFBR-79EBPZ-CS2 
+	Vendor rev                                : 0
+	Vendor SN                                 : AVM2148U1ZZ     
+	Laser bias current (Channel 1)            : 0.000 mA
+	Laser bias current (Channel 2)            : 0.000 mA
+	Laser bias current (Channel 3)            : 0.000 mA
+	Laser bias current (Channel 4)            : 0.000 mA
+	Rcvr signal avg optical power(Channel 1)  : 0.0000 mW / -inf dBm
+--- swp50 ---
+Settings for swp50:
+	Supported ports: [ FIBRE ]
+	Supported link modes:   100baseT/Half 100baseT/Full 
+	                        1000baseT/Full 
+	                        10000baseT/Full 
+	                        40000baseT/Full 
+	Supported pause frame use: Symmetric Receive-only
+	Supports auto-negotiation: Yes
+	Advertised link modes:  1000baseT/Full 
+	                        10000baseT/Full 
+	                        40000baseT/Full 
+	Advertised pause frame use: Symmetric
+	Advertised auto-negotiation: No
+	Speed: 40000Mb/s
+	Duplex: Full
+	Port: FIBRE
+	PHYAD: 0
+	Transceiver: external
+	Auto-negotiation: off
+	Current message level: 0x00000000 (0)
+			       
+	Link detected: yes
+--- swp50 ethtool -k drivers ---
+Features for swp50:
+rx-checksumming: off [fixed]
+tx-checksumming: off
+	tx-checksum-ipv4: off [fixed]
+	tx-checksum-unneeded: off [fixed]
+--- swp50 ethtool --show-fec ---
+ethtool: bad command line argument(s)
+For more information run ethtool -h
+no FEC option in this ethtool
+--- swp50 ethtool --module-info ---
+	Identifier                                : 0x0d (QSFP+)
+	Extended identifier                       : 0xdc (3.5W max. Power consumption, CDR present in TX, CDR present in RX)
+	Connector                                 : 0x07 (LC)
+	Transceiver codes                         : 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x00
+	Encoding                                  : 0x05 (64B/66B)
+	BR, Nominal                               : 20600Mbps
+	Rate identifier                           : 0x00
+	Length (SMF,km)                           : 0km
+	Length (OM3 50um)                         : 100m
+	Length (OM2 50um)                         : 0m
+	Length (OM1 62.5um)                       : 0m
+	Length (Copper or Active cable)           : 0m
+	Transmitter technology                    : 0x00 (850 nm VCSEL)
+	Laser wavelength                          : 850.000nm
+	Laser wavelength tolerance                : 10.000nm
+	Vendor name                               : CISCO-AVAGO     
+	Vendor OUI                                : 00:17:6a
+	Vendor PN                                 : AFBR-79EBPZ-CS2 
+	Vendor rev                                : 0
+	Vendor SN                                 : AVM2149U5UY     
+	Laser bias current (Channel 1)            : 0.000 mA
+	Laser bias current (Channel 2)            : 0.000 mA
+	Laser bias current (Channel 3)            : 0.000 mA
+	Laser bias current (Channel 4)            : 0.000 mA
+	Rcvr signal avg optical power(Channel 1)  : 0.0000 mW / -inf dBm
+
+=== bcm chip-level speed and FEC ===
+  xe0(  1)   143  bff0    d1    d1              WC-B0/16/0     250000  
+  xe1(  2)   143  bff0    d1    d1              WC-B0/16/1     250000  
+ xe10( 11)   143  bff0    85    85              WC-B0/01/2     250000  
+ xe11( 12)   143  bff0    85    85              WC-B0/01/3     250000  
+ xe12( 13)   143  bff0    89    89              WC-B0/02/0     250000  
+ xe13( 14)   143  bff0    89    89              WC-B0/02/1     250000  
+ xe14( 15)   143  bff0    89    89              WC-B0/02/2     250000  
+ xe15( 16)   143  bff0    89    89              WC-B0/02/3     250000  
+ xe16( 17)   143  bff0    8d    8d              WC-B0/03/0     250000  
+ xe17( 18)   143  bff0    8d    8d              WC-B0/03/1     250000  
+ xe18( 19)   143  bff0    8d    8d              WC-B0/03/2     250000  
+ xe19( 20)   143  bff0    8d    8d              WC-B0/03/3     250000  
+ xe48( 49)   143  bff0    c1    c1              WC-B0/12/4     250000  
+ xe49( 50)   143  bff0    b5    b5              WC-B0/11/4     250000  
+
+=== port_status xe0,xe1,xe48,xe49 ===
+--- xe0 ---
+Unknown command: port_status
+--- xe1 ---
+Unknown command: port_status
+--- xe48 ---
+Unknown command: port_status
+--- xe49 ---
+Unknown command: port_status
