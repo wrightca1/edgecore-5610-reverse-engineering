@@ -1,0 +1,261 @@
+[sudo] password for cumulus: 
+############################################################
+## 1. CPU MAC programmed into ASIC (My Station / My MAC)
+############################################################
+
+==== L2 table - find CPU MAC (eth0 MAC = 80:a2:35:81:ca:ae) ====
+
+==== MY_STATION TCAM entries ====
+Syntax error parsing "MY_STATION_TCAM"
+Syntax error parsing "MY_STATION"
+MY_STATION_TCAM.ipipe0[7]: <VLAN_ID_MASK=0,VLAN_ID=0,VALID=1,TRILL_TERMINATION_ALLOWED=0,MPLS_TERMINATION_ALLOWED=0,MIM_TERMINATION_ALLOWED=0,MASK=0x000000ffffffffffff,MAC_ADDR_MASK=0xffffffffffff,MAC_ADDR=0x80a23581caaf,KEY=0x00000080a23581caaf,IPV6_TERMINATION_ALLOWED=1,IPV4_TERMINATION_ALLOWED=1,ING_PORT_NUM_MASK=0,ING_PORT_NUM=0,FCOE_TERMINATION_ALLOWED=0,EVEN_PARITY=0,DISCARD=0,DATA=0x38,COPY_TO_CPU=0,ARP_RARP_TERMINATION_ALLOWED=1>
+MY_STATION_TCAM.ipipe0[8]: <VLAN_ID_MASK=0,VLAN_ID=0,VALID=1,TRILL_TERMINATION_ALLOWED=0,MPLS_TERMINATION_ALLOWED=0,MIM_TERMINATION_ALLOWED=0,MASK=0x000000ffffffffffff,MAC_ADDR_MASK=0xffffffffffff,MAC_ADDR=0x80a23581cab0,KEY=0x00000080a23581cab0,IPV6_TERMINATION_ALLOWED=1,IPV4_TERMINATION_ALLOWED=1,ING_PORT_NUM_MASK=0,ING_PORT_NUM=0,FCOE_TERMINATION_ALLOWED=0,EVEN_PARITY=0,DISCARD=0,DATA=0x38,COPY_TO_CPU=0,ARP_RARP_TERMINATION_ALLOWED=1>
+MY_STATION_TCAM.ipipe0[9]: <VLAN_ID_MASK=0,VLAN_ID=0,VALID=1,TRILL_TERMINATION_ALLOWED=0,MPLS_TERMINATION_ALLOWED=0,MIM_TERMINATION_ALLOWED=0,MASK=0x000000ffffffffffff,MAC_ADDR_MASK=0xffffffffffff,MAC_ADDR=0x80a23581cab1,KEY=0x00000080a23581cab1,IPV6_TERMINATION_ALLOWED=1,IPV4_TERMINATION_ALLOWED=1,ING_PORT_NUM_MASK=0,ING_PORT_NUM=0,FCOE_TERMINATION_ALLOWED=0,EVEN_PARITY=0,DISCARD=0,DATA=0x38,COPY_TO_CPU=0,ARP_RARP_TERMINATION_ALLOWED=1>
+MY_STATION_TCAM.ipipe0[10]: <VLAN_ID_MASK=0,VLAN_ID=0,VALID=1,TRILL_TERMINATION_ALLOWED=0,MPLS_TERMINATION_ALLOWED=0,MIM_TERMINATION_ALLOWED=0,MASK=0x000000ffffffffffff,MAC_ADDR_MASK=0xffffffffffff,MAC_ADDR=0x80a23581cab2,KEY=0x00000080a23581cab2,IPV6_TERMINATION_ALLOWED=1,IPV4_TERMINATION_ALLOWED=1,ING_PORT_NUM_MASK=0,ING_PORT_NUM=0,FCOE_TERMINATION_ALLOWED=0,EVEN_PARITY=0,DISCARD=0,DATA=0x38,COPY_TO_CPU=0,ARP_RARP_TERMINATION_ALLOWED=1>
+MY_STATION_TCAM.ipipe0[11]: <VLAN_ID_MASK=0,VLAN_ID=0,VALID=1,TRILL_TERMINATION_ALLOWED=0,MPLS_TERMINATION_ALLOWED=0,MIM_TERMINATION_ALLOWED=0,MASK=0x000000ffffffffffff,MAC_ADDR_MASK=0xffffffffffff,MAC_ADDR=0x80a23581cab3,KEY=0x00000080a23581cab3,IPV6_TERMINATION_ALLOWED=1,IPV4_TERMINATION_ALLOWED=1,ING_PORT_NUM_MASK=0,ING_PORT_NUM=0,FCOE_TERMINATION_ALLOWED=0,EVEN_PARITY=0,DISCARD=0,DATA=0x38,COPY_TO_CPU=0,ARP_RARP_TERMINATION_ALLOWED=1>
+MY_STATION_TCAM.ipipe0[12]: <VLAN_ID_MASK=0,VLAN_ID=0,VALID=1,TRILL_TERMINATION_ALLOWED=0,MPLS_TERMINATION_ALLOWED=0,MIM_TERMINATION_ALLOWED=0,MASK=0x000000ffffffffffff,MAC_ADDR_MASK=0xffffffffffff,MAC_ADDR=0x80a23581cab4,KEY=0x00000080a23581cab4,IPV6_TERMINATION_ALLOWED=1,IPV4_TERMINATION_ALLOWED=1,ING_PORT_NUM_MASK=0,ING_PORT_NUM=0,FCOE_TERMINATION_ALLOWED=0,EVEN_PARITY=0,DISCARD=0,DATA=0x38,COPY_TO_CPU=0,ARP_RARP_TERMINATION_ALLOWED=1>
+MY_STATION_TCAM.ipipe0[13]: <VLAN_ID_MASK=0,VLAN_ID=0,VALID=1,TRILL_TERMINATION_ALLOWED=0,MPLS_TERMINATION_ALLOWED=0,MIM_TERMINATION_ALLOWED=0,MASK=0x000000ffffffffffff,MAC_ADDR_MASK=0xffffffffffff,MAC_ADDR=0x80a23581cab5,KEY=0x00000080a23581cab5,IPV6_TERMINATION_ALLOWED=1,IPV4_TERMINATION_ALLOWED=1,ING_PORT_NUM_MASK=0,ING_PORT_NUM=0,FCOE_TERMINATION_ALLOWED=0,EVEN_PARITY=0,DISCARD=0,DATA=0x38,COPY_TO_CPU=0,ARP_RARP_TERMINATION_ALLOWED=1>
+MY_STATION_TCAM.ipipe0[14]: <VLAN_ID_MASK=0,VLAN_ID=0,VALID=1,TRILL_TERMINATION_ALLOWED=0,MPLS_TERMINATION_ALLOWED=0,MIM_TERMINATION_ALLOWED=0,MASK=0x000000ffffffffffff,MAC_ADDR_MASK=0xffffffffffff,MAC_ADDR=0x80a23581cab6,KEY=0x00000080a23581cab6,IPV6_TERMINATION_ALLOWED=1,IPV4_TERMINATION_ALLOWED=1,ING_PORT_NUM_MASK=0,ING_PORT_NUM=0,FCOE_TERMINATION_ALLOWED=0,EVEN_PARITY=0,DISCARD=0,DATA=0x38,COPY_TO_CPU=0,ARP_RARP_TERMINATION_ALLOWED=1>
+MY_STATION_TCAM.ipipe0[15]: <VLAN_ID_MASK=0,VLAN_ID=0,VALID=1,TRILL_TERMINATION_ALLOWED=0,MPLS_TERMINATION_ALLOWED=0,MIM_TERMINATION_ALLOWED=0,MASK=0x000000ffffffffffff,MAC_ADDR_MASK=0xffffffffffff,MAC_ADDR=0x80a23581cab7,KEY=0x00000080a23581cab7,IPV6_TERMINATION_ALLOWED=1,IPV4_TERMINATION_ALLOWED=1,ING_PORT_NUM_MASK=0,ING_PORT_NUM=0,FCOE_TERMINATION_ALLOWED=0,EVEN_PARITY=0,DISCARD=0,DATA=0x38,COPY_TO_CPU=0,ARP_RARP_TERMINATION_ALLOWED=1>
+MY_STATION_TCAM.ipipe0[16]: <VLAN_ID_MASK=0,VLAN_ID=0,VALID=1,TRILL_TERMINATION_ALLOWED=0,MPLS_TERMINATION_ALLOWED=0,MIM_TERMINATION_ALLOWED=0,MASK=0x000000ffffffffffff,MAC_ADDR_MASK=0xffffffffffff,MAC_ADDR=0x80a23581cab8,KEY=0x00000080a23581cab8,IPV6_TERMINATION_ALLOWED=1,IPV4_TERMINATION_ALLOWED=1,ING_PORT_NUM_MASK=0,ING_PORT_NUM=0,FCOE_TERMINATION_ALLOWED=0,EVEN_PARITY=0,DISCARD=0,DATA=0x38,COPY_TO_CPU=0,ARP_RARP_TERMINATION_ALLOWED=1>
+MY_STATION_TCAM.ipipe0[17]: <VLAN_ID_MASK=0,VLAN_ID=0,VALID=1,TRILL_TERMINATION_ALLOWED=0,MPLS_TERMINATION_ALLOWED=0,MIM_TERMINATION_ALLOWED=0,MASK=0x000000ffffffffffff,MAC_ADDR_MASK=0xffffffffffff,MAC_ADDR=0x80a23581cab9,KEY=0x00000080a23581cab9,IPV6_TERMINATION_ALLOWED=1,IPV4_TERMINATION_ALLOWED=1,ING_PORT_NUM_MASK=0,ING_PORT_NUM=0,FCOE_TERMINATION_ALLOWED=0,EVEN_PARITY=0,DISCARD=0,DATA=0x38,COPY_TO_CPU=0,ARP_RARP_TERMINATION_ALLOWED=1>
+MY_STATION_TCAM.ipipe0[18]: <VLAN_ID_MASK=0,VLAN_ID=0,VALID=1,TRILL_TERMINATION_ALLOWED=0,MPLS_TERMINATION_ALLOWED=0,MIM_TERMINATION_ALLOWED=0,MASK=0x000000ffffffffffff,MAC_ADDR_MASK=0xffffffffffff,MAC_ADDR=0x80a23581caba,KEY=0x00000080a23581caba,IPV6_TERMINATION_ALLOWED=1,IPV4_TERMINATION_ALLOWED=1,ING_PORT_NUM_MASK=0,ING_PORT_NUM=0,FCOE_TERMINATION_ALLOWED=0,EVEN_PARITY=0,DISCARD=0,DATA=0x38,COPY_TO_CPU=0,ARP_RARP_TERMINATION_ALLOWED=1>
+MY_STATION_TCAM.ipipe0[19]: <VLAN_ID_MASK=0,VLAN_ID=0,VALID=1,TRILL_TERMINATION_ALLOWED=0,MPLS_TERMINATION_ALLOWED=0,MIM_TERMINATION_ALLOWED=0,MASK=0x000000ffffffffffff,MAC_ADDR_MASK=0xffffffffffff,MAC_ADDR=0x80a23581cabb,KEY=0x00000080a23581cabb,IPV6_TERMINATION_ALLOWED=1,IPV4_TERMINATION_ALLOWED=1,ING_PORT_NUM_MASK=0,ING_PORT_NUM=0,FCOE_TERMINATION_ALLOWED=0,EVEN_PARITY=0,DISCARD=0,DATA=0x38,COPY_TO_CPU=0,ARP_RARP_TERMINATION_ALLOWED=1>
+MY_STATION_TCAM.ipipe0[20]: <VLAN_ID_MASK=0,VLAN_ID=0,VALID=1,TRILL_TERMINATION_ALLOWED=0,MPLS_TERMINATION_ALLOWED=0,MIM_TERMINATION_ALLOWED=0,MASK=0x000000ffffffffffff,MAC_ADDR_MASK=0xffffffffffff,MAC_ADDR=0x80a23581cabc,KEY=0x00000080a23581cabc,IPV6_TERMINATION_ALLOWED=1,IPV4_TERMINATION_ALLOWED=1,ING_PORT_NUM_MASK=0,ING_PORT_NUM=0,FCOE_TERMINATION_ALLOWED=0,EVEN_PARITY=0,DISCARD=0,DATA=0x38,COPY_TO_CPU=0,ARP_RARP_TERMINATION_ALLOWED=1>
+MY_STATION_TCAM.ipipe0[21]: <VLAN_ID_MASK=0,VLAN_ID=0,VALID=1,TRILL_TERMINATION_ALLOWED=0,MPLS_TERMINATION_ALLOWED=0,MIM_TERMINATION_ALLOWED=0,MASK=0x000000ffffffffffff,MAC_ADDR_MASK=0xffffffffffff,MAC_ADDR=0x80a23581cabd,KEY=0x00000080a23581cabd,IPV6_TERMINATION_ALLOWED=1,IPV4_TERMINATION_ALLOWED=1,ING_PORT_NUM_MASK=0,ING_PORT_NUM=0,FCOE_TERMINATION_ALLOWED=0,EVEN_PARITY=0,DISCARD=0,DATA=0x38,COPY_TO_CPU=0,ARP_RARP_TERMINATION_ALLOWED=1>
+MY_STATION_TCAM.ipipe0[22]: <VLAN_ID_MASK=0,VLAN_ID=0,VALID=1,TRILL_TERMINATION_ALLOWED=0,MPLS_TERMINATION_ALLOWED=0,MIM_TERMINATION_ALLOWED=0,MASK=0x000000ffffffffffff,MAC_ADDR_MASK=0xffffffffffff,MAC_ADDR=0x80a23581cabe,KEY=0x00000080a23581cabe,IPV6_TERMINATION_ALLOWED=1,IPV4_TERMINATION_ALLOWED=1,ING_PORT_NUM_MASK=0,ING_PORT_NUM=0,FCOE_TERMINATION_ALLOWED=0,EVEN_PARITY=0,DISCARD=0,DATA=0x38,COPY_TO_CPU=0,ARP_RARP_TERMINATION_ALLOWED=1>
+MY_STATION_TCAM.ipipe0[23]: <VLAN_ID_MASK=0,VLAN_ID=0,VALID=1,TRILL_TERMINATION_ALLOWED=0,MPLS_TERMINATION_ALLOWED=0,MIM_TERMINATION_ALLOWED=0,MASK=0x000000ffffffffffff,MAC_ADDR_MASK=0xffffffffffff,MAC_ADDR=0x80a23581cabf,KEY=0x00000080a23581cabf,IPV6_TERMINATION_ALLOWED=1,IPV4_TERMINATION_ALLOWED=1,ING_PORT_NUM_MASK=0,ING_PORT_NUM=0,FCOE_TERMINATION_ALLOWED=0,EVEN_PARITY=0,DISCARD=0,DATA=0x38,COPY_TO_CPU=0,ARP_RARP_TERMINATION_ALLOWED=1>
+MY_STATION_TCAM.ipipe0[24]: <VLAN_ID_MASK=0,VLAN_ID=0,VALID=1,TRILL_TERMINATION_ALLOWED=0,MPLS_TERMINATION_ALLOWED=0,MIM_TERMINATION_ALLOWED=0,MASK=0x000000ffffffffffff,MAC_ADDR_MASK=0xffffffffffff,MAC_ADDR=0x80a23581cac0,KEY=0x00000080a23581cac0,IPV6_TERMINATION_ALLOWED=1,IPV4_TERMINATION_ALLOWED=1,ING_PORT_NUM_MASK=0,ING_PORT_NUM=0,FCOE_TERMINATION_ALLOWED=0,EVEN_PARITY=0,DISCARD=0,DATA=0x38,COPY_TO_CPU=0,ARP_RARP_TERMINATION_ALLOWED=1>
+MY_STATION_TCAM.ipipe0[25]: <VLAN_ID_MASK=0,VLAN_ID=0,VALID=1,TRILL_TERMINATION_ALLOWED=0,MPLS_TERMINATION_ALLOWED=0,MIM_TERMINATION_ALLOWED=0,MASK=0x000000ffffffffffff,MAC_ADDR_MASK=0xffffffffffff,MAC_ADDR=0x80a23581cac1,KEY=0x00000080a23581cac1,IPV6_TERMINATION_ALLOWED=1,IPV4_TERMINATION_ALLOWED=1,ING_PORT_NUM_MASK=0,ING_PORT_NUM=0,FCOE_TERMINATION_ALLOWED=0,EVEN_PARITY=0,DISCARD=0,DATA=0x38,COPY_TO_CPU=0,ARP_RARP_TERMINATION_ALLOWED=1>
+MY_STATION_TCAM.ipipe0[26]: <VLAN_ID_MASK=0,VLAN_ID=0,VALID=1,TRILL_TERMINATION_ALLOWED=0,MPLS_TERMINATION_ALLOWED=0,MIM_TERMINATION_ALLOWED=0,MASK=0x000000ffffffffffff,MAC_ADDR_MASK=0xffffffffffff,MAC_ADDR=0x80a23581cac2,KEY=0x00000080a23581cac2,IPV6_TERMINATION_ALLOWED=1,IPV4_TERMINATION_ALLOWED=1,ING_PORT_NUM_MASK=0,ING_PORT_NUM=0,FCOE_TERMINATION_ALLOWED=0,EVEN_PARITY=0,DISCARD=0,DATA=0x38,COPY_TO_CPU=0,ARP_RARP_TERMINATION_ALLOWED=1>
+
+############################################################
+## 2. Trap table - which protocols/conditions punt to CPU
+############################################################
+
+==== Egress trap config ====
+Syntax error parsing "RX_TRAP_TYPE"
+
+==== Reserved MAC trap (BPDU/LLDP/LACP) ====
+Syntax error parsing "RXLLDP_TRAP_CONTROL"
+Syntax error parsing "LLDP_RX_PARSER_CTRL"
+
+==== Listing all trap reasons ====
+Unknown command: trap
+Usage (RX): Parameters: <count>
+	Wait for and received <count> packets from the CMIC. This command
+	is mostly obsolete, and PacketWatcher should be used.
+SHOW: Error: Invalid option trap
+
+############################################################
+## 3. Class-of-Service (CoS) queues - DMA channel mapping
+############################################################
+
+==== CMIC RX COS control ====
+Syntax error parsing "CMIC_CMC_COS_CTRL_RX_0"
+Syntax error parsing "CMIC_CMC_COS_CTRL_RX_1"
+
+==== CPU CoS queue counters ====
+MC_PERQ_PKT(0).cpu0	:		  1,689 	       +637
+MC_PERQ_PKT(2).cpu0	:		    505 	       +190
+MC_PERQ_PKT(6).cpu0	:		    738 	       +280
+MC_PERQ_BYTE(0).cpu0	:		145,278 	    +54,782
+MC_PERQ_BYTE(2).cpu0	:		 52,972 	    +19,988
+MC_PERQ_BYTE(6).cpu0	:		134,562 	    +51,140
+
+==== CPU port = port 0 ====
+ERROR: Invalid block specified 
+
+############################################################
+## 4. CPU port mappings (where CPU connects to fabric)
+############################################################
+
+==== CPU port info ====
+Syntax error parsing "cpu"
+Syntax error parsing "cmic"
+
+==== iPipe egress to CPU ====
+Syntax error parsing "CPU_PORT_AS_DST_FOR_HIGIG_PORTS"
+Syntax error parsing "ING_CPU_TRAP_CONTROL"
+
+############################################################
+## 5. DMA Descriptor Buffers (DCBs) - the actual punt mechanism
+############################################################
+
+==== CMIC packet DMA channels ====
+Syntax error parsing "CMIC_CMC_PKT_DMA_DESC_0"
+Syntax error parsing "CMIC_CMC_PKT_DMA_DESC_1"
+Syntax error parsing "CMIC_CMC_PKT_DMA_DESC_2"
+Syntax error parsing "CMIC_CMC_PKT_DMA_DESC_3"
+
+==== DMA control + status ====
+Syntax error parsing "CMIC_CMC_DMA_CTRL"
+Syntax error parsing "CMIC_CMC_DMA_STAT"
+
+==== RX buffer thresholds ====
+Syntax error parsing "CMIC_RXBUF_PKT_BUFFER_CONFIG"
+
+############################################################
+## 6. switchd RX path - file descriptors and netlinks
+############################################################
+switchd opens 52 TUN fds:
+75
+TUN fds:
+52
+BDE fd:
+lrwx------ 1 root root 64 Jun  1 13:43 14 -> /dev/linux-user-bde
+uio fds (if any):
+lrwx------ 1 root root 64 Jun  1 13:43 10 -> socket:[28971]
+lrwx------ 1 root root 64 Jun  1 13:43 11 -> socket:[28972]
+lrwx------ 1 root root 64 Jun  1 13:43 12 -> socket:[28974]
+lrwx------ 1 root root 64 Jun  1 13:43 13 -> socket:[28975]
+lrwx------ 1 root root 64 Jun  1 13:43 16 -> socket:[28976]
+lrwx------ 1 root root 64 Jun  1 13:43 6 -> socket:[28967]
+lrwx------ 1 root root 64 Jun  1 13:43 7 -> socket:[28968]
+lrwx------ 1 root root 64 Jun  1 13:43 73 -> socket:[29971]
+lrwx------ 1 root root 64 Jun  1 13:43 74 -> socket:[29972]
+lrwx------ 1 root root 64 Jun  1 13:43 75 -> socket:[29973]
+lrwx------ 1 root root 64 Jun  1 13:43 8 -> socket:[28969]
+lrwx------ 1 root root 64 Jun  1 13:43 9 -> socket:[28970]
+
+############################################################
+## 7. Active strace on switchd to capture punt loop (5 seconds)
+############################################################
+Attaching strace to switchd to see punt loop...
+Process 14242 attached - interrupt to quit
+Process 14242 detached
+% time     seconds  usecs/call     calls    errors syscall
+------ ----------- ----------- --------- --------- ----------------
+ 99.58    0.196000        4261        46           select
+  0.42    0.000817           1      1315           ioctl
+  0.00    0.000000           0         6           sendmsg
+------ ----------- ----------- --------- --------- ----------------
+100.00    0.196817                  1367           total
+
+############################################################
+## 8. ACL/setclass mapping (Linux iptables CLASS -> BCM COS)
+############################################################
+
+==== Linux iptables classifying control traffic ====
+ 2832  232K SETCLASS   89   --  swp+   *       0.0.0.0/0            0.0.0.0/0            SETCLASS  class:7
+    0     0 SETCLASS   tcp  --  swp+   *       0.0.0.0/0            0.0.0.0/0            tcp dpt:179 SETCLASS  class:7
+    0     0 SETCLASS   tcp  --  swp+   *       0.0.0.0/0            0.0.0.0/0            tcp spt:179 SETCLASS  class:7
+    0     0 SETCLASS   tcp  --  swp+   *       0.0.0.0/0            0.0.0.0/0            tcp dpt:5342 SETCLASS  class:7
+    0     0 SETCLASS   tcp  --  swp+   *       0.0.0.0/0            0.0.0.0/0            tcp spt:5342 SETCLASS  class:7
+  502 51204 SETCLASS   icmp --  swp+   *       0.0.0.0/0            0.0.0.0/0            SETCLASS  class:2
+    0     0 SETCLASS   udp  --  swp+   *       0.0.0.0/0            0.0.0.0/0            udp dpts:67:68 SETCLASS  class:2
+    0     0 SETCLASS   tcp  --  swp+   *       0.0.0.0/0            0.0.0.0/0            tcp dpts:67:68 SETCLASS  class:2
+    0     0 SETCLASS   2    --  swp+   *       0.0.0.0/0            0.0.0.0/0            SETCLASS  class:6
+
+==== ebtables classifying L2 control ====
+-d BGA -i swp+ -j setclass --class 7 
+-d 1:80:c2:0:0:2 -i swp+ -j setclass --class 7 
+-d 1:80:c2:0:0:e -i swp+ -j setclass --class 6 
+-d 1:0:c:cc:cc:cc -i swp+ -j setclass --class 6 
+-p ARP -i swp+ -j setclass --class 2 
+-d 1:0:c:cc:cc:cd -i swp+ -j setclass --class 7 
+-i swp+ -j setclass --class 0 
+
+############################################################
+## 9. Look at the configd rc.datapath_0 for trap setup
+############################################################
+Searching rc.datapath_0 for trap and cpu setup...
+# cpu queue 0 minimum limit: 307
+# cpu queue 1 minimum limit: 307
+# cpu queue 3 minimum limit: 307
+# cpu queue 4 minimum limit: 307
+# cpu queue 5 minimum limit: 307
+# cpu queue 6 minimum limit: 307
+# cpu queue 0 shared limit: 2073
+# cpu queue 1 shared limit: 2073
+# cpu queue 3 shared limit: 2073
+# cpu queue 4 shared limit: 2073
+# cpu queue 5 shared limit: 2073
+# cpu queue 6 shared limit: 2073
+# cpu queue 7 shared limit: unlimited
+# cpu queue 2 shared limit: unlimited
+setreg prio2cos_llfc0 mc_cos0_5_bmp=0 uc_cos0_10_bmp=0
+setreg pg_min_cell[0].cpu0 45
+setreg pg_min_cell[2].cpu0 45
+setreg pg_min_cell[7].cpu0 45
+# Enable L3 MTU failure packets to go to CPU
+modreg cpu_control_1 l3_mtu_fail_tocpu=1
+# Enable IP packets with option to go to CPU
+modreg cpu_control_1 l3_slowpath_tocpu=1
+# Enable COPY_TO_CPU for L3 destination miss
+modreg cpu_control_1 v4l3dstmiss_tocpu=1
+modreg cpu_control_1 v6l3dstmiss_tocpu=1
+# entry bcm_l2_addr_delete failures b'cos of the mod fifo overflow.
+setreg ing_cos_mode queue_mode=0 cos_mode=0
+setreg cos_mode_x 0
+setreg cos_mode_y 0
+write cos_map_sel 0 67 0
+
+############################################################
+## 10. Packet to CPU flow trap reasons (BCM trap codes)
+############################################################
+Unknown command: trap
+
+############################################################
+## 11. switchd PID + binary info
+############################################################
+PID: 14242
+-rwxr-xr-x 1 root root 31677516 Jan  9  2015 /usr/sbin/switchd
+/usr/sbin/switchd: ELF 32-bit MSB executable, PowerPC or cisco 4500, version 1 (SYSV), dynamically linked (uses shared libs), for GNU/Linux 2.6.26, with unknown capability 0x41000000 = 0x13676e75, with unknown capability 0x10000 = 0xb0401, stripped
+Open netlink sockets:
+sk       Eth Pid    Groups   Rmem     Wmem     Dump     Locks     Drops     Inode
+ef11b600 0   -4097  00000000 0        0        00000000 2        0        3308    
+edc59e00 0   14242  00000000 0        0        00000000 2        0        28967   
+eee69800 0   31680  00000111 0        0        00000000 2        0        68079   
+ef11b000 0   1269   00000001 0        0        00000000 2        0        3307    
+edc59400 0   8402850 02004445 0        0        00000000 2        0        28969   
+ef805000 0   0      00000000 0        0        00000000 2        0        3       
+edc59c00 0   12597154 00000000 0        0        00000000 2        0        28970   
+ef0ad400 4   0      00000000 0        0        00000000 2        0        2606    
+ef8fb200 9   0      00000000 0        0        00000000 2        0        2537    
+
+############################################################
+## 12. CMIC_RX_COS_VALID_BMP - which CoS queues are active for RX
+############################################################
+Syntax error parsing "CMIC_CMC_COS_CTRL_RX_0"
+Syntax error parsing "CMIC_CMC_COS_CTRL_RX_1"
+
+############################################################
+## 13. The L3_HOST_ENTRY / IP host table - for ARP punt
+############################################################
+Unit 0, free L3 table entries: 16380
+Entry VRF IP address       Mac Address           INTF MOD PORT    CLASS HIT
+1     0    10.1.1.1         00:00:00:00:00:00  100002    0    0         0 n
+2     0    10.101.101.2     00:00:00:00:00:00  100003    0    0         0 n
+3     0    10.101.101.9     00:00:00:00:00:00  100004    0    0         0 n
+4     0    10.1.1.30        00:00:00:00:00:00  100002    0    0         0 n
+Unit 0, Total Number of IPv4 routes: 18
+#     VRF     Net addr             Next Hop Mac        INTF MODID PORT PRIO CLASS HIT VLAN
+2560  0        10.1.1.0/32          00:00:00:00:00:00 100002    0     0     0    2 n
+2560  0        10.1.1.212/32        00:00:00:00:00:00 100002    0     0     0    2 n
+2561  0        10.1.1.255/32        00:00:00:00:00:00 100002    0     0     0    2 n
+2561  0        10.49.49.3/32        00:00:00:00:00:00 100002    0     0     0    2 n
+2562  0        10.49.49.1/32        00:00:00:00:00:00 100002    0     0     0    2 n
+2562  0        10.49.49.0/32        00:00:00:00:00:00 100002    0     0     0    2 n
+2563  0        10.101.101.8/32      00:00:00:00:00:00 100002    0     0     0    2 n
+2563  0        10.101.101.10/32     00:00:00:00:00:00 100002    0     0     0    2 y
+2564  0        10.101.101.15/32     00:00:00:00:00:00 100002    0     0     0    2 n
+2564  0        10.101.101.241/32    00:00:00:00:00:00 100002    0     0     0    2 n
+2565  0        10.101.101.0/32      00:00:00:00:00:00 100002    0     0     0    2 n
+2565  0        10.101.101.1/32      00:00:00:00:00:00 100002    0     0     0    2 y
+2566  0        10.101.101.7/32      00:00:00:00:00:00 100002    0     0     0    2 n
+2691  0        10.49.49.0/30        00:00:00:00:00:00 100002    0     0     0    0 n
+2817  0        10.101.101.8/29      00:00:00:00:00:00 100002    0     0     0    0 n
+2817  0        10.101.101.0/29      00:00:00:00:00:00 100002    0     0     0    0 n
+3072  0        10.1.1.0/24          00:00:00:00:00:00 100002    0     0     0    0 n
+4096  0        0.0.0.0/0            00:00:00:00:00:00 100002    0     0     0    0 n
+
+############################################################
+## 14. cpu_port = port 0 - check what's bound to it
+############################################################
+LINKscan: Linkscan enabled
+LINKscan:   Software polling interval: 250000 usec
+LINKscan:   Software Port BitMap 0x000000000000000000000000000000000000000000000000001ffffffffffffe: xe
+LINKscan:   Hardware Port BitMap 0x0000000000000000000000000000000000000000000000000000000000000000: none
+LINKscan:   Disabled Port BitMap 0x0000000000000000000000000000000000000000000000000000000000000000: none
+######### PUNT PATH ANALYSIS COMPLETE #########
