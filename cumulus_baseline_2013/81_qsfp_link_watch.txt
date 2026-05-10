@@ -1,0 +1,27 @@
+Warning: Permanently added '10.1.1.212' (ECDSA) to the list of known hosts.
+[sudo] password for cumulus: === sleep 30s and watch link ===
+Sat Jun  1 13:52:51 UTC 2013
+swp49:c=0,o=down  swp50:c=0,o=down  swp51:c=0,o=down  swp52:c=0,o=down  
+Sat Jun  1 13:52:57 UTC 2013
+swp49:c=0,o=down  swp50:c=0,o=down  swp51:c=0,o=down  swp52:c=0,o=down  
+Sat Jun  1 13:53:02 UTC 2013
+swp49:c=0,o=down  swp50:c=0,o=down  swp51:c=0,o=down  swp52:c=0,o=down  
+Sat Jun  1 13:53:07 UTC 2013
+swp49:c=0,o=down  swp50:c=0,o=down  swp51:c=0,o=down  swp52:c=0,o=down  
+Sat Jun  1 13:53:12 UTC 2013
+swp49:c=0,o=down  swp50:c=0,o=down  swp51:c=0,o=down  swp52:c=0,o=down  
+Sat Jun  1 13:53:17 UTC 2013
+swp49:c=0,o=down  swp50:c=0,o=down  swp51:c=0,o=down  swp52:c=0,o=down  
+=== bounce QSFP ports ===
+=== wait 30s after bounce ===
+swp49:c=0,o=down  swp50:c=0,o=down  swp51:c=0,o=down  swp52:c=0,o=down  
+swp49:c=0,o=down  swp50:c=0,o=down  swp51:c=0,o=down  swp52:c=0,o=down  
+swp49:c=0,o=down  swp50:c=0,o=down  swp51:c=0,o=down  swp52:c=0,o=down  
+swp49:c=0,o=down  swp50:c=0,o=down  swp51:c=0,o=down  swp52:c=0,o=down  
+swp49:c=0,o=down  swp50:c=0,o=down  swp51:c=0,o=down  swp52:c=0,o=down  
+swp49:c=0,o=down  swp50:c=0,o=down  swp51:c=0,o=down  swp52:c=0,o=down  
+=== ps after bounce ===
+      xe48  down   40G  FD   SW  No   Forward          None    F    KR4  1518 
+      xe49  down   40G  FD   SW  No   Forward          None    F    KR4  1518 
+      xe50  down   40G  FD   SW  No   Forward          None    F    KR4  1518 
+      xe51  down   40G  FD   SW  No   Forward          None    F    KR4  1518 

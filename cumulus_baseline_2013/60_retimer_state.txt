@@ -1,0 +1,539 @@
+Warning: Permanently added '10.1.1.212' (ECDSA) to the list of known hosts.
+[sudo] password for cumulus: === retimer driver inspection ===
+18-0027
+19-0027
+20-0027
+21-0027
+22-0027
+23-0027
+24-0027
+25-0027
+30-0027
+31-0027
+32-0027
+33-0027
+38-0027
+39-0027
+40-0027
+41-0027
+46-0027
+47-0027
+48-0027
+49-0027
+54-0027
+55-0027
+56-0027
+57-0027
+62-0027
+63-0027
+64-0027
+65-0027
+66-0027
+67-0027
+68-0027
+69-0027
+module
+uevent
+===
+total 0
+drwxr-xr-x 3 root root    0 May 10  2026 .
+drwxr-xr-x 5 root root    0 May 10  2026 ..
+-rw-r--r-- 1 root root 4096 Jun  1 13:39 adapt_eq_sm
+-rw-r--r-- 1 root root 4096 May 10  2026 cdr_rst
+-rw-r--r-- 1 root root 4096 May 10  2026 channels
+lrwxrwxrwx 1 root root    0 Jun  1 13:39 driver -> ../../../../../../bus/i2c/drivers/ds100df410
+-rw-r--r-- 1 root root 4096 Jun  1 13:39 drv_sel_vod
+-r--r--r-- 1 root root 4096 Jun  1 13:39 modalias
+-r--r--r-- 1 root root 4096 Jun  1 13:27 name
+-rw-r--r-- 1 root root 4096 Jun  1 13:39 pfd_prbs_dfe
+drwxr-xr-x 3 root root    0 May 10  2026 retimer_dev
+lrwxrwxrwx 1 root root    0 Jun  1 13:39 subsystem -> ../../../../../../bus/i2c
+-rw-r--r-- 1 root root 4096 May 10  2026 tap_dem
+-rw-r--r-- 1 root root 4096 Jun  1 13:39 uevent
+-rw-r--r-- 1 root root 4096 May 10  2026 veo_clk_cdr_cap
+=== any sysfs attrs ===
+-- /sys/bus/i2c/devices/18-0027/ --
+adapt_eq_sm
+cdr_rst
+channels
+driver
+drv_sel_vod
+modalias
+name
+pfd_prbs_dfe
+retimer_dev
+subsystem
+tap_dem
+uevent
+veo_clk_cdr_cap
+-- /sys/bus/i2c/devices/19-0027/ --
+adapt_eq_sm
+cdr_rst
+channels
+driver
+drv_sel_vod
+modalias
+name
+pfd_prbs_dfe
+retimer_dev
+subsystem
+tap_dem
+uevent
+veo_clk_cdr_cap
+-- /sys/bus/i2c/devices/20-0027/ --
+adapt_eq_sm
+cdr_rst
+channels
+driver
+drv_sel_vod
+modalias
+name
+pfd_prbs_dfe
+retimer_dev
+subsystem
+tap_dem
+uevent
+veo_clk_cdr_cap
+-- /sys/bus/i2c/devices/21-0027/ --
+adapt_eq_sm
+cdr_rst
+channels
+driver
+drv_sel_vod
+modalias
+name
+pfd_prbs_dfe
+retimer_dev
+subsystem
+tap_dem
+uevent
+veo_clk_cdr_cap
+-- /sys/bus/i2c/devices/22-0027/ --
+adapt_eq_sm
+cdr_rst
+channels
+driver
+drv_sel_vod
+modalias
+name
+pfd_prbs_dfe
+retimer_dev
+subsystem
+tap_dem
+uevent
+veo_clk_cdr_cap
+-- /sys/bus/i2c/devices/23-0027/ --
+adapt_eq_sm
+cdr_rst
+channels
+driver
+drv_sel_vod
+modalias
+name
+pfd_prbs_dfe
+retimer_dev
+subsystem
+tap_dem
+uevent
+veo_clk_cdr_cap
+-- /sys/bus/i2c/devices/24-0027/ --
+adapt_eq_sm
+cdr_rst
+channels
+driver
+drv_sel_vod
+modalias
+name
+pfd_prbs_dfe
+retimer_dev
+subsystem
+tap_dem
+uevent
+veo_clk_cdr_cap
+-- /sys/bus/i2c/devices/25-0027/ --
+adapt_eq_sm
+cdr_rst
+channels
+driver
+drv_sel_vod
+modalias
+name
+pfd_prbs_dfe
+retimer_dev
+subsystem
+tap_dem
+uevent
+veo_clk_cdr_cap
+-- /sys/bus/i2c/devices/30-0027/ --
+adapt_eq_sm
+cdr_rst
+channels
+driver
+drv_sel_vod
+modalias
+name
+pfd_prbs_dfe
+retimer_dev
+subsystem
+tap_dem
+uevent
+veo_clk_cdr_cap
+-- /sys/bus/i2c/devices/31-0027/ --
+adapt_eq_sm
+cdr_rst
+channels
+driver
+drv_sel_vod
+modalias
+name
+pfd_prbs_dfe
+retimer_dev
+subsystem
+tap_dem
+uevent
+veo_clk_cdr_cap
+-- /sys/bus/i2c/devices/32-0027/ --
+adapt_eq_sm
+cdr_rst
+channels
+driver
+drv_sel_vod
+modalias
+name
+pfd_prbs_dfe
+retimer_dev
+subsystem
+tap_dem
+uevent
+veo_clk_cdr_cap
+-- /sys/bus/i2c/devices/33-0027/ --
+adapt_eq_sm
+cdr_rst
+channels
+driver
+drv_sel_vod
+modalias
+name
+pfd_prbs_dfe
+retimer_dev
+subsystem
+tap_dem
+uevent
+veo_clk_cdr_cap
+-- /sys/bus/i2c/devices/38-0027/ --
+adapt_eq_sm
+cdr_rst
+channels
+driver
+drv_sel_vod
+modalias
+name
+pfd_prbs_dfe
+retimer_dev
+subsystem
+tap_dem
+uevent
+veo_clk_cdr_cap
+-- /sys/bus/i2c/devices/39-0027/ --
+adapt_eq_sm
+cdr_rst
+channels
+driver
+drv_sel_vod
+modalias
+name
+pfd_prbs_dfe
+retimer_dev
+subsystem
+tap_dem
+uevent
+veo_clk_cdr_cap
+-- /sys/bus/i2c/devices/40-0027/ --
+adapt_eq_sm
+cdr_rst
+channels
+driver
+drv_sel_vod
+modalias
+name
+pfd_prbs_dfe
+retimer_dev
+subsystem
+tap_dem
+uevent
+veo_clk_cdr_cap
+-- /sys/bus/i2c/devices/41-0027/ --
+adapt_eq_sm
+cdr_rst
+channels
+driver
+drv_sel_vod
+modalias
+name
+pfd_prbs_dfe
+retimer_dev
+subsystem
+tap_dem
+uevent
+veo_clk_cdr_cap
+-- /sys/bus/i2c/devices/46-0027/ --
+adapt_eq_sm
+cdr_rst
+channels
+driver
+drv_sel_vod
+modalias
+name
+pfd_prbs_dfe
+retimer_dev
+subsystem
+tap_dem
+uevent
+veo_clk_cdr_cap
+-- /sys/bus/i2c/devices/47-0027/ --
+adapt_eq_sm
+cdr_rst
+channels
+driver
+drv_sel_vod
+modalias
+name
+pfd_prbs_dfe
+retimer_dev
+subsystem
+tap_dem
+uevent
+veo_clk_cdr_cap
+-- /sys/bus/i2c/devices/48-0027/ --
+adapt_eq_sm
+cdr_rst
+channels
+driver
+drv_sel_vod
+modalias
+name
+pfd_prbs_dfe
+retimer_dev
+subsystem
+tap_dem
+uevent
+veo_clk_cdr_cap
+-- /sys/bus/i2c/devices/49-0027/ --
+adapt_eq_sm
+cdr_rst
+channels
+driver
+drv_sel_vod
+modalias
+name
+pfd_prbs_dfe
+retimer_dev
+subsystem
+tap_dem
+uevent
+veo_clk_cdr_cap
+-- /sys/bus/i2c/devices/54-0027/ --
+adapt_eq_sm
+cdr_rst
+channels
+driver
+drv_sel_vod
+modalias
+name
+pfd_prbs_dfe
+retimer_dev
+subsystem
+tap_dem
+uevent
+veo_clk_cdr_cap
+-- /sys/bus/i2c/devices/55-0027/ --
+adapt_eq_sm
+cdr_rst
+channels
+driver
+drv_sel_vod
+modalias
+name
+pfd_prbs_dfe
+retimer_dev
+subsystem
+tap_dem
+uevent
+veo_clk_cdr_cap
+-- /sys/bus/i2c/devices/56-0027/ --
+adapt_eq_sm
+cdr_rst
+channels
+driver
+drv_sel_vod
+modalias
+name
+pfd_prbs_dfe
+retimer_dev
+subsystem
+tap_dem
+uevent
+veo_clk_cdr_cap
+-- /sys/bus/i2c/devices/57-0027/ --
+adapt_eq_sm
+cdr_rst
+channels
+driver
+drv_sel_vod
+modalias
+name
+pfd_prbs_dfe
+retimer_dev
+subsystem
+tap_dem
+uevent
+veo_clk_cdr_cap
+-- /sys/bus/i2c/devices/62-0027/ --
+adapt_eq_sm
+cdr_rst
+channels
+driver
+drv_sel_vod
+modalias
+name
+pfd_prbs_dfe
+retimer_dev
+subsystem
+tap_dem
+uevent
+veo_clk_cdr_cap
+-- /sys/bus/i2c/devices/63-0027/ --
+adapt_eq_sm
+cdr_rst
+channels
+driver
+drv_sel_vod
+modalias
+name
+pfd_prbs_dfe
+retimer_dev
+subsystem
+tap_dem
+uevent
+veo_clk_cdr_cap
+-- /sys/bus/i2c/devices/64-0027/ --
+adapt_eq_sm
+cdr_rst
+channels
+driver
+drv_sel_vod
+modalias
+name
+pfd_prbs_dfe
+retimer_dev
+subsystem
+tap_dem
+uevent
+veo_clk_cdr_cap
+-- /sys/bus/i2c/devices/65-0027/ --
+adapt_eq_sm
+cdr_rst
+channels
+driver
+drv_sel_vod
+modalias
+name
+pfd_prbs_dfe
+retimer_dev
+subsystem
+tap_dem
+uevent
+veo_clk_cdr_cap
+-- /sys/bus/i2c/devices/66-0027/ --
+adapt_eq_sm
+cdr_rst
+channels
+driver
+drv_sel_vod
+modalias
+name
+pfd_prbs_dfe
+retimer_dev
+subsystem
+tap_dem
+uevent
+veo_clk_cdr_cap
+-- /sys/bus/i2c/devices/67-0027/ --
+adapt_eq_sm
+cdr_rst
+channels
+driver
+drv_sel_vod
+modalias
+name
+pfd_prbs_dfe
+retimer_dev
+subsystem
+tap_dem
+uevent
+veo_clk_cdr_cap
+-- /sys/bus/i2c/devices/68-0027/ --
+adapt_eq_sm
+cdr_rst
+channels
+driver
+drv_sel_vod
+modalias
+name
+pfd_prbs_dfe
+retimer_dev
+subsystem
+tap_dem
+uevent
+veo_clk_cdr_cap
+-- /sys/bus/i2c/devices/69-0027/ --
+adapt_eq_sm
+cdr_rst
+channels
+driver
+drv_sel_vod
+modalias
+name
+pfd_prbs_dfe
+retimer_dev
+subsystem
+tap_dem
+uevent
+veo_clk_cdr_cap
+=== try direct register read via i2cget after unbind ===
+--- bus 18 retimer 0x27 ---
+reg 0x00 = Error: Could not open file `/dev/i2c-18' or `/dev/i2c/18': No such file or directory
+reg 0x01 = Error: Could not open file `/dev/i2c-18' or `/dev/i2c/18': No such file or directory
+reg 0x02 = Error: Could not open file `/dev/i2c-18' or `/dev/i2c/18': No such file or directory
+reg 0x03 = Error: Could not open file `/dev/i2c-18' or `/dev/i2c/18': No such file or directory
+reg 0xfc = Error: Could not open file `/dev/i2c-18' or `/dev/i2c/18': No such file or directory
+reg 0xfd = Error: Could not open file `/dev/i2c-18' or `/dev/i2c/18': No such file or directory
+reg 0xfe = Error: Could not open file `/dev/i2c-18' or `/dev/i2c/18': No such file or directory
+reg 0xff = Error: Could not open file `/dev/i2c-18' or `/dev/i2c/18': No such file or directory
+--- bus 19 retimer 0x27 ---
+reg 0x00 = Error: Could not open file `/dev/i2c-19' or `/dev/i2c/19': No such file or directory
+reg 0x01 = Error: Could not open file `/dev/i2c-19' or `/dev/i2c/19': No such file or directory
+reg 0x02 = Error: Could not open file `/dev/i2c-19' or `/dev/i2c/19': No such file or directory
+reg 0x03 = Error: Could not open file `/dev/i2c-19' or `/dev/i2c/19': No such file or directory
+reg 0xfc = Error: Could not open file `/dev/i2c-19' or `/dev/i2c/19': No such file or directory
+reg 0xfd = Error: Could not open file `/dev/i2c-19' or `/dev/i2c/19': No such file or directory
+reg 0xfe = Error: Could not open file `/dev/i2c-19' or `/dev/i2c/19': No such file or directory
+reg 0xff = Error: Could not open file `/dev/i2c-19' or `/dev/i2c/19': No such file or directory
+--- bus 20 retimer 0x27 ---
+reg 0x00 = Error: Could not open file `/dev/i2c-20' or `/dev/i2c/20': No such file or directory
+reg 0x01 = Error: Could not open file `/dev/i2c-20' or `/dev/i2c/20': No such file or directory
+reg 0x02 = Error: Could not open file `/dev/i2c-20' or `/dev/i2c/20': No such file or directory
+reg 0x03 = Error: Could not open file `/dev/i2c-20' or `/dev/i2c/20': No such file or directory
+reg 0xfc = Error: Could not open file `/dev/i2c-20' or `/dev/i2c/20': No such file or directory
+reg 0xfd = Error: Could not open file `/dev/i2c-20' or `/dev/i2c/20': No such file or directory
+reg 0xfe = Error: Could not open file `/dev/i2c-20' or `/dev/i2c/20': No such file or directory
+reg 0xff = Error: Could not open file `/dev/i2c-20' or `/dev/i2c/20': No such file or directory
+--- bus 21 retimer 0x27 ---
+reg 0x00 = Error: Could not open file `/dev/i2c-21' or `/dev/i2c/21': No such file or directory
+reg 0x01 = Error: Could not open file `/dev/i2c-21' or `/dev/i2c/21': No such file or directory
+reg 0x02 = Error: Could not open file `/dev/i2c-21' or `/dev/i2c/21': No such file or directory
+reg 0x03 = Error: Could not open file `/dev/i2c-21' or `/dev/i2c/21': No such file or directory
+reg 0xfc = Error: Could not open file `/dev/i2c-21' or `/dev/i2c/21': No such file or directory
+reg 0xfd = Error: Could not open file `/dev/i2c-21' or `/dev/i2c/21': No such file or directory
+reg 0xfe = Error: Could not open file `/dev/i2c-21' or `/dev/i2c/21': No such file or directory
+reg 0xff = Error: Could not open file `/dev/i2c-21' or `/dev/i2c/21': No such file or directory

@@ -1,0 +1,663 @@
+[sudo] password for cumulus: ===== ALL retimer device tree =====
+total 0
+drwxr-xr-x  2 root root    0 Jun  1 13:27 .
+drwxr-xr-x 16 root root    0 May 10  2026 ..
+lrwxrwxrwx  1 root root    0 Jun  1 13:27 18-0027 -> ../../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-18/18-0027
+lrwxrwxrwx  1 root root    0 Jun  1 13:27 19-0027 -> ../../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-19/19-0027
+lrwxrwxrwx  1 root root    0 Jun  1 13:27 20-0027 -> ../../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-20/20-0027
+lrwxrwxrwx  1 root root    0 Jun  1 13:27 21-0027 -> ../../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-21/21-0027
+lrwxrwxrwx  1 root root    0 Jun  1 13:27 22-0027 -> ../../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-10/i2c-22/22-0027
+lrwxrwxrwx  1 root root    0 Jun  1 13:27 23-0027 -> ../../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-10/i2c-23/23-0027
+lrwxrwxrwx  1 root root    0 Jun  1 13:27 24-0027 -> ../../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-10/i2c-24/24-0027
+lrwxrwxrwx  1 root root    0 Jun  1 13:27 25-0027 -> ../../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-10/i2c-25/25-0027
+lrwxrwxrwx  1 root root    0 Jun  1 13:27 30-0027 -> ../../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-11/i2c-30/30-0027
+lrwxrwxrwx  1 root root    0 Jun  1 13:27 31-0027 -> ../../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-11/i2c-31/31-0027
+lrwxrwxrwx  1 root root    0 Jun  1 13:27 32-0027 -> ../../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-11/i2c-32/32-0027
+lrwxrwxrwx  1 root root    0 Jun  1 13:27 33-0027 -> ../../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-11/i2c-33/33-0027
+lrwxrwxrwx  1 root root    0 Jun  1 13:27 38-0027 -> ../../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-12/i2c-38/38-0027
+lrwxrwxrwx  1 root root    0 Jun  1 13:27 39-0027 -> ../../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-12/i2c-39/39-0027
+lrwxrwxrwx  1 root root    0 Jun  1 13:27 40-0027 -> ../../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-12/i2c-40/40-0027
+lrwxrwxrwx  1 root root    0 Jun  1 13:27 41-0027 -> ../../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-12/i2c-41/41-0027
+lrwxrwxrwx  1 root root    0 Jun  1 13:27 46-0027 -> ../../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-13/i2c-46/46-0027
+lrwxrwxrwx  1 root root    0 Jun  1 13:27 47-0027 -> ../../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-13/i2c-47/47-0027
+lrwxrwxrwx  1 root root    0 Jun  1 13:27 48-0027 -> ../../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-13/i2c-48/48-0027
+lrwxrwxrwx  1 root root    0 Jun  1 13:27 49-0027 -> ../../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-13/i2c-49/49-0027
+lrwxrwxrwx  1 root root    0 Jun  1 13:27 54-0027 -> ../../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-14/i2c-54/54-0027
+lrwxrwxrwx  1 root root    0 Jun  1 13:27 55-0027 -> ../../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-14/i2c-55/55-0027
+lrwxrwxrwx  1 root root    0 Jun  1 13:27 56-0027 -> ../../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-14/i2c-56/56-0027
+lrwxrwxrwx  1 root root    0 Jun  1 13:27 57-0027 -> ../../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-14/i2c-57/57-0027
+lrwxrwxrwx  1 root root    0 Jun  1 13:27 62-0027 -> ../../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-15/i2c-62/62-0027
+lrwxrwxrwx  1 root root    0 Jun  1 13:27 63-0027 -> ../../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-15/i2c-63/63-0027
+lrwxrwxrwx  1 root root    0 Jun  1 13:27 64-0027 -> ../../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-15/i2c-64/64-0027
+lrwxrwxrwx  1 root root    0 Jun  1 13:27 65-0027 -> ../../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-15/i2c-65/65-0027
+lrwxrwxrwx  1 root root    0 Jun  1 13:27 66-0027 -> ../../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-15/i2c-66/66-0027
+lrwxrwxrwx  1 root root    0 Jun  1 13:27 67-0027 -> ../../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-15/i2c-67/67-0027
+lrwxrwxrwx  1 root root    0 Jun  1 13:27 68-0027 -> ../../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-15/i2c-68/68-0027
+lrwxrwxrwx  1 root root    0 Jun  1 13:27 69-0027 -> ../../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-15/i2c-69/69-0027
+lrwxrwxrwx  1 root root    0 Jun  1 13:27 module -> ../../../../module/ds100df410
+--w-------  1 root root 4096 Jun  1 13:27 uevent
+
+===== retimer instances =====
+/sys/bus/i2c/devices/18-0027/
+/sys/bus/i2c/devices/19-0027/
+/sys/bus/i2c/devices/20-0027/
+/sys/bus/i2c/devices/21-0027/
+/sys/bus/i2c/devices/22-0027/
+/sys/bus/i2c/devices/23-0027/
+/sys/bus/i2c/devices/24-0027/
+/sys/bus/i2c/devices/25-0027/
+/sys/bus/i2c/devices/30-0027/
+/sys/bus/i2c/devices/31-0027/
+/sys/bus/i2c/devices/32-0027/
+/sys/bus/i2c/devices/33-0027/
+/sys/bus/i2c/devices/38-0027/
+/sys/bus/i2c/devices/39-0027/
+/sys/bus/i2c/devices/40-0027/
+/sys/bus/i2c/devices/41-0027/
+/sys/bus/i2c/devices/46-0027/
+/sys/bus/i2c/devices/47-0027/
+/sys/bus/i2c/devices/48-0027/
+/sys/bus/i2c/devices/49-0027/
+/sys/bus/i2c/devices/54-0027/
+/sys/bus/i2c/devices/55-0027/
+/sys/bus/i2c/devices/56-0027/
+/sys/bus/i2c/devices/57-0027/
+/sys/bus/i2c/devices/62-0027/
+/sys/bus/i2c/devices/63-0027/
+/sys/bus/i2c/devices/64-0027/
+/sys/bus/i2c/devices/65-0027/
+/sys/bus/i2c/devices/66-0027/
+/sys/bus/i2c/devices/67-0027/
+/sys/bus/i2c/devices/68-0027/
+/sys/bus/i2c/devices/69-0027/
+
+===== per-retimer sysfs dump =====
+
+============================================================
+===== /sys/bus/i2c/devices/18-0027/
+============================================================
+adapt_eq_sm = 32|
+cdr_rst = 16|
+channels = 165|
+drv_sel_vod = 128|
+modalias = i2c:ds100df410|
+name = ds100df410|
+pfd_prbs_dfe = 233|
+tap_dem = 23|
+uevent = 
+veo_clk_cdr_cap = 1|
+
+============================================================
+===== /sys/bus/i2c/devices/19-0027/
+============================================================
+adapt_eq_sm = 32|
+cdr_rst = 16|
+channels = 165|
+drv_sel_vod = 128|
+modalias = i2c:ds100df410|
+name = ds100df410|
+pfd_prbs_dfe = 233|
+tap_dem = 23|
+uevent = 
+veo_clk_cdr_cap = 1|
+
+============================================================
+===== /sys/bus/i2c/devices/20-0027/
+============================================================
+adapt_eq_sm = 32|
+cdr_rst = 16|
+channels = 165|
+drv_sel_vod = 128|
+modalias = i2c:ds100df410|
+name = ds100df410|
+pfd_prbs_dfe = 233|
+tap_dem = 23|
+uevent = 
+veo_clk_cdr_cap = 1|
+
+============================================================
+===== /sys/bus/i2c/devices/21-0027/
+============================================================
+adapt_eq_sm = 32|
+cdr_rst = 16|
+channels = 165|
+drv_sel_vod = 128|
+modalias = i2c:ds100df410|
+name = ds100df410|
+pfd_prbs_dfe = 233|
+tap_dem = 23|
+uevent = 
+veo_clk_cdr_cap = 1|
+
+============================================================
+===== /sys/bus/i2c/devices/22-0027/
+============================================================
+adapt_eq_sm = 32|
+cdr_rst = 16|
+channels = 165|
+drv_sel_vod = 128|
+modalias = i2c:ds100df410|
+name = ds100df410|
+pfd_prbs_dfe = 233|
+tap_dem = 16|
+uevent = 
+veo_clk_cdr_cap = 1|
+
+============================================================
+===== /sys/bus/i2c/devices/23-0027/
+============================================================
+adapt_eq_sm = 32|
+cdr_rst = 16|
+channels = 165|
+drv_sel_vod = 128|
+modalias = i2c:ds100df410|
+name = ds100df410|
+pfd_prbs_dfe = 233|
+tap_dem = 16|
+uevent = 
+veo_clk_cdr_cap = 1|
+
+============================================================
+===== /sys/bus/i2c/devices/24-0027/
+============================================================
+adapt_eq_sm = 32|
+cdr_rst = 16|
+channels = 165|
+drv_sel_vod = 128|
+modalias = i2c:ds100df410|
+name = ds100df410|
+pfd_prbs_dfe = 233|
+tap_dem = 16|
+uevent = 
+veo_clk_cdr_cap = 1|
+
+============================================================
+===== /sys/bus/i2c/devices/25-0027/
+============================================================
+adapt_eq_sm = 32|
+cdr_rst = 16|
+channels = 165|
+drv_sel_vod = 128|
+modalias = i2c:ds100df410|
+name = ds100df410|
+pfd_prbs_dfe = 233|
+tap_dem = 16|
+uevent = 
+veo_clk_cdr_cap = 1|
+
+============================================================
+===== /sys/bus/i2c/devices/30-0027/
+============================================================
+adapt_eq_sm = 32|
+cdr_rst = 16|
+channels = 165|
+drv_sel_vod = 128|
+modalias = i2c:ds100df410|
+name = ds100df410|
+pfd_prbs_dfe = 233|
+tap_dem = 16|
+uevent = 
+veo_clk_cdr_cap = 1|
+
+============================================================
+===== /sys/bus/i2c/devices/31-0027/
+============================================================
+adapt_eq_sm = 32|
+cdr_rst = 16|
+channels = 165|
+drv_sel_vod = 128|
+modalias = i2c:ds100df410|
+name = ds100df410|
+pfd_prbs_dfe = 233|
+tap_dem = 16|
+uevent = 
+veo_clk_cdr_cap = 1|
+
+============================================================
+===== /sys/bus/i2c/devices/32-0027/
+============================================================
+adapt_eq_sm = 32|
+cdr_rst = 16|
+channels = 165|
+drv_sel_vod = 128|
+modalias = i2c:ds100df410|
+name = ds100df410|
+pfd_prbs_dfe = 233|
+tap_dem = 16|
+uevent = 
+veo_clk_cdr_cap = 1|
+
+============================================================
+===== /sys/bus/i2c/devices/33-0027/
+============================================================
+adapt_eq_sm = 32|
+cdr_rst = 16|
+channels = 165|
+drv_sel_vod = 128|
+modalias = i2c:ds100df410|
+name = ds100df410|
+pfd_prbs_dfe = 233|
+tap_dem = 16|
+uevent = 
+veo_clk_cdr_cap = 1|
+
+============================================================
+===== /sys/bus/i2c/devices/38-0027/
+============================================================
+adapt_eq_sm = 32|
+cdr_rst = 16|
+channels = 165|
+drv_sel_vod = 128|
+modalias = i2c:ds100df410|
+name = ds100df410|
+pfd_prbs_dfe = 233|
+tap_dem = 16|
+uevent = 
+veo_clk_cdr_cap = 1|
+
+============================================================
+===== /sys/bus/i2c/devices/39-0027/
+============================================================
+adapt_eq_sm = 32|
+cdr_rst = 16|
+channels = 165|
+drv_sel_vod = 128|
+modalias = i2c:ds100df410|
+name = ds100df410|
+pfd_prbs_dfe = 233|
+tap_dem = 16|
+uevent = 
+veo_clk_cdr_cap = 1|
+
+============================================================
+===== /sys/bus/i2c/devices/40-0027/
+============================================================
+adapt_eq_sm = 32|
+cdr_rst = 16|
+channels = 165|
+drv_sel_vod = 128|
+modalias = i2c:ds100df410|
+name = ds100df410|
+pfd_prbs_dfe = 233|
+tap_dem = 23|
+uevent = 
+veo_clk_cdr_cap = 1|
+
+============================================================
+===== /sys/bus/i2c/devices/41-0027/
+============================================================
+adapt_eq_sm = 32|
+cdr_rst = 16|
+channels = 165|
+drv_sel_vod = 128|
+modalias = i2c:ds100df410|
+name = ds100df410|
+pfd_prbs_dfe = 233|
+tap_dem = 16|
+uevent = 
+veo_clk_cdr_cap = 1|
+
+============================================================
+===== /sys/bus/i2c/devices/46-0027/
+============================================================
+adapt_eq_sm = 32|
+cdr_rst = 16|
+channels = 165|
+drv_sel_vod = 128|
+modalias = i2c:ds100df410|
+name = ds100df410|
+pfd_prbs_dfe = 233|
+tap_dem = 16|
+uevent = 
+veo_clk_cdr_cap = 1|
+
+============================================================
+===== /sys/bus/i2c/devices/47-0027/
+============================================================
+adapt_eq_sm = 32|
+cdr_rst = 16|
+channels = 165|
+drv_sel_vod = 128|
+modalias = i2c:ds100df410|
+name = ds100df410|
+pfd_prbs_dfe = 233|
+tap_dem = 16|
+uevent = 
+veo_clk_cdr_cap = 1|
+
+============================================================
+===== /sys/bus/i2c/devices/48-0027/
+============================================================
+adapt_eq_sm = 32|
+cdr_rst = 16|
+channels = 165|
+drv_sel_vod = 128|
+modalias = i2c:ds100df410|
+name = ds100df410|
+pfd_prbs_dfe = 233|
+tap_dem = 16|
+uevent = 
+veo_clk_cdr_cap = 1|
+
+============================================================
+===== /sys/bus/i2c/devices/49-0027/
+============================================================
+adapt_eq_sm = 32|
+cdr_rst = 16|
+channels = 165|
+drv_sel_vod = 128|
+modalias = i2c:ds100df410|
+name = ds100df410|
+pfd_prbs_dfe = 233|
+tap_dem = 16|
+uevent = 
+veo_clk_cdr_cap = 1|
+
+============================================================
+===== /sys/bus/i2c/devices/54-0027/
+============================================================
+adapt_eq_sm = 32|
+cdr_rst = 16|
+channels = 165|
+drv_sel_vod = 128|
+modalias = i2c:ds100df410|
+name = ds100df410|
+pfd_prbs_dfe = 233|
+tap_dem = 16|
+uevent = 
+veo_clk_cdr_cap = 1|
+
+============================================================
+===== /sys/bus/i2c/devices/55-0027/
+============================================================
+adapt_eq_sm = 32|
+cdr_rst = 16|
+channels = 165|
+drv_sel_vod = 128|
+modalias = i2c:ds100df410|
+name = ds100df410|
+pfd_prbs_dfe = 233|
+tap_dem = 16|
+uevent = 
+veo_clk_cdr_cap = 1|
+
+============================================================
+===== /sys/bus/i2c/devices/56-0027/
+============================================================
+adapt_eq_sm = 32|
+cdr_rst = 16|
+channels = 165|
+drv_sel_vod = 128|
+modalias = i2c:ds100df410|
+name = ds100df410|
+pfd_prbs_dfe = 233|
+tap_dem = 16|
+uevent = 
+veo_clk_cdr_cap = 1|
+
+============================================================
+===== /sys/bus/i2c/devices/57-0027/
+============================================================
+adapt_eq_sm = 32|
+cdr_rst = 16|
+channels = 165|
+drv_sel_vod = 128|
+modalias = i2c:ds100df410|
+name = ds100df410|
+pfd_prbs_dfe = 233|
+tap_dem = 16|
+uevent = 
+veo_clk_cdr_cap = 1|
+
+============================================================
+===== /sys/bus/i2c/devices/62-0027/
+============================================================
+adapt_eq_sm = 32|
+cdr_rst = 16|
+channels = 165|
+drv_sel_vod = 128|
+modalias = i2c:ds100df410|
+name = ds100df410|
+pfd_prbs_dfe = 233|
+tap_dem = 16|
+uevent = 
+veo_clk_cdr_cap = 1|
+
+============================================================
+===== /sys/bus/i2c/devices/63-0027/
+============================================================
+adapt_eq_sm = 32|
+cdr_rst = 16|
+channels = 165|
+drv_sel_vod = 128|
+modalias = i2c:ds100df410|
+name = ds100df410|
+pfd_prbs_dfe = 233|
+tap_dem = 16|
+uevent = 
+veo_clk_cdr_cap = 1|
+
+============================================================
+===== /sys/bus/i2c/devices/64-0027/
+============================================================
+adapt_eq_sm = 32|
+cdr_rst = 16|
+channels = 165|
+drv_sel_vod = 128|
+modalias = i2c:ds100df410|
+name = ds100df410|
+pfd_prbs_dfe = 233|
+tap_dem = 16|
+uevent = 
+veo_clk_cdr_cap = 1|
+
+============================================================
+===== /sys/bus/i2c/devices/65-0027/
+============================================================
+adapt_eq_sm = 32|
+cdr_rst = 16|
+channels = 165|
+drv_sel_vod = 128|
+modalias = i2c:ds100df410|
+name = ds100df410|
+pfd_prbs_dfe = 233|
+tap_dem = 16|
+uevent = 
+veo_clk_cdr_cap = 1|
+
+============================================================
+===== /sys/bus/i2c/devices/66-0027/
+============================================================
+adapt_eq_sm = 32|
+cdr_rst = 16|
+channels = 165|
+drv_sel_vod = 128|
+modalias = i2c:ds100df410|
+name = ds100df410|
+pfd_prbs_dfe = 233|
+tap_dem = 23|
+uevent = 
+veo_clk_cdr_cap = 1|
+
+============================================================
+===== /sys/bus/i2c/devices/67-0027/
+============================================================
+adapt_eq_sm = 32|
+cdr_rst = 16|
+channels = 165|
+drv_sel_vod = 128|
+modalias = i2c:ds100df410|
+name = ds100df410|
+pfd_prbs_dfe = 233|
+tap_dem = 23|
+uevent = 
+veo_clk_cdr_cap = 1|
+
+============================================================
+===== /sys/bus/i2c/devices/68-0027/
+============================================================
+adapt_eq_sm = 32|
+cdr_rst = 16|
+channels = 165|
+drv_sel_vod = 128|
+modalias = i2c:ds100df410|
+name = ds100df410|
+pfd_prbs_dfe = 233|
+tap_dem = 23|
+uevent = 
+veo_clk_cdr_cap = 1|
+
+============================================================
+===== /sys/bus/i2c/devices/69-0027/
+============================================================
+adapt_eq_sm = 32|
+cdr_rst = 16|
+channels = 165|
+drv_sel_vod = 128|
+modalias = i2c:ds100df410|
+name = ds100df410|
+pfd_prbs_dfe = 233|
+tap_dem = 23|
+uevent = 
+veo_clk_cdr_cap = 1|
+
+===== map retimers to ports via switchd or board config =====
+accton_as4600_54t
+accton_as5610_52x
+accton_as5712_54x
+accton_as6700_32x
+accton_as6701_32x
+accton_es5652bt1
+amd64-init.conf
+arch.conf
+cel_kennisis
+cel_redstone
+cel_redstone_xp
+cel_smallstone
+cel_smallstone_xp
+cumulus_cumulus_p2020
+dell_s4000_c2338
+dell_s6000_s1220
+dni_c7448n
+dni_et-6448r
+dni_et-7448bf
+lsb-release
+mlx_sx1400_i73612
+platform.conf
+powerpc-init.conf
+quanta_lb9
+quanta_ly2
+quanta_ly2r
+quanta_ly6_p2020
+quanta_ly6_rangeley
+quanta_ly8_rangeley
+quanta_ly9_rangeley
+quanta_panther
+running
+/usr/share/cumulus/.installer/cumulus/init/accton_as5610_52x
+/usr/share/cumulus/.installer/scripts/platform/as5610_52x_install.sh
+/usr/share/cumulus/.installer/uboot_env/as5610_52x.platform.inc
+/usr/share/platform-config/accton/as5610_52x
+/usr/share/platform-config/accton/as5610_52x/etc/sensors.d/as5610_52x.conf
+accton
+bcm
+cel
+cumulus
+dell
+dni
+mlx
+quanta
+
+===== identify which retimer i2c channel maps to which front-panel port =====
+-- /sys/bus/i2c/drivers/pca954x/0-0070 --
+driver
+modalias
+name
+subsystem
+uevent
+-- /sys/bus/i2c/drivers/pca954x/1-0075 --
+driver
+modalias
+name
+subsystem
+uevent
+-- /sys/bus/i2c/drivers/pca954x/1-0076 --
+driver
+modalias
+name
+subsystem
+uevent
+-- /sys/bus/i2c/drivers/pca954x/1-0077 --
+driver
+modalias
+name
+subsystem
+uevent
+-- /sys/bus/i2c/drivers/pca954x/10-0074 --
+driver
+modalias
+name
+subsystem
+uevent
+-- /sys/bus/i2c/drivers/pca954x/11-0074 --
+driver
+modalias
+name
+subsystem
+uevent
+-- /sys/bus/i2c/drivers/pca954x/12-0074 --
+driver
+modalias
+name
+subsystem
+uevent
+-- /sys/bus/i2c/drivers/pca954x/13-0074 --
+driver
+modalias
+name
+subsystem
+uevent
+-- /sys/bus/i2c/drivers/pca954x/14-0074 --
+driver
+modalias
+name
+subsystem
+uevent
+-- /sys/bus/i2c/drivers/pca954x/15-0074 --
+driver
+modalias
+name
+subsystem
+uevent
+
+===== platform driver info =====
+accton_as5610_52x_cpld
+alarmtimer
+fsl,elbc-fcm-nand
+fsl,upm-nand
+fsl-ehci
+fsl-gianfar
+fsl-lbc
+fsl-pq_mdio
+fsl-usb2-mph-dr
+fsl_espi
+gen_nand
+mpc-i2c
+of-flash
+pata_of_platform
+pata_platform
+physmap-flash
+ppc-of-ehci
+sdhci-esdhc
+serial8250
+talitos
+===
+[    5.301398] sff8436 18-0050: 640 byte sff8436 EEPROM, read-only
+[    5.301442] sff8436 19-0050: 640 byte sff8436 EEPROM, read-only
+[    5.301486] sff8436 20-0050: 640 byte sff8436 EEPROM, read-only
+[    5.301525] sff8436 21-0050: 640 byte sff8436 EEPROM, read-only
+
+===== running switchd flags =====
+/usr/sbin/switchd -d 
+
+===== switchd open file descriptors (for /dev/i2c-* enumeration) =====

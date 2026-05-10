@@ -1,0 +1,69 @@
+Warning: Permanently added '10.1.1.212' (ECDSA) to the list of known hosts.
+[sudo] password for cumulus: Usage (PHY): Parameters: [int] <ports> [regnum [value/devad] [value]]
+            raw [c45] <mii-addr> [devad] <regnum> [<value>]
+            dumpall <c22|c45> [start_phy_addr [end_phy_addr]]
+            info
+            control <ports> [phy_control_type=value]
+            firmware <port> set=<filename> [-y]
+            eee <port> [mode=<native|auto|none>|latency=<variable|fixed>|
+                        stats=<get|clear>|idle_th=<0-7>
+            power <ports> [mode=mode_type [sleep_time=value] [wake_time=value]]
+            longreach   <ports> [parameter=value]
+            prbs <ports> set|get|clear Mode=<hc|si> [Polynomial=<value>]
+                         [LoopBack=true|false]
+            clock <ports> [PRImary=<t|f>] [SECondary=<t|f>]
+                          [FRequency=<125000|195312|156250> for BCM8747]
+            margin <ports> maxget|valueget|valueset|set|clear [marginval=<value>]
+            oam <ports> [MODE={y1731|bhh|ietf}] [DIR={tx|rx}] 
+                        [MacCheck={yes|no}] [ENTROPY={yes|no}] 
+                        [TimeStampFormat={ntp|ptp}] [ETHerType=<value>] 
+                        [MACIndex={1|2|3}] [MACAddrHi=<value[47:32]]
+                        [MACAddrLow=<value[31:0]>] 
+                        [MACAddrHi1=<value[47:32]>] [MACAddrLow1=<value[31:0]>] 
+                        [MACAddrHi2=<value[47:32]>] [MACAddrLow2=<value[31:0]>] 
+                        [MACAddrHi3=<value[47:32]>] [MACAddrLow3=<value[31:0]>] 
+	Set or display PHY registers.  If only <ports> is specified,
+	then registers for those ports' PHYs are displayed. <ports> is a
+	standard port bitmap, e.g. fe for all 10/100 ports, fe5-fe7 for
+	three FE's, etc. (see "help pbmp").  If the int option is given,
+	the intermediate PHY for the port is used instead of the outer PHY.
+	In 'raw' mode, the direct mii-address can be specified, only
+	'writing' is supported.
+	dumpall <c22|c45> - Do a clause 22 or clause 45 PHY scan of ID registers
+	Info    - display PHY device ID and attached PHY drivers
+	firmware - program the firmware given by the filename to the PHY 
+	           device's non-volatile storage. The file must be in binary
+	           format.
+	eee      - set or display eee mode, latency and counters for PHYs devices
+	           implementing EEE. Mode can be native or auto. Latency may be 
+	           variable or fixed. idle_th may be a value from 0 to 7.
+	power    - set or display power mode for the PHY devices implemented
+	           power control. mode_type has these values: auto_low,
+	           auto_down,auto_off,low and full. sleep_time and wake_time 
+	           only applies to auto_down power mode
+	control - set or display PHY settings such as WAN, Preemphasis, etc.,
+	longreach - set or display PHY longreach settings.
+
+	diag - phy diagnostic commands.
+	phy diag <pbm> <sub_cmd> [sub cmd parameters]
+	 All sub commands take two general parameters: unit and if. This identifies
+	 the instance the command targets to.
+	unit = 0,1, ....
+	   unit takes numeric values identifying the instance of the PHY devices
+	   associated with the given port. A value 0 indicates the internal
+	   PHY(serdes) the one directly connected to the MAC. A value 1 indicates
+	   the first external PHY.
+	if(interface) = [sys | line]
+	   interface identifies the system side interface or line side interface of
+	   PHY device.
+	The list of sub commands:
+	   dsc - display tx/rx equalization information. Warpcore(WC) only.
+	   veye - vertical eye margin mesurement. WC only. All eye margin functions
+	          are used in conjunction with PRBS utility in the configed speed mode
+	   heye_r - right horizontal eye margin mesurement. WC only
+	   heye_l - right horizontal eye margin mesurement. WC only
+	   for the WarpLite, there are three additional parameters, live link or not,
+	   par1 for the target BER value for example: -18 stands for 10^(-18)
+	   par2 will be percentage range for example, 5 means checxk for +-%5 of the target BER
+	   loopback - put the device in the given loopback mode
+	              parameter: mode=[remote | loca

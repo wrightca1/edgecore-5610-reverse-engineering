@@ -1,0 +1,1163 @@
+[sudo] password for cumulus: 
+============================================================
+=== DATE/UPTIME/UNAME
+============================================================
+Sat Jun  1 13:15:56 UTC 2013
+ 13:15:56 up  3:47,  1 user,  load average: 0.23, 0.18, 0.15
+Linux cumulus 3.2.60-1+deb7u1+cl2.5 #3.2.60-1+deb7u1+cl2.5 SMP Thu Jan 8 19:36:53 PST 2015 ppc powerpc GNU/Linux
+
+============================================================
+=== PORT CARRIER STATE (Linux side)
+============================================================
+swp1 carrier=1 operstate=up speed=10000 duplex=full
+swp10 carrier= operstate=down speed= duplex=
+swp11 carrier= operstate=down speed= duplex=
+swp12 carrier= operstate=down speed= duplex=
+swp13 carrier= operstate=down speed= duplex=
+swp14 carrier= operstate=down speed= duplex=
+swp15 carrier= operstate=down speed= duplex=
+swp16 carrier= operstate=down speed= duplex=
+swp17 carrier= operstate=down speed= duplex=
+swp18 carrier= operstate=down speed= duplex=
+swp19 carrier= operstate=down speed= duplex=
+swp2 carrier=1 operstate=up speed=10000 duplex=full
+swp20 carrier= operstate=down speed= duplex=
+swp21 carrier= operstate=down speed= duplex=
+swp22 carrier= operstate=down speed= duplex=
+swp23 carrier= operstate=down speed= duplex=
+swp24 carrier= operstate=down speed= duplex=
+swp25 carrier= operstate=down speed= duplex=
+swp26 carrier= operstate=down speed= duplex=
+swp27 carrier= operstate=down speed= duplex=
+swp28 carrier= operstate=down speed= duplex=
+swp29 carrier= operstate=down speed= duplex=
+swp3 carrier= operstate=down speed= duplex=
+swp30 carrier= operstate=down speed= duplex=
+swp31 carrier= operstate=down speed= duplex=
+swp32 carrier= operstate=down speed= duplex=
+swp33 carrier= operstate=down speed= duplex=
+swp34 carrier= operstate=down speed= duplex=
+swp35 carrier= operstate=down speed= duplex=
+swp36 carrier= operstate=down speed= duplex=
+swp37 carrier= operstate=down speed= duplex=
+swp38 carrier= operstate=down speed= duplex=
+swp39 carrier= operstate=down speed= duplex=
+swp4 carrier= operstate=down speed= duplex=
+swp40 carrier= operstate=down speed= duplex=
+swp41 carrier= operstate=down speed= duplex=
+swp42 carrier= operstate=down speed= duplex=
+swp43 carrier= operstate=down speed= duplex=
+swp44 carrier= operstate=down speed= duplex=
+swp45 carrier= operstate=down speed= duplex=
+swp46 carrier= operstate=down speed= duplex=
+swp47 carrier= operstate=down speed= duplex=
+swp48 carrier= operstate=down speed= duplex=
+swp49 carrier= operstate=down speed= duplex=
+swp5 carrier= operstate=down speed= duplex=
+swp50 carrier= operstate=down speed= duplex=
+swp51 carrier= operstate=down speed= duplex=
+swp52 carrier= operstate=down speed= duplex=
+swp6 carrier= operstate=down speed= duplex=
+swp7 carrier= operstate=down speed= duplex=
+swp8 carrier= operstate=down speed= duplex=
+swp9 carrier= operstate=down speed= duplex=
+
+============================================================
+=== ETHTOOL swp1 / swp2
+============================================================
+
+--- swp1 ---
+Settings for swp1:
+	Supported ports: [ FIBRE ]
+	Supported link modes:   100baseT/Half 100baseT/Full 
+	                        1000baseT/Full 
+	                        10000baseT/Full 
+	Supported pause frame use: Symmetric Receive-only
+	Supports auto-negotiation: Yes
+	Advertised link modes:  1000baseT/Full 
+	                        10000baseT/Full 
+	Advertised pause frame use: Symmetric
+	Advertised auto-negotiation: No
+	Speed: 10000Mb/s
+	Duplex: Full
+	Port: FIBRE
+	PHYAD: 0
+	Transceiver: external
+	Auto-negotiation: off
+	Current message level: 0x00000000 (0)
+			       
+	Link detected: yes
+NIC statistics:
+     HwIfInOctets: 14429
+     HwIfInUcastPkts: 0
+     HwIfInBcastPkts: 2
+     HwIfInMcastPkts: 132
+     HwIfOutOctets: 4385
+     HwIfOutUcastPkts: 0
+     HwIfOutMcastPkts: 35
+     HwIfOutBcastPkts: 0
+     HwIfInDiscards: 0
+     HwIfInL3Drops: 0
+     HwIfInBufferDrops: 0
+     HwIfInAclDrops: 0
+     HwIfInDot3LengthErrors: 0
+     HwIfInErrors: 0
+     SoftInErrors: 0
+     SoftInDrops: 0
+     SoftInFrameErrors: 0
+     HwIfOutDiscards: 0
+     HwIfOutErrors: 0
+     HwIfOutQDrops: 0
+     HwIfOutNonQDrops: 0
+     SoftOutErrors: 0
+     SoftOutDrops: 0
+     SoftOutTxFifoFull: 0
+     HwIfOutQLen: 0
+     HwIfInPausePkt: 0
+     HwIfOutPausePkt: 0
+     HwIfInPfc0Pkt: 0
+     HwIfOutPfc0Pkt: 0
+     HwIfInPfc1Pkt: 0
+     HwIfOutPfc1Pkt: 0
+     HwIfInPfc2Pkt: 0
+     HwIfOutPfc2Pkt: 0
+     HwIfInPfc3Pkt: 0
+     HwIfOutPfc3Pkt: 0
+     HwIfInPfc4Pkt: 0
+     HwIfOutPfc4Pkt: 0
+     HwIfInPfc5Pkt: 0
+     HwIfOutPfc5Pkt: 0
+     HwIfInPfc6Pkt: 0
+     HwIfOutPfc6Pkt: 0
+     HwIfInPfc7Pkt: 0
+     HwIfOutPfc7Pkt: 0
+
+--- swp2 ---
+Settings for swp2:
+	Supported ports: [ FIBRE ]
+	Supported link modes:   100baseT/Half 100baseT/Full 
+	                        1000baseT/Full 
+	                        10000baseT/Full 
+	Supported pause frame use: Symmetric Receive-only
+	Supports auto-negotiation: Yes
+	Advertised link modes:  1000baseT/Full 
+	                        10000baseT/Full 
+	Advertised pause frame use: Symmetric
+	Advertised auto-negotiation: No
+	Speed: 10000Mb/s
+	Duplex: Full
+	Port: FIBRE
+	PHYAD: 0
+	Transceiver: external
+	Auto-negotiation: off
+	Current message level: 0x00000000 (0)
+			       
+	Link detected: yes
+NIC statistics:
+     HwIfInOctets: 14511
+     HwIfInUcastPkts: 0
+     HwIfInBcastPkts: 2
+     HwIfInMcastPkts: 133
+     HwIfOutOctets: 4341
+     HwIfOutUcastPkts: 0
+     HwIfOutMcastPkts: 35
+     HwIfOutBcastPkts: 0
+     HwIfInDiscards: 0
+     HwIfInL3Drops: 0
+     HwIfInBufferDrops: 0
+     HwIfInAclDrops: 0
+     HwIfInDot3LengthErrors: 0
+     HwIfInErrors: 0
+     SoftInErrors: 0
+     SoftInDrops: 0
+     SoftInFrameErrors: 0
+     HwIfOutDiscards: 0
+     HwIfOutErrors: 0
+     HwIfOutQDrops: 0
+     HwIfOutNonQDrops: 0
+     SoftOutErrors: 0
+     SoftOutDrops: 0
+     SoftOutTxFifoFull: 0
+     HwIfOutQLen: 0
+     HwIfInPausePkt: 0
+     HwIfOutPausePkt: 0
+     HwIfInPfc0Pkt: 0
+     HwIfOutPfc0Pkt: 0
+     HwIfInPfc1Pkt: 0
+     HwIfOutPfc1Pkt: 0
+     HwIfInPfc2Pkt: 0
+     HwIfOutPfc2Pkt: 0
+     HwIfInPfc3Pkt: 0
+     HwIfOutPfc3Pkt: 0
+     HwIfInPfc4Pkt: 0
+     HwIfOutPfc4Pkt: 0
+     HwIfInPfc5Pkt: 0
+     HwIfOutPfc5Pkt: 0
+     HwIfInPfc6Pkt: 0
+     HwIfOutPfc6Pkt: 0
+     HwIfInPfc7Pkt: 0
+     HwIfOutPfc7Pkt: 0
+
+============================================================
+=== BCM DIAG: ps (port summary)
+============================================================
+            ena/    speed/ link auto    STP                  lrn  inter   max  loop
+      port  link    duplex scan neg?   state   pause  discrd ops   face frame  back
+       xe0  up     10G  FD   SW  No   Forward          None    F    XFI  1518 
+       xe1  up     10G  FD   SW  No   Forward          None    F    XFI  1518 
+       xe2  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+       xe3  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+       xe4  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+       xe5  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+       xe6  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+       xe7  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+       xe8  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+       xe9  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe10  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe11  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe12  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe13  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe14  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe15  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe16  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe17  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe18  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe19  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe20  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe21  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe22  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe23  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe24  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe25  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe26  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe27  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe28  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe29  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe30  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe31  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe32  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe33  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe34  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe35  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe36  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe37  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe38  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe39  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe40  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe41  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe42  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe43  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe44  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe45  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe46  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe47  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe48  !ena   40G  FD   SW  No   Disable          None    F    KR4  1518 
+      xe49  !ena   40G  FD   SW  No   Disable          None    F    KR4  1518 
+      xe50  !ena   40G  FD   SW  No   Disable          None    F    KR4  1518 
+      xe51  !ena   40G  FD   SW  No   Disable          None    F    KR4  1518 
+
+============================================================
+=== BCM DIAG: phy info
+============================================================
+Phy mapping dump:
+      port   id0   id1  addr iaddr                    name    timeout
+  xe0(  1)   143  bff0    d1    d1              WC-B0/16/0     250000  
+  xe1(  2)   143  bff0    d1    d1              WC-B0/16/1     250000  
+  xe2(  3)   143  bff0    d1    d1              WC-B0/16/2     250000  
+  xe3(  4)   143  bff0    d1    d1              WC-B0/16/3     250000  
+  xe4(  5)   143  bff0    d5    d5              WC-B0/17/0     250000  
+  xe5(  6)   143  bff0    d5    d5              WC-B0/17/1     250000  
+  xe6(  7)   143  bff0    d5    d5              WC-B0/17/2     250000  
+  xe7(  8)   143  bff0    d5    d5              WC-B0/17/3     250000  
+  xe8(  9)   143  bff0    85    85              WC-B0/01/0     250000  
+  xe9( 10)   143  bff0    85    85              WC-B0/01/1     250000  
+ xe10( 11)   143  bff0    85    85              WC-B0/01/2     250000  
+ xe11( 12)   143  bff0    85    85              WC-B0/01/3     250000  
+ xe12( 13)   143  bff0    89    89              WC-B0/02/0     250000  
+ xe13( 14)   143  bff0    89    89              WC-B0/02/1     250000  
+ xe14( 15)   143  bff0    89    89              WC-B0/02/2     250000  
+ xe15( 16)   143  bff0    89    89              WC-B0/02/3     250000  
+ xe16( 17)   143  bff0    8d    8d              WC-B0/03/0     250000  
+ xe17( 18)   143  bff0    8d    8d              WC-B0/03/1     250000  
+ xe18( 19)   143  bff0    8d    8d              WC-B0/03/2     250000  
+ xe19( 20)   143  bff0    8d    8d              WC-B0/03/3     250000  
+ xe20( 21)   143  bff0    91    91              WC-B0/04/1     250000  
+ xe21( 22)   143  bff0    91    91              WC-B0/04/0     250000  
+ xe22( 23)   143  bff0    91    91              WC-B0/04/3     250000  
+ xe23( 24)   143  bff0    91    91              WC-B0/04/2     250000  
+ xe24( 25)   143  bff0    95    95              WC-B0/05/1     250000  
+ xe25( 26)   143  bff0    95    95              WC-B0/05/0     250000  
+ xe26( 27)   143  bff0    95    95              WC-B0/05/3     250000  
+ xe27( 28)   143  bff0    95    95              WC-B0/05/2     250000  
+ xe28( 29)   143  bff0    a1    a1              WC-B0/06/0     250000  
+ xe29( 30)   143  bff0    a1    a1              WC-B0/06/1     250000  
+ xe30( 31)   143  bff0    a1    a1              WC-B0/06/2     250000  
+ xe31( 32)   143  bff0    a1    a1              WC-B0/06/3     250000  
+ xe32( 33)   143  bff0    a5    a5              WC-B0/07/0     250000  
+ xe33( 34)   143  bff0    a5    a5              WC-B0/07/1     250000  
+ xe34( 35)   143  bff0    a5    a5              WC-B0/07/2     250000  
+ xe35( 36)   143  bff0    a5    a5              WC-B0/07/3     250000  
+ xe36( 37)   143  bff0    a9    a9              WC-B0/08/0     250000  
+ xe37( 38)   143  bff0    a9    a9              WC-B0/08/1     250000  
+ xe38( 39)   143  bff0    a9    a9              WC-B0/08/2     250000  
+ xe39( 40)   143  bff0    a9    a9              WC-B0/08/3     250000  
+ xe40( 41)   143  bff0    ad    ad              WC-B0/09/0     250000  
+ xe41( 42)   143  bff0    ad    ad              WC-B0/09/1     250000  
+ xe42( 43)   143  bff0    ad    ad              WC-B0/09/2     250000  
+ xe43( 44)   143  bff0    ad    ad              WC-B0/09/3     250000  
+ xe44( 45)   143  bff0    b1    b1              WC-B0/10/0     250000  
+ xe45( 46)   143  bff0    b1    b1              WC-B0/10/1     250000  
+ xe46( 47)   143  bff0    b1    b1              WC-B0/10/2     250000  
+ xe47( 48)   143  bff0    b1    b1              WC-B0/10/3     250000  
+ xe48( 49)   143  bff0    c1    c1              WC-B0/12/4     250000  
+ xe49( 50)   143  bff0    b5    b5              WC-B0/11/4     250000  
+ xe50( 51)   143  bff0    cd    cd              WC-B0/15/4     250000  
+ xe51( 52)   143  bff0    c9    c9              WC-B0/14/4     250000  
+
+============================================================
+=== BCM DIAG: phy control xe0
+============================================================
+Current PHY control settings of xe0 ->
+Preemphasis              = 0xa370
+DriverCurrent            = 0x2
+PreDriverCurrent         = 0x3
+Rx LOS (s/w) enable         - 0
+
+============================================================
+=== BCM DIAG: phy control xe1
+============================================================
+Current PHY control settings of xe1 ->
+Preemphasis              = 0xa370
+DriverCurrent            = 0x2
+PreDriverCurrent         = 0x3
+Rx LOS (s/w) enable         - 0
+
+============================================================
+=== BCM DIAG: xe0 link rate
+============================================================
+Syntax error parsing "xe0"
+
+============================================================
+=== BCM DIAG: xe1 link rate
+============================================================
+Syntax error parsing "xe1"
+
+============================================================
+=== PHY CL22 dump xe0 (0x00-0x1f)
+============================================================
+xe0 reg 0x00 : 0xd1 0x0000 0x0000 
+xe0 reg 0x01 : 0xd1 0x0001 0x0000 
+xe0 reg 0x02 : 0xd1 0x0002 0x0000 
+xe0 reg 0x03 : 0xd1 0x0003 0x0000 
+xe0 reg 0x04 : 0xd1 0x0004 0x00a0 
+xe0 reg 0x05 : 0xd1 0x0005 0x0000 
+xe0 reg 0x06 : 0xd1 0x0006 0x0004 
+xe0 reg 0x07 : 0xd1 0x0007 0x2001 
+xe0 reg 0x08 : 0xd1 0x0008 0x0000 
+xe0 reg 0x09 : 0xd1 0x0009 0x0000 
+xe0 reg 0x0a : 0xd1 0x000a 0x0000 
+xe0 reg 0x0b : 0xd1 0x000b 0x0000 
+xe0 reg 0x0c : 0xd1 0x000c 0x0000 
+xe0 reg 0x0d : 0xd1 0x000d 0x0000 
+xe0 reg 0x0e : 0xd1 0x000e 0x0140 
+xe0 reg 0x0f : 0xd1 0x000f 0xc000 
+xe0 reg 0x10 : 0xd1 0x0010 0x242f 
+xe0 reg 0x11 : 0xd1 0x0011 0x8b08 
+xe0 reg 0x12 : 0xd1 0x0012 0x0707 
+xe0 reg 0x13 : 0xd1 0x0013 0xbcbc 
+xe0 reg 0x14 : 0xd1 0x0014 0x1c1c 
+xe0 reg 0x15 : 0xd1 0x0015 0xfbfd 
+xe0 reg 0x16 : 0xd1 0x0016 0xfe7c 
+xe0 reg 0x17 : 0xd1 0x0017 0x0410 
+xe0 reg 0x18 : 0xd1 0x0018 0xa040 
+xe0 reg 0x19 : 0xd1 0x0019 0x0010 
+xe0 reg 0x1a : 0xd1 0x001a 0x9c00 
+xe0 reg 0x1b : 0xd1 0x001b 0x0001 
+xe0 reg 0x1c : 0xd1 0x001c 0xa000 
+xe0 reg 0x1d : 0xd1 0x001d 0x401f 
+xe0 reg 0x1e : 0xd1 0x001e 0xc000 
+xe0 reg 0x1f : 0xd1 0x001f 0x0000 
+
+============================================================
+=== PHY CL22 dump xe1 (0x00-0x1f)
+============================================================
+xe1 reg 0x00 : 0xd1 0x0000 0x0140 
+xe1 reg 0x01 : 0xd1 0x0001 0x0109 
+xe1 reg 0x02 : 0xd1 0x0002 0x0143 
+xe1 reg 0x03 : 0xd1 0x0003 0xbff0 
+xe1 reg 0x04 : 0xd1 0x0004 0x00a0 
+xe1 reg 0x05 : 0xd1 0x0005 0x0000 
+xe1 reg 0x06 : 0xd1 0x0006 0x0004 
+xe1 reg 0x07 : 0xd1 0x0007 0x2001 
+xe1 reg 0x08 : 0xd1 0x0008 0x0000 
+xe1 reg 0x09 : 0xd1 0x0009 0x0000 
+xe1 reg 0x0a : 0xd1 0x000a 0x0000 
+xe1 reg 0x0b : 0xd1 0x000b 0x0000 
+xe1 reg 0x0c : 0xd1 0x000c 0x0000 
+xe1 reg 0x0d : 0xd1 0x000d 0x0000 
+xe1 reg 0x0e : 0xd1 0x000e 0x0140 
+xe1 reg 0x0f : 0xd1 0x000f 0xc000 
+xe1 reg 0x10 : 0xd1 0x0010 0x242f 
+xe1 reg 0x11 : 0xd1 0x0011 0x8b08 
+xe1 reg 0x12 : 0xd1 0x0012 0x0707 
+xe1 reg 0x13 : 0xd1 0x0013 0xbcbc 
+xe1 reg 0x14 : 0xd1 0x0014 0x1c1c 
+xe1 reg 0x15 : 0xd1 0x0015 0xfbfd 
+xe1 reg 0x16 : 0xd1 0x0016 0xfe7c 
+xe1 reg 0x17 : 0xd1 0x0017 0x0410 
+xe1 reg 0x18 : 0xd1 0x0018 0xa040 
+xe1 reg 0x19 : 0xd1 0x0019 0x0010 
+xe1 reg 0x1a : 0xd1 0x001a 0x9c00 
+xe1 reg 0x1b : 0xd1 0x001b 0x0001 
+xe1 reg 0x1c : 0xd1 0x001c 0xa000 
+xe1 reg 0x1d : 0xd1 0x001d 0x401f 
+xe1 reg 0x1e : 0xd1 0x001e 0xc000 
+xe1 reg 0x1f : 0xd1 0x001f 0x0000 
+
+============================================================
+=== PHY CL45 dump xe0 (devad=1 PMD/PMA + devad=4 XGXS)
+============================================================
+xe0 dev=1 reg=0x0000 : 
+xe0 dev=1 reg=0x0001 : 
+xe0 dev=1 reg=0x0008 : 
+xe0 dev=1 reg=0x0009 : 
+xe0 dev=1 reg=0x0020 : 
+xe0 dev=1 reg=0x0021 : 
+xe0 dev=1 reg=0x8000 : 
+xe0 dev=1 reg=0x8001 : 
+xe0 dev=1 reg=0x8002 : 
+xe0 dev=1 reg=0x8003 : 
+xe0 dev=1 reg=0x8400 : 
+xe0 dev=1 reg=0xb820 : 
+xe0 dev=1 reg=0xc801 : 
+xe0 dev=1 reg=0xc802 : 
+xe0 dev=1 reg=0xc803 : 
+xe0 dev=1 reg=0xc810 : 
+xe0 dev=1 reg=0xc811 : 
+xe0 dev=2 reg=0x0000 : 
+xe0 dev=2 reg=0x0001 : 
+xe0 dev=2 reg=0x0008 : 
+xe0 dev=2 reg=0x0009 : 
+xe0 dev=2 reg=0x0020 : 
+xe0 dev=2 reg=0x0021 : 
+xe0 dev=2 reg=0x8000 : 
+xe0 dev=2 reg=0x8001 : 
+xe0 dev=2 reg=0x8002 : 
+xe0 dev=2 reg=0x8003 : 
+xe0 dev=2 reg=0x8400 : 
+xe0 dev=2 reg=0xb820 : 
+xe0 dev=2 reg=0xc801 : 
+xe0 dev=2 reg=0xc802 : 
+xe0 dev=2 reg=0xc803 : 
+xe0 dev=2 reg=0xc810 : 
+xe0 dev=2 reg=0xc811 : 
+xe0 dev=3 reg=0x0000 : 
+xe0 dev=3 reg=0x0001 : 
+xe0 dev=3 reg=0x0008 : 
+xe0 dev=3 reg=0x0009 : 
+xe0 dev=3 reg=0x0020 : 
+xe0 dev=3 reg=0x0021 : 
+xe0 dev=3 reg=0x8000 : 
+xe0 dev=3 reg=0x8001 : 
+xe0 dev=3 reg=0x8002 : 
+xe0 dev=3 reg=0x8003 : 
+xe0 dev=3 reg=0x8400 : 
+xe0 dev=3 reg=0xb820 : 
+xe0 dev=3 reg=0xc801 : 
+xe0 dev=3 reg=0xc802 : 
+xe0 dev=3 reg=0xc803 : 
+xe0 dev=3 reg=0xc810 : 
+xe0 dev=3 reg=0xc811 : 
+xe0 dev=4 reg=0x0000 : 
+xe0 dev=4 reg=0x0001 : 
+xe0 dev=4 reg=0x0008 : 
+xe0 dev=4 reg=0x0009 : 
+xe0 dev=4 reg=0x0020 : 
+xe0 dev=4 reg=0x0021 : 
+xe0 dev=4 reg=0x8000 : 
+xe0 dev=4 reg=0x8001 : 
+xe0 dev=4 reg=0x8002 : 
+xe0 dev=4 reg=0x8003 : 
+xe0 dev=4 reg=0x8400 : 
+xe0 dev=4 reg=0xb820 : 
+xe0 dev=4 reg=0xc801 : 
+xe0 dev=4 reg=0xc802 : 
+xe0 dev=4 reg=0xc803 : 
+xe0 dev=4 reg=0xc810 : 
+xe0 dev=4 reg=0xc811 : 
+xe0 dev=5 reg=0x0000 : 
+xe0 dev=5 reg=0x0001 : 
+xe0 dev=5 reg=0x0008 : 
+xe0 dev=5 reg=0x0009 : 
+xe0 dev=5 reg=0x0020 : 
+xe0 dev=5 reg=0x0021 : 
+xe0 dev=5 reg=0x8000 : 
+xe0 dev=5 reg=0x8001 : 
+xe0 dev=5 reg=0x8002 : 
+xe0 dev=5 reg=0x8003 : 
+xe0 dev=5 reg=0x8400 : 
+xe0 dev=5 reg=0xb820 : 
+xe0 dev=5 reg=0xc801 : 
+xe0 dev=5 reg=0xc802 : 
+xe0 dev=5 reg=0xc803 : 
+xe0 dev=5 reg=0xc810 : 
+xe0 dev=5 reg=0xc811 : 
+xe0 dev=7 reg=0x0000 : 
+xe0 dev=7 reg=0x0001 : 
+xe0 dev=7 reg=0x0008 : 
+xe0 dev=7 reg=0x0009 : 
+xe0 dev=7 reg=0x0020 : 
+xe0 dev=7 reg=0x0021 : 
+xe0 dev=7 reg=0x8000 : 
+xe0 dev=7 reg=0x8001 : 
+xe0 dev=7 reg=0x8002 : 
+xe0 dev=7 reg=0x8003 : 
+xe0 dev=7 reg=0x8400 : 
+xe0 dev=7 reg=0xb820 : 
+xe0 dev=7 reg=0xc801 : 
+xe0 dev=7 reg=0xc802 : 
+xe0 dev=7 reg=0xc803 : 
+xe0 dev=7 reg=0xc810 : 
+xe0 dev=7 reg=0xc811 : 
+
+============================================================
+=== WARPCORE REGISTERS via raw access (xe0 = phy 0xd1 lane 0)
+============================================================
+
+--- Read AER and important blocks ---
+raw 0xd1 reg 0x1f : 0x1f 0x0000 
+raw 0xd1 reg 0xffde : 0xffde 0xc000 
+raw 0xd1 reg 0xffdf : 0xffdf 0x0000 
+
+============================================================
+=== BCM DIAG: dmac (show MAC tables)
+============================================================
+
+============================================================
+=== BCM DIAG: vlan show
+============================================================
+vlan 1	ports none (0x0000000000000000000000000000000000000000000000000000000000000000), untagged none (0x0000000000000000000000000000000000000000000000000000000000000000) MCAST_FLOOD_UNKNOWN
+vlan 3301	ports cpu,xe0 (0x0000000000000000000000000000000000000000000000000000000000000003), untagged xe0 (0x0000000000000000000000000000000000000000000000000000000000000002) MCAST_FLOOD_ALL
+vlan 3302	ports cpu,xe1 (0x0000000000000000000000000000000000000000000000000000000000000005), untagged xe1 (0x0000000000000000000000000000000000000000000000000000000000000004) MCAST_FLOOD_ALL
+vlan 3303	ports cpu,xe2 (0x0000000000000000000000000000000000000000000000000000000000000009), untagged xe2 (0x0000000000000000000000000000000000000000000000000000000000000008) MCAST_FLOOD_ALL
+vlan 3304	ports cpu,xe3 (0x0000000000000000000000000000000000000000000000000000000000000011), untagged xe3 (0x0000000000000000000000000000000000000000000000000000000000000010) MCAST_FLOOD_ALL
+vlan 3305	ports cpu,xe4 (0x0000000000000000000000000000000000000000000000000000000000000021), untagged xe4 (0x0000000000000000000000000000000000000000000000000000000000000020) MCAST_FLOOD_ALL
+vlan 3306	ports cpu,xe5 (0x0000000000000000000000000000000000000000000000000000000000000041), untagged xe5 (0x0000000000000000000000000000000000000000000000000000000000000040) MCAST_FLOOD_ALL
+vlan 3307	ports cpu,xe6 (0x0000000000000000000000000000000000000000000000000000000000000081), untagged xe6 (0x0000000000000000000000000000000000000000000000000000000000000080) MCAST_FLOOD_ALL
+vlan 3308	ports cpu,xe7 (0x0000000000000000000000000000000000000000000000000000000000000101), untagged xe7 (0x0000000000000000000000000000000000000000000000000000000000000100) MCAST_FLOOD_ALL
+vlan 3309	ports cpu,xe8 (0x0000000000000000000000000000000000000000000000000000000000000201), untagged xe8 (0x0000000000000000000000000000000000000000000000000000000000000200) MCAST_FLOOD_ALL
+vlan 3310	ports cpu,xe9 (0x0000000000000000000000000000000000000000000000000000000000000401), untagged xe9 (0x0000000000000000000000000000000000000000000000000000000000000400) MCAST_FLOOD_ALL
+vlan 3311	ports cpu,xe10 (0x0000000000000000000000000000000000000000000000000000000000000801), untagged xe10 (0x0000000000000000000000000000000000000000000000000000000000000800) MCAST_FLOOD_ALL
+vlan 3312	ports cpu,xe11 (0x0000000000000000000000000000000000000000000000000000000000001001), untagged xe11 (0x0000000000000000000000000000000000000000000000000000000000001000) MCAST_FLOOD_ALL
+vlan 3313	ports cpu,xe12 (0x0000000000000000000000000000000000000000000000000000000000002001), untagged xe12 (0x0000000000000000000000000000000000000000000000000000000000002000) MCAST_FLOOD_ALL
+vlan 3314	ports cpu,xe13 (0x0000000000000000000000000000000000000000000000000000000000004001), untagged xe13 (0x0000000000000000000000000000000000000000000000000000000000004000) MCAST_FLOOD_ALL
+vlan 3315	ports cpu,xe14 (0x0000000000000000000000000000000000000000000000000000000000008001), untagged xe14 (0x0000000000000000000000000000000000000000000000000000000000008000) MCAST_FLOOD_ALL
+vlan 3316	ports cpu,xe15 (0x0000000000000000000000000000000000000000000000000000000000010001), untagged xe15 (0x0000000000000000000000000000000000000000000000000000000000010000) MCAST_FLOOD_ALL
+vlan 3317	ports cpu,xe16 (0x0000000000000000000000000000000000000000000000000000000000020001), untagged xe16 (0x0000000000000000000000000000000000000000000000000000000000020000) MCAST_FLOOD_ALL
+vlan 3318	ports cpu,xe17 (0x0000000000000000000000000000000000000000000000000000000000040001), untagged xe17 (0x0000000000000000000000000000000000000000000000000000000000040000) MCAST_FLOOD_ALL
+vlan 3319	ports cpu,xe18 (0x0000000000000000000000000000000000000000000000000000000000080001), untagged xe18 (0x0000000000000000000000000000000000000000000000000000000000080000) MCAST_FLOOD_ALL
+vlan 3320	ports cpu,xe19 (0x0000000000000000000000000000000000000000000000000000000000100001), untagged xe19 (0x0000000000000000000000000000000000000000000000000000000000100000) MCAST_FLOOD_ALL
+vlan 3321	ports cpu,xe20 (0x0000000000000000000000000000000000000000000000000000000000200001), untagged xe20 (0x0000000000000000000000000000000000000000000000000000000000200000) MCAST_FLOOD_ALL
+vlan 3322	ports cpu,xe21 (0x0000000000000000000000000000000000000000000000000000000000400001), untagged xe21 (0x0000000000000000000000000000000000000000000000000000000000400000) MCAST_FLOOD_ALL
+vlan 3323	ports cpu,xe22 (0x0000000000000000000000000000000000000000000000000000000000800001), untagged xe22 (0x0000000000000000000000000000000000000000000000000000000000800000) MCAST_FLOOD_ALL
+vlan 3324	ports cpu,xe23 (0x0000000000000000000000000000000000000000000000000000000001000001), untagged xe23 (0x0000000000000000000000000000000000000000000000000000000001000000) MCAST_FLOOD_ALL
+vlan 3325	ports cpu,xe24 (0x0000000000000000000000000000000000000000000000000000000002000001), untagged xe24 (0x0000000000000000000000000000000000000000000000000000000002000000) MCAST_FLOOD_ALL
+vlan 3326	ports cpu,xe25 (0x0000000000000000000000000000000000000000000000000000000004000001), untagged xe25 (0x0000000000000000000000000000000000000000000000000000000004000000) MCAST_FLOOD_ALL
+vlan 3327	ports cpu,xe26 (0x0000000000000000000000000000000000000000000000000000000008000001), untagged xe26 (0x0000000000000000000000000000000000000000000000000000000008000000) MCAST_FLOOD_ALL
+vlan 3328	ports cpu,xe27 (0x0000000000000000000000000000000000000000000000000000000010000001), untagged xe27 (0x0000000000000000000000000000000000000000000000000000000010000000) MCAST_FLOOD_ALL
+vlan 3329	ports cpu,xe28 (0x0000000000000000000000000000000000000000000000000000000020000001), untagged xe28 (0x0000000000000000000000000000000000000000000000000000000020000000) MCAST_FLOOD_ALL
+vlan 3330	ports cpu,xe29 (0x0000000000000000000000000000000000000000000000000000000040000001), untagged xe29 (0x0000000000000000000000000000000000000000000000000000000040000000) MCAST_FLOOD_ALL
+vlan 3331	ports cpu,xe30 (0x0000000000000000000000000000000000000000000000000000000080000001), untagged xe30 (0x0000000000000000000000000000000000000000000000000000000080000000) MCAST_FLOOD_ALL
+vlan 3332	ports cpu,xe31 (0x0000000000000000000000000000000000000000000000000000000100000001), untagged xe31 (0x0000000000000000000000000000000000000000000000000000000100000000) MCAST_FLOOD_ALL
+vlan 3333	ports cpu,xe32 (0x0000000000000000000000000000000000000000000000000000000200000001), untagged xe32 (0x0000000000000000000000000000000000000000000000000000000200000000) MCAST_FLOOD_ALL
+vlan 3334	ports cpu,xe33 (0x0000000000000000000000000000000000000000000000000000000400000001), untagged xe33 (0x0000000000000000000000000000000000000000000000000000000400000000) MCAST_FLOOD_ALL
+vlan 3335	ports cpu,xe34 (0x0000000000000000000000000000000000000000000000000000000800000001), untagged xe34 (0x0000000000000000000000000000000000000000000000000000000800000000) MCAST_FLOOD_ALL
+vlan 3336	ports cpu,xe35 (0x0000000000000000000000000000000000000000000000000000001000000001), untagged xe35 (0x0000000000000000000000000000000000000000000000000000001000000000) MCAST_FLOOD_ALL
+vlan 3337	ports cpu,xe36 (0x0000000000000000000000000000000000000000000000000000002000000001), untagged xe36 (0x0000000000000000000000000000000000000000000000000000002000000000) MCAST_FLOOD_ALL
+vlan 3338	ports cpu,xe37 (0x0000000000000000000000000000000000000000000000000000004000000001), untagged xe37 (0x0000000000000000000000000000000000000000000000000000004000000000) MCAST_FLOOD_ALL
+vlan 3339	ports cpu,xe38 (0x0000000000000000000000000000000000000000000000000000008000000001), untagged xe38 (0x0000000000000000000000000000000000000000000000000000008000000000) MCAST_FLOOD_ALL
+
+============================================================
+=== BCM DIAG: pmap (port mapping)
+============================================================
+Unknown command: pmap
+
+============================================================
+=== BCM DIAG: stg (spanning tree)
+============================================================
+STG 0: contains 0 VLANs
+  Disable: xe
+STG 1: contains 53 VLANs (1,3301-3352)
+  Disable: xe2-xe51
+  Forward: xe0-xe1
+
+============================================================
+=== BCM DIAG: counter (xe0,xe1)
+============================================================
+RDBGC1.xe0		:		    114 	       +114
+R64.xe0 		:		      2 		 +2
+R127.xe0		:		    114 	       +114
+R511.xe0		:		     19 		+19
+RPKT.xe0		:		    135 	       +135
+RMCA.xe0		:		    133 	       +133
+RBCA.xe0		:		      2 		 +2
+RPOK.xe0		:		    135 	       +135
+RBYT.xe0		:		 14,511 	    +14,511
+T127.xe0		:		     34 		+34
+T255.xe0		:		      1 		 +1
+TPOK.xe0		:		     35 		+35
+TPKT.xe0		:		     35 		+35
+TMCA.xe0		:		     35 		+35
+TBYT.xe0		:		  4,385 	     +4,385
+UC_PERQ_PKT(3).xe0	:		     35 		+35
+UC_PERQ_BYTE(3).xe0	:		  4,385 	     +4,385
+RDBGC1.xe1		:		    115 	       +115		  1/s
+R64.xe1 		:		      2 		 +2
+R127.xe1		:		    115 	       +115		  1/s
+R511.xe1		:		     19 		+19
+RPKT.xe1		:		    136 	       +136		  1/s
+RMCA.xe1		:		    134 	       +134		  1/s
+RBCA.xe1		:		      2 		 +2
+RPOK.xe1		:		    136 	       +136		  1/s
+RBYT.xe1		:		 14,593 	    +14,593		 71/s
+T127.xe1		:		     34 		+34
+T255.xe1		:		      1 		 +1
+TPOK.xe1		:		     35 		+35
+TPKT.xe1		:		     35 		+35
+TMCA.xe1		:		     35 		+35
+TBYT.xe1		:		  4,341 	     +4,341
+UC_PERQ_PKT(3).xe1	:		     35 		+35
+UC_PERQ_BYTE(3).xe1	:		  4,341 	     +4,341
+
+============================================================
+=== CMIC REGISTERS (BAR0 reads)
+============================================================
+CMIC_CONFIG : CMIC_CONFIG.cmic0[0x10c]=0x3f0c2043: <WR_BRST_EN=1,UNTAG_EN=0,UNTAG_ALL_RCV_EN=0,
+CMIC_REVISION : CMIC_LINK_STAT : CMIC_LINK_STAT.cmic0[0x140]=0xffffffff: <PORT_BITMAP=0xffffffff>
+CMIC_LINK_STATUS_CHG : 
+============================================================
+=== BCM DIAG: misc port_status
+============================================================
+Unknown command: port_status
+Unknown command: port_status
+
+============================================================
+=== Configs
+============================================================
+
+--- ports.conf ---
+# ports.conf --
+#
+# This file controls port aggregation and subdivision.  For example, QSFP+
+# ports are typically configurable as either one 40G interface or four
+# 10G/1000/100 interfaces.  This file sets the number of interfaces per port
+# while /etc/network/interfaces and ethtool configure the link speed for each
+# interface.
+#
+# You must restart switchd for changes to take effect.
+#
+# accton,as5610_52x has:
+#     48 SFP+ ports numbered 1-48
+#         These ports are configurable as 10G or 4 adjacent ports can be
+#         configured as 40G.
+#     4 QSFP ports numbered 49-52
+#         These ports are configurable as 40G or split into 4x10G ports.
+
+# SFP+ ports
+#
+# <port label 1-48> = [10G|40G/4]
+1=10G
+2=10G
+3=10G
+4=10G
+5=10G
+6=10G
+7=10G
+8=10G
+9=10G
+10=10G
+11=10G
+12=10G
+13=10G
+14=10G
+15=10G
+16=10G
+17=10G
+18=10G
+19=10G
+20=10G
+21=10G
+22=10G
+23=10G
+24=10G
+25=10G
+26=10G
+27=10G
+28=10G
+29=10G
+30=10G
+31=10G
+32=10G
+33=10G
+34=10G
+35=10G
+36=10G
+37=10G
+38=10G
+39=10G
+40=10G
+41=10G
+42=10G
+43=10G
+44=10G
+45=10G
+46=10G
+47=10G
+48=10G
+
+# QSFP+ ports
+#
+# <port label 49-52> = [4x10G|40G]
+49=40G
+50=40G
+51=40G
+52=40G
+
+--- switchd.conf (non-comment) ---
+logging = file:/var/log/switchd.log=INFO
+
+--- platform ---
+
+--- /etc/network/interfaces ---
+# This file describes the network interfaces available on your system
+# and how to activate them. For more information, see interfaces(5), ifup(8)
+#
+# Please see /usr/share/doc/python-ifupdown2/examples/ for examples
+#
+#
+
+# The loopback network interface
+auto lo
+iface lo inet loopback
+
+# The primary network interface
+auto eth0
+iface eth0 inet dhcp
+
+
+
+============================================================
+=== Switch process (cmdline)
+============================================================
+root     14242 13.2  1.6  86568 33756 ?        S<sl 12:00  10:02 /usr/sbin/switchd -d
+root     21569  0.0  0.0   2248   704 ?        S    13:16   0:00 grep -E switchd|portd|hsfl|sfputil
+---
+/usr/sbin/switchd -d 
+
+============================================================
+=== lsmod (kernel modules)
+============================================================
+Module                  Size  Used by
+8021q                  20604  0 
+ds100df410              6086  0 
+adm1021                 8639  0 
+max6697                 9564  0 
+gpio_pca953x           12937  61 
+sff_8436_eeprom        11381  0 
+at24                    9322  0 
+accton_as5610_52x_cpld    13854  0 
+linux_bde_tmon          6674  0 
+tun                    18389  104 
+linux_user_bde         14431  0 
+linux_kernel_bde       34398  2 linux_user_bde,linux_bde_tmon
+
+============================================================
+=== /proc/iomem and /proc/interrupts
+============================================================
+00000000-7fffffff : System RAM
+a0000000-bfffffff : /pcie@ff70a000
+  a0000000-bfffffff : PCI Bus 0000:01
+    a0000000-a003ffff : 0000:01:00.0
+efc00000-efffffff : efc00000.flash
+ff704500-ff704507 : serial
+ff722000-ff722fff : /soc@ff700000/usb@22000
+  ff722000-ff722fff : ehci_hcd
+---
+           CPU0       CPU1       
+ 16:    1219559          0   OpenPIC   Level     linux-kernel-bde
+ 19:          0          0   OpenPIC   Level     fsl-lbc
+ 28:      36515          0   OpenPIC   Level     ehci_hcd:usb1
+ 29:          0       1991   OpenPIC   Level     eth0_g0_tx
+ 30:     124124          0   OpenPIC   Level     eth0_g0_rx
+ 34:          0          0   OpenPIC   Level     eth0_g0_er
+ 42:          4        420   OpenPIC   Level     serial
+ 43:          0     233996   OpenPIC   Level     i2c-mpc, i2c-mpc
+251:          0          0   OpenPIC   Edge      ipi call function
+252:     132173     593154   OpenPIC   Edge      ipi reschedule
+253:     249637     322693   OpenPIC   Edge      ipi call function single
+LOC:   13708097   13696736   Local timer interrupts
+SPU:         62          1   Spurious interrupts
+CNT:          0          0   Performance monitoring interrupts
+MCE:          0          0   Machine check exceptions
+
+============================================================
+=== lspci -vvxxx (PCI config + first 256B header)
+============================================================
+00:00.0 PCI bridge [0604]: Freescale Semiconductor Inc P2020 [1957:0071] (rev 21)
+01:00.0 Ethernet controller [0200]: Broadcom Corporation Device [14e4:b846] (rev 02)
+---
+00:00.0 PCI bridge: Freescale Semiconductor Inc P2020 (rev 21) (prog-if 00 [Normal decode])
+	Control: I/O- Mem+ BusMaster+ SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR+ FastB2B- DisINTx-
+	Status: Cap+ 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+	Latency: 0, Cache Line Size: 32 bytes
+	Region 0: Memory at <ignored> (32-bit, non-prefetchable)
+	Bus: primary=00, secondary=01, subordinate=01, sec-latency=0
+	I/O behind bridge: 00000000-00000fff
+	Memory behind bridge: a0000000-bfffffff
+	Secondary status: 66MHz- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- <SERR- <PERR-
+	BridgeCtl: Parity- SERR- NoISA- VGA- MAbort- >Reset- FastB2B-
+		PriDiscTmr- SecDiscTmr- DiscTmrStat- DiscTmrSERREn-
+	Capabilities: [44] Power Management version 2
+		Flags: PMEClk- DSI- D1+ D2+ AuxCurrent=0mA PME(D0+,D1+,D2+,D3hot+,D3cold+)
+		Status: D0 NoSoftRst- PME-Enable- DSel=0 DScale=0 PME-
+	Capabilities: [4c] Express (v1) Root Port (Slot-), MSI 00
+		DevCap:	MaxPayload 256 bytes, PhantFunc 0, Latency L0s <64ns, L1 <1us
+			ExtTag- RBE- FLReset-
+		DevCtl:	Report errors: Correctable- Non-Fatal+ Fatal+ Unsupported+
+			RlxdOrd+ ExtTag- PhantFunc- AuxPwr- NoSnoop+
+			MaxPayload 256 bytes, MaxReadReq 256 bytes
+		DevSta:	CorrErr- UncorrErr- FatalErr- UnsuppReq- AuxPwr- TransPend-
+		LnkCap:	Port #0, Speed 2.5GT/s, Width x4, ASPM L0s, Latency L0 <2us, L1 unlimited
+			ClockPM- Surprise- LLActRep- BwNot-
+		LnkCtl:	ASPM Disabled; RCB 128 bytes Disabled- Retrain- CommClk-
+			ExtSynch- ClockPM- AutWidDis- BWInt- AutBWInt-
+		LnkSta:	Speed 2.5GT/s, Width x1, TrErr- Train- SlotClk- DLActive- BWMgmt- ABWMgmt-
+		RootCtl: ErrCorrectable- ErrNon-Fatal- ErrFatal- PMEIntEna- CRSVisible-
+		RootCap: CRSVisible-
+		RootSta: PME ReqID 0000, PMEStatus- PMEPending-
+	Capabilities: [100 v1] Advanced Error Reporting
+		UESta:	DLP- SDES- TLP- FCP- CmpltTO- CmpltAbrt- UnxCmplt- RxOF- MalfTLP- ECRC- UnsupReq- ACSViol-
+		UEMsk:	DLP- SDES- TLP- FCP- CmpltTO- CmpltAbrt- UnxCmplt- RxOF- MalfTLP- ECRC- UnsupReq- ACSViol-
+		UESvrt:	DLP+ SDES- TLP- FCP+ CmpltTO- CmpltAbrt- UnxCmplt- RxOF+ MalfTLP+ ECRC- UnsupReq- ACSViol-
+		CESta:	RxErr- BadTLP- BadDLLP- Rollover- Timeout- NonFatalErr-
+		CEMsk:	RxErr- BadTLP- BadDLLP- Rollover- Timeout- NonFatalErr-
+		AERCap:	First Error Pointer: 00, GenCap+ CGenEn- ChkCap+ ChkEn-
+00: 57 19 71 00 06 01 10 00 21 00 20 0b 08 00 01 00
+10: 00 00 f0 ff 00 00 00 00 00 01 01 00 00 00 00 00
+20: 00 a0 f0 bf f1 ff 01 00 00 00 00 00 00 00 00 00
+30: 00 00 00 00 44 00 00 00 00 00 00 00 00 00 00 00
+40: 00 00 00 00 01 4c 02 fe 00 00 00 00 10 00 41 00
+50: 01 00 00 00 3e 18 00 00 41 d4 03 00 08 00 11 00
+60: c0 07 00 00 c0 03 40 00 00 00 00 00 00 00 00 00
+70: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+90: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+a0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+b0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+c0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+d0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+
+01:00.0 Ethernet controller: Broadcom Corporation Device b846 (rev 02)
+	Subsystem: Broadcom Corporation Device b846
+	Control: I/O- Mem+ BusMaster+ SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR- FastB2B- DisINTx-
+	Status: Cap+ 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+	Latency: 0, Cache Line Size: 32 bytes
+	Interrupt: pin A routed to IRQ 16
+	Region 0: Memory at a0000000 (64-bit, non-prefetchable) [size=256K]
+	Capabilities: [48] Power Management version 3
+		Flags: PMEClk- DSI- D1- D2- AuxCurrent=0mA PME(D0+,D1-,D2-,D3hot+,D3cold+)
+		Status: D0 NoSoftRst+ PME-Enable- DSel=0 DScale=1 PME-
+	Capabilities: [50] Vital Product Data
+		Not readable
+	Capabilities: [58] MSI: Enable- Count=1/8 Maskable- 64bit+
+		Address: 0000000000000000  Data: 0000
+	Capabilities: [ac] Express (v2) Endpoint, MSI 00
+		DevCap:	MaxPayload 512 bytes, PhantFunc 0, Latency L0s <64ns, L1 <1us
+			ExtTag- AttnBtn- AttnInd- PwrInd- RBE+ FLReset-
+		DevCtl:	Report errors: Correctable- Non-Fatal- Fatal- Unsupported-
+			RlxdOrd- ExtTag- PhantFunc- AuxPwr+ NoSnoop+
+			MaxPayload 256 bytes, MaxReadReq 256 bytes
+		DevSta:	CorrErr- UncorrErr- FatalErr- UnsuppReq- AuxPwr+ TransPend-
+		LnkCap:	Port #0, Speed 5GT/s, Width x2, ASPM L0s L1, Latency L0 <4us, L1 <4us
+			ClockPM- Surprise- LLActRep- BwNot-
+		LnkCtl:	ASPM Disabled; RCB 64 bytes Disabled- Retrain- CommClk-
+			ExtSynch- ClockPM- AutWidDis- BWInt- AutBWInt-
+		LnkSta:	Speed 2.5GT/s, Width x1, TrErr- Train- SlotClk+ DLActive- BWMgmt- ABWMgmt-
+		DevCap2: Completion Timeout: Range ABCD, TimeoutDis+
+		DevCtl2: Completion Timeout: 50us to 50ms, TimeoutDis-
+		LnkCtl2: Target Link Speed: 2.5GT/s, EnterCompliance- SpeedDis-, Selectable De-emphasis: -6dB
+			 Transmit Margin: Normal Operating Range, EnterModifiedCompliance- ComplianceSOS-
+			 Compliance De-emphasis: -6dB
+		LnkSta2: Current De-emphasis Level: -6dB, EqualizationComplete-, EqualizationPhase1-
+			 EqualizationPhase2-, EqualizationPhase3-, LinkEqualizationRequest-
+	Capabilities: [100 v1] Device Serial Number 00-00-00-00-00-00-00-00
+	Capabilities: [110 v1] Advanced Error Reporting
+		UESta:	DLP- SDES- TLP- FCP- CmpltTO- CmpltAbrt- UnxCmplt- RxOF- MalfTLP- ECRC- UnsupReq- ACSViol-
+		UEMsk:	DLP- SDES- TLP- FCP- CmpltTO- CmpltAbrt- UnxCmplt- RxOF- MalfTLP- ECRC- UnsupReq- ACSViol-
+		UESvrt:	DLP+ SDES+ TLP- FCP+ CmpltTO- CmpltAbrt- UnxCmplt- RxOF+ MalfTLP+ ECRC- UnsupReq- ACSViol-
+		CESta:	RxErr- BadTLP- BadDLLP- Rollover- Timeout- NonFatalErr-
+		CEMsk:	RxErr- BadTLP- BadDLLP- Rollover- Timeout- NonFatalErr+
+		AERCap:	First Error Pointer: 00, GenCap+ CGenEn- ChkCap+ ChkEn-
+	Capabilities: [150 v1] Power Budgeting <?>
+	Capabilities: [160 v1] Virtual Channel
+		Caps:	LPEVC=0 RefClk=100ns PATEntryBits=1
+		Arb:	Fixed- WRR32- WRR64- WRR128-
+		Ctrl:	ArbSelect=Fixed
+		Status:	InProgress-
+		VC0:	Caps:	PATOffset=00 MaxTimeSlots=1 RejSnoopTrans-
+			Arb:	Fixed- WRR32- WRR64- WRR128- TWRR128- WRR256-
+			Ctrl:	Enable+ ID=0 ArbSelect=Fixed TC/VC=ff
+			Status:	NegoPending- InProgress-
+	Kernel driver in use: linux-kernel-bde
+00: e4 14 46 b8 06 00 10 00 02 00 00 02 08 00 00 00
+10: 04 00 00 a0 00 00 00 00 00 00 00 00 00 00 00 00
+20: 00 00 00 00 00 00 00 00 00 00 00 00 e4 14 46 b8
+30: 00 00 00 00 48 00 00 00 00 00 00 00 00 01 00 00
+40: 00 00 00 00 00 00 ad de 01 50 03 c8 08 20 00 00
+50: 03 58 00 00 00 00 00 00 05 ac 86 00 00 00 00 00
+60: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+70: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+90: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+a0: 11 00 00 00 00 00 00 00 00 00 00 00 10 00 02 00
+b0: 02 80 3c 00 20 1c 10 00 22 6c 01 00 00 00 11 10
+c0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+d0: 1f 00 00 00 00 00 00 00 00 00 00 00 01 00 00 00
+e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+
+
+============================================================
+=== I2C: detect each bus
+============================================================
+
+--- i2c-0 ---
+     0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f
+00:          -- -- -- -- -- -- -- -- -- UU -- -- -- 
+10: -- -- -- -- -- -- -- -- UU -- -- -- -- -- -- -- 
+20: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+30: -- -- -- -- -- -- -- -- -- UU UU -- -- UU UU -- 
+40: -- -- -- -- -- -- -- -- -- -- -- -- -- UU -- -- 
+50: -- UU -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+60: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+70: UU -- -- -- -- -- -- --                         
+
+--- i2c-1 ---
+     0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f
+00:          -- -- -- -- -- -- -- -- -- -- -- -- -- 
+10: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+20: UU UU -- UU UU -- -- UU -- -- -- -- -- -- -- -- 
+30: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+40: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+50: UU UU -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+60: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+70: UU UU UU UU UU UU UU UU                         
+
+--- i2c-2 ---
+     0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f
+00:          -- -- -- -- -- -- -- -- -- -- -- -- -- 
+10: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+20: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+30: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+40: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+50: -- UU -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+60: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+70: UU -- -- -- -- -- -- --                         
+
+--- i2c-3 ---
+     0  1  2  3  4  5  6  7  8  9  a  b  c  d  e  f
+00:          -- -- -- -- -- -- -- -- -- -- -- -- -- 
+10: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+20: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+30: -- -- -- -- -- -- -- -- -- -- UU -- -- -- UU -- 
+40: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+50: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+60: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- 
+70: UU -- -- -- -- -- -- --                         
+
+============================================================
+=== I2C: SFP+ DOM (port 1 = swp1, addr 0x50/0x51)
+============================================================
+i2c-0 addr=0x51 id_byte=Error: Could not set address to 0x51: Device or resource busy
+i2c-1 addr=0x50 id_byte=Error: Could not set address to 0x50: Device or resource busy
+i2c-1 addr=0x51 id_byte=Error: Could not set address to 0x51: Device or resource busy
+i2c-2 addr=0x51 id_byte=Error: Could not set address to 0x51: Device or resource busy
+
+============================================================
+=== Retimer DS100DF410 (per memory: I2C bus topology, channel pages 0x04-0x07)
+============================================================
+i2c-0 addr=0x18 reg_0xfd=Error: Could not set address to 0x18: Device or resource busy page_reg_0xfc=Error: Could not set address to 0x18: Device or resource busy
+
+============================================================
+=== CPLD via /sys or i2c (per memory: CPLD wraps at 32 bytes)
+============================================================
+0-0070
+1-0075
+1-0076
+1-0077
+10-0074
+11-0074
+12-0074
+13-0074
+14-0074
+15-0074
+16-0020
+16-0021
+16-0070
+16-0071
+16-0072
+16-0073
+17-0020
+17-0023
+17-0024
+18-0027
+
+============================================================
+=== dmesg (boot)
+============================================================
+ (NAND) (SUMMARY)  \xffffffc2\xffffffa9 2001-2006 Red Hat, Inc.
+[    0.300216] fuse init (API version 7.17)
+[    0.300316] msgmni has been set to 1360
+[    0.301137] io scheduler noop registered
+[    0.301143] io scheduler deadline registered
+[    0.301164] io scheduler cfq registered (default)
+[    0.309716] Serial: 8250/16550 driver, 2 ports, IRQ sharing enabled
+[    0.309960] serial8250.0: ttyS0 at MMIO 0xff704500 (irq = 42) is a 16550A
+[    0.309978] console [ttyS0] enabled, bootconsole disabled
+[    0.312905] brd: module loaded
+[    0.314414] loop: module loaded
+[    0.315041] efc00000.flash: Found 1 x16 devices at 0x0 in 8-bit bank. Manufacturer ID 0x000001 Chip ID 0x000c01
+[    0.315049] NOR chip too large to fit in mapping. Attempting to cope...
+[    0.315060] Amd/Fujitsu Extended Query Table at 0x0040
+[    0.315091]   Amd/Fujitsu Extended Query version 1.3.
+[    0.315099] number of CFI chips: 1
+[    0.315105] Reducing visibility of 8192KiB chip to 4096KiB
+[    0.316436] 4 ofpart partitions found on MTD device efc00000.flash
+[    0.316443] Creating 4 MTD partitions on "efc00000.flash":
+[    0.316452] 0x000000000000-0x000000360000 : "onie"
+[    0.316859] 0x000000360000-0x000000370000 : "uboot-env"
+[    0.317169] 0x000000370000-0x000000380000 : "board_eeprom"
+[    0.317478] 0x000000380000-0x000000400000 : "uboot"
+[    0.317959] bonding: Ethernet Channel Bonding Driver: v3.7.1 (April 27, 2011)
+[    0.318433] Freescale PowerQUICC MII Bus: probed
+[    0.319752] fsl-gianfar ff724000.ethernet: eth0: mac: 80:a2:35:81:ca:ae
+[    0.319761] fsl-gianfar ff724000.ethernet: eth0: Running with NAPI enabled
+[    0.319769] fsl-gianfar ff724000.ethernet: eth0: RX BD ring size for Q[0]: 256
+[    0.319777] fsl-gianfar ff724000.ethernet: eth0: TX BD ring size for Q[0]: 256
+[    0.319792] ehci_hcd: USB 2.0 'Enhanced' Host Controller (EHCI) Driver
+[    0.319912] fsl-ehci fsl-ehci.0: Freescale On-Chip EHCI Host Controller
+[    0.319929] fsl-ehci fsl-ehci.0: new USB bus registered, assigned bus number 1
+[    0.340638] fsl-ehci fsl-ehci.0: irq 28, io mem 0xff722000
+[    0.346615] fsl-ehci fsl-ehci.0: USB 2.0 started, EHCI 1.00
+[    0.346664] usb usb1: New USB device found, idVendor=1d6b, idProduct=0002
+[    0.346672] usb usb1: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+[    0.346678] usb usb1: Product: Freescale On-Chip EHCI Host Controller
+[    0.346685] usb usb1: Manufacturer: Linux 3.2.60-1+deb7u1+cl2.5 ehci_hcd
+[    0.346691] usb usb1: SerialNumber: fsl-ehci.0
+[    0.346822] hub 1-0:1.0: USB hub found
+[    0.346838] hub 1-0:1.0: 1 port detected
+[    0.346935] Initializing USB Mass Storage driver...
+[    0.346984] usbcore: registered new interface driver usb-storage
+[    0.346989] USB Mass Storage support registered.
+[    0.347033] usbcore: registered new interface driver usbserial
+[    0.347039] usbserial: USB Serial Driver core
+[    0.347075] i2c /dev entries driver
+[    0.347182] mpc-i2c ff703000.i2c: timeout 10000 us
+[    0.347901] mpc-i2c ff703100.i2c: timeout 10000 us
+[    0.349668] i2c i2c-0: Added multiplexed i2c bus 2
+[    0.350172] rtc-pcf8563 2-0051: chip found, driver version 0.4.3
+[    0.351249] rtc-pcf8563 2-0051: rtc core: registered rtc-pcf8563 as rtc0
+[    0.351316] i2c i2c-0: Added multiplexed i2c bus 3
+[    0.352852] i2c i2c-0: Added multiplexed i2c bus 4
+[    0.354915] i2c i2c-0: Added multiplexed i2c bus 5
+[    0.354984] i2c i2c-0: Added multiplexed i2c bus 6
+[    0.355038] i2c i2c-0: Added multiplexed i2c bus 7
+[    0.355092] i2c i2c-0: Added multiplexed i2c bus 8
+[    0.355151] i2c i2c-0: Added multiplexed i2c bus 9
+[    0.356128] pca954x 0-0070: registered 8 multiplexed busses for I2C switch pca9548
+[    0.356327] i2c i2c-1: Added multiplexed i2c bus 10
+[    0.356927] i2c i2c-1: Added multiplexed i2c bus 11
+[    0.357458] i2c i2c-1: Added multiplexed i2c bus 12
+[    0.358018] i2c i2c-1: Added multiplexed i2c bus 13
+[    0.358505] pca954x 1-0075: registered 4 multiplexed busses for I2C switch pca9546
+[    0.358706] i2c i2c-1: Added multiplexed i2c bus 14
+[    0.359252] i2c i2c-1: Added multiplexed i2c bus 15
+[    0.359870] i2c i2c-1: Added multiplexed i2c bus 16
+[    0.362871] i2c i2c-1: Added multiplexed i2c bus 17
+[    0.364304] pca954x 1-0076: registered 4 multiplexed busses for I2C switch pca9546
+[    0.364505] i2c i2c-1: Added multiplexed i2c bus 18
+[    0.365533] i2c i2c-1: Added multiplexed i2c bus 19
+[    0.366648] i2c i2c-1: Added multiplexed i2c bus 20
+[    0.367679] i2c i2c-1: Added multiplexed i2c bus 21
+[    0.368670] pca954x 1-0077: registered 4 multiplexed busses for I2C switch pca9546
+[    0.369128] i2c i2c-10: Added multiplexed i2c bus 22
+[    0.370177] i2c i2c-10: Added multiplexed i2c bus 23
+[    0.371213] i2c i2c-10: Added multiplexed i2c bus 24
+[    0.372314] i2c i2c-10: Added multiplexed i2c bus 25
+[    0.373342] i2c i2c-10: Added multiplexed i2c bus 26
+[    0.373909] i2c i2c-10: Added multiplexed i2c bus 27
+[    0.374454] i2c i2c-10: Added multiplexed i2c bus 28
+[    0.375082] i2c i2c-10: Added multiplexed i2c bus 29
+[    0.375575] pca954x 10-0074: registered 8 multiplexed busses for I2C switch pca9548
+[    0.376017] i2c i2c-11: Added multiplexed i2c bus 30
+[    0.377070] i2c i2c-11: Added multiplexed i2c bus 31
+[    0.378163] i2c i2c-11: Added multiplexed i2c bus 32
+[    0.379197] i2c i2c-11: Added multiplexed i2c bus 33
+[    0.380248] i2c i2c-11: Added multiplexed i2c bus 34
+[    0.380874] i2c i2c-11: Added multiplexed i2c bus 35
+[    0.381426] i2c i2c-11: Added multiplexed i2c bus 36
+[    0.381991] i2c i2c-11: Added multiplexed i2c bus 37
+[    0.382485] pca954x 11-0074: registered 8 multiplexed busses for I2C switch pca9548
+[    0.382932] i2c i2c-12: Added multiplexed i2c bus 38
+[    0.384039] i2c i2c-12: Added multiplexed i2c bus 39
+[    0.385088] i2c i2c-12: Added multiplexed i2c bus 40
+[    0.386128] i2c i2c-12: Added multiplexed i2c bus 41
+[    0.387222] i2c i2c-12: Added multiplexed i2c bus 42
+[    0.387780] i2c i2c-12: Added multiplexed i2c bus 43
+[    0.388315] i2c i2c-12: Added multiplexed i2c bus 44
+
+============================================================
+=== switchd log tail
+============================================================
+-rw-r--r-- 1 root root 40622 Jun  1 13:15 /var/log/switchd.log
+439
+
+============================================================
+=== Running services
+============================================================
+ [ ? ]  aclinit
+ [ ? ]  acltool
+ [ + ]  arp_refresh
+ [ + ]  auditd
+ [ ? ]  autoprovision
+ [ - ]  bootlogd
+ [ - ]  bootlogs
+ [ ? ]  bootmisc.sh
+ [ ? ]  checkfs.sh
+ [ ? ]  checkroot-bootclean.sh
+ [ - ]  checkroot.sh
+ [ ? ]  cl-l2tune
+ [ + ]  clagd
+ [ ? ]  clcmd_server
+ [ ? ]  clinit
+ [ + ]  cron
+ [ - ]  hostname.sh
+ [ ? ]  hw_init
+ [ ? ]  hwclock.sh
+ [ ? ]  isc-dhcp-relay
+ [ - ]  isc-dhcp-server
+ [ ? ]  killprocs
+ [ ? ]  kmod
+ [ + ]  ledmgrd
+ [ + ]  lldpd
+ [ - ]  lm-sensors
+ [ + ]  monit
+ [ - ]  motd
+ [ ? ]  mountall-bootclean.sh
+ [ ? ]  mountall.sh
+
+============================================================
+=== DUMP COMPLETE
+============================================================

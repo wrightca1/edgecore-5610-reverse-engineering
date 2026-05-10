@@ -1,0 +1,64 @@
+Warning: Permanently added '10.1.1.212' (ECDSA) to the list of known hosts.
+[sudo] password for cumulus: === ALL port carrier states now ===
+swp1: UP carrier=1 oper=up
+swp2: UP carrier=1 oper=up
+=== QSFP carriers specifically ===
+swp49: carrier=0 oper=down
+swp50: carrier=0 oper=down
+swp51: carrier=0 oper=down
+swp52: carrier=0 oper=down
+=== BCM ps for all xe ports ===
+            ena/    speed/ link auto    STP                  lrn  inter   max  loop
+      port  link    duplex scan neg?   state   pause  discrd ops   face frame  back
+       xe0  up     10G  FD   SW  No   Forward          None    F    XFI  1518 
+       xe1  up     10G  FD   SW  No   Forward          None    F    XFI  1518 
+       xe2  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+       xe3  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+       xe4  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+       xe5  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+       xe6  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+       xe7  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+       xe8  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+       xe9  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe10  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe11  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe12  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe13  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe14  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe15  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe16  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe17  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe18  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe19  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe20  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe21  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe22  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe23  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe24  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe25  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe26  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe27  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe28  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe29  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe30  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe31  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe32  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe33  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe34  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe35  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe36  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe37  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe38  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe39  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe40  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe41  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe42  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe43  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe44  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe45  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe46  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe47  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+      xe48  down   40G  FD   SW  No   Forward          None    F    KR4  1518 
+      xe49  down   40G  FD   SW  No   Forward          None    F    KR4  1518 
+      xe50  down   40G  FD   SW  No   Forward          None    F    KR4  1518 
+      xe51  down   40G  FD   SW  No   Forward          None    F    KR4  1518 

@@ -1,0 +1,85 @@
+Warning: Permanently added '10.1.1.212' (ECDSA) to the list of known hosts.
+[sudo] password for cumulus: === sff8436 instances ===
+lrwxrwxrwx 1 root root 0 Jun  1 13:27 18-0050 -> ../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-18/18-0050
+lrwxrwxrwx 1 root root 0 Jun  1 13:27 19-0050 -> ../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-19/19-0050
+lrwxrwxrwx 1 root root 0 Jun  1 13:27 20-0050 -> ../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-20/20-0050
+lrwxrwxrwx 1 root root 0 Jun  1 13:27 21-0050 -> ../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-21/21-0050
+lrwxrwxrwx 1 root root 0 Jun  1 13:27 22-0050 -> ../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-10/i2c-22/22-0050
+lrwxrwxrwx 1 root root 0 Jun  1 13:55 23-0050 -> ../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-10/i2c-23/23-0050
+lrwxrwxrwx 1 root root 0 Jun  1 13:55 24-0050 -> ../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-10/i2c-24/24-0050
+lrwxrwxrwx 1 root root 0 Jun  1 13:55 25-0050 -> ../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-10/i2c-25/25-0050
+lrwxrwxrwx 1 root root 0 Jun  1 13:55 26-0050 -> ../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-10/i2c-26/26-0050
+lrwxrwxrwx 1 root root 0 Jun  1 13:55 27-0050 -> ../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-10/i2c-27/27-0050
+lrwxrwxrwx 1 root root 0 Jun  1 13:55 28-0050 -> ../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-10/i2c-28/28-0050
+lrwxrwxrwx 1 root root 0 Jun  1 13:55 29-0050 -> ../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-10/i2c-29/29-0050
+lrwxrwxrwx 1 root root 0 Jun  1 13:55 30-0050 -> ../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-11/i2c-30/30-0050
+lrwxrwxrwx 1 root root 0 Jun  1 13:55 31-0050 -> ../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-11/i2c-31/31-0050
+lrwxrwxrwx 1 root root 0 Jun  1 13:55 32-0050 -> ../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-11/i2c-32/32-0050
+lrwxrwxrwx 1 root root 0 Jun  1 13:55 33-0050 -> ../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-11/i2c-33/33-0050
+lrwxrwxrwx 1 root root 0 Jun  1 13:55 34-0050 -> ../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-11/i2c-34/34-0050
+lrwxrwxrwx 1 root root 0 Jun  1 13:55 35-0050 -> ../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-11/i2c-35/35-0050
+lrwxrwxrwx 1 root root 0 Jun  1 13:55 36-0050 -> ../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-11/i2c-36/36-0050
+lrwxrwxrwx 1 root root 0 Jun  1 13:55 37-0050 -> ../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-11/i2c-37/37-0050
+lrwxrwxrwx 1 root root 0 Jun  1 13:55 38-0050 -> ../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-12/i2c-38/38-0050
+lrwxrwxrwx 1 root root 0 Jun  1 13:55 39-0050 -> ../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-12/i2c-39/39-0050
+lrwxrwxrwx 1 root root 0 Jun  1 13:55 40-0050 -> ../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-12/i2c-40/40-0050
+lrwxrwxrwx 1 root root 0 Jun  1 13:55 41-0050 -> ../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-12/i2c-41/41-0050
+lrwxrwxrwx 1 root root 0 Jun  1 13:55 42-0050 -> ../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-12/i2c-42/42-0050
+lrwxrwxrwx 1 root root 0 Jun  1 13:55 43-0050 -> ../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-12/i2c-43/43-0050
+lrwxrwxrwx 1 root root 0 Jun  1 13:55 44-0050 -> ../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-12/i2c-44/44-0050
+lrwxrwxrwx 1 root root 0 Jun  1 13:55 45-0050 -> ../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-12/i2c-45/45-0050
+lrwxrwxrwx 1 root root 0 Jun  1 13:55 46-0050 -> ../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-13/i2c-46/46-0050
+lrwxrwxrwx 1 root root 0 Jun  1 13:55 47-0050 -> ../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-13/i2c-47/47-0050
+lrwxrwxrwx 1 root root 0 Jun  1 13:55 48-0050 -> ../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-13/i2c-48/48-0050
+lrwxrwxrwx 1 root root 0 Jun  1 13:55 49-0050 -> ../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-13/i2c-49/49-0050
+lrwxrwxrwx 1 root root 0 Jun  1 13:55 50-0050 -> ../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-13/i2c-50/50-0050
+lrwxrwxrwx 1 root root 0 Jun  1 13:55 51-0050 -> ../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-13/i2c-51/51-0050
+lrwxrwxrwx 1 root root 0 Jun  1 13:55 52-0050 -> ../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-13/i2c-52/52-0050
+lrwxrwxrwx 1 root root 0 Jun  1 13:55 53-0050 -> ../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-13/i2c-53/53-0050
+lrwxrwxrwx 1 root root 0 Jun  1 13:55 54-0050 -> ../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-14/i2c-54/54-0050
+lrwxrwxrwx 1 root root 0 Jun  1 13:55 55-0050 -> ../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-14/i2c-55/55-0050
+lrwxrwxrwx 1 root root 0 Jun  1 13:55 56-0050 -> ../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-14/i2c-56/56-0050
+lrwxrwxrwx 1 root root 0 Jun  1 13:55 57-0050 -> ../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-14/i2c-57/57-0050
+lrwxrwxrwx 1 root root 0 Jun  1 13:55 58-0050 -> ../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-14/i2c-58/58-0050
+lrwxrwxrwx 1 root root 0 Jun  1 13:55 59-0050 -> ../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-14/i2c-59/59-0050
+lrwxrwxrwx 1 root root 0 Jun  1 13:55 60-0050 -> ../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-14/i2c-60/60-0050
+lrwxrwxrwx 1 root root 0 Jun  1 13:55 61-0050 -> ../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-14/i2c-61/61-0050
+lrwxrwxrwx 1 root root 0 Jun  1 13:55 62-0050 -> ../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-15/i2c-62/62-0050
+lrwxrwxrwx 1 root root 0 Jun  1 13:55 63-0050 -> ../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-15/i2c-63/63-0050
+lrwxrwxrwx 1 root root 0 Jun  1 13:55 64-0050 -> ../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-15/i2c-64/64-0050
+lrwxrwxrwx 1 root root 0 Jun  1 13:55 65-0050 -> ../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-15/i2c-65/65-0050
+lrwxrwxrwx 1 root root 0 Jun  1 13:55 66-0050 -> ../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-15/i2c-66/66-0050
+lrwxrwxrwx 1 root root 0 Jun  1 13:55 67-0050 -> ../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-15/i2c-67/67-0050
+lrwxrwxrwx 1 root root 0 Jun  1 13:55 68-0050 -> ../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-15/i2c-68/68-0050
+lrwxrwxrwx 1 root root 0 Jun  1 13:55 69-0050 -> ../../../devices/soc.0/ff703100.i2c/i2c-1/i2c-15/i2c-69/69-0050
+
+=== ls one of them ===
+driver
+eeprom
+eeprom_dev
+modalias
+name
+subsystem
+uevent
+
+=== find QSFP EEPROMs ===
+=== QSFP at 18-0050 name=sff8436 ===
+ 0d 00 02 ff 00 00 00 00 00 00 00 00 00 00 00 00
+ 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+*
+ 00 00 00 00 00 00
+=== QSFP at 19-0050 name=sff8436 ===
+ 0d 00 02 ff 00 00 00 00 00 00 00 00 00 00 00 00
+ 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+*
+ 00 00 00 00 00 00
+=== QSFP at 20-0050 name=sff8436 ===
+ 0d 00 02 ff 00 00 00 00 00 00 00 00 00 00 00 00
+ 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+*
+ 00 00 00 00 00 00
+=== QSFP at 21-0050 name=sff8436 ===
+ 0d 00 02 ff 00 00 00 00 00 00 00 00 00 00 00 00
+ 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+*
+ 00 00 00 00 00 00

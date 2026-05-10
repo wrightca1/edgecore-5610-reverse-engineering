@@ -1,0 +1,247 @@
+Warning: Permanently added '10.1.1.212' (ECDSA) to the list of known hosts.
+[sudo] password for cumulus: === swp1 ===
+Warning: cl-sfputil will be removed in a future release.  Use ethtool -m
+swp1: SFP detected
+	CalibrationType : Internally Calibrated
+	Connector : LC
+	EncodingCodes : 64B/66B
+	ExtIdentOfTypeOfTransceiver : GBIC/SFP defined by twowire interface ID
+	LengthSMF(UnitsOf100m) : 100
+	LengthSMFkm-UnitsOfKm : 10
+	NominalSignallingRate(UnitsOf100Mbd) : 103
+	RateIdentifier : Unspecified
+	ReceivedPowerMeasurementType : Avg power
+	TransceiverCodes :
+		10GEthernetComplianceCode : 10G Base-LR
+		FibreChannelLinkLength : Long distance (L)
+		FibreChannelSpeed : 800 MBytes/sec
+		FibreChannelTechnology : Longwave Laser (LC)
+		FibreChannelTransmissionMedia : Single Mode (SM)
+	TypeOfTransceiver : SFP or SFP Plus
+	VendorDataCode(YYYY-MM-DD Lot) : 2018-09-12 
+	VendorName : FINISAR CORP.
+	VendorOUI : FIN
+	VendorPN : FTLX1475D3BTL-E7
+	VendorRev : A
+	VendorSN : A0BAJGQ
+	AlarmFlagStatus :
+		RXPowerHighAlarm : Off
+		RXPowerLowAlarm : Off
+		TXBiasHighAlarm : On
+		TXBiasLowAlarm : On
+		TXPowerHighAlarm : On
+		TXPowerLowAlarm : On
+		TempHighAlarm : Off
+		TempLowAlarm : Off
+		VccHighAlarm : On
+		VccLowAlarm : Off
+	AwThresholds :
+		BiasHighAlarm : 0.0000mA
+		BiasHighWarning : 35.9860mA
+		BiasLowAlarm : 0.0000mA
+		BiasLowWarning : 40.0820mA
+=== swp2 ===
+Warning: cl-sfputil will be removed in a future release.  Use ethtool -m
+swp2: SFP detected
+	CalibrationType : Internally Calibrated
+	Connector : LC
+	EncodingCodes : 64B/66B
+	ExtIdentOfTypeOfTransceiver : GBIC/SFP defined by twowire interface ID
+	LengthSMF(UnitsOf100m) : 14
+	LengthSMFkm-UnitsOfKm : 1
+	NominalSignallingRate(UnitsOf100Mbd) : 103
+	RateIdentifier : Unspecified
+	ReceivedPowerMeasurementType : Avg power
+	TransceiverCodes :
+		10GEthernetComplianceCode : 10G Base-LR
+		FibreChannelTechnology : Longwave Laser (LC)
+		FibreChannelTransmissionMedia : Single Mode (SM)
+	TypeOfTransceiver : SFP or SFP Plus
+	VendorDataCode(YYYY-MM-DD Lot) : 2018-05-03 
+	VendorName : FINISAR CORP.
+	VendorOUI : FIN
+	VendorPN : FTLX1370W4BTL-E7
+	VendorRev : A
+	VendorSN : PZG32P9
+	AlarmFlagStatus :
+		RXPowerHighAlarm : Off
+		RXPowerLowAlarm : Off
+		TXBiasHighAlarm : On
+		TXBiasLowAlarm : On
+		TXPowerHighAlarm : On
+		TXPowerLowAlarm : On
+		TempHighAlarm : Off
+		TempLowAlarm : Off
+		VccHighAlarm : On
+		VccLowAlarm : Off
+	AwThresholds :
+		BiasHighAlarm : 0.0000mA
+		BiasHighWarning : 35.9860mA
+		BiasLowAlarm : 0.0000mA
+		BiasLowWarning : 40.0820mA
+		RXPowerHighAlarm : 0.7218dBm
+		RXPowerHighWarning : -infdBm
+=== swp49 ===
+Warning: cl-sfputil will be removed in a future release.  Use ethtool -m
+swp49: SFP detected
+	Connector : LC
+	EncodingCodes : SONET Scrambled
+	ExtIdentOfTypeOfTransceiver : Unknown
+	LengthSMF(UnitsOf100m) : 50
+	NominalSignallingRate(UnitsOf100Mbd) : 206
+	RateIdentifier : Unspecified
+	ReceivedPowerMeasurementType : Avg power
+	TransceiverCodes :
+	TypeOfTransceiver : QSFP
+	VendorDataCode(YYYY-MM-DD Lot) : 2017-11-30 
+	VendorName : CISCO-AVAGO
+	VendorOUI : CIS
+	VendorPN : AFBR-79EBPZ-CS2
+	VendorRev : 01Bh
+	VendorSN : AVM2148U1ZZ
+	ChannelMonitor :
+		Rx1PowerHighAlarm : Off
+		Rx1PowerHighWarning : Off
+		Rx1PowerLowAlarm : Off
+		Rx1PowerLowWarning : Off
+		Rx2PowerHighAlarm : Off
+		Rx2PowerHighWarning : Off
+		Rx2PowerLowAlarm : Off
+		Rx2PowerLowWarning : Off
+		Rx3PowerHighAlarm : Off
+		Rx3PowerHighWarning : Off
+		Rx3PowerLowAlarm : Off
+		Rx3PowerLowWarning : Off
+		Rx4PowerHighAlarm : Off
+		Rx4PowerHighWarning : Off
+		Rx4PowerLowAlarm : Off
+		Rx4PowerLowWarning : Off
+		Tx1BiasHighAlarm : Off
+		Tx1BiasHighWarning : Off
+		Tx1BiasLowAlarm : Off
+		Tx1BiasLowWarning : Off
+		Tx2BiasHighAlarm : Off
+		Tx2BiasHighWarning : Off
+=== swp50 ===
+Warning: cl-sfputil will be removed in a future release.  Use ethtool -m
+swp50: SFP detected
+	Connector : LC
+	EncodingCodes : SONET Scrambled
+	ExtIdentOfTypeOfTransceiver : Unknown
+	LengthSMF(UnitsOf100m) : 50
+	NominalSignallingRate(UnitsOf100Mbd) : 206
+	RateIdentifier : Unspecified
+	ReceivedPowerMeasurementType : Avg power
+	TransceiverCodes :
+	TypeOfTransceiver : QSFP
+	VendorDataCode(YYYY-MM-DD Lot) : 2017-12-09 
+	VendorName : CISCO-AVAGO
+	VendorOUI : CIS
+	VendorPN : AFBR-79EBPZ-CS2
+	VendorRev : 01Bh
+	VendorSN : AVM2149U5UY
+	ChannelMonitor :
+		Rx1PowerHighAlarm : Off
+		Rx1PowerHighWarning : Off
+		Rx1PowerLowAlarm : Off
+		Rx1PowerLowWarning : Off
+		Rx2PowerHighAlarm : Off
+		Rx2PowerHighWarning : Off
+		Rx2PowerLowAlarm : Off
+		Rx2PowerLowWarning : Off
+		Rx3PowerHighAlarm : Off
+		Rx3PowerHighWarning : Off
+		Rx3PowerLowAlarm : Off
+		Rx3PowerLowWarning : Off
+		Rx4PowerHighAlarm : Off
+		Rx4PowerHighWarning : Off
+		Rx4PowerLowAlarm : Off
+		Rx4PowerLowWarning : Off
+		Tx1BiasHighAlarm : Off
+		Tx1BiasHighWarning : Off
+		Tx1BiasLowAlarm : Off
+		Tx1BiasLowWarning : Off
+		Tx2BiasHighAlarm : Off
+		Tx2BiasHighWarning : Off
+=== swp51 ===
+Warning: cl-sfputil will be removed in a future release.  Use ethtool -m
+swp51: SFP detected
+	Connector : LC
+	EncodingCodes : SONET Scrambled
+	ExtIdentOfTypeOfTransceiver : Unknown
+	LengthSMF(UnitsOf100m) : 50
+	NominalSignallingRate(UnitsOf100Mbd) : 206
+	RateIdentifier : Unspecified
+	ReceivedPowerMeasurementType : Avg power
+	TransceiverCodes :
+	TypeOfTransceiver : QSFP
+	VendorDataCode(YYYY-MM-DD Lot) : 2017-12-06 
+	VendorName : CISCO-AVAGO
+	VendorOUI : CIS
+	VendorPN : AFBR-79EBPZ-CS2
+	VendorRev : 01Bh
+	VendorSN : AVF2149U056
+	ChannelMonitor :
+		Rx1PowerHighAlarm : Off
+		Rx1PowerHighWarning : Off
+		Rx1PowerLowAlarm : Off
+		Rx1PowerLowWarning : Off
+		Rx2PowerHighAlarm : Off
+		Rx2PowerHighWarning : Off
+		Rx2PowerLowAlarm : Off
+		Rx2PowerLowWarning : Off
+		Rx3PowerHighAlarm : Off
+		Rx3PowerHighWarning : Off
+		Rx3PowerLowAlarm : Off
+		Rx3PowerLowWarning : Off
+		Rx4PowerHighAlarm : Off
+		Rx4PowerHighWarning : Off
+		Rx4PowerLowAlarm : Off
+		Rx4PowerLowWarning : Off
+		Tx1BiasHighAlarm : Off
+		Tx1BiasHighWarning : Off
+		Tx1BiasLowAlarm : Off
+		Tx1BiasLowWarning : Off
+		Tx2BiasHighAlarm : Off
+		Tx2BiasHighWarning : Off
+=== swp52 ===
+Warning: cl-sfputil will be removed in a future release.  Use ethtool -m
+swp52: SFP detected
+	Connector : LC
+	EncodingCodes : SONET Scrambled
+	ExtIdentOfTypeOfTransceiver : Unknown
+	LengthSMF(UnitsOf100m) : 50
+	NominalSignallingRate(UnitsOf100Mbd) : 206
+	RateIdentifier : Unspecified
+	ReceivedPowerMeasurementType : Avg power
+	TransceiverCodes :
+	TypeOfTransceiver : QSFP
+	VendorDataCode(YYYY-MM-DD Lot) : 2017-12-09 
+	VendorName : CISCO-AVAGO
+	VendorOUI : CIS
+	VendorPN : AFBR-79EBPZ-CS2
+	VendorRev : 01Bh
+	VendorSN : AVM2149U5UZ
+	ChannelMonitor :
+		Rx1PowerHighAlarm : Off
+		Rx1PowerHighWarning : Off
+		Rx1PowerLowAlarm : Off
+		Rx1PowerLowWarning : Off
+		Rx2PowerHighAlarm : Off
+		Rx2PowerHighWarning : Off
+		Rx2PowerLowAlarm : Off
+		Rx2PowerLowWarning : Off
+		Rx3PowerHighAlarm : Off
+		Rx3PowerHighWarning : Off
+		Rx3PowerLowAlarm : Off
+		Rx3PowerLowWarning : Off
+		Rx4PowerHighAlarm : Off
+		Rx4PowerHighWarning : Off
+		Rx4PowerLowAlarm : Off
+		Rx4PowerLowWarning : Off
+		Tx1BiasHighAlarm : Off
+		Tx1BiasHighWarning : Off
+		Tx1BiasLowAlarm : Off
+		Tx1BiasLowWarning : Off
+		Tx2BiasHighAlarm : Off
+		Tx2BiasHighWarning : Off

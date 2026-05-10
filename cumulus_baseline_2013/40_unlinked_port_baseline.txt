@@ -1,0 +1,24 @@
+Warning: Permanently added '10.1.1.212' (ECDSA) to the list of known hosts.
+[sudo] password for cumulus: === phy control xe2 ===
+Current PHY control settings of xe2 ->
+Preemphasis              = 0xa370
+DriverCurrent            = 0x2
+PreDriverCurrent         = 0x3
+Rx LOS (s/w) enable         - 0
+=== phy control xe4 ===
+Current PHY control settings of xe4 ->
+Preemphasis              = 0xa370
+DriverCurrent            = 0x2
+PreDriverCurrent         = 0x3
+Rx LOS (s/w) enable         - 0
+=== ps all ports ===
+            ena/    speed/ link auto    STP                  lrn  inter   max  loop
+      port  link    duplex scan neg?   state   pause  discrd ops   face frame  back
+       xe0  up     10G  FD   SW  No   Forward          None    F    XFI  1518 
+       xe1  up     10G  FD   SW  No   Forward          None    F    XFI  1518 
+       xe2  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+       xe3  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+       xe4  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+       xe5  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+       xe6  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+       xe7  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 

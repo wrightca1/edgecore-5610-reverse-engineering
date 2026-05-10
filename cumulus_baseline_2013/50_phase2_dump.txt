@@ -1,0 +1,1764 @@
+[sudo] password for cumulus: 
+============================================================
+=== BEFORE: enabling swp10 (unconnected) for admin-up-no-link state
+============================================================
+12: swp10: <BROADCAST,MULTICAST>mtu 1500 qdisc noop DOWN     mode DEFAULT qlen 500
+    link/ether 80:a2:35:81:ca:b8 brd ff:ff:ff:ff:ff:ff
+            ena/    speed/ link auto    STP                  lrn  inter   max  loop
+      port  link    duplex scan neg?   state   pause  discrd ops   face frame  back
+       xe9  !ena   10G  FD   SW  No   Disable          None    F    XFI  1518 
+
+============================================================
+=== QSFP+ ports 49-52 - check link state (cables plugged in!)
+============================================================
+User reports cables in QSFP ports 49-52
+--- swp49 ---
+51: swp49: <BROADCAST,MULTICAST>mtu 1500 qdisc noop DOWN     mode DEFAULT qlen 500
+    link/ether 80:a2:35:81:ca:df brd ff:ff:ff:ff:ff:ff
+carrier= operstate=down
+Cannot get device settings: No data available
+Settings for swp49:
+	Current message level: 0x00000000 (0)
+			       
+	Link detected: no
+--- swp50 ---
+52: swp50: <BROADCAST,MULTICAST>mtu 1500 qdisc noop DOWN     mode DEFAULT qlen 500
+    link/ether 80:a2:35:81:ca:e3 brd ff:ff:ff:ff:ff:ff
+carrier= operstate=down
+Cannot get device settings: No data available
+Settings for swp50:
+	Current message level: 0x00000000 (0)
+			       
+	Link detected: no
+--- swp51 ---
+53: swp51: <BROADCAST,MULTICAST>mtu 1500 qdisc noop DOWN     mode DEFAULT qlen 500
+    link/ether 80:a2:35:81:ca:e7 brd ff:ff:ff:ff:ff:ff
+carrier= operstate=down
+Cannot get device settings: No data available
+Settings for swp51:
+	Current message level: 0x00000000 (0)
+			       
+	Link detected: no
+--- swp52 ---
+54: swp52: <BROADCAST,MULTICAST>mtu 1500 qdisc noop DOWN     mode DEFAULT qlen 500
+    link/ether 80:a2:35:81:ca:eb brd ff:ff:ff:ff:ff:ff
+carrier= operstate=down
+Cannot get device settings: No data available
+Settings for swp52:
+	Current message level: 0x00000000 (0)
+			       
+	Link detected: no
+Bring up swp49-52 to test
+
+============================================================
+=== QSFP after admin up
+============================================================
+--- swp49 ---
+51: swp49: <NO-CARRIER,BROADCAST,MULTICAST,UP>mtu 1500 qdisc pfifo_fast DOWN     mode DEFAULT qlen 500
+    link/ether 80:a2:35:81:ca:df brd ff:ff:ff:ff:ff:ff
+carrier=0
+	Speed: Unknown!
+	Link detected: no
+--- swp50 ---
+52: swp50: <NO-CARRIER,BROADCAST,MULTICAST,UP>mtu 1500 qdisc pfifo_fast DOWN     mode DEFAULT qlen 500
+    link/ether 80:a2:35:81:ca:e3 brd ff:ff:ff:ff:ff:ff
+carrier=0
+	Speed: Unknown!
+	Link detected: no
+--- swp51 ---
+53: swp51: <NO-CARRIER,BROADCAST,MULTICAST,UP>mtu 1500 qdisc pfifo_fast DOWN     mode DEFAULT qlen 500
+    link/ether 80:a2:35:81:ca:e7 brd ff:ff:ff:ff:ff:ff
+carrier=0
+	Speed: Unknown!
+	Link detected: no
+--- swp52 ---
+54: swp52: <NO-CARRIER,BROADCAST,MULTICAST,UP>mtu 1500 qdisc pfifo_fast DOWN     mode DEFAULT qlen 500
+    link/ether 80:a2:35:81:ca:eb brd ff:ff:ff:ff:ff:ff
+carrier=0
+	Speed: Unknown!
+	Link detected: no
+
+============================================================
+=== QSFP BCM ports xe48-xe51
+============================================================
+            ena/    speed/ link auto    STP                  lrn  inter   max  loop
+      port  link    duplex scan neg?   state   pause  discrd ops   face frame  back
+      xe48  down   40G  FD   SW  No   Forward          None    F    KR4  1518 
+      xe49  down   40G  FD   SW  No   Forward          None    F    KR4  1518 
+      xe50  down   40G  FD   SW  No   Forward          None    F    KR4  1518 
+      xe51  down   40G  FD   SW  No   Forward          None    F    KR4  1518 
+--- xe48 ---
+Current PHY control settings of xe48 ->
+Preemphasis              = 0xe270
+DriverCurrent            = 0x4
+PreDriverCurrent         = 0x4
+Rx LOS (s/w) enable         - 0
+  PHY info:
+ xe48( 49)   143  bff0    c1    c1              WC-B0/12/4     250000  
+--- xe49 ---
+Current PHY control settings of xe49 ->
+Preemphasis              = 0xe270
+DriverCurrent            = 0x4
+PreDriverCurrent         = 0x4
+Rx LOS (s/w) enable         - 0
+  PHY info:
+ xe49( 50)   143  bff0    b5    b5              WC-B0/11/4     250000  
+--- xe50 ---
+Current PHY control settings of xe50 ->
+Preemphasis              = 0xe270
+DriverCurrent            = 0x4
+PreDriverCurrent         = 0x4
+Rx LOS (s/w) enable         - 0
+  PHY info:
+ xe50( 51)   143  bff0    cd    cd              WC-B0/15/4     250000  
+--- xe51 ---
+Current PHY control settings of xe51 ->
+Preemphasis              = 0xe270
+DriverCurrent            = 0x4
+PreDriverCurrent         = 0x4
+Rx LOS (s/w) enable         - 0
+  PHY info:
+ xe51( 52)   143  bff0    c9    c9              WC-B0/14/4     250000  
+
+============================================================
+=== QSFP CL22 reg dump xe48 (swp49)
+============================================================
+xe48 reg 0x00 : 0xc1 0x0000 0x0000 
+xe48 reg 0x01 : 0xc1 0x0001 0x0000 
+xe48 reg 0x02 : 0xc1 0x0002 0x0000 
+xe48 reg 0x03 : 0xc1 0x0003 0x0000 
+xe48 reg 0x04 : 0xc1 0x0004 0x0000 
+xe48 reg 0x05 : 0xc1 0x0005 0x0000 
+xe48 reg 0x06 : 0xc1 0x0006 0x0000 
+xe48 reg 0x07 : 0xc1 0x0007 0x0000 
+xe48 reg 0x08 : 0xc1 0x0008 0x0000 
+xe48 reg 0x09 : 0xc1 0x0009 0x0000 
+xe48 reg 0x0a : 0xc1 0x000a 0x0000 
+xe48 reg 0x0b : 0xc1 0x000b 0x0000 
+xe48 reg 0x0c : 0xc1 0x000c 0x0000 
+xe48 reg 0x0d : 0xc1 0x000d 0x0000 
+xe48 reg 0x0e : 0xc1 0x000e 0x0000 
+xe48 reg 0x0f : 0xc1 0x000f 0x0000 
+xe48 reg 0x10 : 0xc1 0x0010 0x0000 
+xe48 reg 0x11 : 0xc1 0x0011 0x0109 
+xe48 reg 0x12 : 0xc1 0x0012 0x0143 
+xe48 reg 0x13 : 0xc1 0x0013 0xbff0 
+xe48 reg 0x14 : 0xc1 0x0014 0x00a0 
+xe48 reg 0x15 : 0xc1 0x0015 0x0000 
+xe48 reg 0x16 : 0xc1 0x0016 0x0004 
+xe48 reg 0x17 : 0xc1 0x0017 0x2001 
+xe48 reg 0x18 : 0xc1 0x0018 0x0000 
+xe48 reg 0x19 : 0xc1 0x0019 0x0000 
+xe48 reg 0x1a : 0xc1 0x001a 0x0000 
+xe48 reg 0x1b : 0xc1 0x001b 0x0000 
+xe48 reg 0x1c : 0xc1 0x001c 0x0000 
+xe48 reg 0x1d : 0xc1 0x001d 0x0000 
+xe48 reg 0x1e : 0xc1 0x001e 0x0000 
+xe48 reg 0x1f : 0xc1 0x001f 0xffe0 
+
+============================================================
+=== AFTER swp10 admin up
+============================================================
+12: swp10: <NO-CARRIER,BROADCAST,MULTICAST,UP>mtu 1500 qdisc pfifo_fast DOWN     mode DEFAULT qlen 500
+    link/ether 80:a2:35:81:ca:b8 brd ff:ff:ff:ff:ff:ff
+carrier=0
+            ena/    speed/ link auto    STP                  lrn  inter   max  loop
+      port  link    duplex scan neg?   state   pause  discrd ops   face frame  back
+       xe9  down   10G  FD   SW  No   Forward          None    F    XFI  1518 
+Current PHY control settings of xe9 ->
+Preemphasis              = 0xa370
+DriverCurrent            = 0x2
+PreDriverCurrent         = 0x3
+Rx LOS (s/w) enable         - 0
+
+============================================================
+=== PHY CL22 dump xe9 (admin up, no SFP)
+============================================================
+xe9 reg 0x00 : 0x85 0x0000 0x0000 
+xe9 reg 0x01 : 0x85 0x0001 0x0000 
+xe9 reg 0x02 : 0x85 0x0002 0x0000 
+xe9 reg 0x03 : 0x85 0x0003 0x0000 
+xe9 reg 0x04 : 0x85 0x0004 0x0000 
+xe9 reg 0x05 : 0x85 0x0005 0x0000 
+xe9 reg 0x06 : 0x85 0x0006 0x0000 
+xe9 reg 0x07 : 0x85 0x0007 0x0000 
+xe9 reg 0x08 : 0x85 0x0008 0x0000 
+xe9 reg 0x09 : 0x85 0x0009 0x0000 
+xe9 reg 0x0a : 0x85 0x000a 0x0000 
+xe9 reg 0x0b : 0x85 0x000b 0x0000 
+xe9 reg 0x0c : 0x85 0x000c 0x0000 
+xe9 reg 0x0d : 0x85 0x000d 0x0000 
+xe9 reg 0x0e : 0x85 0x000e 0x0140 
+xe9 reg 0x0f : 0x85 0x000f 0x0000 
+xe9 reg 0x10 : 0x85 0x0010 0x0c00 
+xe9 reg 0x11 : 0x85 0x0011 0x1c40 
+xe9 reg 0x12 : 0x85 0x0012 0x0fff 
+xe9 reg 0x13 : 0x85 0x0013 0x0fff 
+xe9 reg 0x14 : 0x85 0x0014 0x6520 
+xe9 reg 0x15 : 0x85 0x0015 0x0000 
+xe9 reg 0x16 : 0x85 0x0016 0x0000 
+xe9 reg 0x17 : 0x85 0x0017 0x0000 
+xe9 reg 0x18 : 0x85 0x0018 0x0000 
+xe9 reg 0x19 : 0x85 0x0019 0x0080 
+xe9 reg 0x1a : 0x85 0x001a 0x0800 
+xe9 reg 0x1b : 0x85 0x001b 0x7810 
+xe9 reg 0x1c : 0x85 0x001c 0x0010 
+xe9 reg 0x1d : 0x85 0x001d 0x0000 
+xe9 reg 0x1e : 0x85 0x001e 0xe800 
+xe9 reg 0x1f : 0x85 0x001f 0x80c0 
+
+============================================================
+=== Warpcore raw register dump xe0 — go through all blocks
+============================================================
+Reading WC registers for phy=0xd1 (xe0 lane 0)
+AER (reg 0x1e of phy 0xd1) : 
+Block 0x0001 reads (regs 0x10-0x1f):/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x10=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x11=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x12=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x13=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x14=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x15=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x16=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x17=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x18=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x19=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x1a=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x1b=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x1c=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x1d=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x1e=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x1f=
+Block 0x8003 reads (regs 0x10-0x1f):/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x10=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x11=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x12=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x13=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x14=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x15=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x16=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x17=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x18=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x19=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x1a=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x1b=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x1c=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x1d=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x1e=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x1f=
+Block 0x8005 reads (regs 0x10-0x1f):/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x10=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x11=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x12=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x13=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x14=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x15=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x16=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x17=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x18=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x19=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x1a=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x1b=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x1c=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x1d=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x1e=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x1f=
+Block 0x8007 reads (regs 0x10-0x1f):/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x10=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x11=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x12=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x13=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x14=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x15=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x16=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x17=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x18=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x19=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x1a=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x1b=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x1c=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x1d=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x1e=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x1f=
+Block 0x8100 reads (regs 0x10-0x1f):/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x10=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x11=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x12=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x13=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x14=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x15=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x16=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x17=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x18=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x19=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x1a=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x1b=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x1c=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x1d=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x1e=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x1f=
+Block 0x9000 reads (regs 0x10-0x1f):/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x10=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x11=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x12=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x13=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x14=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x15=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x16=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x17=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x18=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x19=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x1a=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x1b=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x1c=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x1d=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x1e=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x1f=
+Block 0x9001 reads (regs 0x10-0x1f):/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x10=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x11=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x12=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x13=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x14=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x15=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x16=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x17=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x18=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x19=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x1a=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x1b=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x1c=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x1d=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x1e=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x1f=
+Block 0x9002 reads (regs 0x10-0x1f):/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x10=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x11=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x12=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x13=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x14=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x15=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x16=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x17=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x18=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x19=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x1a=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x1b=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x1c=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x1d=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x1e=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x1f=
+Block 0x9003 reads (regs 0x10-0x1f):/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x10=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x11=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x12=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x13=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x14=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x15=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x16=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x17=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x18=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x19=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x1a=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x1b=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x1c=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x1d=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x1e=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x1f=
+Block 0xc801 reads (regs 0x10-0x1f):/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x10=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x11=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x12=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x13=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x14=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x15=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x16=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x17=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x18=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x19=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x1a=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x1b=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x1c=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x1d=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x1e=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x1f=
+Block 0xffff reads (regs 0x10-0x1f):/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x10=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x11=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x12=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x13=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x14=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x15=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x16=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x17=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x18=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x19=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x1a=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x1b=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x1c=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x1d=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x1e=/usr/bin/tail.coreutils: option used in invalid context -- 1
+ 0x1f=
+
+============================================================
+=== BCM regs - CMICm config
+============================================================
+CMIC_CONFIG.cmic0[0x10c]=0x3f0c2043: <WR_BRST_EN=1,UNTAG_EN=0,UNTAG_ALL_RCV_EN=0,
+   TIME_STAMP_UPD_DIS=0,STOP_LS_ON_FIRST_CHANGE=0,STOP_LS_ON_CHANGE=0,
+   SG_RELOAD_ENABLE=1,SG_ENABLE=1,SCHAN_ABORT=0,RLD_STS_UPD_DIS=0,
+   RESET_PCI_EN=0,RESET_CPS=0,RESERVED_4=0,RESERVED=0,RD_BRST_EN=1,
+   OVER_RIDE_EXT_MDIO_MSTR_CNTRL=1,MSTR_Q_MAX_EN=0,MIIM_ADDR_MAP_ENABLE=1,
+   MDIO_OUT_DELAY=3,LE_DMA_EN=0,IGNORE_MMU_BKP_TXDMA_PKT=0,IGNORE_MMU_BKP_REMOTE_PKT=0,
+   IGNORE_ADR_ALIGN_EN=1,I2C_EN=0,EN_SER_INTERLEAVE_PARITY=1,DMA_GARBAGE_COLLECT_EN=0,
+   COS_RX_EN=1,BE_CHECK_EN=0,ACT_LOW_INT=1,ABORT_STAT_DMA=0>
+Syntax error parsing "CMIC_MISC_CONFIG"
+Syntax error parsing "CMIC_REVISION"
+Syntax error parsing "CMIC_BS_OFFSET"
+Syntax error parsing "CMIC_INTERRUPT_LO"
+
+============================================================
+=== BCM regs - chip ID + version
+============================================================
+Broadcom Command Monitor: Copyright (c) 1998-2010 Broadcom Corporation
+Release: sdk-6.3.8 built 20150108 (Thu Jan  8 19:42:14 2015)
+From build@monster-07.cumulusnetworks.com:/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/build/powerpc/bcm-sdk
+Platform: Cumulus_Networks_LLC
+OS: Unix (Posix)
+Chips:
+      
+      
+      
+      
+       BCM56634_A0, BCM56634_B0,
+      
+       BCM56840_A0,
+       BCM56840_B0,
+      
+      
+       BCM56640_A0,
+       BCM56850_A0,
+       BCM56340_A0,
+PHYs:  BCM5218, BCM5220/21, BCM5226, BCM5228,
+    BCM5238, BCM5248, BCM5324/FE, BCM5348/FE,
+    BCM53242/FE, BCM53262/FE, BCM53101/FE, BCM53280/FE,
+    BCM53600/FE, BCM5400, BCM5401, BCM5402,
+    BCM5404, BCM5424/34, BCM5411, BCM5461,
+    BCM5464, BCM5466, BCM5478, BCM5488,
+    BCM54980, BCM54980, BCM54980, BCM54980,
+    BCM53314, BCM5482/801x, BCM54684, BCM54640,
+    BCM54682E, BCM54684E, BCM54685, BCM54616,
+    BCM54618E, BCM54618SE, BCM84707, BCM84073,
+    BCM84074, BCM84728, BCM84748, BCM84727,
+    BCM84747, BCM84762, BCM84764, BCM84042,
+    BCM84044, BCM54210, BCM54220, BCM54280,
+    BCM54282, BCM54240, BCM54285, BCM5428X,
+    BCM54290, BCM54292, BCM54294, BCM54295,
+    BCM5421S, BCM54680, BCM53324, BCM53125
+    BCM53128, BCM53010, BCM53018, BCM5302X,
+    BCM54880, BCM54881, BCM54810, BCM54811,
+    BCM89500, BCM54640E, BCM54880E, BCM54680E,
+    BCM52681E, BCM8703, BCM8704, BCM8705/24/25,
+    BCM8706/8726, BCM8727, BCM8728/8747, BCM8072,
+    BCM8073, BCM8074, BCM8040, BCM8481X,
+    BCM84812, BCM84821, BCM84822, BCM84823,
+    BCM84833, BCM84834, BCM84835, BCM84836,
+    BCM84844, BCM84846, BCM84848, BCM84858,
+    BCM8750, BCM8752, BCM8754, BCM84740,
+    BCM84164, BCM84758, BCM84780, BCM84784,
+    BCM84318, BCM84328, BCM84793, BCM82328,
+    copper sfp
+   
+
+============================================================
+=== BCM tables - L2
+============================================================
+vlan 1	ports none (0x0000000000000000000000000000000000000000000000000000000000000000), untagged none (0x0000000000000000000000000000000000000000000000000000000000000000) MCAST_FLOOD_UNKNOWN
+vlan 3301	ports cpu,xe0 (0x0000000000000000000000000000000000000000000000000000000000000003), untagged xe0 (0x0000000000000000000000000000000000000000000000000000000000000002) MCAST_FLOOD_ALL
+vlan 3302	ports cpu,xe1 (0x0000000000000000000000000000000000000000000000000000000000000005), untagged xe1 (0x0000000000000000000000000000000000000000000000000000000000000004) MCAST_FLOOD_ALL
+vlan 3303	ports cpu,xe2 (0x0000000000000000000000000000000000000000000000000000000000000009), untagged xe2 (0x0000000000000000000000000000000000000000000000000000000000000008) MCAST_FLOOD_ALL
+vlan 3304	ports cpu,xe3 (0x0000000000000000000000000000000000000000000000000000000000000011), untagged xe3 (0x0000000000000000000000000000000000000000000000000000000000000010) MCAST_FLOOD_ALL
+vlan 3305	ports cpu,xe4 (0x0000000000000000000000000000000000000000000000000000000000000021), untagged xe4 (0x0000000000000000000000000000000000000000000000000000000000000020) MCAST_FLOOD_ALL
+vlan 3306	ports cpu,xe5 (0x0000000000000000000000000000000000000000000000000000000000000041), untagged xe5 (0x0000000000000000000000000000000000000000000000000000000000000040) MCAST_FLOOD_ALL
+vlan 3307	ports cpu,xe6 (0x0000000000000000000000000000000000000000000000000000000000000081), untagged xe6 (0x0000000000000000000000000000000000000000000000000000000000000080) MCAST_FLOOD_ALL
+vlan 3308	ports cpu,xe7 (0x0000000000000000000000000000000000000000000000000000000000000101), untagged xe7 (0x0000000000000000000000000000000000000000000000000000000000000100) MCAST_FLOOD_ALL
+vlan 3309	ports cpu,xe8 (0x0000000000000000000000000000000000000000000000000000000000000201), untagged xe8 (0x0000000000000000000000000000000000000000000000000000000000000200) MCAST_FLOOD_ALL
+vlan 3310	ports cpu,xe9 (0x0000000000000000000000000000000000000000000000000000000000000401), untagged xe9 (0x0000000000000000000000000000000000000000000000000000000000000400) MCAST_FLOOD_ALL
+vlan 3311	ports cpu,xe10 (0x0000000000000000000000000000000000000000000000000000000000000801), untagged xe10 (0x0000000000000000000000000000000000000000000000000000000000000800) MCAST_FLOOD_ALL
+vlan 3312	ports cpu,xe11 (0x0000000000000000000000000000000000000000000000000000000000001001), untagged xe11 (0x0000000000000000000000000000000000000000000000000000000000001000) MCAST_FLOOD_ALL
+vlan 3313	ports cpu,xe12 (0x0000000000000000000000000000000000000000000000000000000000002001), untagged xe12 (0x0000000000000000000000000000000000000000000000000000000000002000) MCAST_FLOOD_ALL
+vlan 3314	ports cpu,xe13 (0x0000000000000000000000000000000000000000000000000000000000004001), untagged xe13 (0x0000000000000000000000000000000000000000000000000000000000004000) MCAST_FLOOD_ALL
+vlan 3315	ports cpu,xe14 (0x0000000000000000000000000000000000000000000000000000000000008001), untagged xe14 (0x0000000000000000000000000000000000000000000000000000000000008000) MCAST_FLOOD_ALL
+vlan 3316	ports cpu,xe15 (0x0000000000000000000000000000000000000000000000000000000000010001), untagged xe15 (0x0000000000000000000000000000000000000000000000000000000000010000) MCAST_FLOOD_ALL
+vlan 3317	ports cpu,xe16 (0x0000000000000000000000000000000000000000000000000000000000020001), untagged xe16 (0x0000000000000000000000000000000000000000000000000000000000020000) MCAST_FLOOD_ALL
+vlan 3318	ports cpu,xe17 (0x0000000000000000000000000000000000000000000000000000000000040001), untagged xe17 (0x0000000000000000000000000000000000000000000000000000000000040000) MCAST_FLOOD_ALL
+vlan 3319	ports cpu,xe18 (0x0000000000000000000000000000000000000000000000000000000000080001), untagged xe18 (0x0000000000000000000000000000000000000000000000000000000000080000) MCAST_FLOOD_ALL
+vlan 3320	ports cpu,xe19 (0x0000000000000000000000000000000000000000000000000000000000100001), untagged xe19 (0x0000000000000000000000000000000000000000000000000000000000100000) MCAST_FLOOD_ALL
+vlan 3321	ports cpu,xe20 (0x0000000000000000000000000000000000000000000000000000000000200001), untagged xe20 (0x0000000000000000000000000000000000000000000000000000000000200000) MCAST_FLOOD_ALL
+vlan 3322	ports cpu,xe21 (0x0000000000000000000000000000000000000000000000000000000000400001), untagged xe21 (0x0000000000000000000000000000000000000000000000000000000000400000) MCAST_FLOOD_ALL
+vlan 3323	ports cpu,xe22 (0x0000000000000000000000000000000000000000000000000000000000800001), untagged xe22 (0x0000000000000000000000000000000000000000000000000000000000800000) MCAST_FLOOD_ALL
+vlan 3324	ports cpu,xe23 (0x0000000000000000000000000000000000000000000000000000000001000001), untagged xe23 (0x0000000000000000000000000000000000000000000000000000000001000000) MCAST_FLOOD_ALL
+vlan 3325	ports cpu,xe24 (0x0000000000000000000000000000000000000000000000000000000002000001), untagged xe24 (0x0000000000000000000000000000000000000000000000000000000002000000) MCAST_FLOOD_ALL
+vlan 3326	ports cpu,xe25 (0x0000000000000000000000000000000000000000000000000000000004000001), untagged xe25 (0x0000000000000000000000000000000000000000000000000000000004000000) MCAST_FLOOD_ALL
+vlan 3327	ports cpu,xe26 (0x0000000000000000000000000000000000000000000000000000000008000001), untagged xe26 (0x0000000000000000000000000000000000000000000000000000000008000000) MCAST_FLOOD_ALL
+vlan 3328	ports cpu,xe27 (0x0000000000000000000000000000000000000000000000000000000010000001), untagged xe27 (0x0000000000000000000000000000000000000000000000000000000010000000) MCAST_FLOOD_ALL
+vlan 3329	ports cpu,xe28 (0x0000000000000000000000000000000000000000000000000000000020000001), untagged xe28 (0x0000000000000000000000000000000000000000000000000000000020000000) MCAST_FLOOD_ALL
+STG 0: contains 0 VLANs
+  Disable: xe
+STG 1: contains 53 VLANs (1,3301-3352)
+  Disable: xe2-xe8,xe10-xe47
+  Forward: xe0-xe1,xe9,xe48-xe51
+
+============================================================
+=== BCM TCAM and ACL
+============================================================
+FP:	unit 0:PIPELINE STAGE INGRESS
+FP:	      :tcam_sz=2048(0x800), tcam_slices=10, tcam_ext_numb=-1,
+FP: Range ID=1, flag=0x2, min=546, max=547, hw_index=0(0), style=BCM56504
+FP: Range ID=2, flag=0x2, min=67, max=68, hw_index=1(0x1), style=BCM56504
+PIPELINE STAGE EGRESS
+FP:	      :tcam_sz=1024(0x400), tcam_slices=4, tcam_ext_numb=-1,
+PIPELINE STAGE LOOKUP
+FP:	      :tcam_sz=1024(0x400), tcam_slices=4, tcam_ext_numb=-1,
+GID          4: gid=0x4, mode=Double, stage=Egress lookup=Enabled, pbmp={0x000000000000000000000000000000000000000000000000001fffffffffffff}
+         qset={SrcMac, DstMac, SrcIp, DstIp, OuterVlanId, L4SrcPort, L4DstPort, EtherType, IpProtocol, DSCP, Ttl, TcpControl, IpType, StageEgress, InterfaceClassPort, IpFrag, OutPort},
+         selcodes[0]=
+{
+         FPF3=0
+         Intraslice=Primary slice.
+ {
+SrcIp->DstIp->StageEgress->IpFrag->IpProtocol->L4DstPort->L4SrcPort->Ttl->DSCP->TcpControl->OuterVlanId->OutPort->InterfaceClassPort->IpType},
+         selcodes[1]=
+{
+         FPF3=3
+         Intraslice=Primary slice.
+ {
+SrcMac->DstMac->EtherType},
+
+         slice_pri=                    {slice_number=2, Entry count=256(0x100), active, pbmp={0x000000000000000000000000000000000000000000000000001fffffffffffff}},
+         slice_sec=                    {slice_number=3, Entry count=256(0x100), active, pbmp={0x000000000000000000000000000000000000000000000000001fffffffffffff}},
+         group_status={prio_min=0, prio_max=2147483647, entries_total=512, entries_free=494,
+                       counters_total=1024, counters_free=988, meters_total=768, meters_free=750}
+EID 0x00000021: gid=0x4,
+         slice=2, slice_idx=0, part =0 prio=0, flags=0x10202, Installed, Enabled
+              tcam: color_indep=0, 
+ StageEgress 
+ IpProtocol 
+    Offset: 62 Width: 8 
+    DATA=0x00000059 
+    MASK=0x000000ff 
+ OutPort 
+    Offset: 199 Width: 7 
+    DATA=0x00000000 
+    MASK=0x0000007f 
+         slice=3, slice_idx=0, part =1 prio=0, flags=0x10204, Installed, Enabled
+              tcam: color_indep=0, 
+         action={act=RpDrop, param0=0(0), param1=0(0), param2=0(0), param3=0(0)}
+         policer={ commit_kbits_sec=0x7d0, commit_kbits_burst=0x7d0, PacketBased=0x1, mode=0x1, entries=2, Clean}
+         statistics={stat id 30  slice = 2 idx=0 entries=2}{GreenBytes}{GreenPackets}{NotGreenBytes}{NotGreenPackets}
+EID 0x00000023: gid=0x4,
+         slice=2, slice_idx=0x1, part =0 prio=0, flags=0x10202, Installed, Enabled
+              tcam: color_indep=0, 
+ StageEgress 
+ IpProtocol 
+    Offset: 62 Width: 8 
+
+============================================================
+=== BCM portmap
+============================================================
+Unknown command: pmap
+             logical  physical    mmu   ucast Qbase  mcast Qbase
+      cpu0      0         0         0         0            0
+       xe0      1        65        50         0           10
+       xe1      2        66        54        15           25
+       xe2      3        67        58        30           40
+       xe3      4        68        62        45           55
+       xe4      5        69        51        60           70
+       xe5      6        70        55        75           85
+       xe6      7        71        59        90          100
+       xe7      8        72        63       105          115
+       xe8      9         5         1        48           58
+       xe9     10         6         5       127          137
+      xe10     11         7         9       142          152
+      xe11     12         8        13       157          167
+      xe12     13         9         2       172          182
+      xe13     14        10         6       251          261
+      xe14     15        11        10       266          276
+      xe15     16        12        14       281          291
+      xe16     17        13         3       296          306
+      xe17     18        14         7       375          385
+      xe18     19        15        11       390          400
+      xe19     20        16        15       405          415
+      xe20     21        18         4       420          430
+      xe21     22        17         8       499          509
+      xe22     23        20        12       514          524
+      xe23     24        19        16       529          539
+      xe24     25        22        17       544          554
+      xe25     26        21        21       559          569
+      xe26     27        24        25       574          584
+      xe27     28        23        29       589          599
+      xe28     29        25        18       604          614
+      xe29     30        26        22       619          629
+      xe30     31        27        26       634          644
+      xe31     32        28        30       649          659
+      xe32     33        29        19       664          674
+      xe33     34        30        23       679          689
+      xe34     35        31        27       694          704
+      xe35     36        32        31       709          719
+      xe36     37        33        20       724          734
+      xe37     38        34        24       739          749
+      xe38     39        35        28       754          764
+      xe39     40        36        32       769          779
+      xe40     41        37        52       120          130
+      xe41     42        38        56       135          145
+      xe42     43        39        60       150          160
+      xe43     44        40        64       165          175
+      xe44     45        41        53       180          190
+      xe45     46        42        57       195          205
+      xe46     47        43        61       210          220
+      xe47     48        44        65       225          235
+      xe48     49        49        34       240          250
+      xe49     50        45        35       319          329
+      xe50     51        61        36       398          408
+      xe51     52        57        37       477          487
+       lb0     65        73        33         0          556
+
+============================================================
+=== BCM debug + counters
+============================================================
+RDBGC1.xe0		:		    195 		+81
+R127.xe0		:		    195 		+81
+R511.xe0		:		     31 		+12
+RPKT.xe0		:		    228 		+93
+RMCA.xe0		:		    226 		+93
+RPOK.xe0		:		    228 		+93
+RBYT.xe0		:		 24,333 	     +9,822
+T127.xe0		:		     57 		+23
+TPOK.xe0		:		     58 		+23
+TPKT.xe0		:		     58 		+23
+TMCA.xe0		:		     58 		+23
+TBYT.xe0		:		  7,283 	     +2,898
+UC_PERQ_PKT(3).xe0	:		     58 		+23
+UC_PERQ_BYTE(3).xe0	:		  7,283 	     +2,898
+RDBGC1.xe1		:		    195 		+80
+R127.xe1		:		    195 		+80
+R511.xe1		:		     31 		+12
+RPKT.xe1		:		    228 		+92
+RMCA.xe1		:		    226 		+92
+RPOK.xe1		:		    228 		+92
+RBYT.xe1		:		 24,333 	     +9,740
+T127.xe1		:		     57 		+23
+TPOK.xe1		:		     58 		+23
+TPKT.xe1		:		     58 		+23
+TMCA.xe1		:		     58 		+23
+TBYT.xe1		:		  7,239 	     +2,898
+UC_PERQ_PKT(3).xe1	:		     58 		+23
+UC_PERQ_BYTE(3).xe1	:		  7,239 	     +2,898
+
+============================================================
+=== Per-port DSC equalizer for xe0/xe1
+============================================================
+--- dsc xe0 ---
+Unknown command: dsc
+--- dsc xe1 ---
+Unknown command: dsc
+--- phy debug xe0 ---
+PHY: ERROR: unrecognized port bitmap: debug
+--- phy debug xe1 ---
+PHY: ERROR: unrecognized port bitmap: debug
+--- wbz xe0 ---
+Unknown command: wbz
+--- wbz xe1 ---
+Unknown command: wbz
+--- txport xe0 ---
+Unknown command: txport
+--- rxport xe0 ---
+Unknown command: rxport
+--- phy diag xe0 dsc ---
+
+
+DSC parameters for port 1
+
+PLL Range: 235
+
+LN  PPM PPM_XFR clk90_ofs PF SL_TRGT VGA BIAS DFE1 DFE2 DFE3 DFE4 DFE5 PREC MAIN POSTC MTRC PE   ZE   ME  PO  ZO  MO
+00 0014 0000000 000000036 0006 0150 0036 100% 0000 0000 0000 0000 0000 0000 0055 0008  -1024 0000 -004  5   0  -2  6
+01 0015 0000000 000000036 0005 0150 0036 100% 0000 0000 0000 0000 0000 0000 0055 0008  -1024 0000 0002  0   0   4  7
+02 0000 0000000 000000032 0010 0150 0047 100% 0000 0000 0000 0000 0000 0000 0055 0008  0000 0000 0000  0   0   0  0
+03 0000 0000000 000000032 0010 0150 0047 100% 0000 0000 0000 0000 0000 0000 0055 0008  0000 0000 0000  0   0   0  0
+--- phy diag xe1 dsc ---
+
+
+DSC parameters for port 2
+
+PLL Range: 235
+
+LN  PPM PPM_XFR clk90_ofs PF SL_TRGT VGA BIAS DFE1 DFE2 DFE3 DFE4 DFE5 PREC MAIN POSTC MTRC PE   ZE   ME  PO  ZO  MO
+00 0015 0000000 000000036 0006 0150 0036 100% 0000 0000 0000 0000 0000 0000 0055 0008  -1024 0000 -004  5   0  -2  6
+01 0015 0000000 000000036 0005 0150 0036 100% 0000 0000 0000 0000 0000 0000 0055 0008  -1024 0000 0002  0   0   4  7
+02 0000 0000000 000000032 0010 0150 0047 100% 0000 0000 0000 0000 0000 0000 0055 0008  0000 0000 0000  0   0   0  0
+03 0000 0000000 000000032 0010 0150 0047 100% 0000 0000 0000 0000 0000 0000 0055 0008  0000 0000 0000  0   0   0  0
+--- phy diag xe0 short ---
+--- phy diag xe0 mediumshort ---
+--- phy diag xe0 long ---
+
+============================================================
+=== /sys/class/net/swp1 contents
+============================================================
+total 0
+drwxr-xr-x  4 root root    0 May 10  2026 .
+drwxr-xr-x 55 root root    0 May 10  2026 ..
+-r--r--r--  1 root root 4096 Jun  1 13:27 addr_assign_type
+-r--r--r--  1 root root 4096 Jun  1 13:27 addr_len
+-r--r--r--  1 root root 4096 Jun  1 13:27 address
+-r--r--r--  1 root root 4096 Jun  1 13:27 broadcast
+-r--r--r--  1 root root 4096 Jun  1 13:01 carrier
+-r--r--r--  1 root root 4096 Jun  1 13:27 dev_id
+-r--r--r--  1 root root 4096 Jun  1 13:27 dormant
+-r--r--r--  1 root root 4096 Jun  1 13:15 duplex
+-rw-r--r--  1 root root 4096 Jun  1 13:27 flags
+-r--r--r--  1 root root 4096 Jun  1 12:00 group
+-rw-r--r--  1 root root 4096 Jun  1 13:27 ifalias
+-r--r--r--  1 root root 4096 Jun  1 13:27 ifindex
+-r--r--r--  1 root root 4096 Jun  1 13:27 iflink
+-r--r--r--  1 root root 4096 Jun  1 13:27 link_mode
+-rw-r--r--  1 root root 4096 Jun  1 13:27 mtu
+-rw-r--r--  1 root root 4096 Jun  1 13:27 netdev_group
+-r--r--r--  1 root root 4096 Jun  1 13:01 operstate
+-r--r--r--  1 root root 4096 Jun  1 12:00 owner
+drwxr-xr-x  4 root root    0 Jun  1 13:27 queues
+-r--r--r--  1 root root 4096 Jun  1 13:15 speed
+drwxr-xr-x  2 root root    0 Jun  1 13:27 statistics
+lrwxrwxrwx  1 root root    0 Jun  1 13:27 subsystem -> ../../../../class/net
+-r--r--r--  1 root root 4096 Jun  1 12:00 tun_flags
+-rw-r--r--  1 root root 4096 Jun  1 13:27 tx_queue_len
+-r--r--r--  1 root root 4096 Jun  1 13:27 type
+-rw-r--r--  1 root root 4096 Jun  1 13:27 uevent
+addr_assign_type = 0 
+addr_len = 6 
+address = 80:a2:35:81:ca:af 
+broadcast = ff:ff:ff:ff:ff:ff 
+carrier = 0 
+dev_id = 0x0 
+dormant = 0 
+duplex = full 
+flags = 0x1003 
+group = -1 
+ifalias = 
+ifindex = 3 
+iflink = 3 
+link_mode = 0 
+mtu = 1500 
+netdev_group = 0 
+operstate = up 
+owner = -1 
+speed = 10000 
+tun_flags = 0x3002 
+tx_queue_len = 500 
+type = 1 
+uevent = 
+
+============================================================
+=== /proc/cpuinfo /proc/meminfo /proc/cmdline
+============================================================
+processor	: 0
+cpu		: e500v2
+clock		: 1200.000000MHz
+revision	: 5.1 (pvr 8021 1051)
+physical id	: 0
+core id		: 0
+bogomips	: 150.00
+
+processor	: 1
+cpu		: e500v2
+clock		: 1200.000000MHz
+revision	: 5.1 (pvr 8021 1051)
+physical id	: 0
+core id		: 1
+bogomips	: 150.00
+
+total bogomips	: 300.00
+timebase	: 75000000
+platform	: Accton Technology Corporation AS5610_52X
+model		: accton,as5610_52x
+Vendor		: Freescale Semiconductor
+PVR		: 0x80211051
+SVR		: 0x80e20021
+PLL setting	: 0x4
+Memory		: 2048 MB
+Memory		: 2048 MB
+---
+MemTotal:        2007692 kB
+MemFree:         1813516 kB
+Buffers:           22056 kB
+Cached:            71132 kB
+SwapCached:            0 kB
+Active:            96068 kB
+Inactive:          63132 kB
+Active(anon):      66180 kB
+Inactive(anon):     2132 kB
+Active(file):      29888 kB
+---
+quiet console=ttyS0,115200 active=1
+
+============================================================
+=== DMI / device-tree (PowerPC)
+============================================================
+#address-cells
+#size-cells
+aliases
+bcm_dma
+chosen
+compatible
+cpus
+interrupt-parent
+localbus@ff705000
+memory
+model
+name
+pcie@ff70a000
+soc@ff700000
+accton,as5610_52x 
+accton,as5610_52x 
+
+============================================================
+=== U-Boot env (read-only via /etc/fw_env.config)
+============================================================
+# MTD device name       Device offset   Env. size       Flash sector size
+/dev/mtd1               0x00000000      0x00010000         0x00010000
+baudrate=115200
+bootcmd=run check_boot_reason; run nos_bootcmd; run onie_bootcmd
+check_boot_reason=if test -n $onie_boot_reason; then setenv onie_bootargs boot_reason=$onie_boot_reason; run onie_bootcmd; fi;
+consoledev=ttyS0
+dhcp_user-class=powerpc-accton_as5610_52x-r0_uboot
+dhcp_vendor-class-identifier=powerpc-accton_as5610_52x-r0
+ethact=eth0
+ethaddr=80:A2:35:81:CA:AE
+ethprime=eth0
+gatewayip=192.168.1.10
+hostname=as5610_52x-unknown
+ipaddr=192.168.1.10
+loadaddr=0x2000000
+loads_echo=1
+netmask=255.255.255.0
+onie_args=run onie_initargs onie_platformargs
+onie_bootcmd=echo Loading Open Network Install Environment ...; echo Platform: $onie_platform ; echo Version : $onie_version ; cp.b $onie_start $loadaddr ${onie_sz.b} && run onie_args && bootm ${loadaddr}
+onie_initargs=setenv bootargs quiet console=$consoledev,$baudrate
+onie_machine=accton_as5610_52x
+onie_machine_rev=0
+onie_platform=powerpc-accton_as5610_52x-r0
+onie_platformargs=setenv bootargs $bootargs serial_num=${serial#} eth_addr=$ethaddr $onie_bootargs $onie_debugargs 
+onie_rescue=setenv onie_boot_reason rescue && boot
+onie_start=0xefc00000
+onie_sz.b=0x00360000
+onie_uninstall=setenv onie_boot_reason uninstall && boot
+onie_update=setenv onie_boot_reason update && boot
+onie_vendor_id=259
+onie_version=2017.02.00.07
+pcidelay=1000
+platform=powerpc-accton_as5610_52x-r0
+serial#=561052X1916063
+serverip=192.168.1.99
+ver=U-Boot 2013.01.01-gb4d916c (Jun 06 2017 - 10:45:46) - 3.0.3.15
+onie_dropbear_rsa_host_key=begin-base64@600@r#AAAAB3NzaC1yc2EAAAADAQABAAAAgQCHA96F/tcRQq3Jq2mhPlpyg3NjdY8j#/b2mS50YjWhSJUBsYXPzlz5iwK3U7pBb6HW/QDkilsMC3nHnBPU/ZuDgcaUz#V9Q4gaUO9AXWpp4GRn9lq0MVQIVjn31EwY7e6m/do7gjD5yZ/h5EQyD7Nq6q#q2x2Io3n1ZxTh3d281ZYewAAAIAONHmCho6RHyn9WFQGO3MKWPXYcS4XXs3H#w8J/qqJfANKs3ySdwdFgqXNV6P2g4IMW6pu4SGgJvWaleYTmCp2+crxBymCR#h4F3D9W6vau4H5lyOUgH4f9UCGhXfYbAGTpEOApKLW1P8S2fKTLC6yrQ7EdY#TKVfhTkvE5x7tZTBeQAAAEEApHZd76k7DIyUgrFw+hBgeag7W9Gu4eOtB/0g#lHdijKFJyhh3TZ4lZKUa31idOpJFwxuUYR6VwMYXm+29KfUNEwAAAEEA0ims#BGY5ZZ0Z6zIoGhMY+exKindXIkxE/ENPz94+Na7w1KLM1I7eGPdzVGCvMpSf#NNm2UrCKjHXKYSlnu4n7+Q==#====#
+onie_dropbear_dss_host_key=begin-base64@600@d#AAAAB3NzaC1kc3MAAACBALtp8kBm3mb73pLs1/EYhBG5wAqRbPqTQQPrsUyX#hMqCr2oLNw9Zrdtg35t0xfNXWZ60WjOGXFeojwQt5lg3FetcFPrv9VJKDdwI#KIwlhlgVkEblWI4AY3xhEQHegbhRWz7ByUL6Rw/pw3M2v/2cUK1Lb6PdUIYa#JjJ2QhqIs3jLAAAAFQDuPh2AWKMRy3qyZZnZgzAW2BFohwAAAIBicL3TS5lN#HUDvUowQ6DsocEpUzML3YqyTnzMrM1A8CufHVUGgInReS5F6/OJjpz6BAThh#SCACCNwmAVYvwqu+qomtvhq+OnuvFpY6GrLjmojR3BX5+kzpPhAAvY1fTBVH#Twsb+/19eJWQlNYafJe7EKPWYppqCIfSEO4f2VWgdwAAAIBY3DTZYSQNmGA9#3N1E0KlAwwx3dZt2KcNV/l7Ti1dwWyb/nyzg0VBTQ/pxJNVq6NEQ1HWySNKf#pSGYv8xxUk0Eey+npeSDb2L5U/WCxvLaYTi4nJwpdX0cH9lk6YH28UrMWkTt#G8ruHt5xKBBuipXlBHhj0bLVqkVj398lFtJy1wAAABQnOtbinQ1jtYs+EzA5#cllfcOKlNg==#====#
+fdt_high=0xffffffff
+initrd_high=0xffffffff
+boot_count=0
+slot_state1=0
+
+============================================================
+=== ifupdown / Cumulus init scripts inspection
+============================================================
+accton_as4600_54t
+accton_as5610_52x
+accton_as5712_54x
+accton_as6700_32x
+accton_as6701_32x
+accton_es5652bt1
+amd64-init.conf
+arch.conf
+cel_kennisis
+cel_redstone
+cel_redstone_xp
+cel_smallstone
+cel_smallstone_xp
+cumulus_cumulus_p2020
+dell_s4000_c2338
+dell_s6000_s1220
+dni_c7448n
+dni_et-6448r
+dni_et-7448bf
+lsb-release
+mlx_sx1400_i73612
+platform.conf
+powerpc-init.conf
+quanta_lb9
+quanta_ly2
+quanta_ly2r
+quanta_ly6_p2020
+quanta_ly6_rangeley
+quanta_ly8_rangeley
+quanta_ly9_rangeley
+quanta_panther
+running
+EULA.txt
+acl
+clag
+clcmd_uds
+img
+phy_ucode
+support
+vars
+
+============================================================
+=== switchd binary version / build info
+============================================================
+
+============================================================
+=== kernel modules loaded at boot
+============================================================
+Module                  Size  Used by
+8021q                  20604  0 
+ds100df410              6086  0 
+adm1021                 8639  0 
+max6697                 9564  0 
+gpio_pca953x           12937  61 
+sff_8436_eeprom        11381  0 
+at24                    9322  0 
+accton_as5610_52x_cpld    13854  0 
+linux_bde_tmon          6674  0 
+tun                    18389  104 
+linux_user_bde         14431  0 
+linux_kernel_bde       34398  2 linux_user_bde,linux_bde_tmon
+
+============================================================
+=== lspci -nnvvxxx (full)
+============================================================
+00:00.0 PCI bridge [0604]: Freescale Semiconductor Inc P2020 [1957:0071] (rev 21) (prog-if 00 [Normal decode])
+	Control: I/O- Mem+ BusMaster+ SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR+ FastB2B- DisINTx-
+	Status: Cap+ 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+	Latency: 0, Cache Line Size: 32 bytes
+	Region 0: Memory at <ignored> (32-bit, non-prefetchable)
+	Bus: primary=00, secondary=01, subordinate=01, sec-latency=0
+	I/O behind bridge: 00000000-00000fff
+	Memory behind bridge: a0000000-bfffffff
+	Secondary status: 66MHz- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- <SERR- <PERR-
+	BridgeCtl: Parity- SERR- NoISA- VGA- MAbort- >Reset- FastB2B-
+		PriDiscTmr- SecDiscTmr- DiscTmrStat- DiscTmrSERREn-
+	Capabilities: [44] Power Management version 2
+		Flags: PMEClk- DSI- D1+ D2+ AuxCurrent=0mA PME(D0+,D1+,D2+,D3hot+,D3cold+)
+		Status: D0 NoSoftRst- PME-Enable- DSel=0 DScale=0 PME-
+	Capabilities: [4c] Express (v1) Root Port (Slot-), MSI 00
+		DevCap:	MaxPayload 256 bytes, PhantFunc 0, Latency L0s <64ns, L1 <1us
+			ExtTag- RBE- FLReset-
+		DevCtl:	Report errors: Correctable- Non-Fatal+ Fatal+ Unsupported+
+			RlxdOrd+ ExtTag- PhantFunc- AuxPwr- NoSnoop+
+			MaxPayload 256 bytes, MaxReadReq 256 bytes
+		DevSta:	CorrErr- UncorrErr- FatalErr- UnsuppReq- AuxPwr- TransPend-
+		LnkCap:	Port #0, Speed 2.5GT/s, Width x4, ASPM L0s, Latency L0 <2us, L1 unlimited
+			ClockPM- Surprise- LLActRep- BwNot-
+		LnkCtl:	ASPM Disabled; RCB 128 bytes Disabled- Retrain- CommClk-
+			ExtSynch- ClockPM- AutWidDis- BWInt- AutBWInt-
+		LnkSta:	Speed 2.5GT/s, Width x1, TrErr- Train- SlotClk- DLActive- BWMgmt- ABWMgmt-
+		RootCtl: ErrCorrectable- ErrNon-Fatal- ErrFatal- PMEIntEna- CRSVisible-
+		RootCap: CRSVisible-
+		RootSta: PME ReqID 0000, PMEStatus- PMEPending-
+	Capabilities: [100 v1] Advanced Error Reporting
+		UESta:	DLP- SDES- TLP- FCP- CmpltTO- CmpltAbrt- UnxCmplt- RxOF- MalfTLP- ECRC- UnsupReq- ACSViol-
+		UEMsk:	DLP- SDES- TLP- FCP- CmpltTO- CmpltAbrt- UnxCmplt- RxOF- MalfTLP- ECRC- UnsupReq- ACSViol-
+		UESvrt:	DLP+ SDES- TLP- FCP+ CmpltTO- CmpltAbrt- UnxCmplt- RxOF+ MalfTLP+ ECRC- UnsupReq- ACSViol-
+		CESta:	RxErr- BadTLP- BadDLLP- Rollover- Timeout- NonFatalErr-
+		CEMsk:	RxErr- BadTLP- BadDLLP- Rollover- Timeout- NonFatalErr-
+		AERCap:	First Error Pointer: 00, GenCap+ CGenEn- ChkCap+ ChkEn-
+00: 57 19 71 00 06 01 10 00 21 00 20 0b 08 00 01 00
+10: 00 00 f0 ff 00 00 00 00 00 01 01 00 00 00 00 00
+20: 00 a0 f0 bf f1 ff 01 00 00 00 00 00 00 00 00 00
+30: 00 00 00 00 44 00 00 00 00 00 00 00 00 00 00 00
+40: 00 00 00 00 01 4c 02 fe 00 00 00 00 10 00 41 00
+50: 01 00 00 00 3e 18 00 00 41 d4 03 00 08 00 11 00
+60: c0 07 00 00 c0 03 40 00 00 00 00 00 00 00 00 00
+70: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+90: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+a0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+b0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+c0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+d0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+
+01:00.0 Ethernet controller [0200]: Broadcom Corporation Device [14e4:b846] (rev 02)
+	Subsystem: Broadcom Corporation Device [14e4:b846]
+	Control: I/O- Mem+ BusMaster+ SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR- FastB2B- DisINTx-
+	Status: Cap+ 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- <TAbort- <MAbort- >SERR- <PERR- INTx-
+	Latency: 0, Cache Line Size: 32 bytes
+	Interrupt: pin A routed to IRQ 16
+	Region 0: Memory at a0000000 (64-bit, non-prefetchable) [size=256K]
+	Capabilities: [48] Power Management version 3
+		Flags: PMEClk- DSI- D1- D2- AuxCurrent=0mA PME(D0+,D1-,D2-,D3hot+,D3cold+)
+		Status: D0 NoSoftRst+ PME-Enable- DSel=0 DScale=1 PME-
+	Capabilities: [50] Vital Product Data
+		Not readable
+	Capabilities: [58] MSI: Enable- Count=1/8 Maskable- 64bit+
+		Address: 0000000000000000  Data: 0000
+	Capabilities: [ac] Express (v2) Endpoint, MSI 00
+		DevCap:	MaxPayload 512 bytes, PhantFunc 0, Latency L0s <64ns, L1 <1us
+			ExtTag- AttnBtn- AttnInd- PwrInd- RBE+ FLReset-
+		DevCtl:	Report errors: Correctable- Non-Fatal- Fatal- Unsupported-
+			RlxdOrd- ExtTag- PhantFunc- AuxPwr+ NoSnoop+
+			MaxPayload 256 bytes, MaxReadReq 256 bytes
+		DevSta:	CorrErr- UncorrErr- FatalErr- UnsuppReq- AuxPwr+ TransPend-
+		LnkCap:	Port #0, Speed 5GT/s, Width x2, ASPM L0s L1, Latency L0 <4us, L1 <4us
+			ClockPM- Surprise- LLActRep- BwNot-
+		LnkCtl:	ASPM Disabled; RCB 64 bytes Disabled- Retrain- CommClk-
+			ExtSynch- ClockPM- AutWidDis- BWInt- AutBWInt-
+		LnkSta:	Speed 2.5GT/s, Width x1, TrErr- Train- SlotClk+ DLActive- BWMgmt- ABWMgmt-
+		DevCap2: Completion Timeout: Range ABCD, TimeoutDis+
+		DevCtl2: Completion Timeout: 50us to 50ms, TimeoutDis-
+		LnkCtl2: Target Link Speed: 2.5GT/s, EnterCompliance- SpeedDis-, Selectable De-emphasis: -6dB
+			 Transmit Margin: Normal Operating Range, EnterModifiedCompliance- ComplianceSOS-
+			 Compliance De-emphasis: -6dB
+		LnkSta2: Current De-emphasis Level: -6dB, EqualizationComplete-, EqualizationPhase1-
+			 EqualizationPhase2-, EqualizationPhase3-, LinkEqualizationRequest-
+	Capabilities: [100 v1] Device Serial Number 00-00-00-00-00-00-00-00
+	Capabilities: [110 v1] Advanced Error Reporting
+		UESta:	DLP- SDES- TLP- FCP- CmpltTO- CmpltAbrt- UnxCmplt- RxOF- MalfTLP- ECRC- UnsupReq- ACSViol-
+		UEMsk:	DLP- SDES- TLP- FCP- CmpltTO- CmpltAbrt- UnxCmplt- RxOF- MalfTLP- ECRC- UnsupReq- ACSViol-
+		UESvrt:	DLP+ SDES+ TLP- FCP+ CmpltTO- CmpltAbrt- UnxCmplt- RxOF+ MalfTLP+ ECRC- UnsupReq- ACSViol-
+		CESta:	RxErr- BadTLP- BadDLLP- Rollover- Timeout- NonFatalErr-
+		CEMsk:	RxErr- BadTLP- BadDLLP- Rollover- Timeout- NonFatalErr+
+		AERCap:	First Error Pointer: 00, GenCap+ CGenEn- ChkCap+ ChkEn-
+	Capabilities: [150 v1] Power Budgeting <?>
+	Capabilities: [160 v1] Virtual Channel
+		Caps:	LPEVC=0 RefClk=100ns PATEntryBits=1
+		Arb:	Fixed- WRR32- WRR64- WRR128-
+		Ctrl:	ArbSelect=Fixed
+		Status:	InProgress-
+		VC0:	Caps:	PATOffset=00 MaxTimeSlots=1 RejSnoopTrans-
+			Arb:	Fixed- WRR32- WRR64- WRR128- TWRR128- WRR256-
+			Ctrl:	Enable+ ID=0 ArbSelect=Fixed TC/VC=ff
+			Status:	NegoPending- InProgress-
+	Kernel driver in use: linux-kernel-bde
+00: e4 14 46 b8 06 00 10 00 02 00 00 02 08 00 00 00
+10: 04 00 00 a0 00 00 00 00 00 00 00 00 00 00 00 00
+20: 00 00 00 00 00 00 00 00 00 00 00 00 e4 14 46 b8
+30: 00 00 00 00 48 00 00 00 00 00 00 00 00 01 00 00
+40: 00 00 00 00 00 00 ad de 01 50 03 c8 08 20 00 00
+50: 03 58 00 00 00 00 00 00 05 ac 86 00 00 00 00 00
+60: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+70: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+90: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+a0: 11 00 00 00 00 00 00 00 00 00 00 00 10 00 02 00
+b0: 02 80 3c 00 20 1c 10 00 22 6c 01 00 00 00 11 10
+c0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+d0: 1f 00 00 00 00 00 00 00 00 00 00 00 01 00 00 00
+e0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+f0: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+
+
+============================================================
+=== Routing / NDP state
+============================================================
+default via 10.1.1.1 dev eth0 
+10.1.1.0/24 dev eth0  proto kernel  scope link  src 10.1.1.212 
+---
+fe80::/64 dev eth0  proto kernel  metric 256 
+fe80::/64 dev swp1  proto kernel  metric 256 
+fe80::/64 dev swp2  proto kernel  metric 256 
+fe80::/64 dev swp10  proto kernel  metric 256 dead 
+fe80::/64 dev swp49  proto kernel  metric 256 dead 
+fe80::/64 dev swp50  proto kernel  metric 256 dead 
+fe80::/64 dev swp51  proto kernel  metric 256 dead 
+fe80::/64 dev swp52  proto kernel  metric 256 dead 
+
+============================================================
+=== dmesg full
+============================================================
+scheduler noop registered
+[    0.301143] io scheduler deadline registered
+[    0.301164] io scheduler cfq registered (default)
+[    0.309716] Serial: 8250/16550 driver, 2 ports, IRQ sharing enabled
+[    0.309960] serial8250.0: ttyS0 at MMIO 0xff704500 (irq = 42) is a 16550A
+[    0.309978] console [ttyS0] enabled, bootconsole disabled
+[    0.312905] brd: module loaded
+[    0.314414] loop: module loaded
+[    0.315041] efc00000.flash: Found 1 x16 devices at 0x0 in 8-bit bank. Manufacturer ID 0x000001 Chip ID 0x000c01
+[    0.315049] NOR chip too large to fit in mapping. Attempting to cope...
+[    0.315060] Amd/Fujitsu Extended Query Table at 0x0040
+[    0.315091]   Amd/Fujitsu Extended Query version 1.3.
+[    0.315099] number of CFI chips: 1
+[    0.315105] Reducing visibility of 8192KiB chip to 4096KiB
+[    0.316436] 4 ofpart partitions found on MTD device efc00000.flash
+[    0.316443] Creating 4 MTD partitions on "efc00000.flash":
+[    0.316452] 0x000000000000-0x000000360000 : "onie"
+[    0.316859] 0x000000360000-0x000000370000 : "uboot-env"
+[    0.317169] 0x000000370000-0x000000380000 : "board_eeprom"
+[    0.317478] 0x000000380000-0x000000400000 : "uboot"
+[    0.317959] bonding: Ethernet Channel Bonding Driver: v3.7.1 (April 27, 2011)
+[    0.318433] Freescale PowerQUICC MII Bus: probed
+[    0.319752] fsl-gianfar ff724000.ethernet: eth0: mac: 80:a2:35:81:ca:ae
+[    0.319761] fsl-gianfar ff724000.ethernet: eth0: Running with NAPI enabled
+[    0.319769] fsl-gianfar ff724000.ethernet: eth0: RX BD ring size for Q[0]: 256
+[    0.319777] fsl-gianfar ff724000.ethernet: eth0: TX BD ring size for Q[0]: 256
+[    0.319792] ehci_hcd: USB 2.0 'Enhanced' Host Controller (EHCI) Driver
+[    0.319912] fsl-ehci fsl-ehci.0: Freescale On-Chip EHCI Host Controller
+[    0.319929] fsl-ehci fsl-ehci.0: new USB bus registered, assigned bus number 1
+[    0.340638] fsl-ehci fsl-ehci.0: irq 28, io mem 0xff722000
+[    0.346615] fsl-ehci fsl-ehci.0: USB 2.0 started, EHCI 1.00
+[    0.346664] usb usb1: New USB device found, idVendor=1d6b, idProduct=0002
+[    0.346672] usb usb1: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+[    0.346678] usb usb1: Product: Freescale On-Chip EHCI Host Controller
+[    0.346685] usb usb1: Manufacturer: Linux 3.2.60-1+deb7u1+cl2.5 ehci_hcd
+[    0.346691] usb usb1: SerialNumber: fsl-ehci.0
+[    0.346822] hub 1-0:1.0: USB hub found
+[    0.346838] hub 1-0:1.0: 1 port detected
+[    0.346935] Initializing USB Mass Storage driver...
+[    0.346984] usbcore: registered new interface driver usb-storage
+[    0.346989] USB Mass Storage support registered.
+[    0.347033] usbcore: registered new interface driver usbserial
+[    0.347039] usbserial: USB Serial Driver core
+[    0.347075] i2c /dev entries driver
+[    0.347182] mpc-i2c ff703000.i2c: timeout 10000 us
+[    0.347901] mpc-i2c ff703100.i2c: timeout 10000 us
+[    0.349668] i2c i2c-0: Added multiplexed i2c bus 2
+[    0.350172] rtc-pcf8563 2-0051: chip found, driver version 0.4.3
+[    0.351249] rtc-pcf8563 2-0051: rtc core: registered rtc-pcf8563 as rtc0
+[    0.351316] i2c i2c-0: Added multiplexed i2c bus 3
+[    0.352852] i2c i2c-0: Added multiplexed i2c bus 4
+[    0.354915] i2c i2c-0: Added multiplexed i2c bus 5
+[    0.354984] i2c i2c-0: Added multiplexed i2c bus 6
+[    0.355038] i2c i2c-0: Added multiplexed i2c bus 7
+[    0.355092] i2c i2c-0: Added multiplexed i2c bus 8
+[    0.355151] i2c i2c-0: Added multiplexed i2c bus 9
+[    0.356128] pca954x 0-0070: registered 8 multiplexed busses for I2C switch pca9548
+[    0.356327] i2c i2c-1: Added multiplexed i2c bus 10
+[    0.356927] i2c i2c-1: Added multiplexed i2c bus 11
+[    0.357458] i2c i2c-1: Added multiplexed i2c bus 12
+[    0.358018] i2c i2c-1: Added multiplexed i2c bus 13
+[    0.358505] pca954x 1-0075: registered 4 multiplexed busses for I2C switch pca9546
+[    0.358706] i2c i2c-1: Added multiplexed i2c bus 14
+[    0.359252] i2c i2c-1: Added multiplexed i2c bus 15
+[    0.359870] i2c i2c-1: Added multiplexed i2c bus 16
+[    0.362871] i2c i2c-1: Added multiplexed i2c bus 17
+[    0.364304] pca954x 1-0076: registered 4 multiplexed busses for I2C switch pca9546
+[    0.364505] i2c i2c-1: Added multiplexed i2c bus 18
+[    0.365533] i2c i2c-1: Added multiplexed i2c bus 19
+[    0.366648] i2c i2c-1: Added multiplexed i2c bus 20
+[    0.367679] i2c i2c-1: Added multiplexed i2c bus 21
+[    0.368670] pca954x 1-0077: registered 4 multiplexed busses for I2C switch pca9546
+[    0.369128] i2c i2c-10: Added multiplexed i2c bus 22
+[    0.370177] i2c i2c-10: Added multiplexed i2c bus 23
+[    0.371213] i2c i2c-10: Added multiplexed i2c bus 24
+[    0.372314] i2c i2c-10: Added multiplexed i2c bus 25
+[    0.373342] i2c i2c-10: Added multiplexed i2c bus 26
+[    0.373909] i2c i2c-10: Added multiplexed i2c bus 27
+[    0.374454] i2c i2c-10: Added multiplexed i2c bus 28
+[    0.375082] i2c i2c-10: Added multiplexed i2c bus 29
+[    0.375575] pca954x 10-0074: registered 8 multiplexed busses for I2C switch pca9548
+[    0.376017] i2c i2c-11: Added multiplexed i2c bus 30
+[    0.377070] i2c i2c-11: Added multiplexed i2c bus 31
+[    0.378163] i2c i2c-11: Added multiplexed i2c bus 32
+[    0.379197] i2c i2c-11: Added multiplexed i2c bus 33
+[    0.380248] i2c i2c-11: Added multiplexed i2c bus 34
+[    0.380874] i2c i2c-11: Added multiplexed i2c bus 35
+[    0.381426] i2c i2c-11: Added multiplexed i2c bus 36
+[    0.381991] i2c i2c-11: Added multiplexed i2c bus 37
+[    0.382485] pca954x 11-0074: registered 8 multiplexed busses for I2C switch pca9548
+[    0.382932] i2c i2c-12: Added multiplexed i2c bus 38
+[    0.384039] i2c i2c-12: Added multiplexed i2c bus 39
+[    0.385088] i2c i2c-12: Added multiplexed i2c bus 40
+[    0.386128] i2c i2c-12: Added multiplexed i2c bus 41
+[    0.387222] i2c i2c-12: Added multiplexed i2c bus 42
+[    0.387780] i2c i2c-12: Added multiplexed i2c bus 43
+[    0.388315] i2c i2c-12: Added multiplexed i2c bus 44
+[    0.388872] i2c i2c-12: Added multiplexed i2c bus 45
+[    0.389361] pca954x 12-0074: registered 8 multiplexed busses for I2C switch pca9548
+[    0.389809] i2c i2c-13: Added multiplexed i2c bus 46
+[    0.390870] i2c i2c-13: Added multiplexed i2c bus 47
+[    0.391906] i2c i2c-13: Added multiplexed i2c bus 48
+[    0.392992] i2c i2c-13: Added multiplexed i2c bus 49
+[    0.394029] i2c i2c-13: Added multiplexed i2c bus 50
+[    0.394571] i2c i2c-13: Added multiplexed i2c bus 51
+[    0.395138] i2c i2c-13: Added multiplexed i2c bus 52
+[    0.395713] i2c i2c-13: Added multiplexed i2c bus 53
+[    0.396217] pca954x 13-0074: registered 8 multiplexed busses for I2C switch pca9548
+[    0.396678] i2c i2c-14: Added multiplexed i2c bus 54
+[    0.397714] i2c i2c-14: Added multiplexed i2c bus 55
+[    0.398818] i2c i2c-14: Added multiplexed i2c bus 56
+[    0.399872] i2c i2c-14: Added multiplexed i2c bus 57
+[    0.400927] i2c i2c-14: Added multiplexed i2c bus 58
+[    0.401476] i2c i2c-14: Added multiplexed i2c bus 59
+[    0.402123] i2c i2c-14: Added multiplexed i2c bus 60
+[    0.402705] i2c i2c-14: Added multiplexed i2c bus 61
+[    0.403201] pca954x 14-0074: registered 8 multiplexed busses for I2C switch pca9548
+[    0.403669] i2c i2c-15: Added multiplexed i2c bus 62
+[    0.404719] i2c i2c-15: Added multiplexed i2c bus 63
+[    0.405768] i2c i2c-15: Added multiplexed i2c bus 64
+[    0.406812] i2c i2c-15: Added multiplexed i2c bus 65
+[    0.407914] i2c i2c-15: Added multiplexed i2c bus 66
+[    0.408965] i2c i2c-15: Added multiplexed i2c bus 67
+[    0.410013] i2c i2c-15: Added multiplexed i2c bus 68
+[    0.411116] i2c i2c-15: Added multiplexed i2c bus 69
+[    0.412090] pca954x 15-0074: registered 8 multiplexed busses for I2C switch pca9548
+[    0.412341] sdhci: Secure Digital Host Controller Interface driver
+[    0.412346] sdhci: Copyright(c) Pierre Ossman
+[    0.412351] sdhci-pltfm: SDHCI platform and OF driver helper
+[    0.412445] oprofile: using ppc/e500 performance monitoring.
+[    0.413060] ip_tables: (C) 2000-2006 Netfilter Core Team
+[    0.413122] TCP cubic registered
+[    0.413350] NET: Registered protocol family 10
+[    0.415017] ip6_tables: (C) 2000-2006 Netfilter Core Team
+[    0.415072] NET: Registered protocol family 17
+[    0.415089] NET: Registered protocol family 15
+[    0.415207] Bridge firewalling registered
+[    0.415216] Ebtables v2.0 registered
+[    0.415260] Registering the dns_resolver key type
+[    0.415314] registered taskstats version 1
+[    0.416593] rtc-pcf8563 2-0051: setting system clock to 2026-05-10 16:16:10 UTC (1778429770)
+[    0.416646] port family register OK
+[    0.416656] port mc group register OK
+[    0.417261] Freeing unused kernel memory: 280k freed
+[    0.648629] usb 1-1: new high-speed USB device number 2 using fsl-ehci
+[    0.762930] usb 1-1: New USB device found, idVendor=0424, idProduct=2513
+[    0.762939] usb 1-1: New USB device strings: Mfr=0, Product=0, SerialNumber=0
+[    0.763207] hub 1-1:1.0: USB hub found
+[    0.763297] hub 1-1:1.0: 3 ports detected
+[    1.036668] usb 1-1.3: new high-speed USB device number 3 using fsl-ehci
+[    1.124911] usb 1-1.3: New USB device found, idVendor=13fe, idProduct=4100
+[    1.124921] usb 1-1.3: New USB device strings: Mfr=1, Product=2, SerialNumber=3
+[    1.124928] usb 1-1.3: Product: USB DISK 2.0
+[    1.124933] usb 1-1.3: Manufacturer:         
+[    1.124939] usb 1-1.3: SerialNumber: 7F009544DA7CFA01
+[    1.125336] scsi0 : usb-storage 1-1.3:1.0
+[    2.128694] scsi 0:0:0:0: Direct-Access              USB DISK 2.0     PMAP PQ: 0 ANSI: 6
+[    2.129761] sd 0:0:0:0: [sda] 7831552 512-byte logical blocks: (4.00 GB/3.73 GiB)
+[    2.130637] sd 0:0:0:0: [sda] Write Protect is off
+[    2.130646] sd 0:0:0:0: [sda] Mode Sense: 23 00 00 00
+[    2.131501] sd 0:0:0:0: [sda] No Caching mode page found
+[    2.136841] sd 0:0:0:0: [sda] Assuming drive cache: write through
+[    2.145634] sd 0:0:0:0: [sda] No Caching mode page found
+[    2.150961] sd 0:0:0:0: [sda] Assuming drive cache: write through
+[    2.160005]  sda: sda1 sda2 < sda5 sda6 sda7 sda8 > sda3
+[    2.163370] sd 0:0:0:0: [sda] No Caching mode page found
+[    2.168706] sd 0:0:0:0: [sda] Assuming drive cache: write through
+[    2.174817] sd 0:0:0:0: [sda] Attached SCSI disk
+[    4.909218] linux-kernel-bde (559): Payload size of 256 bytes may not be supported by all PCIe bridges by default.
+[    5.105069] tun: Universal TUN/TAP device driver, 1.6
+[    5.105078] tun: (C) 1999-2004 Max Krasnyansky <maxk@qualcomm.com>
+[    5.152877] linux-kernel-bde 0000:01:00.0: created sysfs groups as hwmon0
+[    5.185397] accton_as5610_52x_cpld ea000000.cpld: probed & iomapped @ 0xf16d7a84
+[    5.252974] at24 3-003a: 256 byte 24c02 EEPROM, read-only, 0 bytes/write
+[    5.253014] at24 3-003e: 256 byte 24c02 EEPROM, read-only, 0 bytes/write
+[    5.253049] at24 3-0078: 256 byte 24c02 EEPROM, read-only, 0 bytes/write
+[    5.253085] at24 4-000c: 256 byte 24c02 EEPROM, read-only, 0 bytes/write
+[    5.253125] at24 4-0039: 256 byte 24c02 EEPROM, read-only, 0 bytes/write
+[    5.253161] at24 4-003d: 256 byte 24c02 EEPROM, read-only, 0 bytes/write
+[    5.253197] at24 4-0078: 256 byte 24c02 EEPROM, read-only, 0 bytes/write
+[    5.253302] at24 22-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.253372] at24 23-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.253440] at24 24-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.253508] at24 25-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.253583] at24 26-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.253671] at24 27-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.253740] at24 28-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.253812] at24 29-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.253884] at24 30-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.253957] at24 31-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.254026] at24 32-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.254094] at24 33-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.254165] at24 34-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.254237] at24 35-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.254304] at24 36-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.254385] at24 37-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.254460] at24 38-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.254541] at24 39-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.254654] at24 40-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.254729] at24 41-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.254797] at24 42-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.254873] at24 43-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.254941] at24 44-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.255007] at24 45-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.255094] at24 46-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.255177] at24 47-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.255262] at24 48-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.255345] at24 49-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.255417] at24 50-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.255501] at24 51-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.255581] at24 52-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.255685] at24 53-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.255767] at24 54-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.255853] at24 55-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.255957] at24 56-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.256036] at24 57-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.256113] at24 58-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.256194] at24 59-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.256268] at24 60-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.256339] at24 61-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.256418] at24 62-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.256492] at24 63-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.256565] at24 64-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.256716] at24 65-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.256794] at24 66-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.256865] at24 67-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.256943] at24 68-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.257020] at24 69-0050: 512 byte 24c04 EEPROM, writable, 1 bytes/write
+[    5.301398] sff8436 18-0050: 640 byte sff8436 EEPROM, read-only
+[    5.301442] sff8436 19-0050: 640 byte sff8436 EEPROM, read-only
+[    5.301486] sff8436 20-0050: 640 byte sff8436 EEPROM, read-only
+[    5.301525] sff8436 21-0050: 640 byte sff8436 EEPROM, read-only
+[   13.486843] ADDRCONF(NETDEV_UP): eth0: link is not ready
+[   15.490033] PHY: mdio@ff724520:01 - Link is Up - 1000/Full
+[   15.490742] ADDRCONF(NETDEV_CHANGE): eth0: link becomes ready
+[   21.647797] auditd (1768): /proc/1768/oom_adj is deprecated, please use /proc/1768/oom_score_adj instead.
+[   27.180980] 8021q: 802.1Q VLAN Support v1.8
+[13674.607140] linux-kernel-bde 0000:01:00.0: vpd r/w failed.  This is likely a firmware bug on this device.  Contact the card vendor for a firmware update.
+[14382.807574] linux-kernel-bde 0000:01:00.0: vpd r/w failed.  This is likely a firmware bug on this device.  Contact the card vendor for a firmware update.
+
+============================================================
+=== All running processes
+============================================================
+USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root         1  0.0  0.0   2520   864 ?        Ss   09:28   0:00 init [3]  
+root         2  0.0  0.0      0     0 ?        S    09:28   0:00 [kthreadd]
+root         3  0.0  0.0      0     0 ?        S    09:28   0:00 [ksoftirqd/0]
+root         5  0.0  0.0      0     0 ?        S    09:28   0:00 [kworker/u:0]
+root         6  0.0  0.0      0     0 ?        S    09:28   0:00 [migration/0]
+root         7  0.0  0.0      0     0 ?        S    09:28   0:00 [watchdog/0]
+root         8  0.0  0.0      0     0 ?        S    09:28   0:00 [migration/1]
+root        10  0.0  0.0      0     0 ?        S    09:28   0:00 [ksoftirqd/1]
+root        11  0.0  0.0      0     0 ?        S    09:28   0:00 [kworker/0:1]
+root        12  0.0  0.0      0     0 ?        S    09:28   0:00 [watchdog/1]
+root        13  0.0  0.0      0     0 ?        S<   09:28   0:00 [cpuset]
+root        14  0.0  0.0      0     0 ?        S<   09:28   0:00 [khelper]
+root        15  0.0  0.0      0     0 ?        S<   09:28   0:00 [netns]
+root        16  0.0  0.0      0     0 ?        S    09:28   0:00 [sync_supers]
+root        17  0.0  0.0      0     0 ?        S    09:28   0:00 [bdi-default]
+root        18  0.0  0.0      0     0 ?        S<   09:28   0:00 [kblockd]
+root        19  0.0  0.0      0     0 ?        S<   09:28   0:00 [ata_sff]
+root        20  0.0  0.0      0     0 ?        S    09:28   0:00 [khubd]
+root        21  0.0  0.0      0     0 ?        S<   09:28   0:00 [rpciod]
+root        22  0.0  0.0      0     0 ?        S    09:28   0:00 [kworker/1:1]
+root        23  0.0  0.0      0     0 ?        S    09:28   0:00 [khungtaskd]
+root        24  0.0  0.0      0     0 ?        S    09:28   0:00 [kswapd0]
+root        25  0.0  0.0      0     0 ?        S    09:28   0:00 [fsnotify_mark]
+root        26  0.0  0.0      0     0 ?        S<   09:28   0:00 [nfsiod]
+root        27  0.0  0.0      0     0 ?        S<   09:28   0:00 [crypto]
+root        40  0.0  0.0      0     0 ?        S    09:28   0:00 [kworker/u:1]
+root        45  0.0  0.0      0     0 ?        S    09:28   0:00 [mtdblock0]
+root        46  0.0  0.0      0     0 ?        S    09:28   0:00 [mtdblock1]
+root        47  0.0  0.0      0     0 ?        S    09:28   0:00 [mtdblock2]
+root        48  0.0  0.0      0     0 ?        S    09:28   0:00 [mtdblock3]
+root       296  0.0  0.0      0     0 ?        S    09:28   0:00 [scsi_eh_0]
+root       297  0.0  0.0      0     0 ?        S    09:28   0:00 [usb-storage]
+root       349  0.0  0.0      0     0 ?        S    09:28   0:00 [kworker/0:2]
+root       631  0.0  0.0      0     0 ?        S    09:28   0:03 [kworker/1:2]
+root       699  0.0  0.0  28732  1796 ?        Sl   09:28   0:00 /usr/sbin/rsyslogd -c4
+root       920  0.0  0.0      0     0 ?        S    09:28   0:00 [flush-8:0]
+root      1269  0.0  0.0   2220   472 ?        S<s  09:28   0:00 /sbin/mstpd -v2
+root      1368  0.0  0.1   5112  2408 ?        Ss   09:28   0:00 /sbin/dhclient -pf /run/dhclient.eth0.pid -lf /var/lib/dhcp/dhclient.eth0.leases eth0
+root      1454  0.0  0.0   3140  1336 ?        S    09:28   0:00 /bin/bash /usr/bin/arp_refresh
+root      1551  0.0  0.5  16616 11896 ?        S    09:28   0:12 /usr/bin/python /usr/sbin/ledmgrd
+root      1606  0.1  0.6  16960 12156 ?        S    09:28   0:16 /usr/bin/python /usr/sbin/pwmd
+root      1646  0.5  0.5  16620 11928 ?        S    09:28   1:12 /usr/bin/python /usr/sbin/smond
+root      1768  0.0  0.0  13836   956 ?        S<sl 09:28   0:00 /sbin/auditd
+root      1770  0.0  0.0  10460   848 ?        S<sl 09:28   0:00 /sbin/audispd
+root      1771  0.0  0.0      0     0 ?        S    09:28   0:00 [kauditd]
+root      1806  0.0  0.0   2888   956 ?        Ss   09:28   0:00 /usr/sbin/cron
+root      1936  0.0  0.0  11020  1296 ?        Ss   09:28   0:00 /usr/sbin/lldpd -c
+_lldpd    2055  0.0  0.0  11020  1016 ?        S    09:28   0:00 /usr/sbin/lldpd -c
+root      2271  0.0  0.3  10864  6044 ?        S    09:28   0:00 /usr/bin/python /usr/lib/python2.7/dist-packages/clcmd_server.py
+
+============================================================
+=== syslog tail
+============================================================
+404 /var/log/syslog
+May 10 16:16:47 cumulus : /usr/sbin/smond : : PSU1: state changed from UNKNOWN to OK
+May 10 16:16:47 cumulus : /usr/sbin/smond : : PSU2: state changed from UNKNOWN to BAD
+May 10 16:16:47 cumulus : /usr/sbin/smond : : PSU2:  status is dc_not_ok, all_not_ok, installed
+May 10 16:16:47 cumulus : /usr/sbin/smond : : Fan(System Fan): state changed from UNKNOWN to OK
+May 10 16:16:47 cumulus : /usr/sbin/ledmgrd : : Starting LED Manager Daemon
+May 10 16:16:48 cumulus monit: Control file syntax OK
+May 10 16:16:48 cumulus monit[2741]: monit: generated unique Monit id 1190290a9c72730a2a015df194627da1 and stored to '/var/lib/monit/id'
+May 10 16:16:48 cumulus monit[2741]: Starting monit daemon with http interface at [localhost:2812]
+May 10 16:16:48 cumulus monit[2741]: Monit start delay set -- pause for 240s
+May 10 16:16:48 cumulus monit[2743]: State file '/var/run/monit/state': Unable to read magic
+May 10 16:17:01 cumulus /USR/SBIN/CRON[2795]: (root) CMD (   cd / && run-parts --report /etc/cron.hourly)
+May 10 16:17:19 cumulus cl-acltool[2721]: failed to connect to hw
+May 10 16:17:19 cumulus cl-acltool[2721]: init failed, aborting
+May 10 16:20:48 cumulus monit[2743]: Starting monit HTTP server at [localhost:2812]
+May 10 16:20:48 cumulus monit[2743]: monit HTTP server started
+May 10 16:20:48 cumulus monit[2743]: 'localhost' Monit started
+May 10 16:20:48 cumulus monit[2743]: 'topology.dot' file doesn't exist
+May 10 16:21:19 cumulus cl-acltool[2999]: failed to connect to hw
+May 10 16:21:19 cumulus cl-acltool[2999]: init failed, aborting
+May 10 16:21:49 cumulus monit[2743]: 'chk_acl' status failed (1) for /usr/share/monit/scripts/acl_check.sh. Error: Acls not installed, CPU unprotected (see /var/cache/cumulus/acltool/error for errors)#012..
+May 10 16:22:19 cumulus cl-acltool[3079]: failed to connect to hw
+May 10 16:22:19 cumulus cl-acltool[3079]: init failed, aborting
+May 10 16:22:49 cumulus monit[2743]: 'chk_acl' status failed (1) for /usr/share/monit/scripts/acl_check.sh. Error: Acls not installed, CPU unprotected (see /var/cache/cumulus/acltool/error for errors)#012..
+May 10 16:23:19 cumulus cl-acltool[3159]: failed to connect to hw
+May 10 16:23:19 cumulus cl-acltool[3159]: init failed, aborting
+May 10 16:23:49 cumulus monit[2743]: 'chk_acl' status failed (1) for /usr/share/monit/scripts/acl_check.sh. Error: Acls not installed, CPU unprotected (see /var/cache/cumulus/acltool/error for errors)#012..
+May 10 16:24:19 cumulus cl-acltool[3239]: failed to connect to hw
+May 10 16:24:19 cumulus cl-acltool[3239]: init failed, aborting
+May 10 16:30:01 cumulus /USR/SBIN/CRON[3656]: (root) CMD (   /usr/sbin/logrotate /etc/logrotate.conf)
+May 10 16:30:01 cumulus /USR/SBIN/CRON[3657]: (root) CMD (   /usr/sbin/logrotate /etc/logrotate.conf)
+May 10 16:45:01 cumulus /USR/SBIN/CRON[4634]: (root) CMD (   /usr/sbin/logrotate /etc/logrotate.conf)
+May 10 16:45:01 cumulus /USR/SBIN/CRON[4635]: (root) CMD (   /usr/sbin/logrotate /etc/logrotate.conf)
+May 10 17:00:01 cumulus /USR/SBIN/CRON[5630]: (root) CMD (   /usr/sbin/logrotate /etc/logrotate.conf)
+May 10 17:00:01 cumulus /USR/SBIN/CRON[5631]: (root) CMD (   /usr/sbin/logrotate /etc/logrotate.conf)
+May 10 17:07:09 cumulus dhclient: DHCPREQUEST on eth0 to 10.1.1.1 port 67
+May 10 17:07:09 cumulus dhclient: DHCPACK from 10.1.1.1
+May 10 17:07:09 cumulus dhclient: bound to 10.1.1.212 -- renewal in 3118 seconds.
+May 10 17:15:01 cumulus /USR/SBIN/CRON[6633]: (root) CMD (   /usr/sbin/logrotate /etc/logrotate.conf)
+May 10 17:15:01 cumulus /USR/SBIN/CRON[6634]: (root) CMD (   /usr/sbin/logrotate /etc/logrotate.conf)
+May 10 17:17:01 cumulus /USR/SBIN/CRON[6770]: (root) CMD (   cd / && run-parts --report /etc/cron.hourly)
+May 10 17:30:01 cumulus /USR/SBIN/CRON[7637]: (root) CMD (   /usr/sbin/logrotate /etc/logrotate.conf)
+May 10 17:30:01 cumulus /USR/SBIN/CRON[7638]: (root) CMD (   /usr/sbin/logrotate /etc/logrotate.conf)
+May 10 17:45:01 cumulus /USR/SBIN/CRON[8633]: (root) CMD (   /usr/sbin/logrotate /etc/logrotate.conf)
+May 10 17:45:01 cumulus /USR/SBIN/CRON[8634]: (root) CMD (   /usr/sbin/logrotate /etc/logrotate.conf)
+May 10 17:59:07 cumulus dhclient: DHCPREQUEST on eth0 to 10.1.1.1 port 67
+May 10 17:59:07 cumulus dhclient: DHCPACK from 10.1.1.1
+May 10 17:59:07 cumulus dhclient: bound to 10.1.1.212 -- renewal in 2797 seconds.
+May 10 18:00:01 cumulus /USR/SBIN/CRON[9636]: (root) CMD (   /usr/sbin/logrotate /etc/logrotate.conf)
+May 10 18:00:01 cumulus /USR/SBIN/CRON[9637]: (root) CMD (   /usr/sbin/logrotate /etc/logrotate.conf)
+May 10 18:15:01 cumulus /USR/SBIN/CRON[10845]: (root) CMD (   /usr/sbin/logrotate /etc/logrotate.conf)
+May 10 18:15:01 cumulus /USR/SBIN/CRON[10846]: (root) CMD (   /usr/sbin/logrotate /etc/logrotate.conf)
+May 10 18:17:01 cumulus /USR/SBIN/CRON[10982]: (root) CMD (   cd / && run-parts --report /etc/cron.hourly)
+May 10 18:30:01 cumulus /USR/SBIN/CRON[11938]: (root) CMD (   /usr/sbin/logrotate /etc/logrotate.conf)
+May 10 18:30:01 cumulus /USR/SBIN/CRON[11937]: (root) CMD (   /usr/sbin/logrotate /etc/logrotate.conf)
+May 10 18:31:03 cumulus datapath-config INFO: generating configuration file /var/lib/cumulus/rc.datapath_0
+May 10 18:31:11 cumulus monit: Control file syntax OK
+May 10 18:31:11 cumulus monit[2743]: Awakened by the SIGHUP signal
+May 10 18:31:11 cumulus monit[2743]: Reinitializing monit - Control file '/etc/monit/monitrc'
+May 10 18:31:11 cumulus monit[2743]: Shutting down monit HTTP server
+May 10 18:31:12 cumulus monit[2743]: monit HTTP server stopped
+May 10 18:31:12 cumulus monit[2743]: Starting monit HTTP server at [localhost:2812]
+May 10 18:31:12 cumulus monit[2743]: monit HTTP server started
+May 10 18:31:12 cumulus monit[2743]: 'localhost' Monit reloaded
+May 10 18:45:01 cumulus /USR/SBIN/CRON[13526]: (root) CMD (   /usr/sbin/logrotate /etc/logrotate.conf)
+May 10 18:45:01 cumulus /USR/SBIN/CRON[13527]: (root) CMD (   /usr/sbin/logrotate /etc/logrotate.conf)
+May 10 18:45:44 cumulus dhclient: DHCPREQUEST on eth0 to 10.1.1.1 port 67
+May 10 18:45:44 cumulus dhclient: DHCPACK from 10.1.1.1
+May 10 18:45:44 cumulus dhclient: bound to 10.1.1.212 -- renewal in 2900 seconds.
+May 10 18:48:01 cumulus ntpd[2020]: ntpd exiting on signal 15
+May 10 18:48:01 cumulus monit: Control file syntax OK
+May 10 18:48:01 cumulus monit[2743]: Awakened by the SIGHUP signal
+May 10 18:48:01 cumulus monit[2743]: Reinitializing monit - Control file '/etc/monit/monitrc'
+May 10 18:48:01 cumulus monit[2743]: Shutting down monit HTTP server
+Jun  1 12:00:00 cumulus /USR/SBIN/CRON[13849]: (root) CMD (   /usr/sbin/logrotate /etc/logrotate.conf)
+Jun  1 12:00:00 cumulus /USR/SBIN/CRON[13851]: (root) CMD (   /usr/sbin/logrotate /etc/logrotate.conf)
+Jun  1 12:00:00 cumulus monit[2743]: monit HTTP server stopped
+Jun  1 12:00:00 cumulus monit[2743]: Starting monit HTTP server at [localhost:2812]
+Jun  1 12:00:00 cumulus monit[2743]: monit HTTP server started
+Jun  1 12:00:00 cumulus monit[2743]: 'localhost' Monit reloaded
+Jun  1 12:00:09 cumulus datapath-config INFO: generating configuration file /var/lib/cumulus/rc.datapath_0
+Jun  1 12:00:16 cumulus monit: Control file syntax OK
+Jun  1 12:00:16 cumulus monit[2743]: Awakened by the SIGHUP signal
+Jun  1 12:00:16 cumulus monit[2743]: Reinitializing monit - Control file '/etc/monit/monitrc'
+Jun  1 12:00:16 cumulus monit[2743]: Shutting down monit HTTP server
+Jun  1 12:00:17 cumulus monit[2743]: monit HTTP server stopped
+Jun  1 12:00:17 cumulus monit[2743]: Starting monit HTTP server at [localhost:2812]
+Jun  1 12:00:17 cumulus monit[2743]: monit HTTP server started
+Jun  1 12:00:17 cumulus monit[2743]: 'localhost' Monit reloaded
+Jun  1 12:15:01 cumulus /USR/SBIN/CRON[15313]: (root) CMD (   /usr/sbin/logrotate /etc/logrotate.conf)
+Jun  1 12:15:01 cumulus /USR/SBIN/CRON[15314]: (root) CMD (   /usr/sbin/logrotate /etc/logrotate.conf)
+Jun  1 12:17:01 cumulus /USR/SBIN/CRON[15450]: (root) CMD (   cd / && run-parts --report /etc/cron.hourly)
+Jun  1 12:30:01 cumulus /USR/SBIN/CRON[16321]: (root) CMD (   /usr/sbin/logrotate /etc/logrotate.conf)
+Jun  1 12:30:01 cumulus /USR/SBIN/CRON[16322]: (root) CMD (   /usr/sbin/logrotate /etc/logrotate.conf)
+Jun  1 12:45:01 cumulus /USR/SBIN/CRON[17319]: (root) CMD (   /usr/sbin/logrotate /etc/logrotate.conf)
+Jun  1 12:45:01 cumulus /USR/SBIN/CRON[17320]: (root) CMD (   /usr/sbin/logrotate /etc/logrotate.conf)
+Jun  1 13:00:01 cumulus /USR/SBIN/CRON[18333]: (root) CMD (   /usr/sbin/logrotate /etc/logrotate.conf)
+Jun  1 13:00:01 cumulus /USR/SBIN/CRON[18334]: (root) CMD (   /usr/sbin/logrotate /etc/logrotate.conf)
+Jun  1 13:15:01 cumulus /USR/SBIN/CRON[19527]: (root) CMD (   /usr/sbin/logrotate /etc/logrotate.conf)
+Jun  1 13:15:01 cumulus /USR/SBIN/CRON[19528]: (root) CMD (   /usr/sbin/logrotate /etc/logrotate.conf)
+Jun  1 13:17:01 cumulus /USR/SBIN/CRON[22154]: (root) CMD (   cd / && run-parts --report /etc/cron.hourly)
+Jun  1 13:27:50 cumulus kernel: [13674.607140] linux-kernel-bde 0000:01:00.0: vpd r/w failed.  This is likely a firmware bug on this device.  Contact the card vendor for a firmware update.
+
+============================================================
+=== Try direct retimer I2C - DS100DF410 known address space
+============================================================
+/sys/bus/i2c/drivers
+/sys/bus/i2c/drivers/dummy
+/sys/bus/i2c/drivers/rtc-ds1307
+/sys/bus/i2c/drivers/rtc-ds1374
+/sys/bus/i2c/drivers/rtc-ds1672
+/sys/bus/i2c/drivers/rtc-m41t80
+/sys/bus/i2c/drivers/rtc-pcf8563
+/sys/bus/i2c/drivers/pca954x
+/sys/bus/i2c/drivers/dni_6448_i2c_mux
+/sys/bus/i2c/drivers/at24
+/sys/bus/i2c/drivers/sff8436
+/sys/bus/i2c/drivers/pca953x
+/sys/bus/i2c/drivers/max6697
+/sys/bus/i2c/drivers/adm1021
+/sys/bus/i2c/drivers/ds100df410
+---
+0-0070
+1-0075
+1-0076
+1-0077
+10-0074
+11-0074
+12-0074
+13-0074
+14-0074
+15-0074
+16-0020
+16-0021
+16-0070
+16-0071
+16-0072
+16-0073
+17-0020
+17-0023
+17-0024
+18-0027
+18-0050
+19-0027
+19-0050
+2-0051
+20-0027
+20-0050
+21-0027
+21-0050
+22-0027
+22-0050
+22-0051
+23-0027
+23-0050
+23-0051
+24-0027
+24-0050
+24-0051
+25-0027
+25-0050
+25-0051
+26-0050
+26-0051
+27-0050
+27-0051
+28-0050
+28-0051
+29-0050
+29-0051
+3-003a
+3-003e
+3-0078
+30-0027
+30-0050
+30-0051
+31-0027
+31-0050
+31-0051
+32-0027
+32-0050
+32-0051
+33-0027
+33-0050
+33-0051
+34-0050
+34-0051
+35-0050
+35-0051
+36-0050
+36-0051
+37-0050
+37-0051
+38-0027
+38-0050
+38-0051
+39-0027
+39-0050
+39-0051
+4-000c
+4-0039
+4-003d
+4-0078
+40-0027
+40-0050
+40-0051
+41-0027
+41-0050
+41-0051
+42-0050
+42-0051
+43-0050
+43-0051
+44-0050
+44-0051
+45-0050
+45-0051
+46-0027
+46-0050
+46-0051
+47-0027
+47-0050
+47-0051
+48-0027
+48-0050
+48-0051
+49-0027
+49-0050
+49-0051
+50-0050
+50-0051
+51-0050
+51-0051
+52-0050
+52-0051
+53-0050
+53-0051
+54-0027
+54-0050
+54-0051
+55-0027
+55-0050
+55-0051
+56-0027
+56-0050
+56-0051
+57-0027
+57-0050
+57-0051
+58-0050
+58-0051
+59-0050
+59-0051
+60-0050
+60-0051
+61-0050
+61-0051
+62-0027
+62-0050
+62-0051
+63-0027
+63-0050
+63-0051
+64-0027
+64-0050
+64-0051
+65-0027
+65-0050
+65-0051
+66-0027
+66-0050
+66-0051
+67-0027
+67-0050
+67-0051
+68-0027
+68-0050
+68-0051
+69-0027
+69-0050
+69-0051
+9-0018
+9-004d
+i2c-0
+i2c-1
+i2c-10
+i2c-11
+i2c-12
+i2c-13
+i2c-14
+i2c-15
+i2c-16
+i2c-17
+i2c-18
+i2c-19
+i2c-2
+i2c-20
+i2c-21
+i2c-22
+i2c-23
+i2c-24
+i2c-25
+i2c-26
+i2c-27
+i2c-28
+i2c-29
+i2c-3
+i2c-30
+i2c-31
+i2c-32
+i2c-33
+i2c-34
+i2c-35
+i2c-36
+i2c-37
+i2c-38
+i2c-39
+i2c-4
+i2c-40
+i2c-41
+i2c-42
+i2c-43
+i2c-44
+i2c-45
+i2c-46
+i2c-47
+i2c-48
+i2c-49
+i2c-5
+i2c-50
+i2c-51
+i2c-52
+i2c-53
+i2c-54
+i2c-55
+i2c-56
+i2c-57
+i2c-58
+i2c-59
+i2c-6
+i2c-60
+i2c-61
+i2c-62
+i2c-63
+i2c-64
+i2c-65
+i2c-66
+i2c-67
+i2c-68
+i2c-69
+i2c-7
+i2c-8
+i2c-9
+---
+0-0070: name=pca9548 status=
+1-0075: name=pca9546 status=
+1-0076: name=pca9546 status=
+1-0077: name=pca9546 status=
+10-0074: name=pca9548 status=
+11-0074: name=pca9548 status=
+12-0074: name=pca9548 status=
+13-0074: name=pca9548 status=
+14-0074: name=pca9548 status=
+15-0074: name=pca9548 status=
+16-0020: name=pca9506 status=
+16-0021: name=pca9506 status=
+16-0070: name=pca9538 status=
+16-0071: name=pca9538 status=
+16-0072: name=pca9538 status=
+16-0073: name=pca9538 status=
+17-0020: name=pca9506 status=
+17-0023: name=pca9506 status=
+17-0024: name=pca9506 status=
+18-0027: name=ds100df410 status=
+18-0050: name=sff8436 status=
+19-0027: name=ds100df410 status=
+19-0050: name=sff8436 status=
+2-0051: name=rtc8564 status=
+20-0027: name=ds100df410 status=
+20-0050: name=sff8436 status=
+21-0027: name=ds100df410 status=
+21-0050: name=sff8436 status=
+22-0027: name=ds100df410 status=
+22-0050: name=24c04 status=
+
+============================================================
+=== DUMP COMPLETE phase 2
+============================================================
+Bringing swp10 back DOWN to leave system in baseline
+done.

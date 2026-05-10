@@ -1,0 +1,4 @@
+Warning: Permanently added '10.1.1.212' (ECDSA) to the list of known hosts.
+[sudo] password for cumulus: === port summary ===
+usage: /usr/lib/cumulus/bcmcmd "bcm diag shell command"
+       issue a single command to the diag shell via switchd

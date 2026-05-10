@@ -1,0 +1,16 @@
+Warning: Permanently added '10.1.1.212' (ECDSA) to the list of known hosts.
+[sudo] password for cumulus: === LINK STATUS ===
+Unknown command: linkstat
+=== PHY CONTROL xe0 ===
+Current PHY control settings of xe0 ->
+Preemphasis              = 0xa370
+DriverCurrent            = 0x2
+PreDriverCurrent         = 0x3
+Rx LOS (s/w) enable         - 0
+=== PHY CONTROL xe1 ===
+Current PHY control settings of xe1 ->
+Preemphasis              = 0xa370
+DriverCurrent            = 0x2
+PreDriverCurrent         = 0x3
+Rx LOS (s/w) enable         - 0
+sh: 8: Syntax error: "(" unexpected

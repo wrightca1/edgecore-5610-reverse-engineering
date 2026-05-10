@@ -1,0 +1,47 @@
+Warning: Permanently added '10.1.1.212' (ECDSA) to the list of known hosts.
+[sudo] password for cumulus: === cl-sfputil --help ===
+Warning: cl-sfputil will be removed in a future release.  Use ethtool -m
+
+Usage: cl-sfputil [--help] [-p|--port <port_name>] [-d|--dom] [-o|--oneline]
+		  [-v|--version]
+
+OPTIONS 
+	-h,--help		prints this usage
+	-p,--port <port_name>	prints sfp details for port_name
+	-d,--dom		Includes diagnostic monitor data in output if supported
+	-o,--oneline		prints oneline output for each port
+	-v,--version		prints version string
+
+
+=== cl-sfputil -p swp49 -e ===
+Warning: cl-sfputil will be removed in a future release.  Use ethtool -m
+option -e not recognized
+
+Usage: cl-sfputil [--help] [-p|--port <port_name>] [-d|--dom] [-o|--oneline]
+		  [-v|--version]
+
+OPTIONS 
+	-h,--help		prints this usage
+	-p,--port <port_name>	prints sfp details for port_name
+	-d,--dom		Includes diagnostic monitor data in output if supported
+	-o,--oneline		prints oneline output for each port
+	-v,--version		prints version string
+
+
+=== cl-sfputil -p swp50 -e ===
+Warning: cl-sfputil will be removed in a future release.  Use ethtool -m
+option -e not recognized
+
+Usage: cl-sfputil [--help] [-p|--port <port_name>] [-d|--dom] [-o|--oneline]
+		  [-v|--version]
+
+OPTIONS 
+	-h,--help		prints this usage
+	-p,--port <port_name>	prints sfp details for port_name
+	-d,--dom		Includes diagnostic monitor data in output if supported
+	-o,--oneline		prints oneline output for each port
+	-v,--version		prints version string
+
+
+bash: -c: line 7: syntax error near unexpected token `('
+bash: -c: line 7: `echo === SFP+ 1 (swp1) DOM via 22-0050 if available ==='
