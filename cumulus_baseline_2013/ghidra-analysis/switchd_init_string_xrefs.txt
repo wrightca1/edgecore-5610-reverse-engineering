@@ -1,0 +1,812 @@
+# Init-related string xrefs in switchd
+# Format: STRING @ string_addr  used in FUNCTION @ entry_addr  (size, type)
+
+  "    -V: Display switchd version information.\n"              @ 0x1131859c   in FUN_10007a04              @ 0x10007a04 (size=244)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x11321c5c   in FUN_10044f5c              @ 0x10044f5c (size=716)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x11321c5c   in FUN_10045808              @ 0x10045808 (size=364)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x11321c5c   in FUN_10045808              @ 0x10045808 (size=364)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x11321c5c   in FUN_10045808              @ 0x10045808 (size=364)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x11321c5c   in FUN_100455e8              @ 0x100455e8 (size=360)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x11321c5c   in FUN_100455e8              @ 0x100455e8 (size=360)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x11321c5c   in FUN_100455e8              @ 0x100455e8 (size=360)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x11321c5c   in FUN_10045750              @ 0x10045750 (size=184)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x11321c5c   in FUN_10045750              @ 0x10045750 (size=184)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x11321c5c   in FUN_10045974              @ 0x10045974 (size=348)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x11321c5c   in FUN_10045974              @ 0x10045974 (size=348)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x11321ed4   in __assert_fail             @ 0x10046d88 (size=192)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x11321ed4   in FUN_10047d08              @ 0x10047d08 (size=380)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x11321ed4   in FUN_10047d08              @ 0x10047d08 (size=380)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x11322144   in FUN_10047ff4              @ 0x10047ff4 (size=664)
+  "%s %s:%d CRIT bcm_trunk_init failed: %s\n"                   @ 0x1132311c   in FUN_10051be0              @ 0x10051be0 (size=15376)
+  "%s %s:%d CRIT bcm_tx_init failed: %s\n"                      @ 0x1132349c   in FUN_10051be0              @ 0x10051be0 (size=15376)
+  "%s %s:%d ERR bcm_field_entry_policer_attach failed %s\n"     @ 0x11328b04   in FUN_1007a4a0              @ 0x1007a4a0 (size=1132)
+  "%s %s:%d ERR bcm_field_entry_policer_attach failed %s\n"     @ 0x11328b04   in FUN_1007805c              @ 0x1007805c (size=1028)
+  "%s %s:%d ERR bcm_field_entry_policer_attach failed %s\n"     @ 0x11328b04   in FUN_10078460              @ 0x10078460 (size=2568)
+  "%s %s:%d ERR bcm_field_stat_attach failed %s\n"              @ 0x113290e4   in FUN_1007b060              @ 0x1007b060 (size=712)
+  "%s %s:%d WARN bcm_vlan_stat_attach failed for vlan %d; %s\n  @ 0x1132b0e4   in FUN_1008960c              @ 0x1008960c (size=624)
+  "%s %s:%d WARN bcm_vxlan_stat_attach failed for vxlan mbr 0x  @ 0x1132b318   in FUN_1008a2b0              @ 0x1008a2b0 (size=624)
+  "%s %s:%d WARN bcm_vxlan_stat_attach failed for vxlan 0x%x;   @ 0x1132b4e0   in FUN_1008ad10              @ 0x1008ad10 (size=708)
+  "%s %s:%d CRIT bcm_stat_init failed: %s\n"                    @ 0x1132b92c   in FUN_1008d168              @ 0x1008d168 (size=696)
+  "/etc/bcm.d/datapath/datapath.conf"                           @ 0x1132bd24   in FUN_1008dba0              @ 0x1008dba0 (size=320)
+  "/etc/bcm.d/datapath/datapath.conf"                           @ 0x1132bd24   in FUN_1008dba0              @ 0x1008dba0 (size=320)
+  "/etc/bcm.d/datapath/datapath.conf"                           @ 0x1132bd24   in FUN_1008dba0              @ 0x1008dba0 (size=320)
+  "/etc/bcm.d/datapath/datapath.conf"                           @ 0x1132bd24   in FUN_1008dba0              @ 0x1008dba0 (size=320)
+  "/etc/bcm.d/datapath/datapath.conf"                           @ 0x1132bd24   in FUN_1008dba0              @ 0x1008dba0 (size=320)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x1132be7c   in FUN_1008e928              @ 0x1008e928 (size=272)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x1132be7c   in FUN_1008e928              @ 0x1008e928 (size=272)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x1132be7c   in FUN_1008ea38              @ 0x1008ea38 (size=208)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x1132be7c   in FUN_1008e100              @ 0x1008e100 (size=816)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x1132be7c   in FUN_1008e100              @ 0x1008e100 (size=816)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x1132be7c   in FUN_1008e430              @ 0x1008e430 (size=900)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x1132be7c   in FUN_1008e430              @ 0x1008e430 (size=900)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x1132be7c   in FUN_1008e430              @ 0x1008e430 (size=900)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x1132be7c   in FUN_1008e430              @ 0x1008e430 (size=900)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x1132be7c   in FUN_1008e430              @ 0x1008e430 (size=900)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x1132be7c   in FUN_1008e430              @ 0x1008e430 (size=900)
+  "/etc/bcm.d/rc.soc"                                           @ 0x1132bf60   in FUN_1008ea38              @ 0x1008ea38 (size=208)
+  "/etc/bcm.d/rc.soc"                                           @ 0x1132bf60   in FUN_1008eb08              @ 0x1008eb08 (size=176)
+  "/etc/bcm.d/rc.soc"                                           @ 0x1132bf60   in FUN_1008eb08              @ 0x1008eb08 (size=176)
+  "ERROR: SOC unit %d attach failed\n"                          @ 0x1132bfa0   in FUN_1008ec20              @ 0x1008ec20 (size=3500)
+  "bcm_linkscan_interval"                                       @ 0x1132c33c   in FUN_1008f9cc              @ 0x1008f9cc (size=1296)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x1132c4e4   in FUN_1009cc34              @ 0x1009cc34 (size=364)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x1132c4e4   in FUN_1009d398              @ 0x1009d398 (size=364)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x11336f70   in FUN_1009f5fc              @ 0x1009f5fc (size=368)
+  "%s: soc_init error : %s\n"                                   @ 0x11339918   in FUN_100a3680              @ 0x100a3680 (size=1116)
+  "%s: soc_mmu_init error : %s\n"                               @ 0x11339954   in FUN_100a3680              @ 0x100a3680 (size=1116)
+  "%s: bcm_attach error : %s\n"                                 @ 0x11339978   in FUN_100a3680              @ 0x100a3680 (size=1116)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x1133b46c   in FUN_100a91d8              @ 0x100a91d8 (size=1292)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x1133b46c   in FUN_100a91d8              @ 0x100a91d8 (size=1292)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x1133b46c   in FUN_100a91d8              @ 0x100a91d8 (size=1292)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x1133b46c   in FUN_100a91d8              @ 0x100a91d8 (size=1292)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x1133b46c   in FUN_100a67b0              @ 0x100a67b0 (size=176)
+  "%s: ERROR: attach failed: %s\n"                              @ 0x1133d0b8   in FUN_100b2760              @ 0x100b2760 (size=3568)
+  "%s: ERROR: attach failed: %s\n"                              @ 0x1133d0b8   in FUN_100b2760              @ 0x100b2760 (size=3568)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x11340568   in FUN_100c479c              @ 0x100c479c (size=872)
+  "%s: Error: Could not get linkscan state for port %s\n"       @ 0x11342174   in FUN_100cfcdc              @ 0x100cfcdc (size=7072)
+  "bcm_linkscan_interval"                                       @ 0x11342274   in FUN_100cfcdc              @ 0x100cfcdc (size=7072)
+  "%s: Error: Failed to disable linkscan: %s\n"                 @ 0x113422e8   in FUN_100cfcdc              @ 0x100cfcdc (size=7072)
+  "%s: Error: Same port can't use both software and hardware l  @ 0x11342314   in FUN_100cfcdc              @ 0x100cfcdc (size=7072)
+  "%s: Error: Failed to enable linkscan: %s\n"                  @ 0x113423fc   in FUN_100cfcdc              @ 0x100cfcdc (size=7072)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x11348fd0   in FUN_10106294              @ 0x10106294 (size=892)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x11348fd0   in FUN_101067e8              @ 0x101067e8 (size=7268)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x11348fd0   in FUN_101067e8              @ 0x101067e8 (size=7268)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x11349374   in FUN_10109058              @ 0x10109058 (size=752)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x11349374   in FUN_10109058              @ 0x10109058 (size=752)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x11349374   in FUN_10109348              @ 0x10109348 (size=876)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x11349374   in FUN_101096b4              @ 0x101096b4 (size=260)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x11349374   in FUN_101096b4              @ 0x101096b4 (size=260)
+  "sysconf_attach: bcm device init failed\n"                    @ 0x11349428   in FUN_10109348              @ 0x10109348 (size=876)
+  "sysconf_attach: bcm device init failed\n"                    @ 0x11349428   in FUN_10109348              @ 0x10109348 (size=876)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x1134ac8c   in FUN_10110fd4              @ 0x10110fd4 (size=124)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x11354b94   in FUN_10133400              @ 0x10133400 (size=2676)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x11356138   in FUN_10145494              @ 0x10145494 (size=440)
+  "MIM_CLI: Error: bcm_mim_init failed, %s\n"                   @ 0x113609f0   in FUN_10175eb8              @ 0x10175eb8 (size=764)
+  "MPLS_CLI: Error: bcm_mpls_init failed, %s\n"                 @ 0x1136201c   in FUN_1017d394              @ 0x1017d394 (size=964)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113643a0   in FUN_1018be5c              @ 0x1018be5c (size=1992)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113643a0   in FUN_1018c624              @ 0x1018c624 (size=1196)
+  "Warning:  init failed.  Will attempt register\n"             @ 0x11365198   in FUN_101912f4              @ 0x101912f4 (size=1504)
+  "%s: trunk init failed: %s\n"                                 @ 0x1136e010   in FUN_101a1a04              @ 0x101a1a04 (size=5576)
+  "%s: trunk deinit failed: %s\n"                               @ 0x1136e034   in FUN_101a1a04              @ 0x101a1a04 (size=5576)
+  "WLAN_CLI: Error: bcm_wlan_init failed, %s\n"                 @ 0x1136ff7c   in FUN_101b263c              @ 0x101b263c (size=904)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x11371a44   in FUN_101bf628              @ 0x101bf628 (size=3844)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x11371a44   in FUN_101bf628              @ 0x101bf628 (size=3844)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x11371a44   in FUN_101bd530              @ 0x101bd530 (size=7076)
+  "L3 DEFIP IPV4 Routes Add"                                    @ 0x11374dd0   in FUN_101d8854              @ 0x101d8854 (size=12256)
+  "bcm_port_linkscan_get: port %d: %s\n"                        @ 0x11376410   in FUN_101ec974              @ 0x101ec974 (size=3372)
+  "bcm_port_linkscan_set: port %d: %s\n"                        @ 0x11376434   in FUN_101ec974              @ 0x101ec974 (size=3372)
+  "bcm_port_linkscan_set: port %d: %s\n"                        @ 0x11376434   in FUN_101ec974              @ 0x101ec974 (size=3372)
+  "bcm_port_linkscan_set: port %d: %s\n"                        @ 0x11376434   in FUN_101ed6a0              @ 0x101ed6a0 (size=420)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x1137692c   in FUN_10200648              @ 0x10200648 (size=2608)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x1137692c   in FUN_10201078              @ 0x10201078 (size=1164)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x1137692c   in FUN_101fc8f0              @ 0x101fc8f0 (size=2988)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x1137692c   in FUN_101fc320              @ 0x101fc320 (size=1488)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x1137692c   in FUN_101fc320              @ 0x101fc320 (size=1488)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x1137692c   in FUN_101f5f60              @ 0x101f5f60 (size=2636)
+  "bcm_port_linkscan_set"                                       @ 0x1137a0e8   in FUN_10216970              @ 0x10216970 (size=4192)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x1137a900   in FUN_1021a2dc              @ 0x1021a2dc (size=968)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x1137a900   in FUN_1021b760              @ 0x1021b760 (size=228)
+  "/etc/bcm.d/config.bcm"                                       @ 0x11386d68   in FUN_1031eaf0              @ 0x1031eaf0 (size=1376)
+  "/etc/bcm.d/config.bcm"                                       @ 0x11386d68   in FUN_1031eaf0              @ 0x1031eaf0 (size=1376)
+  "/etc/bcm.d/config.bcm"                                       @ 0x11386d68   in FUN_1031e1e8              @ 0x1031e1e8 (size=132)
+  "/etc/bcm.d/config.bcm"                                       @ 0x11386d68   in FUN_1031f050              @ 0x1031f050 (size=1272)
+  "/etc/bcm.d/config.bcm"                                       @ 0x11386d68   in FUN_1031f050              @ 0x1031f050 (size=1272)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x11386f50   in FUN_1031f050              @ 0x1031f050 (size=1272)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x11387070   in FUN_10320110              @ 0x10320110 (size=748)
+  "BCMX: Failed to add unit for linkscan, u %d.  %d: %s\n"      @ 0x1138795c   in FUN_103265e4              @ 0x103265e4 (size=1856)
+  "BCMX linkscan not initialized\n"                             @ 0x11387b04   in FUN_1032a410              @ 0x1032a410 (size=464)
+  "BCMX linkscan interval %d%s\n"                               @ 0x11387b34   in FUN_1032a410              @ 0x1032a410 (size=464)
+  "bcm_init_check"                                              @ 0x11390f00   in FUN_103e18e8              @ 0x103e18e8 (size=272)
+  "bcm_init_selective"                                          @ 0x11390f10   in FUN_103e19f8              @ 0x103e19f8 (size=284)
+  "bcm_ipmc_egress_port_init"                                   @ 0x113911f0   in FUN_103e3efc              @ 0x103e3efc (size=272)
+  "bcm_linkscan_detach"                                         @ 0x1139320c   in FUN_103fd718              @ 0x103fd718 (size=272)
+  "bcm_linkscan_dump"                                           @ 0x11393220   in FUN_103fd828              @ 0x103fd828 (size=272)
+  "bcm_linkscan_enable_get"                                     @ 0x11393234   in FUN_103fd938              @ 0x103fd938 (size=280)
+  "bcm_linkscan_enable_port_get"                                @ 0x1139324c   in FUN_103fda50              @ 0x103fda50 (size=304)
+  "bcm_linkscan_enable_set"                                     @ 0x1139326c   in FUN_103fdb80              @ 0x103fdb80 (size=280)
+  "bcm_linkscan_init"                                           @ 0x11393284   in FUN_103fdc98              @ 0x103fdc98 (size=272)
+  "bcm_linkscan_mode_get"                                       @ 0x11393298   in FUN_103fdda8              @ 0x103fdda8 (size=312)
+  "bcm_linkscan_mode_set"                                       @ 0x113932b0   in FUN_103fdee0              @ 0x103fdee0 (size=312)
+  "bcm_linkscan_mode_set_pbm"                                   @ 0x113932c8   in FUN_103fe018              @ 0x103fe018 (size=504)
+  "bcm_linkscan_port_register"                                  @ 0x113932e4   in FUN_103fe210              @ 0x103fe210 (size=312)
+  "bcm_linkscan_port_unregister"                                @ 0x11393300   in FUN_103fe348              @ 0x103fe348 (size=312)
+  "bcm_linkscan_register"                                       @ 0x11393320   in FUN_103fe480              @ 0x103fe480 (size=280)
+  "bcm_linkscan_unregister"                                     @ 0x11393338   in FUN_103fe598              @ 0x103fe598 (size=280)
+  "bcm_linkscan_update"                                         @ 0x11393350   in FUN_103fe6b0              @ 0x103fe6b0 (size=496)
+  "bcm_port_init"                                               @ 0x11395348   in FUN_10418c80              @ 0x10418c80 (size=272)
+  "bcm_port_linkscan_get"                                       @ 0x11395588   in FUN_1041aa24              @ 0x1041aa24 (size=312)
+  "bcm_port_linkscan_set"                                       @ 0x113955a0   in FUN_1041ab5c              @ 0x1041ab5c (size=312)
+  "bcm_subport_init"                                            @ 0x11397760   in FUN_10435b84              @ 0x10435b84 (size=272)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x1139bca8   in FUN_104c1c38              @ 0x104c1c38 (size=1324)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x1139bca8   in FUN_104c1c38              @ 0x104c1c38 (size=1324)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x1139bca8   in FUN_104a60a8              @ 0x104a60a8 (size=596)
+  "FP(unit %d) Error: Module deinit failed.\n"                  @ 0x1139d6d0   in FUN_104b8f94              @ 0x104b8f94 (size=9428)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113a17c8   in FUN_104ef078              @ 0x104ef078 (size=1304)
+  "bcm_detach: Deinitializing %s...\n"                          @ 0x113a185c   in FUN_104efa18              @ 0x104efa18 (size=3580)
+  "bcm_detach: Deinitializing %s...\n"                          @ 0x113a185c   in FUN_104efa18              @ 0x104efa18 (size=3580)
+  "bcm_detach: Deinitializing %s...\n"                          @ 0x113a185c   in FUN_104efa18              @ 0x104efa18 (size=3580)
+  "bcm_detach: Deinitializing %s...\n"                          @ 0x113a185c   in FUN_104efa18              @ 0x104efa18 (size=3580)
+  "bcm_detach: Deinitializing %s...\n"                          @ 0x113a185c   in FUN_104efa18              @ 0x104efa18 (size=3580)
+  "bcm_detach: Deinitializing %s...\n"                          @ 0x113a185c   in FUN_104efa18              @ 0x104efa18 (size=3580)
+  "bcm_detach: Deinitializing %s...\n"                          @ 0x113a185c   in FUN_104efa18              @ 0x104efa18 (size=3580)
+  "bcm_detach: Deinitializing %s...\n"                          @ 0x113a185c   in FUN_104efa18              @ 0x104efa18 (size=3580)
+  "bcm_detach: Deinitializing %s...\n"                          @ 0x113a185c   in FUN_104efa18              @ 0x104efa18 (size=3580)
+  "bcm_detach: Deinitializing %s...\n"                          @ 0x113a185c   in FUN_104efa18              @ 0x104efa18 (size=3580)
+  "bcm_detach: Deinitializing %s...\n"                          @ 0x113a185c   in FUN_104efa18              @ 0x104efa18 (size=3580)
+  "bcm_detach: Deinitializing %s...\n"                          @ 0x113a185c   in FUN_104efa18              @ 0x104efa18 (size=3580)
+  "bcm_detach: Deinitializing %s...\n"                          @ 0x113a185c   in FUN_104efa18              @ 0x104efa18 (size=3580)
+  "bcm_detach: Deinitializing %s...\n"                          @ 0x113a185c   in FUN_104efa18              @ 0x104efa18 (size=3580)
+  "bcm_detach: Deinitializing %s...\n"                          @ 0x113a185c   in FUN_104efa18              @ 0x104efa18 (size=3580)
+  "bcm_detach: Deinitializing %s...\n"                          @ 0x113a185c   in FUN_104efa18              @ 0x104efa18 (size=3580)
+  "bcm_detach: Deinitializing %s...\n"                          @ 0x113a185c   in FUN_104efa18              @ 0x104efa18 (size=3580)
+  "bcm_detach: Deinitializing %s...\n"                          @ 0x113a185c   in FUN_104efa18              @ 0x104efa18 (size=3580)
+  "bcm_detach: Deinitializing %s...\n"                          @ 0x113a185c   in FUN_104efa18              @ 0x104efa18 (size=3580)
+  "bcm_detach: Deinitializing %s...\n"                          @ 0x113a185c   in FUN_104efa18              @ 0x104efa18 (size=3580)
+  "bcm_detach: Deinitializing %s...\n"                          @ 0x113a185c   in FUN_104efa18              @ 0x104efa18 (size=3580)
+  "bcm_detach: Deinitializing %s...\n"                          @ 0x113a185c   in FUN_104efa18              @ 0x104efa18 (size=3580)
+  "bcm_detach: Deinitializing %s...\n"                          @ 0x113a185c   in FUN_104efa18              @ 0x104efa18 (size=3580)
+  "bcm_detach: Deinitializing %s...\n"                          @ 0x113a185c   in FUN_104efa18              @ 0x104efa18 (size=3580)
+  "bcm_detach: Deinitializing %s...\n"                          @ 0x113a185c   in FUN_104efa18              @ 0x104efa18 (size=3580)
+  "bcm_detach: Deinitializing %s...\n"                          @ 0x113a185c   in FUN_104efa18              @ 0x104efa18 (size=3580)
+  "bcm_detach: Deinitializing %s...\n"                          @ 0x113a185c   in FUN_104efa18              @ 0x104efa18 (size=3580)
+  "bcm_detach: Deinitializing %s...\n"                          @ 0x113a185c   in FUN_104efa18              @ 0x104efa18 (size=3580)
+  "linkscan"                                                    @ 0x113a1924   in FUN_104f0b7c              @ 0x104f0b7c (size=7700)
+  "linkscan"                                                    @ 0x113a1924   in FUN_104f0b7c              @ 0x104f0b7c (size=7700)
+  "linkscan"                                                    @ 0x113a1924   in FUN_104f0b7c              @ 0x104f0b7c (size=7700)
+  "linkscan"                                                    @ 0x113a1924   in FUN_104efa18              @ 0x104efa18 (size=3580)
+  "bcm_detach: All modules deinitialized.\n"                    @ 0x113a1998   in FUN_104efa18              @ 0x104efa18 (size=3580)
+  "bcm_init: (%s)\n"                                            @ 0x113a1a14   in FUN_104f0b7c              @ 0x104f0b7c (size=7700)
+  "bcm_init: (%s)\n"                                            @ 0x113a1a14   in FUN_104f0b7c              @ 0x104f0b7c (size=7700)
+  "bcm_init: (%s)\n"                                            @ 0x113a1a14   in FUN_104f0b7c              @ 0x104f0b7c (size=7700)
+  "bcm_init: (%s)\n"                                            @ 0x113a1a14   in FUN_104f0b7c              @ 0x104f0b7c (size=7700)
+  "bcm_init: (%s)\n"                                            @ 0x113a1a14   in FUN_104f0b7c              @ 0x104f0b7c (size=7700)
+  "bcm_init: (%s)\n"                                            @ 0x113a1a14   in FUN_104f0b7c              @ 0x104f0b7c (size=7700)
+  "bcm_init: (%s)\n"                                            @ 0x113a1a14   in FUN_104f0b7c              @ 0x104f0b7c (size=7700)
+  "bcm_init: (%s)\n"                                            @ 0x113a1a14   in FUN_104f0b7c              @ 0x104f0b7c (size=7700)
+  "bcm_init: (%s)\n"                                            @ 0x113a1a14   in FUN_104f0b7c              @ 0x104f0b7c (size=7700)
+  "bcm_init: (%s)\n"                                            @ 0x113a1a14   in FUN_104f0b7c              @ 0x104f0b7c (size=7700)
+  "bcm_init: (%s)\n"                                            @ 0x113a1a14   in FUN_104f0b7c              @ 0x104f0b7c (size=7700)
+  "bcm_init: (%s)\n"                                            @ 0x113a1a14   in FUN_104f0b7c              @ 0x104f0b7c (size=7700)
+  "bcm_init: (%s)\n"                                            @ 0x113a1a14   in FUN_104f0b7c              @ 0x104f0b7c (size=7700)
+  "bcm_init: (%s)\n"                                            @ 0x113a1a14   in FUN_104f0b7c              @ 0x104f0b7c (size=7700)
+  "bcm_init: (%s)\n"                                            @ 0x113a1a14   in FUN_104f0b7c              @ 0x104f0b7c (size=7700)
+  "bcm_init: (%s)\n"                                            @ 0x113a1a14   in FUN_104f0b7c              @ 0x104f0b7c (size=7700)
+  "bcm_init: (%s)\n"                                            @ 0x113a1a14   in FUN_104f0b7c              @ 0x104f0b7c (size=7700)
+  "bcm_init: (%s)\n"                                            @ 0x113a1a14   in FUN_104f0b7c              @ 0x104f0b7c (size=7700)
+  "bcm_init: (%s)\n"                                            @ 0x113a1a14   in FUN_104f0b7c              @ 0x104f0b7c (size=7700)
+  "bcm_init: (%s)\n"                                            @ 0x113a1a14   in FUN_104f0b7c              @ 0x104f0b7c (size=7700)
+  "bcm_init: (%s)\n"                                            @ 0x113a1a14   in FUN_104f0b7c              @ 0x104f0b7c (size=7700)
+  "bcm_init: (%s)\n"                                            @ 0x113a1a14   in FUN_104f0b7c              @ 0x104f0b7c (size=7700)
+  "bcm_init: (%s)\n"                                            @ 0x113a1a14   in FUN_104f0b7c              @ 0x104f0b7c (size=7700)
+  "bcm_init: (%s)\n"                                            @ 0x113a1a14   in FUN_104f0b7c              @ 0x104f0b7c (size=7700)
+  "bcm_init: (%s)\n"                                            @ 0x113a1a14   in FUN_104f0b7c              @ 0x104f0b7c (size=7700)
+  "bcm_init: (%s)\n"                                            @ 0x113a1a14   in FUN_104f0b7c              @ 0x104f0b7c (size=7700)
+  "bcm_init: (%s)\n"                                            @ 0x113a1a14   in FUN_104f0b7c              @ 0x104f0b7c (size=7700)
+  "bcm_init: %8s   took %10d usec\n"                            @ 0x113a1a24   in FUN_104f0b7c              @ 0x104f0b7c (size=7700)
+  "bcm_init: %8s   took %10d usec\n"                            @ 0x113a1a24   in FUN_104f0b7c              @ 0x104f0b7c (size=7700)
+  "bcm_init: %8s   took %10d usec\n"                            @ 0x113a1a24   in FUN_104f0b7c              @ 0x104f0b7c (size=7700)
+  "bcm_init: %8s   took %10d usec\n"                            @ 0x113a1a24   in FUN_104f0b7c              @ 0x104f0b7c (size=7700)
+  "bcm_init: %8s   took %10d usec\n"                            @ 0x113a1a24   in FUN_104f0b7c              @ 0x104f0b7c (size=7700)
+  "bcm_init: %8s   took %10d usec\n"                            @ 0x113a1a24   in FUN_104f0b7c              @ 0x104f0b7c (size=7700)
+  "bcm_init: %8s   took %10d usec\n"                            @ 0x113a1a24   in FUN_104f0b7c              @ 0x104f0b7c (size=7700)
+  "bcm_init: %8s   took %10d usec\n"                            @ 0x113a1a24   in FUN_104f0b7c              @ 0x104f0b7c (size=7700)
+  "bcm_init: %8s   took %10d usec\n"                            @ 0x113a1a24   in FUN_104f0b7c              @ 0x104f0b7c (size=7700)
+  "bcm_init: %8s   took %10d usec\n"                            @ 0x113a1a24   in FUN_104f0b7c              @ 0x104f0b7c (size=7700)
+  "bcm_init: %8s   took %10d usec\n"                            @ 0x113a1a24   in FUN_104f0b7c              @ 0x104f0b7c (size=7700)
+  "bcm_init: %8s   took %10d usec\n"                            @ 0x113a1a24   in FUN_104f0b7c              @ 0x104f0b7c (size=7700)
+  "bcm_init: %8s   took %10d usec\n"                            @ 0x113a1a24   in FUN_104f0b7c              @ 0x104f0b7c (size=7700)
+  "bcm_init: %8s   took %10d usec\n"                            @ 0x113a1a24   in FUN_104f0b7c              @ 0x104f0b7c (size=7700)
+  "bcm_init: %8s   took %10d usec\n"                            @ 0x113a1a24   in FUN_104f0b7c              @ 0x104f0b7c (size=7700)
+  "bcm_init: %8s   took %10d usec\n"                            @ 0x113a1a24   in FUN_104f0b7c              @ 0x104f0b7c (size=7700)
+  "bcm_init: %8s   took %10d usec\n"                            @ 0x113a1a24   in FUN_104f0b7c              @ 0x104f0b7c (size=7700)
+  "bcm_init: skipped %s init\n"                                 @ 0x113a1a6c   in FUN_104f0b7c              @ 0x104f0b7c (size=7700)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113a296c   in FUN_10536224              @ 0x10536224 (size=14624)
+  "Port %s: linkscan ASF update failed: %s\n"                   @ 0x113a2c64   in FUN_10536224              @ 0x10536224 (size=14624)
+  "Port %s: temporarily removed from linkscan\n"                @ 0x113a2e28   in FUN_10539b44              @ 0x10539b44 (size=868)
+  "bcm_linkscan_errdelay"                                       @ 0x113a2f18   in FUN_1053bcd0              @ 0x1053bcd0 (size=3624)
+  "BCM linkscan callbacks for unit %d\n"                        @ 0x113a3130   in FUN_1053fc8c              @ 0x1053fc8c (size=256)
+  "HW linkscan ports:              %s\n"                        @ 0x113a3184   in FUN_1053fd8c              @ 0x1053fd8c (size=2508)
+  "SW linkscan ports:              %s\n"                        @ 0x113a31a8   in FUN_1053fd8c              @ 0x1053fd8c (size=2508)
+  "Fast linkscan ports:            %s\n"                        @ 0x113a3214   in FUN_1053fd8c              @ 0x1053fd8c (size=2508)
+  "ERROR: mbcm_init unit %d: unsupported chip type\n"           @ 0x113a3420   in FUN_10540758              @ 0x10540758 (size=1532)
+  "%s : Warm boot init failed for unit %d \n"                   @ 0x113a4f94   in FUN_1058e5a0              @ 0x1058e5a0 (size=4472)
+  "port_init_duplex"                                            @ 0x113a86cc   in FUN_105b3c90              @ 0x105b3c90 (size=392)
+  "port_init_adv"                                               @ 0x113a86e0   in FUN_105b3c90              @ 0x105b3c90 (size=392)
+  "port_init_autoneg"                                           @ 0x113a86f0   in FUN_105b3c90              @ 0x105b3c90 (size=392)
+  "bcm_port_init: unit %d\n"                                    @ 0x113a8704   in FUN_105b4b88              @ 0x105b4b88 (size=16624)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113a8738   in FUN_105b4b88              @ 0x105b4b88 (size=16624)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113a8738   in FUN_105b4b88              @ 0x105b4b88 (size=16624)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113a8738   in FUN_105b4b88              @ 0x105b4b88 (size=16624)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113a8738   in FUN_105b4b88              @ 0x105b4b88 (size=16624)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113a8738   in FUN_105b4b88              @ 0x105b4b88 (size=16624)
+  "MAC init failed on port %s\n"                                @ 0x113a8ac0   in FUN_105b98c4              @ 0x105b98c4 (size=15108)
+  "bcm_port_linkscan_get failed: %s\n"                          @ 0x113a95d8   in FUN_105cfcbc              @ 0x105cfcbc (size=5912)
+  "bcm_port_linkscan_set failed: %s\n"                          @ 0x113a9984   in FUN_105d13d4              @ 0x105d13d4 (size=4924)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113ad990   in FUN_106b9b0c              @ 0x106b9b0c (size=676)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b1eb8   in FUN_10720b8c              @ 0x10720b8c (size=988)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b394c   in FUN_1075fcd4              @ 0x1075fcd4 (size=720)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b4564   in FUN_107626b4              @ 0x107626b4 (size=1604)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b4564   in FUN_10763bb4              @ 0x10763bb4 (size=4152)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b4564   in FUN_10761ed8              @ 0x10761ed8 (size=2012)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b4564   in FUN_10764bec              @ 0x10764bec (size=4284)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b4564   in FUN_10764bec              @ 0x10764bec (size=4284)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b4564   in FUN_10762f58              @ 0x10762f58 (size=2156)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b4564   in FUN_10765ca8              @ 0x10765ca8 (size=3940)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b4df4   in FUN_10772a9c              @ 0x10772a9c (size=1184)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b4df4   in FUN_10772a9c              @ 0x10772a9c (size=1184)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b4df4   in FUN_10772a9c              @ 0x10772a9c (size=1184)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b4df4   in FUN_10772a9c              @ 0x10772a9c (size=1184)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b4df4   in FUN_10770424              @ 0x10770424 (size=9048)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b4df4   in FUN_10770424              @ 0x10770424 (size=9048)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b4df4   in FUN_10770424              @ 0x10770424 (size=9048)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b4df4   in FUN_10770424              @ 0x10770424 (size=9048)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b4df4   in FUN_10781a84              @ 0x10781a84 (size=6052)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b4df4   in FUN_10781a84              @ 0x10781a84 (size=6052)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b4df4   in FUN_10781a84              @ 0x10781a84 (size=6052)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b5f3c   in FUN_1078aa38              @ 0x1078aa38 (size=4448)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b5f3c   in FUN_1078bda8              @ 0x1078bda8 (size=444)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b5f3c   in FUN_1078bda8              @ 0x1078bda8 (size=444)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b5f3c   in FUN_10790aa0              @ 0x10790aa0 (size=4184)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b5f3c   in FUN_10790aa0              @ 0x10790aa0 (size=4184)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b5f3c   in FUN_10790aa0              @ 0x10790aa0 (size=4184)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b5f3c   in FUN_10790aa0              @ 0x10790aa0 (size=4184)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b5f3c   in FUN_107906bc              @ 0x107906bc (size=764)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b5f3c   in FUN_107906bc              @ 0x107906bc (size=764)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b5f3c   in FUN_1078ef8c              @ 0x1078ef8c (size=1556)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b5f3c   in FUN_1078ef8c              @ 0x1078ef8c (size=1556)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b5f3c   in FUN_1078ef8c              @ 0x1078ef8c (size=1556)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b5f3c   in FUN_1078e30c              @ 0x1078e30c (size=472)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b5f3c   in FUN_1078e30c              @ 0x1078e30c (size=472)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b5f3c   in FUN_1078f5a0              @ 0x1078f5a0 (size=2716)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b5f3c   in FUN_1078d88c              @ 0x1078d88c (size=848)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b5f3c   in FUN_1078d88c              @ 0x1078d88c (size=848)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b5f3c   in FUN_1078d88c              @ 0x1078d88c (size=848)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b5f3c   in FUN_1078dc60              @ 0x1078dc60 (size=828)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b5f3c   in FUN_1078dc60              @ 0x1078dc60 (size=828)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b5f3c   in FUN_1078df9c              @ 0x1078df9c (size=880)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b5f3c   in FUN_1078df9c              @ 0x1078df9c (size=880)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b6e40   in FUN_107a2a68              @ 0x107a2a68 (size=516)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b6e40   in FUN_107a2c6c              @ 0x107a2c6c (size=720)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b6e40   in FUN_107a2f3c              @ 0x107a2f3c (size=768)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b6e40   in FUN_107a2500              @ 0x107a2500 (size=1060)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b6e40   in FUN_107a323c              @ 0x107a323c (size=816)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b6e40   in FUN_107a986c              @ 0x107a986c (size=568)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b6e40   in FUN_107a9aa4              @ 0x107a9aa4 (size=520)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b6e40   in FUN_107a95f4              @ 0x107a95f4 (size=632)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b6e40   in FUN_107a6808              @ 0x107a6808 (size=1184)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b6e40   in FUN_107a6ca8              @ 0x107a6ca8 (size=768)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b6e40   in FUN_107a5bf8              @ 0x107a5bf8 (size=1028)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b6e40   in FUN_107a5ffc              @ 0x107a5ffc (size=2060)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b6e40   in FUN_107a5614              @ 0x107a5614 (size=1508)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b6e40   in FUN_107a7260              @ 0x107a7260 (size=1828)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b6e40   in FUN_107a7260              @ 0x107a7260 (size=1828)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b6e40   in FUN_107a7260              @ 0x107a7260 (size=1828)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b6e40   in FUN_107a7260              @ 0x107a7260 (size=1828)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b6e40   in FUN_107a7260              @ 0x107a7260 (size=1828)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b6e40   in FUN_107a20f0              @ 0x107a20f0 (size=524)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b6e40   in FUN_107a22fc              @ 0x107a22fc (size=516)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b6e40   in FUN_107a7984              @ 0x107a7984 (size=1804)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b6e40   in FUN_107a7984              @ 0x107a7984 (size=1804)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b6e40   in FUN_107a7984              @ 0x107a7984 (size=1804)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b6e40   in FUN_107a7984              @ 0x107a7984 (size=1804)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b6e40   in FUN_107a7984              @ 0x107a7984 (size=1804)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b72f4   in FUN_107aa710              @ 0x107aa710 (size=2660)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b72f4   in FUN_107aa710              @ 0x107aa710 (size=2660)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b72f4   in FUN_107aa710              @ 0x107aa710 (size=2660)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b72f4   in FUN_107aa710              @ 0x107aa710 (size=2660)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b72f4   in FUN_107aa710              @ 0x107aa710 (size=2660)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b72f4   in FUN_107aa710              @ 0x107aa710 (size=2660)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b72f4   in FUN_107aa710              @ 0x107aa710 (size=2660)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b72f4   in FUN_107aa710              @ 0x107aa710 (size=2660)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b72f4   in FUN_107aa710              @ 0x107aa710 (size=2660)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b72f4   in FUN_107aa710              @ 0x107aa710 (size=2660)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b72f4   in FUN_107ab868              @ 0x107ab868 (size=552)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b72f4   in FUN_107ab868              @ 0x107ab868 (size=552)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b72f4   in FUN_107aba90              @ 0x107aba90 (size=1004)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b72f4   in FUN_107aba90              @ 0x107aba90 (size=1004)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b72f4   in FUN_107abe7c              @ 0x107abe7c (size=8212)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b72f4   in FUN_107abe7c              @ 0x107abe7c (size=8212)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b72f4   in FUN_107abe7c              @ 0x107abe7c (size=8212)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b72f4   in FUN_107abe7c              @ 0x107abe7c (size=8212)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b72f4   in FUN_107abe7c              @ 0x107abe7c (size=8212)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b72f4   in FUN_107abe7c              @ 0x107abe7c (size=8212)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b72f4   in FUN_107abe7c              @ 0x107abe7c (size=8212)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b72f4   in FUN_107abe7c              @ 0x107abe7c (size=8212)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b72f4   in FUN_107abe7c              @ 0x107abe7c (size=8212)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b72f4   in FUN_107abe7c              @ 0x107abe7c (size=8212)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b72f4   in FUN_107abe7c              @ 0x107abe7c (size=8212)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b72f4   in FUN_107abe7c              @ 0x107abe7c (size=8212)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b72f4   in FUN_107abe7c              @ 0x107abe7c (size=8212)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b72f4   in FUN_107abe7c              @ 0x107abe7c (size=8212)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b72f4   in FUN_107ab174              @ 0x107ab174 (size=1016)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b72f4   in FUN_107ab174              @ 0x107ab174 (size=1016)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b72f4   in FUN_107ab56c              @ 0x107ab56c (size=764)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b72f4   in FUN_107ab56c              @ 0x107ab56c (size=764)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b72f4   in FUN_107a9f7c              @ 0x107a9f7c (size=1940)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b72f4   in FUN_107a9f7c              @ 0x107a9f7c (size=1940)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b72f4   in FUN_107a9f7c              @ 0x107a9f7c (size=1940)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b72f4   in FUN_107a9f7c              @ 0x107a9f7c (size=1940)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b72f4   in FUN_107a9f7c              @ 0x107a9f7c (size=1940)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113b72f4   in FUN_107ade90              @ 0x107ade90 (size=4400)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113bfe54   in FUN_107c3768              @ 0x107c3768 (size=1336)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113bfe54   in FUN_107c3768              @ 0x107c3768 (size=1336)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113bfe54   in FUN_107c1820              @ 0x107c1820 (size=1188)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113bfe54   in FUN_107bfab0              @ 0x107bfab0 (size=7536)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113bfe54   in FUN_107bfab0              @ 0x107bfab0 (size=7536)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113bfe54   in FUN_107bfab0              @ 0x107bfab0 (size=7536)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113bfe54   in FUN_107bfab0              @ 0x107bfab0 (size=7536)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113bfe54   in FUN_107c4eac              @ 0x107c4eac (size=1292)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113bfe54   in FUN_107c4eac              @ 0x107c4eac (size=1292)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113bfe54   in FUN_107bc440              @ 0x107bc440 (size=1200)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113bfe54   in FUN_107bd408              @ 0x107bd408 (size=1076)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113bfe54   in FUN_107bb090              @ 0x107bb090 (size=2508)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113bfe54   in FUN_107bb090              @ 0x107bb090 (size=2508)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113bfe54   in FUN_107bb090              @ 0x107bb090 (size=2508)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113bfe54   in FUN_107bba5c              @ 0x107bba5c (size=1636)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113bfe54   in FUN_107bba5c              @ 0x107bba5c (size=1636)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113bfe54   in FUN_107bc924              @ 0x107bc924 (size=1372)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113bfe54   in FUN_107bc924              @ 0x107bc924 (size=1372)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113bfe54   in FUN_107bceb4              @ 0x107bceb4 (size=1364)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113bfe54   in FUN_107bceb4              @ 0x107bceb4 (size=1364)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113bfe54   in FUN_107bd9f4              @ 0x107bd9f4 (size=1664)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113bfe54   in FUN_107be074              @ 0x107be074 (size=1256)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113bfe54   in FUN_107be55c              @ 0x107be55c (size=1948)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113bfe54   in FUN_107be55c              @ 0x107be55c (size=1948)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113bfe54   in FUN_107becf8              @ 0x107becf8 (size=1752)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113bfe54   in FUN_107becf8              @ 0x107becf8 (size=1752)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113bfe54   in FUN_107bf3d0              @ 0x107bf3d0 (size=1760)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113bfe54   in FUN_107bf3d0              @ 0x107bf3d0 (size=1760)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113bfe54   in FUN_107c1cc4              @ 0x107c1cc4 (size=1176)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113bfe54   in FUN_107c215c              @ 0x107c215c (size=2428)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113bfe54   in FUN_107c3ca0              @ 0x107c3ca0 (size=1300)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113bfe54   in FUN_107c41b4              @ 0x107c41b4 (size=1512)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113bfe54   in FUN_107c41b4              @ 0x107c41b4 (size=1512)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113bfe54   in FUN_107c479c              @ 0x107c479c (size=676)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c1624   in FUN_107ce490              @ 0x107ce490 (size=3200)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c1a44   in FUN_107d6fd0              @ 0x107d6fd0 (size=2108)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c1a44   in FUN_107d788c              @ 0x107d788c (size=1772)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c1a44   in FUN_107d788c              @ 0x107d788c (size=1772)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c1a44   in FUN_107d788c              @ 0x107d788c (size=1772)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c1a44   in FUN_107d788c              @ 0x107d788c (size=1772)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c1a44   in FUN_107d788c              @ 0x107d788c (size=1772)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c1a44   in FUN_107d788c              @ 0x107d788c (size=1772)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c1a44   in FUN_107d7f78              @ 0x107d7f78 (size=6404)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c1a44   in FUN_107d7f78              @ 0x107d7f78 (size=6404)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c2720   in FUN_107f2a18              @ 0x107f2a18 (size=1880)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c2720   in FUN_107f2a18              @ 0x107f2a18 (size=1880)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c2720   in FUN_10812ebc              @ 0x10812ebc (size=7208)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c2720   in FUN_10802ff4              @ 0x10802ff4 (size=924)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c2720   in FUN_108223a0              @ 0x108223a0 (size=3808)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c2720   in FUN_108223a0              @ 0x108223a0 (size=3808)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c2720   in FUN_1081ba20              @ 0x1081ba20 (size=2584)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c2720   in FUN_1081ba20              @ 0x1081ba20 (size=2584)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c2720   in FUN_1080bb80              @ 0x1080bb80 (size=4848)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c2720   in FUN_1081b394              @ 0x1081b394 (size=1676)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c2720   in FUN_1081b394              @ 0x1081b394 (size=1676)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c2720   in FUN_10803390              @ 0x10803390 (size=1848)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c2720   in FUN_10803390              @ 0x10803390 (size=1848)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c2720   in FUN_1081053c              @ 0x1081053c (size=10624)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c2720   in FUN_107f05b4              @ 0x107f05b4 (size=9316)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c2720   in FUN_107f05b4              @ 0x107f05b4 (size=9316)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c2720   in FUN_107f05b4              @ 0x107f05b4 (size=9316)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c2720   in FUN_10819de8              @ 0x10819de8 (size=2956)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c2720   in FUN_10819de8              @ 0x10819de8 (size=2956)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c2720   in FUN_107ee810              @ 0x107ee810 (size=1664)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c2720   in FUN_107ee810              @ 0x107ee810 (size=1664)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c2720   in FUN_1080e2d4              @ 0x1080e2d4 (size=3000)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c2720   in FUN_1081fdb8              @ 0x1081fdb8 (size=2812)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c2720   in FUN_1081f3a4              @ 0x1081f3a4 (size=1432)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c2720   in FUN_10814ae4              @ 0x10814ae4 (size=1820)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c2720   in FUN_10814ae4              @ 0x10814ae4 (size=1820)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c2720   in FUN_10814ae4              @ 0x10814ae4 (size=1820)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c2720   in FUN_1081cd50              @ 0x1081cd50 (size=1444)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c2720   in FUN_1080ce70              @ 0x1080ce70 (size=2308)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c2720   in FUN_1081c7c8              @ 0x1081c7c8 (size=1416)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c2720   in FUN_107edc58              @ 0x107edc58 (size=852)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c2720   in FUN_107edc58              @ 0x107edc58 (size=852)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c2720   in FUN_1080d774              @ 0x1080d774 (size=2912)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c2720   in FUN_108023d0              @ 0x108023d0 (size=2636)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c2720   in FUN_108023d0              @ 0x108023d0 (size=2636)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c2720   in FUN_108023d0              @ 0x108023d0 (size=2636)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c2720   in FUN_108023d0              @ 0x108023d0 (size=2636)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c2720   in FUN_108023d0              @ 0x108023d0 (size=2636)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c2720   in FUN_108023d0              @ 0x108023d0 (size=2636)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c2720   in FUN_107fc770              @ 0x107fc770 (size=1552)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c2720   in FUN_107f50d4              @ 0x107f50d4 (size=2340)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c2720   in FUN_107f50d4              @ 0x107f50d4 (size=2340)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c2720   in FUN_107f59f8              @ 0x107f59f8 (size=1420)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c2720   in FUN_107f59f8              @ 0x107f59f8 (size=1420)
+  "soc_attached(unit)"                                          @ 0x113c2938   in FUN_10812ebc              @ 0x10812ebc (size=7208)
+  "soc_attached(unit)"                                          @ 0x113c2938   in FUN_1080bb80              @ 0x1080bb80 (size=4848)
+  "soc_attached(unit)"                                          @ 0x113c2938   in FUN_1081053c              @ 0x1081053c (size=10624)
+  "soc_attached(unit)"                                          @ 0x113c2938   in FUN_1080e2d4              @ 0x1080e2d4 (size=3000)
+  "soc_attached(unit)"                                          @ 0x113c2938   in FUN_1081f3a4              @ 0x1081f3a4 (size=1432)
+  "soc_attached(unit)"                                          @ 0x113c2938   in FUN_1081cd50              @ 0x1081cd50 (size=1444)
+  "soc_attached(unit)"                                          @ 0x113c2938   in FUN_1080ce70              @ 0x1080ce70 (size=2308)
+  "soc_attached(unit)"                                          @ 0x113c2938   in FUN_1081c7c8              @ 0x1081c7c8 (size=1416)
+  "soc_attached(unit)"                                          @ 0x113c2938   in FUN_107edc58              @ 0x107edc58 (size=852)
+  "soc_attached(unit)"                                          @ 0x113c2938   in FUN_1080d774              @ 0x1080d774 (size=2912)
+  "mem_clear_buf"                                               @ 0x113c2fc8   in FUN_10823634              @ 0x10823634 (size=1748)
+  "mem_clear_buf"                                               @ 0x113c2fc8   in FUN_10823634              @ 0x10823634 (size=1748)
+  "mem_clear_buf"                                               @ 0x113c2fc8   in FUN_10823634              @ 0x10823634 (size=1748)
+  "mem_clear_buf"                                               @ 0x113c2fc8   in FUN_10823634              @ 0x10823634 (size=1748)
+  "mem_clear_buf"                                               @ 0x113c2fc8   in FUN_107fcd80              @ 0x107fcd80 (size=1240)
+  "soc_mem_clear: write %s.%s[%d] failed: %s\n"                 @ 0x113c39bc   in FUN_108092ec              @ 0x108092ec (size=4020)
+  "soc_mem_clear: write %s.%s[%d] failed: %s\n"                 @ 0x113c39bc   in FUN_108092ec              @ 0x108092ec (size=4020)
+  "soc_mem_clear: unit %d memory %s.%s returns %s\n"            @ 0x113c39e8   in FUN_108092ec              @ 0x108092ec (size=4020)
+  "SOC_L3_DEFIP_MAX_TCAMS_GET(unit)"                            @ 0x113c4ce4   in FUN_108223a0              @ 0x108223a0 (size=3808)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c573c   in FUN_1083243c              @ 0x1083243c (size=5456)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c573c   in FUN_1082fdb8              @ 0x1082fdb8 (size=4732)
+  "soc_phyctrl_probe: Init failed for u=%d p=%d FAILED "        @ 0x113c62d0   in FUN_10838e20              @ 0x10838e20 (size=888)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c7b58   in FUN_1084385c              @ 0x1084385c (size=904)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c7b58   in FUN_1084baf4              @ 0x1084baf4 (size=1152)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c7b58   in FUN_10843be4              @ 0x10843be4 (size=548)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c7b58   in FUN_1084bf74              @ 0x1084bf74 (size=1052)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c7b58   in FUN_108532c8              @ 0x108532c8 (size=516)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c7b58   in FUN_108534cc              @ 0x108534cc (size=448)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c7b58   in FUN_108435e4              @ 0x108435e4 (size=632)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c7b58   in FUN_1085368c              @ 0x1085368c (size=400)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c7b58   in FUN_1084b608              @ 0x1084b608 (size=1260)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c7b58   in FUN_1084ccac              @ 0x1084ccac (size=1252)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c7b58   in FUN_1084c390              @ 0x1084c390 (size=1068)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c7b58   in FUN_1084d190              @ 0x1084d190 (size=1268)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c7b58   in FUN_1084d684              @ 0x1084d684 (size=1604)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c7b58   in FUN_1084e2b0              @ 0x1084e2b0 (size=6204)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c7b58   in FUN_1084e2b0              @ 0x1084e2b0 (size=6204)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c7b58   in FUN_1084e2b0              @ 0x1084e2b0 (size=6204)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c7b58   in FUN_1084e2b0              @ 0x1084e2b0 (size=6204)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c7b58   in FUN_1084e2b0              @ 0x1084e2b0 (size=6204)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c7b58   in FUN_1084e2b0              @ 0x1084e2b0 (size=6204)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c7b58   in FUN_1084e2b0              @ 0x1084e2b0 (size=6204)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c7b58   in FUN_1084e2b0              @ 0x1084e2b0 (size=6204)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c7b58   in FUN_1084faec              @ 0x1084faec (size=8596)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c7b58   in FUN_1084faec              @ 0x1084faec (size=8596)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c7b58   in FUN_1084faec              @ 0x1084faec (size=8596)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c7b58   in FUN_1084faec              @ 0x1084faec (size=8596)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c7b58   in FUN_1084faec              @ 0x1084faec (size=8596)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c7b58   in FUN_1084faec              @ 0x1084faec (size=8596)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c7b58   in FUN_1084faec              @ 0x1084faec (size=8596)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c7b58   in FUN_1084faec              @ 0x1084faec (size=8596)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c7b58   in FUN_1084faec              @ 0x1084faec (size=8596)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c7b58   in FUN_1084c7bc              @ 0x1084c7bc (size=1264)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c7b58   in FUN_1084b1d8              @ 0x1084b1d8 (size=1072)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113c7b58   in FUN_1084dcc8              @ 0x1084dcc8 (size=1512)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113de6c8   in FUN_108582a0              @ 0x108582a0 (size=4956)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113de6c8   in FUN_10859f90              @ 0x10859f90 (size=3372)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113de6c8   in FUN_10853ef8              @ 0x10853ef8 (size=7308)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113de6c8   in FUN_10855b84              @ 0x10855b84 (size=7856)
+  "mem_clear_buf"                                               @ 0x113de904   in FUN_10857ac0              @ 0x10857ac0 (size=1908)
+  "mem_clear_buf"                                               @ 0x113de904   in FUN_10857ac0              @ 0x10857ac0 (size=1908)
+  "mem_clear_buf"                                               @ 0x113de904   in FUN_10857ac0              @ 0x10857ac0 (size=1908)
+  "mem_clear_buf"                                               @ 0x113de904   in FUN_10857ac0              @ 0x10857ac0 (size=1908)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113df898   in FUN_1086100c              @ 0x1086100c (size=1576)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113df898   in FUN_10861634              @ 0x10861634 (size=8176)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113df898   in FUN_10861634              @ 0x10861634 (size=8176)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113dfc74   in FUN_108644ec              @ 0x108644ec (size=768)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113dfc74   in FUN_108644ec              @ 0x108644ec (size=768)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113dfc74   in FUN_10864888              @ 0x10864888 (size=788)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113dfc74   in FUN_10864888              @ 0x10864888 (size=788)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113e10cc   in FUN_10875c5c              @ 0x10875c5c (size=264)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113e10cc   in FUN_10875c5c              @ 0x10875c5c (size=264)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113e10cc   in FUN_10875d64              @ 0x10875d64 (size=392)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113e10cc   in FUN_10875d64              @ 0x10875d64 (size=392)
+  "bcm_esw_flex_stat_mem_init: Mem alloc failed - unit: %d, ty  @ 0x113f0198   in FUN_10b8caf8              @ 0x10b8caf8 (size=1576)
+  "bcm_esw_flex_stat_mem_init: Mem alloc failed - unit: %d, ty  @ 0x113f0208   in FUN_10b8caf8              @ 0x10b8caf8 (size=1576)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113fe98c   in FUN_10da8fa4              @ 0x10da8fa4 (size=1440)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113fe98c   in FUN_10da8fa4              @ 0x10da8fa4 (size=1440)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x113ff72c   in FUN_10e00e2c              @ 0x10e00e2c (size=352)
+  "OAM(unit %d) Error: Opcode profile init failed for EP=%d  %  @ 0x11400130   in FUN_10e04a74              @ 0x10e04a74 (size=2248)
+  "soc_chip_driver_find: driver in devid table not in soc_base  @ 0x114039c0   in FUN_10e413c0              @ 0x10e413c0 (size=308)
+  "soc_init: unit %d not valid\n"                               @ 0x11404074   in FUN_10e58d90              @ 0x10e58d90 (size=22724)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x11404138   in FUN_10e58d90              @ 0x10e58d90 (size=22724)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x11404138   in FUN_10e5f9c4              @ 0x10e5f9c4 (size=4992)
+  "mem_clear_chunk_size"                                        @ 0x11404484   in FUN_10e58d90              @ 0x10e58d90 (size=22724)
+  "soc_init: skipping hard reset\n"                             @ 0x114051b0   in FUN_10e7153c              @ 0x10e7153c (size=18444)
+  "soc_attach: unit %d already attached\n"                      @ 0x114054ac   in FUN_10e772f4              @ 0x10e772f4 (size=12928)
+  "soc_attach: unit %d failed\n"                                @ 0x11405950   in FUN_10e772f4              @ 0x10e772f4 (size=12928)
+  "soc_reset_bcm56820_a0"                                       @ 0x114066b8   in FUN_10e67c8c              @ 0x10e67c8c (size=10908)
+  "soc_reset_bcm56820_a0"                                       @ 0x114066b8   in FUN_10e67c8c              @ 0x10e67c8c (size=10908)
+  "soc_reset_bcm56820_a0"                                       @ 0x114066b8   in FUN_10e67c8c              @ 0x10e67c8c (size=10908)
+  "soc_reset_bcm56820_a0"                                       @ 0x114066b8   in FUN_10e67c8c              @ 0x10e67c8c (size=10908)
+  "soc_reset_bcm56634_a0"                                       @ 0x114066d0   in FUN_10e657ac              @ 0x10e657ac (size=9440)
+  "soc_reset_bcm56634_a0"                                       @ 0x114066d0   in FUN_10e657ac              @ 0x10e657ac (size=9440)
+  "soc_reset_bcm56624_a0"                                       @ 0x114066e8   in FUN_10e63758              @ 0x10e63758 (size=8276)
+  "soc_reset_bcm56624_a0"                                       @ 0x114066e8   in FUN_10e63758              @ 0x10e63758 (size=8276)
+  "Bad device ID register:0x%08x. TCAM init failed\n"           @ 0x11406990   in FUN_10e83bc4              @ 0x10e83bc4 (size=26200)
+  "soc_mem_clear: LPM flush failed.\n"                          @ 0x11406b0c   in FUN_10e8ac44              @ 0x10e8ac44 (size=7388)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x114077a0   in FUN_10e9a5b0              @ 0x10e9a5b0 (size=268)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x1140fd64   in FUN_10eb4e64              @ 0x10eb4e64 (size=1132)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x114101e8   in FUN_10eb9ee8              @ 0x10eb9ee8 (size=2976)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x1142c248   in FUN_10fb7b70              @ 0x10fb7b70 (size=1360)
+  "port_init_cl72"                                              @ 0x1142d59c   in FUN_10fc0358              @ 0x10fc0358 (size=1248)
+  "Port %-2d: devid=%d, chiprev=%04x, micro ver(1.%04x)=%04x,   @ 0x1143891c   in FUN_110aab44              @ 0x110aab44 (size=4824)
+  "Error: u=%0d p=%0d loading firmware init failed\n"           @ 0x11449090   in FUN_111a3b80              @ 0x111a3b80 (size=1948)
+  "_phy_tscmod_port_init_wait_pmd_lock"                         @ 0x1144d758   in FUN_111af170              @ 0x111af170 (size=896)
+  "_phy_tscmod_port_init_pll_lock_wait"                         @ 0x1144d77c   in FUN_111ae530              @ 0x111ae530 (size=3136)
+  "_phy_tscmod_port_init_start"                                 @ 0x1144d7a0   in FUN_111ad658              @ 0x111ad658 (size=3800)
+  "_phy_tscmod_port_init_start"                                 @ 0x1144d7a0   in FUN_111ad658              @ 0x111ad658 (size=3800)
+  "_phy_tscmod_port_init_start"                                 @ 0x1144d7a0   in FUN_111ad658              @ 0x111ad658 (size=3800)
+  "phy_tscmod_soft_reset"                                       @ 0x1144d874   in FUN_111a7de4              @ 0x111a7de4 (size=176)
+  "SW_MANAGEMENT_TLA_SEQUENCER_STATUSr(%0x) d=%0x pre_soft_res  @ 0x114509b0   in FUN_111d959c              @ 0x111d959c (size=5500)
+  "SW_MANAGEMENT_TLA_SEQUENCER_STATUSr(%0x) d=%0x post_soft_re  @ 0x114509f0   in FUN_111d959c              @ 0x111d959c (size=5500)
+  "L3_DEFIP"                                                    @ 0x1146266c   in FUN_1123f2f8              @ 0x1123f2f8 (size=2572)
+  "L3_DEFIP"                                                    @ 0x1146266c   in FUN_1123f2f8              @ 0x1123f2f8 (size=2572)
+  "L3_DEFIP"                                                    @ 0x1146266c   in FUN_1123f2f8              @ 0x1123f2f8 (size=2572)
+  "L3_DEFIP_ALPM_IPV6_64"                                       @ 0x11462798   in FUN_11251fe4              @ 0x11251fe4 (size=2264)
+  "L3_DEFIP_ALPM_IPV6_64"                                       @ 0x11462798   in FUN_1123f2f8              @ 0x1123f2f8 (size=2572)
+  "L3_DEFIP_ALPM_IPV6_64"                                       @ 0x11462798   in FUN_1123f2f8              @ 0x1123f2f8 (size=2572)
+  "L3_DEFIP_ALPM_IPV6_128"                                      @ 0x114627b0   in FUN_1125af5c              @ 0x1125af5c (size=2544)
+  "L3_DEFIP_ALPM_IPV6_128"                                      @ 0x114627b0   in FUN_1125af5c              @ 0x1125af5c (size=2544)
+  "L3_DEFIP_ALPM_IPV6_128"                                      @ 0x114627b0   in FUN_11265204              @ 0x11265204 (size=1756)
+  "L3_DEFIP_ALPM_IPV6_128"                                      @ 0x114627b0   in FUN_11265204              @ 0x11265204 (size=1756)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x116ab814   in FUN_111f8ef4              @ 0x111f8ef4 (size=568)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x117f3ffc   in FUN_112200bc              @ 0x112200bc (size=9748)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x117f3ffc   in FUN_112200bc              @ 0x112200bc (size=9748)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x117f3ffc   in FUN_112200bc              @ 0x112200bc (size=9748)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x117f3ffc   in FUN_1121f2dc              @ 0x1121f2dc (size=3552)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x117f3ffc   in FUN_1121f2dc              @ 0x1121f2dc (size=3552)
+  "unit %d: Retry DEFIP AUX Operation..\n"                      @ 0x117f6910   in FUN_1124d1ec              @ 0x1124d1ec (size=1288)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x117f8b1c   in FUN_11269c1c              @ 0x11269c1c (size=1128)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x117f8b1c   in FUN_11269200              @ 0x11269200 (size=2588)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x117f8b1c   in FUN_11269200              @ 0x11269200 (size=2588)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x117f8b1c   in FUN_11269200              @ 0x11269200 (size=2588)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x117f8b1c   in FUN_11267780              @ 0x11267780 (size=1680)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x117f8b1c   in FUN_112658e0              @ 0x112658e0 (size=584)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x117f8e44   in FUN_1126ad74              @ 0x1126ad74 (size=412)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x117f8e44   in FUN_1126bca4              @ 0x1126bca4 (size=1680)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x117f8e44   in FUN_11270cb0              @ 0x11270cb0 (size=6408)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x117f8e44   in FUN_11270cb0              @ 0x11270cb0 (size=6408)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x117f8e44   in FUN_11270cb0              @ 0x11270cb0 (size=6408)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x117f8e44   in FUN_1126d27c              @ 0x1126d27c (size=2628)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x117f8e44   in FUN_1126d27c              @ 0x1126d27c (size=2628)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x117f8e44   in FUN_1126d27c              @ 0x1126d27c (size=2628)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x117f8e44   in FUN_1126f56c              @ 0x1126f56c (size=4964)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x117fe204   in FUN_112bb0a0              @ 0x112bb0a0 (size=684)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x117fe204   in FUN_112c04c8              @ 0x112c04c8 (size=2848)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x117fe204   in FUN_112c04c8              @ 0x112c04c8 (size=2848)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x117ff194   in FUN_112cd35c              @ 0x112cd35c (size=408)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x117ff194   in FUN_112cd35c              @ 0x112cd35c (size=408)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x117ff194   in FUN_112cd35c              @ 0x112cd35c (size=408)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x117ff364   in FUN_112cefd8              @ 0x112cefd8 (size=440)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x117ff754   in FUN_112d8230              @ 0x112d8230 (size=1912)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x117ff754   in FUN_112d8230              @ 0x112d8230 (size=1912)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x117ff754   in FUN_112d6a6c              @ 0x112d6a6c (size=540)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x117ff754   in FUN_112d6c88              @ 0x112d6c88 (size=480)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x117ff754   in FUN_112e3ba4              @ 0x112e3ba4 (size=472)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x117ff754   in FUN_112e75b8              @ 0x112e75b8 (size=1084)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x117ff754   in FUN_112e75b8              @ 0x112e75b8 (size=1084)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x117ff754   in FUN_112e8f4c              @ 0x112e8f4c (size=464)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x11801c60   in FUN_112f2d98              @ 0x112f2d98 (size=2512)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x11801c60   in FUN_112f3768              @ 0x112f3768 (size=2984)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x11801c60   in FUN_112f4310              @ 0x112f4310 (size=4344)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x118025f0   in FUN_112f7cbc              @ 0x112f7cbc (size=2672)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x118025f0   in FUN_112f7378              @ 0x112f7378 (size=2280)
+  "unit %d i2c 0x%x: init failed %s - %s\n"                     @ 0x118045ec   in FUN_112fd218              @ 0x112fd218 (size=2356)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x11806ed4   in FUN_1130ef4c              @ 0x1130ef4c (size=520)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x1180725c   in FUN_113110d0              @ 0x113110d0 (size=412)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x1180725c   in FUN_113110d0              @ 0x113110d0 (size=412)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x118073e8   in FUN_11311c0c              @ 0x11311c0c (size=348)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x118073e8   in FUN_11311c0c              @ 0x11311c0c (size=348)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x11807500   in FUN_100f1aec              @ 0x100f1aec (size=908)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x11807500   in FUN_100f1aec              @ 0x100f1aec (size=908)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x11807500   in FUN_100f1aec              @ 0x100f1aec (size=908)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x11807500   in FUN_100f1aec              @ 0x100f1aec (size=908)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x11807500   in FUN_100f1aec              @ 0x100f1aec (size=908)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x11807500   in FUN_100f1aec              @ 0x100f1aec (size=908)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x11807500   in FUN_100f1aec              @ 0x100f1aec (size=908)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x11807500   in FUN_100f1aec              @ 0x100f1aec (size=908)
+  "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_  @ 0x11807500   in FUN_100f1aec              @ 0x100f1aec (size=908)
+
+# === DENSITY: functions with most init-related strings ===
+# These are most likely bcm_init/bcm_attach/init_all top-level functions
+FUN_100cfcdc  size=7072    5 distinct init-strings
+    "bcm_linkscan_interval"
+    "%s: Error: Failed to enable linkscan: %s\n"
+    "%s: Error: Same port can't use both software and hardware linkscan\n"
+    "%s: Error: Could not get linkscan state for port %s\n"
+    "%s: Error: Failed to disable linkscan: %s\n"
+
+FUN_104f0b7c  size=7700    4 distinct init-strings
+    "linkscan"
+    "bcm_init: skipped %s init\n"
+    "bcm_init: %8s   took %10d usec\n"
+    "bcm_init: (%s)\n"
+
+FUN_100a3680  size=1116    3 distinct init-strings
+    "%s: bcm_attach error : %s\n"
+    "%s: soc_init error : %s\n"
+    "%s: soc_mmu_init error : %s\n"
+
+FUN_104efa18  size=3580    3 distinct init-strings
+    "bcm_detach: Deinitializing %s...\n"
+    "bcm_detach: All modules deinitialized.\n"
+    "linkscan"
+
+FUN_1053fd8c  size=2508    3 distinct init-strings
+    "Fast linkscan ports:            %s\n"
+    "SW linkscan ports:              %s\n"
+    "HW linkscan ports:              %s\n"
+
+FUN_105b3c90  size=392     3 distinct init-strings
+    "port_init_duplex"
+    "port_init_adv"
+    "port_init_autoneg"
+
+FUN_10e58d90  size=22724   3 distinct init-strings
+    "mem_clear_chunk_size"
+    "soc_init: unit %d not valid\n"
+    "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/build/
+
+FUN_10051be0  size=15376   2 distinct init-strings
+    "%s %s:%d CRIT bcm_tx_init failed: %s\n"
+    "%s %s:%d CRIT bcm_trunk_init failed: %s\n"
+
+FUN_1008ea38  size=208     2 distinct init-strings
+    "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/build/
+    "/etc/bcm.d/rc.soc"
+
+FUN_10109348  size=876     2 distinct init-strings
+    "sysconf_attach: bcm device init failed\n"
+    "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/build/
+
+FUN_101a1a04  size=5576    2 distinct init-strings
+    "%s: trunk init failed: %s\n"
+    "%s: trunk deinit failed: %s\n"
+
+FUN_101ec974  size=3372    2 distinct init-strings
+    "bcm_port_linkscan_get: port %d: %s\n"
+    "bcm_port_linkscan_set: port %d: %s\n"
+
+FUN_1031f050  size=1272    2 distinct init-strings
+    "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/build/
+    "/etc/bcm.d/config.bcm"
+
+FUN_1032a410  size=464     2 distinct init-strings
+    "BCMX linkscan not initialized\n"
+    "BCMX linkscan interval %d%s\n"
+
+FUN_10536224  size=14624   2 distinct init-strings
+    "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/build/
+    "Port %s: linkscan ASF update failed: %s\n"
+
+FUN_105b4b88  size=16624   2 distinct init-strings
+    "bcm_port_init: unit %d\n"
+    "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/build/
+
+FUN_107edc58  size=852     2 distinct init-strings
+    "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/build/
+    "soc_attached(unit)"
+
+FUN_108092ec  size=4020    2 distinct init-strings
+    "soc_mem_clear: write %s.%s[%d] failed: %s\n"
+    "soc_mem_clear: unit %d memory %s.%s returns %s\n"
+
+FUN_1080bb80  size=4848    2 distinct init-strings
+    "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/build/
+    "soc_attached(unit)"
+
+FUN_1080ce70  size=2308    2 distinct init-strings
+    "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/build/
+    "soc_attached(unit)"
+
+FUN_1080d774  size=2912    2 distinct init-strings
+    "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/build/
+    "soc_attached(unit)"
+
+FUN_1080e2d4  size=3000    2 distinct init-strings
+    "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/build/
+    "soc_attached(unit)"
+
+FUN_1081053c  size=10624   2 distinct init-strings
+    "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/build/
+    "soc_attached(unit)"
+
+FUN_10812ebc  size=7208    2 distinct init-strings
+    "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/build/
+    "soc_attached(unit)"
+
+FUN_1081c7c8  size=1416    2 distinct init-strings
+    "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/build/
+    "soc_attached(unit)"
+
+FUN_1081cd50  size=1444    2 distinct init-strings
+    "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/build/
+    "soc_attached(unit)"
+
+FUN_1081f3a4  size=1432    2 distinct init-strings
+    "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/build/
+    "soc_attached(unit)"
+
+FUN_108223a0  size=3808    2 distinct init-strings
+    "SOC_L3_DEFIP_MAX_TCAMS_GET(unit)"
+    "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/build/
+
+FUN_10b8caf8  size=1576    2 distinct init-strings
+    "bcm_esw_flex_stat_mem_init: Mem alloc failed - unit: %d, type: %d, dir: %d, buf
+    "bcm_esw_flex_stat_mem_init: Mem alloc failed - unit: %d, type: %d, dir: %d, gra
+
+FUN_10e772f4  size=12928   2 distinct init-strings
+    "soc_attach: unit %d already attached\n"
+    "soc_attach: unit %d failed\n"
+
+FUN_111d959c  size=5500    2 distinct init-strings
+    "SW_MANAGEMENT_TLA_SEQUENCER_STATUSr(%0x) d=%0x pre_soft_reset\n"
+    "SW_MANAGEMENT_TLA_SEQUENCER_STATUSr(%0x) d=%0x post_soft_reset\n"
+
+FUN_1123f2f8  size=2572    2 distinct init-strings
+    "L3_DEFIP"
+    "L3_DEFIP_ALPM_IPV6_64"
+
+FUN_10007a04  size=244     1 distinct init-strings
+    "    -V: Display switchd version information.\n"
+
+FUN_10044f5c  size=716     1 distinct init-strings
+    "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/lib/po
+
+FUN_100455e8  size=360     1 distinct init-strings
+    "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/lib/po
+
+FUN_10045750  size=184     1 distinct init-strings
+    "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/lib/po
+
+FUN_10045808  size=364     1 distinct init-strings
+    "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/lib/po
+
+FUN_10045974  size=348     1 distinct init-strings
+    "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/lib/po
+
+FUN_10046d88  size=192     1 distinct init-strings
+    "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/lib/lo
+
+FUN_10047d08  size=380     1 distinct init-strings
+    "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/lib/lo
+
+FUN_10047ff4  size=664     1 distinct init-strings
+    "/work/monster-07/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/lib/ha
+
+FUN_1007805c  size=1028    1 distinct init-strings
+    "%s %s:%d ERR bcm_field_entry_policer_attach failed %s\n"
+
+FUN_10078460  size=2568    1 distinct init-strings
+    "%s %s:%d ERR bcm_field_entry_policer_attach failed %s\n"
+
+FUN_1007a4a0  size=1132    1 distinct init-strings
+    "%s %s:%d ERR bcm_field_entry_policer_attach failed %s\n"
+
+FUN_1007b060  size=712     1 distinct init-strings
+    "%s %s:%d ERR bcm_field_stat_attach failed %s\n"
+
+FUN_1008960c  size=624     1 distinct init-strings
+    "%s %s:%d WARN bcm_vlan_stat_attach failed for vlan %d; %s\n"
+
+FUN_1008a2b0  size=624     1 distinct init-strings
+    "%s %s:%d WARN bcm_vxlan_stat_attach failed for vxlan mbr 0x%x; %s\n"
+
+FUN_1008ad10  size=708     1 distinct init-strings
+    "%s %s:%d WARN bcm_vxlan_stat_attach failed for vxlan 0x%x; %s\n"
+
+FUN_1008d168  size=696     1 distinct init-strings
+    "%s %s:%d CRIT bcm_stat_init failed: %s\n"
+
+FUN_1008dba0  size=320     1 distinct init-strings
+    "/etc/bcm.d/datapath/datapath.conf"
+
