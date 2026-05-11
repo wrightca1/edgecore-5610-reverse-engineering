@@ -1,0 +1,120 @@
+===========================================================
+=== common_init  (FUN_10b84db0, size=15924)
+===========================================================
+
+--- Chip-access primitive call counts ---
+
+--- Top 30 other callees ---
+  FUN_10b83b48  size=1984    called 44 times
+  FUN_11310fbc  size=276     called 20 times
+  FUN_10ef2900  size=80      called 17 times
+  FUN_107a2a0c  size=92      called 15 times
+  FUN_10ef2a58  size=1576    called 11 times
+  FUN_11316820  size=16      called 7 times
+  FUN_10ef3080  size=108     called 6 times
+  FUN_10b8f328  size=1176    called 4 times
+  FUN_11311d68  size=140     called 3 times
+  FUN_10ef40b4  size=3820    called 2 times
+  FUN_107a1e38  size=696     called 1 times
+  FUN_10801b4c  size=208     called 1 times
+  FUN_108080ac  size=208     called 1 times
+  FUN_10b84308  size=2252    called 1 times
+  FUN_10b84bd4  size=476     called 1 times
+  FUN_10b88d58  size=184     called 1 times
+  FUN_10b8a22c  size=192     called 1 times
+  FUN_10b9431c  size=548     called 1 times
+  FUN_10bf087c  size=84      called 1 times
+  FUN_10bf08d0  size=1732    called 1 times
+  FUN_10c764e4  size=432     called 1 times
+  FUN_10ef604c  size=740     called 1 times
+  FUN_10ef6aa8  size=76      called 1 times
+  FUN_10ef6af4  size=1224    called 1 times
+  FUN_11311b5c  size=64      called 1 times
+  FUN_11311c0c  size=348     called 1 times
+
+--- Sequence of primitive calls (with table/reg name strings) ---
+
+===========================================================
+=== port_init  (FUN_105b4b88, size=16624)
+===========================================================
+
+--- Chip-access primitive call counts ---
+  soc_mem_clear          1 calls
+  soc_reg32_get          1 calls
+
+--- Top 30 other callees ---
+  FUN_10760cd4  size=220     called 10 times
+  FUN_107a2a0c  size=92      called 5 times
+  FUN_108499c4  size=512     called 5 times
+  FUN_107a1e38  size=696     called 4 times
+  FUN_10846cf4  size=544     called 4 times
+  FUN_10801b4c  size=208     called 3 times
+  FUN_1084c7bc  size=1264    called 3 times
+  FUN_107953d0  size=108     called 2 times
+  FUN_108080ac  size=208     called 2 times
+  FUN_112d5cf4  size=212     called 2 times
+  FUN_11311498  size=156     called 2 times
+  FUN_11311c0c  size=348     called 2 times
+  FUN_11311d68  size=140     called 2 times
+  FUN_1038a734  size=80      called 1 times
+  FUN_105a1784  size=88      called 1 times
+  FUN_105a2268  size=584     called 1 times
+  FUN_105a42a4  size=988     called 1 times
+  FUN_105a683c  size=660     called 1 times
+  FUN_105a961c  size=4828    called 1 times
+  FUN_105aa8f8  size=972     called 1 times
+  FUN_105aacc4  size=1468    called 1 times
+  FUN_105aea24  size=1668    called 1 times
+  FUN_105b0980  size=8852    called 1 times
+  FUN_105b3278  size=2584    called 1 times
+  FUN_105b3c90  size=392     called 1 times
+  FUN_105b3e18  size=480     called 1 times
+  FUN_105b3ff8  size=424     called 1 times
+  FUN_105b43fc  size=660     called 1 times
+  FUN_105b4690  size=412     called 1 times
+  FUN_105b482c  size=860     called 1 times
+
+--- Sequence of primitive calls (with table/reg name strings) ---
+  [  1] +0xc00  soc_mem_clear           str="unit < BCM_MAX_NUM_UNITS"
+  [  2] +0x1314  soc_reg32_get           str="unit < BCM_MAX_NUM_UNITS"
+
+===========================================================
+=== field_init  (FUN_104b8f94, size=9428)
+===========================================================
+
+--- Chip-access primitive call counts ---
+
+--- Top 30 other callees ---
+  FUN_10482210  size=608     called 27 times
+  FUN_10478d44  size=292     called 9 times
+  FUN_10799c5c  size=256     called 9 times
+  FUN_10760b7c  size=220     called 8 times
+  FUN_10761348  size=152     called 8 times
+  FUN_10be052c  size=12016   called 7 times
+  FUN_10498dcc  size=276     called 6 times
+  FUN_10bdb2fc  size=18648   called 6 times
+  FUN_10d7de9c  size=13712   called 4 times
+  FUN_11310fbc  size=276     called 4 times
+  FUN_11316820  size=16      called 4 times
+  FUN_10a67170  size=9764    called 3 times
+  FUN_10be341c  size=9948    called 3 times
+  FUN_10d8142c  size=10256   called 3 times
+  FUN_108a2d5c  size=6868    called 2 times
+  FUN_10be9764  size=3232    called 2 times
+  FUN_10d877d8  size=148     called 2 times
+  FUN_10478ec4  size=396     called 1 times
+  FUN_1047d1e0  size=1164    called 1 times
+  FUN_104984dc  size=444     called 1 times
+  FUN_10498698  size=204     called 1 times
+  FUN_10498f0c  size=328     called 1 times
+  FUN_1049ced0  size=536     called 1 times
+  FUN_104bb710  size=736     called 1 times
+  FUN_107882f0  size=284     called 1 times
+  FUN_10860354  size=96      called 1 times
+  FUN_108ae8d8  size=496     called 1 times
+  FUN_10984844  size=392     called 1 times
+  FUN_10a65c8c  size=392     called 1 times
+  FUN_10adf01c  size=352     called 1 times
+
+--- Sequence of primitive calls (with table/reg name strings) ---
+

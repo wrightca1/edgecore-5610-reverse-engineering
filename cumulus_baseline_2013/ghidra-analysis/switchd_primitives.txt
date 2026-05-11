@@ -1,0 +1,18 @@
+# Chip-access primitive functions
+# (identified by their characteristic log/assert messages)
+
+soc_reg32_set          NOT FOUND
+soc_reg32_get          FUN_10845768  size=1176    example_str=""_soc_reg32_get: invalid S-Channel reply, expected READ_REG_ACK:\n""
+soc_reg32_modify       NOT FOUND
+soc_reg_set            NOT FOUND
+soc_reg_get            NOT FOUND
+soc_mem_write          FUN_10804ea4  size=6640    example_str=""soc_mem_write: attempt to write R/O memory %s\n""
+soc_mem_write          FUN_10806900  size=5772    example_str=""soc_mem_write: attempt to write R/O memory %s\n""
+soc_mem_read           FUN_107fe254  size=11016   example_str=""soc_mem_read: invalid block %d for memory %s\n""
+soc_mem_read           FUN_10800dcc  size=3456    example_str=""soc_mem_read: assert will fail for memory %s\n""
+soc_mem_clear          FUN_108092ec  size=4020    example_str=""soc_mem_clear: write %s.%s[%d] failed: %s\n""
+soc_mem_clear          FUN_10e8ac44  size=7388    example_str=""soc_mem_clear: LPM flush failed.\n""
+soc_schan_op           FUN_10861634  size=8176    example_str=""soc_schan_op: operation attempt timed out\n""
+soc_table_dma          NOT FOUND
+soc_pio_write          NOT FOUND
+_soc_reg_field         NOT FOUND

@@ -1,0 +1,307 @@
+===========================================================
+=== common_init  (FUN_10b84db0, size=15924)
+===========================================================
+
+callee          size            call_count   primitive_call_breakdown_inside_callee
+------------------------------------------------------------------------------------------------------------------------
+FUN_107a1e38  size=696     1x     (no direct prims)
+FUN_107a2a0c  size=92     15x     (no direct prims)
+FUN_10801b4c  size=208     1x     (no direct prims)
+FUN_108080ac  size=208     1x     (no direct prims)
+FUN_10b83b48  size=1984   44x     (no direct prims)
+FUN_10b84308  size=2252    1x     (no direct prims)
+FUN_10b84bd4  size=476     1x     (no direct prims)
+FUN_10b88d58  size=184     1x     (no direct prims)
+FUN_10b8a22c  size=192     1x     (no direct prims)
+FUN_10b8f328  size=1176    4x     (no direct prims)
+FUN_10b9431c  size=548     1x     (no direct prims)
+FUN_10bf087c  size=84      1x     (no direct prims)
+FUN_10bf08d0  size=1732    1x     (no direct prims)
+FUN_10c764e4  size=432     1x     (no direct prims)
+FUN_10ef2900  size=80     17x     (no direct prims)
+FUN_10ef2a58  size=1576   11x     soc_mem_clear=1
+FUN_10ef3080  size=108     6x     (no direct prims)
+FUN_10ef40b4  size=3820    2x     (no direct prims)
+FUN_10ef604c  size=740     1x     (no direct prims)
+FUN_10ef6aa8  size=76      1x     (no direct prims)
+FUN_10ef6af4  size=1224    1x     (no direct prims)
+FUN_11310fbc  size=276    20x     (no direct prims)
+FUN_11311b5c  size=64      1x     (no direct prims)
+FUN_11311c0c  size=348     1x     (no direct prims)
+FUN_11311d68  size=140     3x     (no direct prims)
+FUN_11316820  size=16      7x     (no direct prims)
+
+===========================================================
+=== port_init  (FUN_105b4b88, size=16624)
+===========================================================
+
+callee          size            call_count   primitive_call_breakdown_inside_callee
+------------------------------------------------------------------------------------------------------------------------
+FUN_1038a734  size=80      1x     (no direct prims)
+FUN_105a1784  size=88      1x     (no direct prims)
+FUN_105a2268  size=584     1x     (no direct prims)
+FUN_105a42a4  size=988     1x     (no direct prims)
+FUN_105a683c  size=660     1x     (no direct prims)
+FUN_105a961c  size=4828    1x     (no direct prims)
+FUN_105aa8f8  size=972     1x     (no direct prims)
+FUN_105aacc4  size=1468    1x     (no direct prims)
+FUN_105aea24  size=1668    1x     (no direct prims)
+FUN_105b0980  size=8852    1x     (no direct prims)
+FUN_105b3278  size=2584    1x     (no direct prims)
+FUN_105b3c90  size=392     1x     (no direct prims)
+FUN_105b3e18  size=480     1x     (no direct prims)
+FUN_105b3ff8  size=424     1x     (no direct prims)
+FUN_105b43fc  size=660     1x     (no direct prims)
+FUN_105b4690  size=412     1x     (no direct prims)
+FUN_105b482c  size=860     1x     (no direct prims)
+FUN_105b98c4  size=15108   1x     (no direct prims)
+FUN_105cc6f0  size=2748    1x     (no direct prims)
+FUN_105d5bdc  size=1476    1x     (no direct prims)
+FUN_105e933c  size=2776    1x     (no direct prims)
+FUN_105f08ec  size=1264    1x     (no direct prims)
+FUN_10617aac  size=2284    1x     (no direct prims)
+FUN_10618d38  size=452     1x     (no direct prims)
+FUN_10701310  size=1412    1x     (no direct prims)
+FUN_10760cd4  size=220    10x     (no direct prims)
+FUN_10761cd8  size=512     1x     (no direct prims)
+FUN_107953d0  size=108     2x     (no direct prims)
+FUN_10795ca4  size=116     1x     (no direct prims)
+FUN_107a1e38  size=696     4x     (no direct prims)
+FUN_107a2924  size=96      1x     (no direct prims)
+FUN_107a2a0c  size=92      5x     (no direct prims)
+FUN_10801b4c  size=208     3x     (no direct prims)
+FUN_108080ac  size=208     2x     (no direct prims)
+FUN_10846cf4  size=544     4x     soc_reg32_get=1
+FUN_10848458  size=312     1x     soc_schan_op=1
+FUN_108499c4  size=512     5x     (no direct prims)
+FUN_1084af0c  size=716     1x     (no direct prims)
+FUN_1084b1d8  size=1072    1x     (no direct prims)
+FUN_1084c7bc  size=1264    3x     (no direct prims)
+FUN_1084faec  size=8596    1x     (no direct prims)
+FUN_10852920  size=108     1x     (no direct prims)
+FUN_10933dd4  size=44      1x     (no direct prims)
+FUN_1099d84c  size=2100    1x     (no direct prims)
+FUN_10b8aaa0  size=248     1x     (no direct prims)
+FUN_10b93d50  size=116     1x     (no direct prims)
+FUN_10bfac18  size=5256    1x     (no direct prims)
+FUN_10c125d4  size=1396    1x     (no direct prims)
+FUN_10c12b48  size=744     1x     (no direct prims)
+FUN_10c7322c  size=496     1x     (no direct prims)
+FUN_10c734ac  size=608     1x     (no direct prims)
+FUN_10ef2900  size=80      1x     (no direct prims)
+FUN_10ef3080  size=108     1x     (no direct prims)
+FUN_112cd8d0  size=80      1x     (no direct prims)
+FUN_112d5cf4  size=212     2x     (no direct prims)
+FUN_11310ee4  size=68      1x     (no direct prims)
+FUN_11310fbc  size=276     1x     (no direct prims)
+FUN_113113b0  size=84      1x     (no direct prims)
+FUN_11311498  size=156     2x     (no direct prims)
+FUN_11311c0c  size=348     2x     (no direct prims)
+FUN_11311d68  size=140     2x     (no direct prims)
+FUN_11316820  size=16      1x     (no direct prims)
+
+===========================================================
+=== field_init  (FUN_104b8f94, size=9428)
+===========================================================
+
+callee          size            call_count   primitive_call_breakdown_inside_callee
+------------------------------------------------------------------------------------------------------------------------
+FUN_10478d44  size=292     9x     (no direct prims)
+FUN_10478ec4  size=396     1x     (no direct prims)
+FUN_1047d1e0  size=1164    1x     (no direct prims)
+FUN_10482210  size=608    27x     (no direct prims)
+FUN_104984dc  size=444     1x     (no direct prims)
+FUN_10498698  size=204     1x     (no direct prims)
+FUN_10498dcc  size=276     6x     (no direct prims)
+FUN_10498f0c  size=328     1x     (no direct prims)
+FUN_1049ced0  size=536     1x     (no direct prims)
+FUN_104bb710  size=736     1x     (no direct prims)
+FUN_10760b7c  size=220     8x     (no direct prims)
+FUN_10761348  size=152     8x     (no direct prims)
+FUN_107882f0  size=284     1x     (no direct prims)
+FUN_10799c5c  size=256     9x     (no direct prims)
+FUN_10860354  size=96      1x     (no direct prims)
+FUN_108a2d5c  size=6868    2x     (no direct prims)
+FUN_108ae8d8  size=496     1x     (no direct prims)
+FUN_10984844  size=392     1x     (no direct prims)
+FUN_10a65c8c  size=392     1x     (no direct prims)
+FUN_10a67170  size=9764    3x     (no direct prims)
+FUN_10adf01c  size=352     1x     (no direct prims)
+FUN_10b1c708  size=396     1x     (no direct prims)
+FUN_10bdb2fc  size=18648   6x     (no direct prims)
+FUN_10be052c  size=12016   7x     (no direct prims)
+FUN_10be341c  size=9948    3x     (no direct prims)
+FUN_10be9764  size=3232    2x     (no direct prims)
+FUN_10c4f628  size=396     1x     (no direct prims)
+FUN_10d6f1a4  size=464     1x     (no direct prims)
+FUN_10d78e68  size=428     1x     (no direct prims)
+FUN_10d7de9c  size=13712   4x     (no direct prims)
+FUN_10d8142c  size=10256   3x     (no direct prims)
+FUN_10d83c3c  size=48      1x     (no direct prims)
+FUN_10d877d8  size=148     2x     (no direct prims)
+FUN_11310fbc  size=276     4x     (no direct prims)
+FUN_11311b5c  size=64      1x     (no direct prims)
+FUN_11316820  size=16      4x     (no direct prims)
+
+
+===========================================================
+=== DEEP DIVE: FUN_10b83b48 (called 44x from common_init)
+===========================================================
+
+void FUN_10b83b48(int param_1,int param_2)
+
+{
+  if (param_2 != 0) {
+    if (*(int *)(&DAT_11f07364 + param_1 * 4) != 0) {
+      FUN_11311b9c(*(undefined4 *)(&DAT_11f07364 + param_1 * 4));
+      *(undefined4 *)(&DAT_11f07364 + param_1 * 4) = 0;
+    }
+    if (*(int *)(param_2 + 0x94) != 0) {
+      FUN_11310ee4(*(undefined4 *)(param_2 + 0x94));
+      *(undefined4 *)(param_2 + 0x94) = 0;
+    }
+    if (*(int *)(param_2 + 0x98) != 0) {
+      FUN_11310ee4(*(undefined4 *)(param_2 + 0x98));
+      *(undefined4 *)(param_2 + 0x98) = 0;
+    }
+    if (*(int *)(&DAT_11f073ac + param_1 * 4) != 0) {
+      FUN_11310ee4(*(undefined4 *)(&DAT_11f073ac + param_1 * 4));
+      *(undefined4 *)(&DAT_11f073ac + param_1 * 4) = 0;
+    }
+    if (*(int *)(param_2 + 0x4c) != 0) {
+      if (*(int *)(param_2 + 4) != 0) {
+        FUN_10ef30ec(param_1,*(undefined4 *)(param_2 + 0x4c));
+      }
+      FUN_11310ee4(*(undefined4 *)(param_2 + 0x4c));
+      *(undefined4 *)(param_2 + 0x4c) = 0;
+    }
+    if (*(int *)(param_2 + 0x50) != 0) {
+      if (*(int *)(param_2 + 8) != 0) {
+        FUN_10ef30ec(param_1,*(undefined4 *)(param_2 + 0x50));
+      }
+      FUN_11310ee4(*(undefined4 *)(param_2 + 0x50));
+      *(undefined4 *)(param_2 + 0x50) = 0;
+    }
+    if (*(int *)(param_2 + 0x54) != 0) {
+      if (*(int *)(param_2 + 0xc) != 0) {
+        FUN_10ef30ec(param_1,*(undefined4 *)(param_2 + 0x54));
+      }
+      FUN_11310ee4(*(undefined4 *)(param_2 + 0x54));
+      *(undefined4 *)(param_2 + 0x54) = 0;
+    }
+    if (*(int *)(param_2 + 0x78) != 0) {
+      if (*(int *)(param_2 + 0x10) != 0) {
+        FUN_10ef30ec(param_1,*(undefined4 *)(param_2 + 0x78));
+      }
+      FUN_11310ee4(*(undefined4 *)(param_2 + 0x78));
+      *(undefined4 *)(param_2 + 0x78) = 0;
+    }
+    if (*(int *)(param_2 + 0x7c) != 0) {
+      if (*(int *)(param_2 + 0x14) != 0) {
+        FUN_10ef30ec(param_1,*(undefined4 *)(param_2 + 0x7c));
+      }
+      FUN_11310ee4(*(undefined4 *)(param_2 + 0x7c));
+      *(undefined4 *)(param_2 + 0x7c) = 0;
+    }
+    if (*(int *)(param_2 + 0x80) != 0) {
+      if (*(int *)(param_2 + 0x18) != 0) {
+        FUN_10ef30ec(param_1,*(undefined4 *)(param_2 + 0x80));
+      }
+      FUN_11310ee4(*(undefined4 *)(param_2 + 0x80));
+      *(undefined4 *)(param_2 + 0x80) = 0;
+    }
+    if (*(int *)(param_2 + 0x84) != 0) {
+      if (*(int *)(param_2 + 0x1c) != 0) {
+        FUN_10ef30ec(param_1,*(undefined4 *)(param_2 + 0x84));
+      }
+      FUN_11310ee4(*(undefined4 *)(param_2 + 0x84));
+      *(undefined4 *)(param_2 + 0x84) = 0;
+    }
+    if (*(int *)(param_2 + 0x88) != 0) {
+      if (*(int *)(param_2 + 0x20) != 0) {
+        FUN_10ef30ec(param_1,*(undefined4 *)(param_2 + 0x88));
+      }
+      FUN_11310ee4(*(undefined4 *)(param_2 + 0x88));
+      *(undefined4 *)(param_2 + 0x88) = 0;
+    }
+    if (*(int *)(param_2 + 0x8c) != 0) {
+      if (*(int *)(param_2 + 0x24) != 0) {
+        FUN_10ef30ec(param_1,*(undefined4 *)(param_2 + 0x8c));
+      }
+      FUN_11310ee4(*(undefined4 *)(param_2 + 0x8c));
+      *(undefined4 *)(param_2 + 0x8c) = 0;
+    }
+    if (*(int *)(param_2 + 0x58) != 0) {
+      if (*(int *)(param_2 + 0x28) != 0) {
+        FUN_10ef30ec(param_1,*(undefined4 *)(param_2 + 0x58));
+      }
+      FUN_11310ee4(*(undefined4 *)(param_2 + 0x58));
+      *(undefined4 *)(param_2 + 0x58) = 0;
+    }
+    if (*(int *)(param_2 + 0x5c) != 0) {
+      if (*(int *)(param_2 + 0x2c) != 0) {
+        FUN_10ef30ec(param_1,*(undefined4 *)(param_2 + 0x5c));
+      }
+      FUN_11310ee4(*(undefined4 *)(param_2 + 0x5c));
+      *(undefined4 *)(param_2 + 0x5c) = 0;
+    }
+    if (*(int *)(param_2 + 0x60) != 0) {
+      if (*(int *)(param_2 + 0x30) != 0) {
+        FUN_10ef30ec(param_1,*(undefined4 *)(param_2 + 0x60));
+      }
+      FUN_11310ee4(*(undefined4 *)(param_2 + 0x60));
+      *(undefined4 *)(param_2 + 0x60) = 0;
+    }
+    if (*(int *)(param_2 + 100) != 0) {
+      if (*(int *)(param_2 + 0x34) != 0) {
+        FUN_10ef30ec(param_1,*(undefined4 *)(param_2 + 100));
+      }
+      FUN_11310ee4(*(undefined4 *)(param_2 + 100));
+      *(undefined4 *)(param_2 + 100) = 0;
+    }
+    if (*(int *)(param_2 + 0x90) != 0) {
+      if (*(int *)(param_2 + 0x48) != 0) {
+        FUN_10ef7014(param_1,*(undefined4 *)(param_2 + 0x90));
+      }
+      FUN_11310ee4(*(undefined4 *)(param_2 + 0x90));
+      *(undefined4 *)(param_2 + 0x90) = 0;
+    }
+    if ((*(int *)((&DAT_1212b9c4)[param_1] + 0x10) == 0) &&
+       ((((*(uint *)((&DAT_1212b9c4)[param_1] + 0x14) & 0x80000) != 0 ||
+         ((*(uint *)((&DAT_1212b9c4)[param_1] + 0x14) & 0x40) != 0)) &&
+        (*(int *)(param_2 + 0x68) != 0)))) {
+      if (*(int *)(param_2 + 0x38) != 0) {
+        FUN_10ef30ec(param_1,*(undefined4 *)(param_2 + 0x68));
+      }
+      FUN_11310ee4(*(undefined4 *)(param_2 + 0x68));
+      *(undefined4 *)(param_2 + 0x68) = 0;
+    }
+    if ((*(int *)((&DAT_1212b9c4)[param_1] + 0x10) == 0) &&
+       ((*(uint *)((&DAT_1212b9c4)[param_1] + 0x14) & 4) != 0)) {
+      if (*(int *)(param_2 + 0x6c) != 0) {
+        if (*(int *)(param_2 + 0x3c) != 0) {
+          FUN_10ef30ec(param_1,*(undefined4 *)(param_2 + 0x6c));
+        }
+        FUN_11310ee4(*(undefined4 *)(param_2 + 0x6c));
+        *(undefined4 *)(param_2 + 0x6c) = 0;
+      }
+      if (*(int *)(param_2 + 0x70) != 0) {
+        if (*(int *)(param_2 + 0x40) != 0) {
+          FUN_10ef30ec(param_1,*(undefined4 *)(param_2 + 0x70));
+        }
+        FUN_11310ee4(*(undefined4 *)(param_2 + 0x70));
+        *(undefined4 *)(param_2 + 0x70) = 0;
+      }
+      if (*(int *)(param_2 + 0x74) != 0) {
+        if (*(int *)(param_2 + 0x44) != 0) {
+          FUN_10ef30ec(param_1,*(undefined4 *)(param_2 + 0x74));
+        }
+        FUN_11310ee4(*(undefined4 *)(param_2 + 0x74));
+        *(undefined4 *)(param_2 + 0x74) = 0;
+      }
+    }
+  }
+  return;
+}
+
+
