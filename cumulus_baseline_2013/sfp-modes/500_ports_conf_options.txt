@@ -1,0 +1,113 @@
+Warning: Permanently added '10.1.1.212' (ECDSA) to the list of known hosts.
+[sudo] password for cumulus: === ports.conf comment header - full ===
+# ports.conf --
+#
+# This file controls port aggregation and subdivision.  For example, QSFP+
+# ports are typically configurable as either one 40G interface or four
+# 10G/1000/100 interfaces.  This file sets the number of interfaces per port
+# while /etc/network/interfaces and ethtool configure the link speed for each
+# interface.
+#
+# You must restart switchd for changes to take effect.
+#
+# accton,as5610_52x has:
+#     48 SFP+ ports numbered 1-48
+#         These ports are configurable as 10G or 4 adjacent ports can be
+#         configured as 40G.
+#     4 QSFP ports numbered 49-52
+#         These ports are configurable as 40G or split into 4x10G ports.
+
+# SFP+ ports
+#
+# <port label 1-48> = [10G|40G/4]
+1=10G
+2=10G
+3=10G
+4=10G
+5=10G
+
+=== update-ports help ===
+bash: line 5: update-ports: command not found
+usage: update-ports [-h] [-f] [-v] [-e] [-m {l3-only,standard}]
+
+Update Cumulus port configuration based on /etc/cumulus/ports.conf
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -f, --force           Force update, even if switchd is running.
+  -v, --verbose         Verbose output
+  -e, --exploded        Created exploded port map
+  -m {l3-only,standard}, --mac_mode {l3-only,standard}
+                        Default mac assignment mode,l3-only will replicate the
+                        same mac on all portsstandard will use incremental
+                        macs for each port
+
+=== look at portconfig.py - what modes are valid ===
+    Helper for decode-syseeprom.  Supports a dummy mode for testing.
+    Helper for iproute2.  Supports a dummy mode for testing.
+        self.macmode = 'standard'
+    def set_macmode(self, mode):
+        Set the default mac mode for a configuration
+        self.macmode = mode
+            cmd = 'tuntap del dev %s mode tap' % i
+            if self.macmode == 'l3-only' :
+                cmd = 'tuntap add dev %s mode tap one_queue' % portname
+    Represents a port configured in a specific mode.
+    def __init__(self, mode, mac_index):
+        self.mode = mode
+    def speed(self):
+        The port speed in gigabits/sec.
+        if self.mode == '40G/4':
+    def __init__(self, mode, physical_port, mac_index):
+        ConfiguredPort.__init__(self, mode, mac_index)
+    def speed(self):
+        return self.physical_port.speed(self.mode)
+        return self.physical_port.num_logical_ports(self.mode)
+        return self.physical_port.num_physical_ports(self.mode)
+        return self.physical_port.phy_layer in ('10GBaseT', '1GBaseT')
+        return int(self.physical_port.hw_intf_num(self.mode, sub))
+        return int(self.physical_port.base_hw_intf_num(self.mode, sub))
+        prefix = self.physical_port.hw_intf_prefix(self.mode, sub)[:2]
+        return self.physical_port.hw_pbmp(self.mode, sub)
+        return self.physical_port.phy_autodetect(self.mode, sub)
+        return self.physical_port.set_leds(self.mode, led_port, sub, led_index_list)
+        self.physical_port.set_hardware(platform, self.mode)
+        return self.physical_port.hw_port_num(self.mode, sub)
+        return self.physical_port.rx_logical_polarity_flip(self.mode, sub)
+        return self.physical_port.tx_logical_polarity_flip(self.mode, sub)
+        return self.physical_port.serdes_if_type(self.speed)
+    def __init__(self, mode, physical_port, port_base, mac_index):
+        BCMConfiguredPort.__init__(self, mode, physical_port, mac_index)
+            # default to l3 only mode as we do not have enough mac's
+            self.set_macmode('l3-only')
+            mode = self.config_map.get(port.label, port.default_mode)
+                cp = BCMConfiguredMappedPort(mode, port, mapped_portnum, mac_index)
+                cp = BCMConfiguredPort(mode, port, mac_index)
+        valid = {}
+                valid[port.unit] = valid.get(port.unit,
+        for unit in valid.keys():
+            pbmp.append('pbmp_valid.%u=0x%x' % (unit, valid[unit]))
+                                                        port.speed))
+                #for 40G we need to set emphasis for all 4 lanes, for 10G we 
+                if port.mode == '40G':
+                port_init.append('port_init_speed_%s=%s000' % (port.bcm_intf(sub), port.speed))
+                              (phy_addr, linux_intf, bcm_intf, port.mode))
+        speeds = {}
+
+=== platform.py - look for speed mode support ===
+    _speed_map = {}
+    # Serdes Interface map is dictionary of (Port speed, Interface Mode)
+    def speed(self, mode):
+        Return the port speed in gigabits per second for a given mode.
+        return self._speed_map[mode]
+    def serdes_if_type(self, speed):
+        Return the serdes interface type based on the port speed
+        return self._serdes_intf_map.get(speed, None)
+    def speed(self, mode):
+    def speed(self, mode):
+    _speed_map = { '10G' : 10 }
+    _speed_map = { '10G' : 10 }
+    _speed_map = { '10G'   : 10,
+    _speed_map = { '10G'   : 10,
+    _speed_map = { '4x10G' : 10,
+    _speed_map = { '4x10G' : 10,
