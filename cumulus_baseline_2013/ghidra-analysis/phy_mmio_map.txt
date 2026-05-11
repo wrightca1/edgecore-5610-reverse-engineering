@@ -1,0 +1,373 @@
+# PHY firmware MMIO access map (from BCM84740-ver-D102.bin)
+# Walked 4487 instructions, found 910 MMIO accesses across 181 unique addresses
+
+# PHY_REG     READS   WRITES   LAST_PC        
+# -----------------------------------------------------------
+0x100             4        2   0xe1c9
+0x101             4        2   0xe1cb
+0x103             1        5   0xe1a7
+0x104             1        5   0xe1a9
+0x105             2        2   0xe195
+0x106             2        2   0xe197
+0x107             3        2   0xe1cf
+0x108             3        2   0xe1d1
+0x111             6        2   0xe1b3
+0x112             6        2   0xe1b5
+0x114             5        2   0xe1b9
+0x115             5        2   0xe1bb
+0x116             2        4   0xe1d5
+0x117             4        2   0xe1a1
+0x118             4        2   0xe1a3
+0x119             3        2   0xe1bf
+0x11a             3        2   0xe1c1
+0x11b             2        2   0xe1c3
+0x11c             2        2   0xe1c5
+0x172             3        2   0xe19b
+0x173             3        2   0xe19d
+0x174             2        5   0xe1ad
+0x175             2        5   0xe1af
+0x197             5        2   0xe18f
+0x198             5        2   0xe191
+0x199             3        2   0xe40b
+0x19a             3        3   0xe405
+0x19b             2        4   0xe413
+0x19c             1        1   0xe416
+0x19e             1        2   0xc1ae
+0x19f             2        2   0xdfaa
+0x1a0             2        2   0xdfad
+0x1a1             2        4   0xdfb8
+0x1a2             2        4   0xdfbb
+0x1a3             1        2   0xdc71
+0x1a4             2        2   0xdc8c
+0x1a5             2        2   0xdc8f
+0x1a6             2        2   0xdc5b
+0x1a7             2        2   0xdc5e
+0x1eb            21       18   0xe156
+0x1ec            22       14   0xe159
+0x1ed             9        8   0xe168
+0x1ee            12        9   0xe16b
+0x1ef            15       12   0xe176
+0x1f0             8       18   0xe179
+0x1f1             7       18   0xe12d
+0x1f2             7        6   0xe09a
+0x1f3             7        5   0xe082
+0x1f4            10        7   0xe085
+0x1f5             9       18   0xd41c
+0x1f6             6       17   0xd923
+0x1f7            11       23   0xe3e9
+0x1f8            16       14   0xe3ec
+0x1f9            15       13   0xe3d1
+0x1fa            15       13   0xe3b0
+0x1fb            12       10   0xe356
+0x1fc             4        4   0xe359
+0x1fd             1        1   0xcfa5
+0x21b             2        2   0xd4aa
+0x21c             4        3   0xd711
+0x21d             4        3   0xd715
+0x21e             4        4   0xd6f1
+0x21f             1        2   0xdd18
+0x220             0        1   0xc23f
+0x221             0        1   0xc241
+0x222             0        1   0xc23a
+0x223             0        1   0x8013
+0x224             0        1   0x8016
+0x225             8        2   0xe432
+0x940f            2        2   0xcb06
+0x9426            0        1   0xd6ff
+0x9427            0        2   0xdcff
+0x9430            0        2   0xc982
+0x9431            0        2   0xc97c
+0x9432            0        2   0xc98e
+0x9433            0        2   0xc988
+0x9434            1        2   0xd4f4
+0x9435            0        1   0x802b
+0x9436            0        2   0xc99a
+0x9437            0        2   0xc994
+0x9438            1        2   0xe31e
+0x9439            1        2   0xe332
+0x9452            0        1   0xcae8
+0x9453            0        1   0xcaeb
+0x9454            0        1   0xcade
+0x9455            0        1   0xcae2
+0x9456            0        1   0xcad5
+0x9457            0        1   0xcad9
+0x9458            0        1   0xcacb
+0x9459            0        1   0xcacf
+0x945a            0        1   0xcac1
+0x945b            0        1   0xcac5
+0x9462            0        1   0xcaa1
+0x9463            0        1   0xcaa4
+0x9464            0        1   0xcaa8
+0x9465            0        1   0xcaaa
+0x9472            1        1   0xc3b4
+0x947e            0        1   0xcaf1
+0x947f            0        1   0xcaf3
+0x948a            0        1   0xcaaf
+0x948b            0        1   0xcab3
+0x948c            0        2   0xcab7
+0x948d            0        2   0xcabb
+0x94a2            0        1   0xc3b9
+0x94a3            0        1   0xc3bb
+0x94a4            0        2   0xc9f8
+0x94a5            0        2   0xc9fb
+0x94a6            0        2   0xc9ff
+0x94a7            0        2   0xca03
+0x94a8            0        3   0xca07
+0x94a9            0        3   0xca0b
+0x94aa            0        1   0xca11
+0x94ab            0        2   0xca15
+0x94ac            0        2   0xca19
+0x94ad            0        2   0xca1d
+0x94ae            0        1   0xca21
+0x94af            0        1   0xca25
+0x94b0            0        1   0xca29
+0x94b1            0        1   0xca2d
+0x94b2            0        1   0xca31
+0x94b3            0        1   0xca35
+0x94b4            0        1   0xca39
+0x94b5            0        1   0xca3d
+0x94b6            0        2   0xca41
+0x94b7            0        2   0xca45
+0x94b8            0        2   0xca49
+0x94b9            0        2   0xca4d
+0x94ba            0        2   0xca51
+0x94bb            0        2   0xca55
+0x94bc            0        2   0xca59
+0x94bd            0        2   0xca5d
+0x94be            0        2   0xca61
+0x94bf            0        2   0xca65
+0x94c0            0        2   0xca69
+0x94c1            0        2   0xca6d
+0x94c2            0        2   0xca71
+0x94c3            0        2   0xca75
+0x94c8            0        1   0xc3bf
+0x94c9            0        1   0xc3c1
+0x94e2            0        1   0xc3d4
+0x94e3            0        1   0xc3d6
+0x94e4            1        2   0xc6ae
+0x94e5            0        1   0xc6b0
+0x94e6            1        2   0xc6b4
+0x94e7            0        1   0xc6b8
+0x9510            0        2   0xc9a3
+0x9511            0        2   0xc99f
+0x9512            0        2   0xc9ab
+0x9513            0        2   0xc9a7
+0x9514            0        2   0xc9b3
+0x9515            0        2   0xc9af
+0x9516            0        2   0xc9b7
+0x9517            0        2   0xc9b9
+0x9518            0        2   0xc9c1
+0x9519            0        2   0xc9bd
+0x9542            4        4   0xc3dd
+0x9544            0        2   0xca84
+0x9545            0        2   0xca87
+0x9596            0        1   0xca7b
+0x9597            0        1   0xca7e
+0x9641            2        2   0xc29d
+0x9643            1        1   0xbca8
+0x9648            0        1   0xc752
+0x9649            1        1   0xc74c
+0x965a            1        1   0xc743
+0x965c            8        8   0xc320
+0x965d           11       11   0xc2e7
+0xe000            1        0   0xe3d9
+0xe001            1        1   0xc202
+0xe004            1        1   0xe0f0
+0xe021            0        1   0xe0e9
+0xe022            0        1   0xe0d9
+0xe023            0        1   0xe0bd
+0xe024            0        1   0xe0b1
+0xe025            0        1   0xe0ca
+0xe026            0        1   0xe0c5
+0xe028            1        0   0xe0e5
+0xe029            1        0   0xe0dd
+0xe02a            1        0   0xe0d5
+0xe02b            0        1   0xe0e1
+0xe034            1        1   0xe0d1
+
+# === Read-only registers (likely status/data) ===
+0xe000  R-O  reads=1
+0xe028  R-O  reads=1
+0xe029  R-O  reads=1
+0xe02a  R-O  reads=1
+
+# === Write-only registers (likely config/init) ===
+0x0220  W-O  writes=1
+0x0221  W-O  writes=1
+0x0222  W-O  writes=1
+0x0223  W-O  writes=1
+0x0224  W-O  writes=1
+0x9426  W-O  writes=1
+0x9427  W-O  writes=2
+0x9430  W-O  writes=2
+0x9431  W-O  writes=2
+0x9432  W-O  writes=2
+0x9433  W-O  writes=2
+0x9435  W-O  writes=1
+0x9436  W-O  writes=2
+0x9437  W-O  writes=2
+0x9452  W-O  writes=1
+0x9453  W-O  writes=1
+0x9454  W-O  writes=1
+0x9455  W-O  writes=1
+0x9456  W-O  writes=1
+0x9457  W-O  writes=1
+0x9458  W-O  writes=1
+0x9459  W-O  writes=1
+0x945a  W-O  writes=1
+0x945b  W-O  writes=1
+0x9462  W-O  writes=1
+0x9463  W-O  writes=1
+0x9464  W-O  writes=1
+0x9465  W-O  writes=1
+0x947e  W-O  writes=1
+0x947f  W-O  writes=1
+0x948a  W-O  writes=1
+0x948b  W-O  writes=1
+0x948c  W-O  writes=2
+0x948d  W-O  writes=2
+0x94a2  W-O  writes=1
+0x94a3  W-O  writes=1
+0x94a4  W-O  writes=2
+0x94a5  W-O  writes=2
+0x94a6  W-O  writes=2
+0x94a7  W-O  writes=2
+0x94a8  W-O  writes=3
+0x94a9  W-O  writes=3
+0x94aa  W-O  writes=1
+0x94ab  W-O  writes=2
+0x94ac  W-O  writes=2
+0x94ad  W-O  writes=2
+0x94ae  W-O  writes=1
+0x94af  W-O  writes=1
+0x94b0  W-O  writes=1
+0x94b1  W-O  writes=1
+0x94b2  W-O  writes=1
+0x94b3  W-O  writes=1
+0x94b4  W-O  writes=1
+0x94b5  W-O  writes=1
+0x94b6  W-O  writes=2
+0x94b7  W-O  writes=2
+0x94b8  W-O  writes=2
+0x94b9  W-O  writes=2
+0x94ba  W-O  writes=2
+0x94bb  W-O  writes=2
+0x94bc  W-O  writes=2
+0x94bd  W-O  writes=2
+0x94be  W-O  writes=2
+0x94bf  W-O  writes=2
+0x94c0  W-O  writes=2
+0x94c1  W-O  writes=2
+0x94c2  W-O  writes=2
+0x94c3  W-O  writes=2
+0x94c8  W-O  writes=1
+0x94c9  W-O  writes=1
+0x94e2  W-O  writes=1
+0x94e3  W-O  writes=1
+0x94e5  W-O  writes=1
+0x94e7  W-O  writes=1
+0x9510  W-O  writes=2
+0x9511  W-O  writes=2
+0x9512  W-O  writes=2
+0x9513  W-O  writes=2
+0x9514  W-O  writes=2
+0x9515  W-O  writes=2
+0x9516  W-O  writes=2
+0x9517  W-O  writes=2
+0x9518  W-O  writes=2
+0x9519  W-O  writes=2
+0x9544  W-O  writes=2
+0x9545  W-O  writes=2
+0x9596  W-O  writes=1
+0x9597  W-O  writes=1
+0x9648  W-O  writes=1
+0xe021  W-O  writes=1
+0xe022  W-O  writes=1
+0xe023  W-O  writes=1
+0xe024  W-O  writes=1
+0xe025  W-O  writes=1
+0xe026  W-O  writes=1
+0xe02b  W-O  writes=1
+
+# === Read-Write registers (likely control) ===
+0x0100  R/W  reads=4 writes=2
+0x0101  R/W  reads=4 writes=2
+0x0103  R/W  reads=1 writes=5
+0x0104  R/W  reads=1 writes=5
+0x0105  R/W  reads=2 writes=2
+0x0106  R/W  reads=2 writes=2
+0x0107  R/W  reads=3 writes=2
+0x0108  R/W  reads=3 writes=2
+0x0111  R/W  reads=6 writes=2
+0x0112  R/W  reads=6 writes=2
+0x0114  R/W  reads=5 writes=2
+0x0115  R/W  reads=5 writes=2
+0x0116  R/W  reads=2 writes=4
+0x0117  R/W  reads=4 writes=2
+0x0118  R/W  reads=4 writes=2
+0x0119  R/W  reads=3 writes=2
+0x011a  R/W  reads=3 writes=2
+0x011b  R/W  reads=2 writes=2
+0x011c  R/W  reads=2 writes=2
+0x0172  R/W  reads=3 writes=2
+0x0173  R/W  reads=3 writes=2
+0x0174  R/W  reads=2 writes=5
+0x0175  R/W  reads=2 writes=5
+0x0197  R/W  reads=5 writes=2
+0x0198  R/W  reads=5 writes=2
+0x0199  R/W  reads=3 writes=2
+0x019a  R/W  reads=3 writes=3
+0x019b  R/W  reads=2 writes=4
+0x019c  R/W  reads=1 writes=1
+0x019e  R/W  reads=1 writes=2
+0x019f  R/W  reads=2 writes=2
+0x01a0  R/W  reads=2 writes=2
+0x01a1  R/W  reads=2 writes=4
+0x01a2  R/W  reads=2 writes=4
+0x01a3  R/W  reads=1 writes=2
+0x01a4  R/W  reads=2 writes=2
+0x01a5  R/W  reads=2 writes=2
+0x01a6  R/W  reads=2 writes=2
+0x01a7  R/W  reads=2 writes=2
+0x01eb  R/W  reads=21 writes=18
+0x01ec  R/W  reads=22 writes=14
+0x01ed  R/W  reads=9 writes=8
+0x01ee  R/W  reads=12 writes=9
+0x01ef  R/W  reads=15 writes=12
+0x01f0  R/W  reads=8 writes=18
+0x01f1  R/W  reads=7 writes=18
+0x01f2  R/W  reads=7 writes=6
+0x01f3  R/W  reads=7 writes=5
+0x01f4  R/W  reads=10 writes=7
+0x01f5  R/W  reads=9 writes=18
+0x01f6  R/W  reads=6 writes=17
+0x01f7  R/W  reads=11 writes=23
+0x01f8  R/W  reads=16 writes=14
+0x01f9  R/W  reads=15 writes=13
+0x01fa  R/W  reads=15 writes=13
+0x01fb  R/W  reads=12 writes=10
+0x01fc  R/W  reads=4 writes=4
+0x01fd  R/W  reads=1 writes=1
+0x021b  R/W  reads=2 writes=2
+0x021c  R/W  reads=4 writes=3
+0x021d  R/W  reads=4 writes=3
+0x021e  R/W  reads=4 writes=4
+0x021f  R/W  reads=1 writes=2
+0x0225  R/W  reads=8 writes=2
+0x940f  R/W  reads=2 writes=2
+0x9434  R/W  reads=1 writes=2
+0x9438  R/W  reads=1 writes=2
+0x9439  R/W  reads=1 writes=2
+0x9472  R/W  reads=1 writes=1
+0x94e4  R/W  reads=1 writes=2
+0x94e6  R/W  reads=1 writes=2
+0x9542  R/W  reads=4 writes=4
+0x9641  R/W  reads=2 writes=2
+0x9643  R/W  reads=1 writes=1
+0x9649  R/W  reads=1 writes=1
+0x965a  R/W  reads=1 writes=1
+0x965c  R/W  reads=8 writes=8
+0x965d  R/W  reads=11 writes=11
+0xe001  R/W  reads=1 writes=1
+0xe004  R/W  reads=1 writes=1
+0xe034  R/W  reads=1 writes=1
