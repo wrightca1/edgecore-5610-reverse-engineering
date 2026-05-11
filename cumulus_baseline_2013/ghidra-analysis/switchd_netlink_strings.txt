@@ -1,0 +1,273 @@
+# Strings related to netlink / route processing
+
+"/debug/neigh_update_stop"                         @ 0x11318d60   used in FUN_100059fc @ 0x100059fc
+"/debug/neigh_update_iterate"                      @ 0x11318d7c   used in FUN_100059fc @ 0x100059fc
+"/debug/neigh_update_start"                        @ 0x11318d98   used in FUN_100059fc @ 0x100059fc
+"/config/route/table"                              @ 0x11318fb8   used in FUN_10005ecc @ 0x10005ecc
+"/config/route/host_max_percent"                   @ 0x11318fcc   used in FUN_10005ecc @ 0x10005ecc
+"/config/route/delete_dead_routes"                 @ 0x11318fec   used in FUN_10005ecc @ 0x10005ecc
+"/config/route/max_routes"                         @ 0x11319070   used in FUN_10005ecc @ 0x10005ecc
+"%s %s:%d CRIT Couldn't increase netlink rbuf size @ 0x11319e04   used in FUN_100090c8 @ 0x100090c8
+"netlink.c"                                        @ 0x11319e3c   used in FUN_1000a150 @ 0x1000a150
+"netlink.c"                                        @ 0x11319e3c   used in FUN_1000a150 @ 0x1000a150
+"netlink.c"                                        @ 0x11319e3c   used in FUN_1000a150 @ 0x1000a150
+"netlink.c"                                        @ 0x11319e3c   used in FUN_1000a150 @ 0x1000a150
+"netlink.c"                                        @ 0x11319e3c   used in FUN_1000a150 @ 0x1000a150
+"netlink.c"                                        @ 0x11319e3c   used in FUN_1000a150 @ 0x1000a150
+"netlink.c"                                        @ 0x11319e3c   used in FUN_1000a150 @ 0x1000a150
+"netlink.c"                                        @ 0x11319e3c   used in FUN_1000a150 @ 0x1000a150
+"netlink.c"                                        @ 0x11319e3c   used in FUN_1000a150 @ 0x1000a150
+"netlink.c"                                        @ 0x11319e3c   used in FUN_1000a150 @ 0x1000a150
+"netlink.c"                                        @ 0x11319e3c   used in FUN_1000a150 @ 0x1000a150
+"netlink.c"                                        @ 0x11319e3c   used in FUN_1000a150 @ 0x1000a150
+"netlink.c"                                        @ 0x11319e3c   used in FUN_1000a150 @ 0x1000a150
+"netlink.c"                                        @ 0x11319e3c   used in FUN_1000a150 @ 0x1000a150
+"netlink.c"                                        @ 0x11319e3c   used in FUN_1000a150 @ 0x1000a150
+"netlink.c"                                        @ 0x11319e3c   used in FUN_1000a150 @ 0x1000a150
+"netlink.c"                                        @ 0x11319e3c   used in FUN_10009864 @ 0x10009864
+"netlink.c"                                        @ 0x11319e3c   used in FUN_100098ec @ 0x100098ec
+"netlink.c"                                        @ 0x11319e3c   used in FUN_10009994 @ 0x10009994
+"netlink.c"                                        @ 0x11319e3c   used in FUN_10009994 @ 0x10009994
+"netlink.c"                                        @ 0x11319e3c   used in FUN_10009adc @ 0x10009adc
+"netlink.c"                                        @ 0x11319e3c   used in FUN_10009adc @ 0x10009adc
+"netlink.c"                                        @ 0x11319e3c   used in FUN_10009adc @ 0x10009adc
+"netlink.c"                                        @ 0x11319e3c   used in FUN_10009adc @ 0x10009adc
+"netlink.c"                                        @ 0x11319e3c   used in FUN_10009cac @ 0x10009cac
+"netlink.c"                                        @ 0x11319e3c   used in FUN_10009cac @ 0x10009cac
+"netlink.c"                                        @ 0x11319e3c   used in FUN_10009cac @ 0x10009cac
+"netlink.c"                                        @ 0x11319e3c   used in FUN_10009cac @ 0x10009cac
+"netlink.c"                                        @ 0x11319e3c   used in FUN_10009cac @ 0x10009cac
+"netlink.c"                                        @ 0x11319e3c   used in FUN_10009cac @ 0x10009cac
+"netlink.c"                                        @ 0x11319e3c   used in FUN_100090c8 @ 0x100090c8
+"netlink.c"                                        @ 0x11319e3c   used in FUN_100090c8 @ 0x100090c8
+"netlink.c"                                        @ 0x11319e3c   used in FUN_10009244 @ 0x10009244
+"netlink.c"                                        @ 0x11319e3c   used in FUN_10009244 @ 0x10009244
+"netlink.c"                                        @ 0x11319e3c   used in FUN_10009398 @ 0x10009398
+"netlink.c"                                        @ 0x11319e3c   used in FUN_10009758 @ 0x10009758
+"netlink.c"                                        @ 0x11319e3c   used in FUN_10009568 @ 0x10009568
+"netlink.c"                                        @ 0x11319e3c   used in FUN_10009568 @ 0x10009568
+"netlink.c"                                        @ 0x11319e3c   used in FUN_1000963c @ 0x1000963c
+"netlink.c"                                        @ 0x11319e3c   used in FUN_1000963c @ 0x1000963c
+"netlink.c"                                        @ 0x11319e3c   used in FUN_10009ed0 @ 0x10009ed0
+"%s %s:%d CRIT Couldn't increase netlink wbuf size @ 0x11319e48   used in FUN_100090c8 @ 0x100090c8
+"%s %s:%d CRIT Couldn't allocate netlink socket.\n @ 0x11319e80   used in FUN_1000a150 @ 0x1000a150
+"%s %s:%d CRIT Couldn't allocate netlink socket.\n @ 0x11319e80   used in FUN_1000a150 @ 0x1000a150
+"%s %s:%d CRIT Couldn't allocate netlink socket.\n @ 0x11319e80   used in FUN_10009244 @ 0x10009244
+"%s %s:%d CRIT Couldn't connect netlink socket: %s @ 0x11319eb4   used in FUN_10009244 @ 0x10009244
+"%s %s:%d CRIT nl_resync_route failed for cache %d @ 0x11319f20   used in FUN_1000963c @ 0x1000963c
+"%s %s:%d CRIT Couldn't set bufsize for manager ne @ 0x11319fdc   used in FUN_1000a150 @ 0x1000a150
+"%s %s:%d CRIT Couldn't set bufsize for manager ne @ 0x11319fdc   used in FUN_10009994 @ 0x10009994
+"%s %s:%d %s: netlink socket buffer overflow: %s\n @ 0x1131a084   used in FUN_10009cac @ 0x10009cac
+"%s %s:%d %s: netlink socket buffer overflow: resy @ 0x1131a0e8   used in FUN_10009cac @ 0x10009cac
+"/debug/netlink/cache/link"                        @ 0x1131a1c8   used in FUN_1000a034 @ 0x1000a034
+"/debug/netlink/cache/route"                       @ 0x1131a1e4   used in FUN_1000a034 @ 0x1000a034
+"/debug/netlink/cache/neigh"                       @ 0x1131a200   used in FUN_1000a034 @ 0x1000a034
+"/debug/netlink/cache/mdb"                         @ 0x1131a21c   used in FUN_1000a034 @ 0x1000a034
+"/debug/netlink/cache/bond"                        @ 0x1131a238   used in FUN_1000a034 @ 0x1000a034
+"/config/netlink/buf_size"                         @ 0x1131a254   used in FUN_1000a150 @ 0x1000a150
+"netlink/"                                         @ 0x1131a298   used in FUN_1000a150 @ 0x1000a150
+"/ctrl/netlink/resync"                             @ 0x1131a2a4   used in FUN_1000a150 @ 0x1000a150
+"/ctrl/netlink/nl_logger"                          @ 0x1131a2bc   used in FUN_1000a150 @ 0x1000a150
+"%s %s:%d CRIT Couldn't allocate manager netlink s @ 0x1131a2d4   used in FUN_1000a150 @ 0x1000a150
+"route/link"                                       @ 0x1131a344   used in FUN_1000a150 @ 0x1000a150
+"route/route"                                      @ 0x1131a37c   used in FUN_1000a150 @ 0x1000a150
+"%s %s:%d CRIT Couldn't add route cache: %s\n"     @ 0x1131a388   used in FUN_1000a150 @ 0x1000a150
+"route/mdb"                                        @ 0x1131a3b4   used in FUN_1000a150 @ 0x1000a150
+"route/neigh"                                      @ 0x1131a3ec   used in FUN_1000a150 @ 0x1000a150
+"%s %s:%d CRIT Couldn't alloc neigh cache: %s\n"   @ 0x1131a3f8   used in FUN_1000a150 @ 0x1000a150
+"%s %s:%d CRIT Couldn't add neigh cache: %s\n"     @ 0x1131a428   used in FUN_1000a150 @ 0x1000a150
+"nlroute"                                          @ 0x1131a454   used in FUN_1000a150 @ 0x1000a150
+"%s %s:%d CRIT Couldn't allocate genl manager netl @ 0x1131a45c   used in FUN_1000a150 @ 0x1000a150
+"%s %s:%d CRIT Couldn't set bufsize for genl manag @ 0x1131a4d4   used in FUN_1000a150 @ 0x1000a150
+"%s %s:%d WARN %s: route table mode %d not support @ 0x1131a6c4   used in FUN_1000b638 @ 0x1000b638
+"%s %s:%d CRIT %s: rtnl_link_alloc failed for fami @ 0x1131a6fc   used in FUN_1000b73c @ 0x1000b73c
+"%s %s:%d CRIT %s: rtnl_neigh_alloc failed for fam @ 0x1131a734   used in FUN_1000b7e8 @ 0x1000b7e8
+"%s %s:%d %s neigh obj [%s],action %d, type %d, fa @ 0x1131a904   used in FUN_1000d1ac @ 0x1000d1ac
+"%s %s:%d %s route obj [%s],action %d, type %d, fa @ 0x1131a950   used in FUN_1000d43c @ 0x1000d43c
+"%s %s:%d no hal route found for the neighbor entr @ 0x1131aa04   used in FUN_1000d9d0 @ 0x1000d9d0
+"%s %s:%d no hal route %s found in hal_routes\n"   @ 0x1131aa44   used in FUN_1000d9d0 @ 0x1000d9d0
+"%s %s:%d Reachable neighbors : %d updated, %d per @ 0x1131aa74   used in FUN_1000dcc8 @ 0x1000dcc8
+"%s %s:%d Reachable neighbors : %d updated, %d per @ 0x1131aa74   used in FUN_1000dcc8 @ 0x1000dcc8
+"%s %s:%d Reachable neighbors marked in %llu usecs @ 0x1131aabc   used in FUN_1000de90 @ 0x1000de90
+"%s %s:%d Reachable neighbors marked in %llu usecs @ 0x1131aabc   used in FUN_1000de90 @ 0x1000de90
+"%s %s:%d %s routes: %d %s routes: %d route mask l @ 0x1131b09c   used in FUN_1001028c @ 0x1001028c
+"/run/route_info%s"                                @ 0x1131b1ac   used in FUN_10010884 @ 0x10010884
+"/run/route_info%s"                                @ 0x1131b1ac   used in FUN_1001093c @ 0x1001093c
+"/route/count_0"                                   @ 0x1131b280   used in FUN_10010a80 @ 0x10010a80
+"/route/count_1"                                   @ 0x1131b2ac   used in FUN_10010a80 @ 0x10010a80
+"/route/max_0"                                     @ 0x1131b2bc   used in FUN_10010a80 @ 0x10010a80
+"/route/max_1"                                     @ 0x1131b2e8   used in FUN_10010a80 @ 0x10010a80
+"/route/count_v4"                                  @ 0x1131b2f8   used in FUN_10010a80 @ 0x10010a80
+"/route/count_v6"                                  @ 0x1131b328   used in FUN_10010a80 @ 0x10010a80
+"/route/count_total"                               @ 0x1131b358   used in FUN_10010a80 @ 0x10010a80
+"/route/max_total"                                 @ 0x1131b38c   used in FUN_10010a80 @ 0x10010a80
+"Total number of routes supported"                 @ 0x1131b3a0   used in FUN_10010a80 @ 0x10010a80
+"/route/mask_limit"                                @ 0x1131b3c4   used in FUN_10010a80 @ 0x10010a80
+"/ecmp_nh/max_per_route"                           @ 0x1131b46c   used in FUN_10010a80 @ 0x10010a80
+"ECMP next-hop table maximum next-hops per route"  @ 0x1131b484   used in FUN_10010a80 @ 0x10010a80
+"/route/mode"                                      @ 0x1131b4fc   used in FUN_10010a80 @ 0x10010a80
+"%s %s:%d Marking routes dirty as port %d link sta @ 0x1131b8b4   used in FUN_10011c48 @ 0x10011c48
+"neigh_cache"                                      @ 0x1131b904   used in FUN_10012174 @ 0x10012174
+"%s %s:%d Failed to lookup NH in neigh cache. IF:  @ 0x1131b910   used in FUN_10012174 @ 0x10012174
+"%s %s:%d Unknown NH in neigh cache. IF: %d, IP: % @ 0x1131ba20   used in FUN_10012a40 @ 0x10012a40
+"rtnl_neigh_get_family(neigh) == AF_INET || rtnl_n @ 0x1131ba60   used in FUN_10012a40 @ 0x10012a40
+"rtnl_route_get_table(route) == route_table_num || @ 0x1131bab4   used in FUN_10013328 @ 0x10013328
+"(route_flags & RTNH_F_ONLINK) == 0"               @ 0x1131bcd4   used in FUN_10013328 @ 0x10013328
+"hal_route->num_next_hops == 1"                    @ 0x1131bcf8   used in FUN_10013328 @ 0x10013328
+"ipv6 || !rtnl_route_nh_get_gateway(nh)"           @ 0x1131bd18   used in FUN_10013328 @ 0x10013328
+"route_type == RTN_BLACKHOLE"                      @ 0x1131bd40   used in FUN_10013328 @ 0x10013328
+"get_and_sort_kernel_routes"                       @ 0x1131bd8c   used in FUN_100142ac @ 0x100142ac
+"%s %s:%d Out of route table %d entries for %s.  S @ 0x1131bdec   used in FUN_100142ac @ 0x100142ac
+"%s %s:%d Adding route: %s\n"                      @ 0x1131bec0   used in FUN_100142ac @ 0x100142ac
+"%s %s:%d Updating route %s to %s\n"               @ 0x1131bedc   used in FUN_100142ac @ 0x100142ac
+"%s %s:%d ERR %d routes were ignored due to total  @ 0x1131bfe8   used in FUN_100142ac @ 0x100142ac
+"%s %s:%d ERR %d %s routes were ignored due to cap @ 0x1131c0b8   used in FUN_100142ac @ 0x100142ac
+"%s %s:%d WARN %d routes exceeded %d ecmp NHs, and @ 0x1131c0f4   used in FUN_100142ac @ 0x100142ac
+"%s %s:%d WARN %d routes reverted to non-ECMP due  @ 0x1131c138   used in FUN_100142ac @ 0x100142ac
+"%s %s:%d # of routes have reduced enough to fit.\ @ 0x1131c1b4   used in FUN_100142ac @ 0x100142ac
+"%s %s:%d # of routes in table %d have reduced eno @ 0x1131c1e8   used in FUN_100142ac @ 0x100142ac
+"%s %s:%d # of NHs per route have reduced enough t @ 0x1131c228   used in FUN_100142ac @ 0x100142ac
+"%s %s:%d Removing route: %s\n"                    @ 0x1131c298   used in FUN_10016344 @ 0x10016344
+"route_change_cb"                                  @ 0x1131d3f0   used in FUN_1000d43c @ 0x1000d43c
+"neigh_change_cb"                                  @ 0x1131d400   used in FUN_1000d1ac @ 0x1000d1ac
+"build_nl_neigh_family_filter"                     @ 0x1131d420   used in FUN_1000b7e8 @ 0x1000b7e8
+"get_route_table_type_idx"                         @ 0x1131d45c   used in FUN_1000b638 @ 0x1000b638
+"info->max_routes == cur_info.max_routes"          @ 0x1131d61c   used in FUN_100239d4 @ 0x100239d4
+"info->max_ecmp_nhs_per_route == cur_info.max_ecmp @ 0x1131d698   used in FUN_100239d4 @ 0x100239d4
+"info->num_routes == cur_info.num_routes"          @ 0x1131d708   used in FUN_100239d4 @ 0x100239d4
+"%s %s:%d CRIT Failed to add route %s\n"           @ 0x1131d784   used in FUN_10023c98 @ 0x10023c98
+"hash_table_add(hal_neighbors, HAL_ROUTE_KEY(entry @ 0x1131d7ac   used in FUN_10023c98 @ 0x10023c98
+"hash_table_add(hal_neighbors, HAL_ROUTE_KEY(entry @ 0x1131d7ac   used in FUN_1002405c @ 0x1002405c
+"hash_table_delete(hal_routes, HAL_ROUTE_KEY(route @ 0x1131d7fc   used in FUN_10023e98 @ 0x10023e98
+"hal_route_cmp_dest_only(entry, route)"            @ 0x1131d854   used in FUN_10023e98 @ 0x10023e98
+"hash_table_delete(hal_neighbors, HAL_ROUTE_KEY(ro @ 0x1131d87c   used in FUN_10023e98 @ 0x10023e98
+"hash_table_delete(hal_neighbors, HAL_ROUTE_KEY(ro @ 0x1131d87c   used in FUN_1002405c @ 0x1002405c
+"hash_table_find(hal_routes, HAL_ROUTE_KEY(route), @ 0x1131d8d8   used in FUN_1002405c @ 0x1002405c
+"%s %s:%d ERR HW route %s doesn't match HAL route  @ 0x1131d970   used in FUN_100242d4 @ 0x100242d4
+"hash_table_delete(hal_neighbors, HAL_ROUTE_KEY(ha @ 0x1131da0c   used in FUN_10024664 @ 0x10024664
+"%s %s:%d WARN %s: route table mode %d not support @ 0x1131dacc   used in FUN_10028240 @ 0x10028240
+"hal_set_route_table_mode"                         @ 0x1131db04   used in FUN_10028240 @ 0x10028240
+" neigh_flag: 0x%x"                                @ 0x1131dcdc   used in FUN_10029758 @ 0x10029758
+"%s %s:%d ACL ignoring route event\n"              @ 0x11320a50   used in FUN_1003a34c @ 0x1003a34c
+"%d,%d,%d, ERSPAN route lookup failed for ERSPAN\n @ 0x11321bac   used in FUN_1003e45c @ 0x1003e45c
+"%d,%d,%d, ERSPAN route to CPU is not supported\n" @ 0x11321be0   used in FUN_1003e45c @ 0x1003e45c
+"%s %s:%d ERSPAN: found route %s\n"                @ 0x11321c10   used in FUN_1003e45c @ 0x1003e45c
+"hash_table_add(hal_routes, HAL_ROUTE_KEY(hal_rout @ 0x11323038   used in FUN_10044cec @ 0x10044cec
+"routes->num_entries > 0"                          @ 0x1132308c   used in FUN_10044fa0 @ 0x10044fa0
+"memcmp(&route->dest_addr, &route->dest_addr, size @ 0x113230b0   used in FUN_100450e4 @ 0x100450e4
+"%s %s:%d CRIT bcm_l3_route_max_ecmp_set failed: % @ 0x113245b8   used in FUN_10053150 @ 0x10053150
+"%s %s:%d ERR Invalid router mac %s\n"             @ 0x11325aac   used in FUN_10059914 @ 0x10059914
+"%s %s:%d router mac already installed for l3_if_i @ 0x11325afc   used in FUN_10059914 @ 0x10059914
+"%s %s:%d CRIT Failed to install router mac\n"     @ 0x11325b9c   used in FUN_1005a034 @ 0x1005a034
+"hw_host_to_hal_route(backend, host, hal_route)"   @ 0x11326070   used in FUN_1005cec8 @ 0x1005cec8
+"hash_table_add(hal_routes, HAL_ROUTE_KEY(hal_rout @ 0x113260a0   used in FUN_1005cec8 @ 0x1005cec8
+"hash_table_add(hal_routes, HAL_ROUTE_KEY(hal_rout @ 0x113260a0   used in FUN_1005d444 @ 0x1005d444
+"%s %s:%d CRIT bcm_l3_route_traverse (v4) failed:  @ 0x1132615c   used in FUN_1005cfc8 @ 0x1005cfc8
+"%s %s:%d WARN %s: route table mode %d not support @ 0x11326194   used in FUN_1005cfc8 @ 0x1005cfc8
+"%s %s:%d CRIT bcm_l3_route_traverse (v6) failed:  @ 0x113261cc   used in FUN_1005cfc8 @ 0x1005cfc8
+"%s %s:%d CRIT %s: hal_route_to_hw_host failed for @ 0x11326204   used in FUN_1005f1f0 @ 0x1005f1f0
+"%s %s:%d CRIT %s: hal_route_to_hw_host failed for @ 0x11326204   used in FUN_1005d52c @ 0x1005d52c
+"hal_route->num_next_hops >= 0"                    @ 0x11326510   used in FUN_1005ea54 @ 0x1005ea54
+"hal_route->num_next_hops >= 0"                    @ 0x11326510   used in FUN_1005eb78 @ 0x1005eb78
+"%s %s:%d CRIT bcm_l3_host_add failed for hal rout @ 0x113265e0   used in FUN_1005f1f0 @ 0x1005f1f0
+"%s %s:%d CRIT %s: hal_route_to_hw_route failed fo @ 0x1132661c   used in FUN_1005f1f0 @ 0x1005f1f0
+"%s %s:%d CRIT bcm_l3_route_get failed for hal rou @ 0x11326660   used in FUN_1005f1f0 @ 0x1005f1f0
+"%s %s:%d CRIT bcm_l3_route_add failed for hal rou @ 0x1132669c   used in FUN_1005f1f0 @ 0x1005f1f0
+"%s %s:%d CRIT %s: HW host not found for HAL route @ 0x113266d8   used in FUN_1005f80c @ 0x1005f80c
+"%s %s:%d CRIT bcm_l3_host_delete for HAL route %s @ 0x11326710   used in FUN_1005f80c @ 0x1005f80c
+"%s %s:%d CRIT %s: HW route not found for HAL rout @ 0x11326750   used in FUN_1005f80c @ 0x1005f80c
+"%s %s:%d CRIT bcm_l3_route_delete hal route %s fa @ 0x11326788   used in FUN_1005f80c @ 0x1005f80c
+"%s %s:%d port %d vlan %d route count non-zero: de @ 0x11328170   used in FUN_1006d468 @ 0x1006d468
+"hal_bcm_remove_route"                             @ 0x11328c24   used in FUN_1005f80c @ 0x1005f80c
+"hal_bcm_remove_route"                             @ 0x11328c24   used in FUN_1005f80c @ 0x1005f80c
+"add_update_route"                                 @ 0x11328c3c   used in FUN_1005f1f0 @ 0x1005f1f0
+"add_update_route"                                 @ 0x11328c3c   used in FUN_1005f1f0 @ 0x1005f1f0
+"hal_bcm_get_routes"                               @ 0x11328c60   used in FUN_1005cfc8 @ 0x1005cfc8
+"1 should be L3 routed 0 otherwise"                @ 0x11359c70   used in FUN_10142678 @ 0x10142678
+"1 L3 dest route table hit, 0 otherwise"           @ 0x11359d3c   used in FUN_10142678 @ 0x10142678
+"L3 dest route table hit mask"                     @ 0x11359d64   used in FUN_10142678 @ 0x10142678
+"all routes"                                       @ 0x1135ed04   used in FUN_1015fe78 @ 0x1015fe78
+"IP4 routes"                                       @ 0x1135ed20   used in FUN_1015fe78 @ 0x1015fe78
+"IP6 routes"                                       @ 0x1135ed2c   used in FUN_1015fe78 @ 0x1015fe78
+"nexthops"                                         @ 0x1135ed38   used in FUN_1015fe78 @ 0x1015fe78
+"ecmp_nexthops"                                    @ 0x1135ed50   used in FUN_1015fe78 @ 0x1015fe78
+"Deleted unused route %s/%d)\n"                    @ 0x1135f414   used in FUN_10161664 @ 0x10161664
+"Deleted unused route 0x%x(mask 0x%x)\n"           @ 0x1135f434   used in FUN_10161664 @ 0x10161664
+"%s: Error adding route table: %s\n"               @ 0x1135ff30   used in FUN_10166fc4 @ 0x10166fc4
+"ip6route"                                         @ 0x113607ec   used in FUN_1016881c @ 0x1016881c
+"bcm_l3_route_add: c = %d %s\n"                    @ 0x1137622c   used in FUN_101d9614 @ 0x101d9614
+"bcm_fcoe_route_add"                               @ 0x1138b884   used in FUN_103a5a04 @ 0x103a5a04
+"bcm_fcoe_route_delete"                            @ 0x1138b898   used in FUN_103a5b74 @ 0x103a5b74
+"bcm_fcoe_route_delete_all"                        @ 0x1138b8b0   used in FUN_103a5ce4 @ 0x103a5ce4
+"bcm_fcoe_route_delete_by_interface"               @ 0x1138b8cc   used in FUN_103a5df4 @ 0x103a5df4
+"bcm_fcoe_route_delete_by_prefix"                  @ 0x1138b8f0   used in FUN_103a5f64 @ 0x103a5f64
+"bcm_fcoe_route_find"                              @ 0x1138b910   used in FUN_103a60d4 @ 0x103a60d4
+"bcm_fcoe_route_stat_attach"                       @ 0x1138b924   used in FUN_103a622c @ 0x103a622c
+"bcm_fcoe_route_stat_counter_get"                  @ 0x1138b940   used in FUN_103a63a4 @ 0x103a63a4
+"bcm_fcoe_route_stat_counter_set"                  @ 0x1138b960   used in FUN_103a6534 @ 0x103a6534
+"bcm_fcoe_route_stat_counter_sync_get"             @ 0x1138b980   used in FUN_103a66c4 @ 0x103a66c4
+"bcm_fcoe_route_stat_detach"                       @ 0x1138b9a8   used in FUN_103a6854 @ 0x103a6854
+"bcm_fcoe_route_stat_id_get"                       @ 0x1138b9c4   used in FUN_103a69c4 @ 0x103a69c4
+"bcm_fcoe_route_traverse"                          @ 0x1138b9e0   used in FUN_103a6b44 @ 0x103a6b44
+"bcm_l3_route_add"                                 @ 0x11394014   used in FUN_103f9360 @ 0x103f9360
+"bcm_l3_route_age"                                 @ 0x11394028   used in FUN_103f94d0 @ 0x103f94d0
+"bcm_l3_route_delete"                              @ 0x1139403c   used in FUN_103f95fc @ 0x103f95fc
+"bcm_l3_route_delete_all"                          @ 0x11394050   used in FUN_103f976c @ 0x103f976c
+"bcm_l3_route_delete_by_interface"                 @ 0x11394068   used in FUN_103f98dc @ 0x103f98dc
+"bcm_l3_route_find"                                @ 0x1139408c   used in FUN_103f9a4c @ 0x103f9a4c
+"bcm_l3_route_get"                                 @ 0x113940a0   used in FUN_103f9be4 @ 0x103f9be4
+"bcm_l3_route_max_ecmp_get"                        @ 0x113940b4   used in FUN_103f9d3c @ 0x103f9d3c
+"bcm_l3_route_max_ecmp_set"                        @ 0x113940d0   used in FUN_103f9e54 @ 0x103f9e54
+"bcm_l3_route_multipath_get"                       @ 0x113940ec   used in FUN_103f9f6c @ 0x103f9f6c
+"bcm_l3_route_stat_attach"                         @ 0x11394108   used in FUN_103fa154 @ 0x103fa154
+"bcm_l3_route_stat_counter_get"                    @ 0x11394124   used in FUN_103fa2cc @ 0x103fa2cc
+"bcm_l3_route_stat_counter_set"                    @ 0x11394144   used in FUN_103fa45c @ 0x103fa45c
+"bcm_l3_route_stat_counter_sync_get"               @ 0x11394164   used in FUN_103fa5ec @ 0x103fa5ec
+"bcm_l3_route_stat_detach"                         @ 0x11394188   used in FUN_103fa77c @ 0x103fa77c
+"bcm_l3_route_stat_enable_set"                     @ 0x113941a4   used in FUN_103fa8ec @ 0x103fa8ec
+"bcm_l3_route_stat_get"                            @ 0x113941c4   used in FUN_103faa64 @ 0x103faa64
+"bcm_l3_route_stat_get32"                          @ 0x113941dc   used in FUN_103fabe4 @ 0x103fabe4
+"bcm_l3_route_stat_id_get"                         @ 0x113941f4   used in FUN_103fad64 @ 0x103fad64
+"bcm_l3_route_stat_multi_get"                      @ 0x11394210   used in FUN_103faee4 @ 0x103faee4
+"bcm_l3_route_stat_multi_get32"                    @ 0x1139422c   used in FUN_103fb06c @ 0x103fb06c
+"bcm_l3_route_stat_multi_set"                      @ 0x1139424c   used in FUN_103fb1f4 @ 0x103fb1f4
+"bcm_l3_route_stat_multi_set32"                    @ 0x11394268   used in FUN_103fb37c @ 0x103fb37c
+"bcm_l3_route_stat_set"                            @ 0x11394288   used in FUN_103fb504 @ 0x103fb504
+"bcm_l3_route_stat_set32"                          @ 0x113942a0   used in FUN_103fb68c @ 0x103fb68c
+"bcm_l3_route_traverse"                            @ 0x113942b8   used in FUN_103fb80c @ 0x103fb80c
+"bcm_l3_subnet_route_find"                         @ 0x11394398   used in FUN_103fc224 @ 0x103fc224
+"\ndefip_nexthop_ip6 - "                           @ 0x113b3b28   used in FUN_1075ddb0 @ 0x1075ddb0
+"defip_nexthop_ip: 0x%x\n"                         @ 0x113b3b40   used in FUN_1075ddb0 @ 0x1075ddb0
+"_soc_link_update: link=%s m2=%s pbm=%s\n"         @ 0x113c2e28   used in FUN_107d5f20 @ 0x107d5f20
+"    %d to %d full entries are free, depending on  @ 0x113e8884   used in FUN_109143e8 @ 0x109143e8
+"TR route table"                                   @ 0x113efb24   used in FUN_10af2ca0 @ 0x10af2ca0
+"TR route table"                                   @ 0x113efb24   used in FUN_10af3398 @ 0x10af3398
+"TR route table"                                   @ 0x113efb24   used in FUN_10af3398 @ 0x10af3398
+"TR route table dma"                               @ 0x113efb34   used in FUN_10af3398 @ 0x10af3398
+"TR route table hit bits"                          @ 0x113efb48   used in FUN_10af3398 @ 0x10af3398
+"TR route table"                                   @ 0x1140456c   used in FUN_10e358a0 @ 0x10e358a0
+"TR route table"                                   @ 0x1140456c   used in FUN_10e358a0 @ 0x10e358a0
+"TR route table"                                   @ 0x1140456c   used in FUN_10e352e4 @ 0x10e352e4
+"TR route table dma"                               @ 0x1140457c   used in FUN_10e358a0 @ 0x10e358a0
+"TR route table hit bits"                          @ 0x11404590   used in FUN_10e358a0 @ 0x10e358a0
+"VRF %d: Cannot delete default route if other rout @ 0x117f6ff8   used in FUN_1123be8c @ 0x1123be8c
+"_soc_alpm_delete: Could not find default route in @ 0x117f7190   used in FUN_1123be8c @ 0x1123be8c
+"VRF %d: First route in a VRF has to  be a default @ 0x117f7608   used in FUN_1123f6bc @ 0x1123f6bc
+"Match a Global High route: ent %d\n"              @ 0x117f7958   used in FUN_11240e98 @ 0x11240e98
+"Hit Global High route in index = %d(%d)\n"        @ 0x117f79c0   used in FUN_11240e98 @ 0x11240e98
+"Global high lookup miss, use AUX engine to search @ 0x117f79ec   used in FUN_11240e98 @ 0x11240e98
+"\tRead memory %s index %d (nexthop) return %d\n"  @ 0x117f85b4   used in FUN_11253178 @ 0x11253178
+"\tDefault nexthop was not populated correctly, TC @ 0x117f85e4   used in FUN_11253178 @ 0x11253178
+"VRF %d: Cannot v6-128 delete default route if oth @ 0x117f8e00   used in FUN_11258c98 @ 0x11258c98
+"_soc_alpm_128_delete: Could not find default rout @ 0x117f8fe0   used in FUN_11258c98 @ 0x11258c98
+"VRF %d: First route in a VRF has to  be a default @ 0x117f9424   used in FUN_1125b3e0 @ 0x1125b3e0
+"Hit Global High route in index = %d\n"            @ 0x117f975c   used in FUN_1125cae0 @ 0x1125cae0
+"Global high lookup miss, use AUX engine to search @ 0x117f9784   used in FUN_1125cae0 @ 0x1125cae0
+"\tRead memory %s index %d (nexthop) return %d\n"  @ 0x117f9ee4   used in FUN_11266398 @ 0x11266398
+"\tDefault nexthop was not populated correctly, TC @ 0x117f9f14   used in FUN_11266398 @ 0x11266398
+"%s  %sdo_not_change_ttl %sbpdu %sl3routed %schg_t @ 0x117fe49c   used in FUN_112aa290 @ 0x112aa290
+"%s\t%sl3routed %sl3only %sreplicated %sdo_not_cha @ 0x117fe6cc   used in FUN_112ab3d8 @ 0x112ab3d8
+"%s\t%sl3routed %sl3only %sreplicated %sdo_not_cha @ 0x117fe6cc   used in FUN_112acb70 @ 0x112acb70
+"%s\t%sl3routed %sl3only %sreplicated %sdo_not_cha @ 0x117fe6cc   used in FUN_112ae190 @ 0x112ae190
+
+# Total: 269

@@ -1,0 +1,30 @@
+# L3 / Netlink function callers
+
+==== nl_recvmsgs_default (1 callers) ====
+  FUN_1004102c                             @ 0x1004102c (size=176)
+
+==== nl_socket_modify_cb (1 callers) ====
+  FUN_10041b80                             @ 0x10041b80 (size=1436)
+
+==== nl_socket_alloc (4 callers) ====
+  FUN_1000a150                             @ 0x1000a150 (size=2680)
+  FUN_1003f6b8                             @ 0x1003f6b8 (size=796)
+  FUN_10041b80                             @ 0x10041b80 (size=1436)
+  FUN_10009244                             @ 0x10009244 (size=340)
+
+==== rtnl_route_get_dst (1 callers) ====
+  FUN_10013328                             @ 0x10013328 (size=3280)
+
+==== rtnl_route_alloc (1 callers) ====
+  FUN_100142ac                             @ 0x100142ac (size=8004)
+
+==== rtnl_neigh_alloc (3 callers) ====
+  FUN_1000b7e8                             @ 0x1000b7e8 (size=172)
+  FUN_10012174                             @ 0x10012174 (size=352)
+  FUN_1001b068                             @ 0x1001b068 (size=460)
+
+==== rtnl_neigh_get_dst (3 callers) ====
+  FUN_100122d4                             @ 0x100122d4 (size=1900)
+  FUN_1000d9d0                             @ 0x1000d9d0 (size=760)
+  FUN_1001acd4                             @ 0x1001acd4 (size=916)
+
