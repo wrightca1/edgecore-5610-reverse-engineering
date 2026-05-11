@@ -1,0 +1,504 @@
+# Packet DMA / DCB / HiGig related strings
+
+  "%s %s:%d CRIT bcm_tx_init failed: %s\n"                @ 1132349c  in FUN_10051be0
+  "%s %s:%d CRIT bcm_rx_start failed: %s\n"               @ 113234c4  in FUN_10051be0
+  "%s %s:%d CRIT bcm_rx_register failed: %s\n"            @ 113234f8  in FUN_10051be0
+  "%s %s:%d CRIT bcm_rx_control_set of VTAG_STRIP failed: @ 11323524  in FUN_10051be0
+  "%s %s:%d CRIT bcm_rx_control_set of CRC_STRIP failed:  @ 11323560  in FUN_10051be0
+  "%s %s:%d CRIT bcm_rx_cosq_mapping_set failed: %s\n"    @ 1132359c  in FUN_10051be0
+  "%s %s:%d CRIT bcm_rx_cosq_mapping_set failed: %s\n"    @ 1132359c  in FUN_10051be0
+  "%s %s:%d CRIT bcm_rx_cosq_mapping_set failed: %s\n"    @ 1132359c  in FUN_10051be0
+  "%s %s:%d CRIT bcm_rx_cos_rate_set failed: %s\n"        @ 11327490  in FUN_1006f798
+  "%s %s:%d CRIT bcm_rx_cos_burst_set failed: %s\n"       @ 113274c0  in FUN_1006f798
+  "HiGig"                                                 @ 1132d240  in ?
+  "HiGigProxy"                                            @ 1132d248  in ?
+  "DstHiGig"                                              @ 1132d254  in ?
+  "EthernetOamTxPktUPMEP"                                 @ 1132e558  in ?
+  "HiGigClassSelect"                                      @ 1132fdf0  in ?
+  "DestPortHGTrunk"                                       @ 11331028  in ?
+  "HashHG2UnknownField0"                                  @ 11331344  in ?
+  "HashHG2UnknownField1"                                  @ 1133135c  in ?
+  "EncapHiGigError"                                       @ 11336434  in ?
+  "EncapHiGigError"                                       @ 1133fa8c  in ?
+  "rcpu_only"                                             @ 1134593c  in FUN_100ec17c
+  "rcpu_only"                                             @ 1134593c  in FUN_100ec17c
+  "         HiGig IPIC pause rx"                          @ 11352aa0  in ?
+  "         HiGig End-to-End HOL rx packets"              @ 11352ac8  in ?
+  "         HiGig End-to-End IBP rx packets"              @ 11352afc  in ?
+  "       Unknown HiGig header type packet"               @ 11352b5c  in ?
+  "       HiGig mirror packet"                            @ 11352bb8  in ?
+  "RHGUC"                                                 @ 11352cf0  in ?
+  "         Rx HiGig lookup UC cases"                     @ 11352cf8  in ?
+  "RHGMC"                                                 @ 11352d1c  in ?
+  "         Rx HiGig lookup MC cases"                     @ 11352d24  in ?
+  "HGHDRE"                                                @ 11352e00  in ?
+  "THGUC"                                                 @ 11353480  in ?
+  "THGMC"                                                 @ 113534ac  in ?
+  "       Unknown HiGig2 Drop"                            @ 113534e0  in ?
+  "          Unknown HiGig drop"                          @ 11353504  in ?
+  "dma_dcb_count"                                         @ 11353f0c  in FUN_1012fa28
+  "dma_dcb_count"                                         @ 11353f0c  in FUN_1012fbf8
+  "dma_dcb_laddr"                                         @ 11353f2c  in FUN_1012fbf8
+  "dma_dcb_size"                                          @ 11353f3c  in FUN_1012fbf8
+  "Failed to allocate a DMA Vector (DV) with %d DCBs\n"   @ 1135423c  in FUN_10130b18
+  "Allocated DMA Vector (DV) at %p. %d DCBs (start %p, %d @ 11354270  in FUN_10130b18
+  "DCB type is not specified.\n"                          @ 113542b0  in FUN_10130d54
+  "Incorrect DCB type <%s>. [r|t] expected.\n"            @ 113542cc  in FUN_10130d54
+  "Cannot get DCB address\n"                              @ 113542f8  in FUN_10130d54
+  "Dumping DCB at address %p:\n"                          @ 11354310  in FUN_10130d54
+  "Added DCB to RX DV. %d DCB remaining\n"                @ 1135437c  in FUN_10130fe0
+  "%s: bcm_rx_register failed: %s\n"                      @ 113550ac  in FUN_10135e2c
+  "%s: bcm_rx_unregister failed: %s\n"                    @ 113550d4  in FUN_10135e2c
+  "New HG header Classification Tag Value"                @ 11357c40  in FUN_10140cb0
+  "HiGig=1, non-HiGig=0"                                  @ 11358510  in FUN_101418b8
+  "HiGig=1, non-HiGig=0"                                  @ 11358510  in FUN_101418b8
+  "DstHiGig"                                              @ 11359bd0  in FUN_10145c7c
+  "%s: bcm_rx_register failed: %s\n"                      @ 113651d0  in FUN_101912f4
+  "%s: bcm_rx_unregister failed: %s\n"                    @ 11365260  in FUN_101912f4
+  "     HG   ==> %s\n"                                    @ 11367ae8  in FUN_10198738
+  "     HG   ==> %s\n"                                    @ 11367ae8  in FUN_10199444
+  "     HG   ==> %s\n"                                    @ 11367ae8  in FUN_10197f38
+  "     HG2  ==> %s\n"                                    @ 11367d68  in FUN_10199444
+  "DestPortHGTrunk"                                       @ 11369bfc  in ?
+  "HashHG2UnknownField0"                                  @ 11369f18  in ?
+  "HashHG2UnknownField1"                                  @ 11369f30  in ?
+  "HGDestMod"                                             @ 1136e3e4  in FUN_101a4604
+  "Warning:  Unknown HG header format: %d\n"              @ 1136e7b4  in FUN_101a6a84
+  "ERROR:  bcm_rx_init(%d) returns %d: %s\n"              @ 1136ea50  in FUN_101a8400
+  "soc_dma_rom_init() returned %d: %s\n"                  @ 1136eaec  in FUN_101a8794
+  "soc_dma_rom_detach() returnd %d: %s\n"                 @ 1136eb18  in FUN_101a8794
+  "soc_dma_rom_rx_poll() returned %d: %s\n"               @ 1136eb44  in FUN_101a8794
+  "soc_dma_rom_tx_start() returned %d: %s\n"              @ 1136eb84  in FUN_101a8794
+  "HGDestMOD"                                             @ 11370f94  in FUN_101b7afc
+  "HGDestPORT"                                            @ 11370fb0  in FUN_101b7afc
+  "lbu_connect_ports: Two HG ports rv = %d\n"             @ 113714e0  in FUN_101ba3fc
+  "Warning: soc_dma_abort(%d) failed: %s\n"               @ 11372d2c  in FUN_101c84e4
+  "Failed to direct HG traffic to CPU %s\n"               @ 11376750  in FUN_101ef558
+  "ERROR: Chain done when not done at dcb %p\n"           @ 113769a4  in FUN_101f1760
+  "Failing DV @%p, DCB[%d]\n"                             @ 11376cac  in FUN_101f20f0
+  "Unable to allocate DCB and/or packet memory\n"         @ 113771a4  in FUN_101f55b4
+  "Unable to allocate DCB and/or packet memory\n"         @ 113771a4  in FUN_101f55b4
+  "soc_dma_chan_config: Failed: %s\n"                     @ 113777ac  in FUN_101f8c2c
+  "rcpu_port"                                             @ 113777d0  in FUN_101f8c2c
+  "start_dcb < SOC_DCB_IDX2PTR(unit, dv->dv_dcb, dv->dv_v @ 1137792c  in FUN_101fc320
+  "end_dcb <= SOC_DCB_IDX2PTR(unit, dv->dv_dcb, dv->dv_vc @ 1137796c  in FUN_101fc8f0
+  "end_dcb <= SOC_DCB_IDX2PTR(unit, dv->dv_dcb, dv->dv_vc @ 1137796c  in FUN_101fc320
+  "Error: TX: Expected done bit in DCB Pckt(%d)\n"        @ 113779a8  in FUN_101fc320
+  "Error: TX: Unexpected count Packet %d: Expected %d Got @ 113779d8  in FUN_101fc320
+  "Error: RX: DCB (%d) Last DCB for packet does not have  @ 11377a78  in FUN_101fc8f0
+  "Error: RX: DCB (%d) First for packet does not have STA @ 11377abc  in FUN_101fc8f0
+  "Error: RX: DCB (%d) Unexpected START bit\n"            @ 11377afc  in FUN_101fc8f0
+  "Error: RX: DCB (%d) Unexpected END bit\n"              @ 11377b28  in FUN_101fc8f0
+  "Error: RX: DCB (%d) Expected DONE set\n"               @ 11377b50  in FUN_101fc8f0
+  "Expected DONE not set in dv[%d@%p] dcb[%d@%p]\n"       @ 11377e80  in FUN_10200648
+  "Expected Start dv[%d@%p] dcb[%d] not set\n"            @ 11377ee8  in FUN_10200648
+  "Un-expected Start dv[%d@%p] dcb[%d] set\n"             @ 11377f14  in FUN_10200648
+  "Expected End dv[%d] dcb[%d] not set\n"                 @ 11377fe0  in FUN_10200648
+  "Un-expected End dv[%d] dcb[%d] set\n"                  @ 11378008  in FUN_10200648
+  "dcb_idx <= dv_max_dcb"                                 @ 11378060  in FUN_10201078
+  "Basic DCB Reload %s Channel %d\n"                      @ 11378144  in FUN_10203424
+  "DCB[%d] Done expected but not set\n"                   @ 11378254  in FUN_10203424
+  "DCB[%d] SW/EW set but not expected\n"                  @ 11378278  in FUN_10203424
+  "DCB[%d] SW/EW set but not expected\n"                  @ 11378278  in FUN_10203424
+  "Could not setup reload dcb\n"                          @ 11379554  in FUN_1020e778
+  "bcm_rx_thread_pri"                                     @ 1137f12c  in ?
+  "bcm_tx_thread_pri"                                     @ 1137f1bc  in ?
+  "cx4_to_higig"                                          @ 1137f898  in ?
+  "higig2_hdr_mode"                                       @ 1138187c  in ?
+  "higig2_multicast_l2_range"                             @ 1138188c  in ?
+  "higig2_multicast_l3_range"                             @ 113818a8  in ?
+  "higig2_multicast_vlan_range"                           @ 113818c4  in ?
+  "higig_destport_mask"                                   @ 113818e0  in ?
+  "higig_frc_tm_system_port_encoding"                     @ 113818f4  in ?
+  "higig_max_speed"                                       @ 11381918  in ?
+  "knet_filter_persist"                                   @ 113820b8  in ?
+  "rcpu_cpu_queue"                                        @ 11384ea0  in ?
+  "rcpu_cpu_tc_cos0"                                      @ 11384eb0  in ?
+  "rcpu_cpu_tc_cos1"                                      @ 11384ec4  in ?
+  "rcpu_cpu_tc_cos2"                                      @ 11384ed8  in ?
+  "rcpu_cpu_tc_cos3"                                      @ 11384eec  in ?
+  "rcpu_cpu_tc_cos4"                                      @ 11384f00  in ?
+  "rcpu_cpu_tc_cos5"                                      @ 11384f14  in ?
+  "rcpu_cpu_tc_cos6"                                      @ 11384f28  in ?
+  "rcpu_cpu_tc_cos7"                                      @ 11384f3c  in ?
+  "rcpu_dot1pri_cos0"                                     @ 11384f50  in ?
+  "rcpu_dot1pri_cos1"                                     @ 11384f64  in ?
+  "rcpu_dot1pri_cos2"                                     @ 11384f78  in ?
+  "rcpu_dot1pri_cos3"                                     @ 11384f8c  in ?
+  "rcpu_dot1pri_cos4"                                     @ 11384fa0  in ?
+  "rcpu_dot1pri_cos5"                                     @ 11384fb4  in ?
+  "rcpu_dot1pri_cos6"                                     @ 11384fc8  in ?
+  "rcpu_dot1pri_cos7"                                     @ 11384fdc  in ?
+  "rcpu_dot1pri_map_enable"                               @ 11384ff0  in ?
+  "rcpu_higig_port"                                       @ 11385008  in ?
+  "rcpu_lmac"                                             @ 11385018  in ?
+  "rcpu_master_modid"                                     @ 11385024  in ?
+  "rcpu_master_unit"                                      @ 11385038  in ?
+  "rcpu_mh_cpu_cos_enable"                                @ 1138504c  in ?
+  "rcpu_mh_src_pid_enable"                                @ 11385064  in ?
+  "rcpu_mh_tc_cos0"                                       @ 1138507c  in ?
+  "rcpu_mh_tc_cos1"                                       @ 1138508c  in ?
+  "rcpu_mh_tc_cos2"                                       @ 1138509c  in ?
+  "rcpu_mh_tc_cos3"                                       @ 113850ac  in ?
+  "rcpu_mh_tc_cos4"                                       @ 113850bc  in ?
+  "rcpu_mh_tc_cos5"                                       @ 113850cc  in ?
+  "rcpu_mh_tc_cos6"                                       @ 113850dc  in ?
+  "rcpu_mh_tc_cos7"                                       @ 113850ec  in ?
+  "rcpu_mh_tc_map_enable"                                 @ 113850fc  in ?
+  "rcpu_only"                                             @ 11385114  in ?
+  "rcpu_oob_channel"                                      @ 11385120  in ?
+  "rcpu_port"                                             @ 11385134  in ?
+  "rcpu_rx_pbmp"                                          @ 11385140  in ?
+  "rcpu_slave_modid"                                      @ 11385150  in ?
+  "rcpu_src_mac"                                          @ 11385164  in ?
+  "rcpu_use_oob"                                          @ 11385174  in ?
+  "rcpu_vlan"                                             @ 11385184  in ?
+  "soc_dma_monitor_thread_pri"                            @ 11385b9c  in ?
+  "soc_knet_rx_thread_pri"                                @ 11385bc4  in ?
+  "bcm_field_qualify_DstHiGig"                            @ 1138b778  in FUN_103b1514
+  "bcm_field_qualify_DstHiGig_get"                        @ 1138b794  in FUN_103b165c
+  "bcm_field_qualify_HiGig"                               @ 1138cc68  in FUN_103bc5e8
+  "bcm_field_qualify_HiGigProxy"                          @ 1138cc80  in FUN_103bc730
+  "bcm_field_qualify_HiGigProxy_get"                      @ 1138cca0  in FUN_103bc878
+  "bcm_field_qualify_HiGig_get"                           @ 1138ccc4  in FUN_103bc9a0
+  "bcm_knet_cleanup"                                      @ 11391490  in FUN_103e6130
+  "bcm_knet_filter_create"                                @ 113914a4  in FUN_103e6240
+  "bcm_knet_filter_destroy"                               @ 113914bc  in FUN_103e6398
+  "bcm_knet_filter_get"                                   @ 113914d4  in FUN_103e64b0
+  "bcm_knet_filter_traverse"                              @ 113914e8  in FUN_103e65f0
+  "bcm_knet_init"                                         @ 11391504  in FUN_103e6710
+  "bcm_knet_netif_create"                                 @ 11391514  in FUN_103e6820
+  "bcm_knet_netif_destroy"                                @ 1139152c  in FUN_103e6978
+  "bcm_knet_netif_get"                                    @ 11391544  in FUN_103e6a90
+  "bcm_knet_netif_traverse"                               @ 11391558  in FUN_103e6bd0
+  "bcm_rx_active"                                         @ 113966cc  in FUN_104286e4
+  "bcm_rx_alloc"                                          @ 113966dc  in FUN_104287f4
+  "bcm_rx_burst_get"                                      @ 113966ec  in FUN_10428920
+  "bcm_rx_burst_set"                                      @ 11396700  in FUN_10428a38
+  "bcm_rx_cfg_get"                                        @ 11396714  in FUN_10428b50
+  "bcm_rx_cfg_init"                                       @ 11396724  in FUN_10428c68
+  "bcm_rx_channels_running"                               @ 11396734  in FUN_10428d78
+  "bcm_rx_clear"                                          @ 1139674c  in FUN_10428e90
+  "bcm_rx_control_get"                                    @ 1139675c  in FUN_10428fa0
+  "bcm_rx_control_set"                                    @ 11396770  in FUN_104290c4
+  "bcm_rx_cos_burst_get"                                  @ 11396784  in FUN_104291e8
+  "bcm_rx_cos_burst_set"                                  @ 1139679c  in FUN_10429308
+  "bcm_rx_cos_max_len_get"                                @ 113967b4  in FUN_10429428
+  "bcm_rx_cos_max_len_set"                                @ 113967cc  in FUN_10429548
+  "bcm_rx_cos_rate_get"                                   @ 113967e4  in FUN_10429668
+  "bcm_rx_cos_rate_set"                                   @ 113967f8  in FUN_10429788
+  "bcm_rx_cosq_mapping_delete"                            @ 1139680c  in FUN_104298a8
+  "bcm_rx_cosq_mapping_get"                               @ 11396828  in FUN_104299c0
+  "bcm_rx_cosq_mapping_reasons_get"                       @ 11396840  in FUN_10429b10
+  "bcm_rx_cosq_mapping_set"                               @ 11396860  in FUN_10429c28
+  "bcm_rx_cosq_mapping_size_get"                          @ 11396878  in FUN_10429dd8
+  "bcm_rx_cpu_rate_get"                                   @ 11396898  in FUN_10429ef0
+  "bcm_rx_cpu_rate_set"                                   @ 113968ac  in FUN_1042a008
+  "bcm_rx_free"                                           @ 113968c0  in FUN_1042a120
+  "bcm_rx_free_enqueue"                                   @ 113968cc  in FUN_1042a238
+  "bcm_rx_init"                                           @ 113968e0  in FUN_1042a350
+  "bcm_rx_queue_channel_get"                              @ 113968ec  in FUN_1042a460
+  "bcm_rx_queue_channel_set"                              @ 11396908  in FUN_1042a580
+  "bcm_rx_queue_max_get"                                  @ 11396924  in FUN_1042a6a0
+  "bcm_rx_queue_packet_count_get"                         @ 1139693c  in FUN_1042a7b8
+  "bcm_rx_queue_rate_limit_status_get"                    @ 1139695c  in FUN_1042a8d8
+  "bcm_rx_queue_register"                                 @ 11396980  in FUN_1042a9f8
+  "bcm_rx_queue_unregister"                               @ 11396998  in FUN_1042ab44
+  "bcm_rx_rate_get"                                       @ 113969b0  in FUN_1042ac78
+  "bcm_rx_rate_set"                                       @ 113969c0  in FUN_1042ad90
+  "bcm_rx_reasons_get"                                    @ 113969d0  in FUN_1042aea8
+  "bcm_rx_reasons_policer_set"                            @ 113969e4  in FUN_1042afc0
+  "bcm_rx_redirect_reasons_get"                           @ 11396a00  in FUN_1042b10c
+  "bcm_rx_redirect_reasons_set"                           @ 11396a1c  in FUN_1042b230
+  "bcm_rx_register"                                       @ 11396a38  in FUN_1042b380
+  "bcm_rx_remote_pkt_enqueue"                             @ 11396a48  in FUN_1042b4c4
+  "bcm_rx_sched_register"                                 @ 11396a64  in FUN_1042b5dc
+  "bcm_rx_sched_unregister"                               @ 11396a7c  in FUN_1042b6f4
+  "bcm_rx_show"                                           @ 11396a94  in FUN_1042b804
+  "bcm_rx_snoop_create"                                   @ 11396aa0  in FUN_1042b914
+  "bcm_rx_snoop_destroy"                                  @ 11396ab4  in FUN_1042ba34
+  "bcm_rx_snoop_get"                                      @ 11396acc  in FUN_1042bb54
+  "bcm_rx_snoop_set"                                      @ 11396ae0  in FUN_1042bc94
+  "bcm_rx_start"                                          @ 11396af4  in FUN_1042be0c
+  "bcm_rx_stop"                                           @ 11396b04  in FUN_1042bf24
+  "bcm_rx_trap_get"                                       @ 11396b10  in FUN_1042c03c
+  "bcm_rx_trap_set"                                       @ 11396b20  in FUN_1042c17c
+  "bcm_rx_trap_type_create"                               @ 11396b30  in FUN_1042c2f4
+  "bcm_rx_trap_type_destroy"                              @ 11396b48  in FUN_1042c420
+  "bcm_rx_unit_next_get"                                  @ 11396b64  in FUN_1042c538
+  "bcm_rx_unregister"                                     @ 11396b7c  in FUN_1042c650
+  "bcm_switch_rcpu_decap_priority_map_get"                @ 11397b3c  in FUN_10438244
+  "bcm_switch_rcpu_decap_priority_map_set"                @ 11397b64  in FUN_10438364
+  "bcm_switch_rcpu_encap_priority_map_get"                @ 11397b8c  in FUN_10438484
+  "bcm_switch_rcpu_encap_priority_map_set"                @ 11397bb4  in FUN_104385b0
+  "bcm_tx_array"                                          @ 11398694  in FUN_10440db0
+  "bcm_tx_init"                                           @ 113986b4  in FUN_10440ff8
+  "bcm_tx_list"                                           @ 113986c0  in FUN_10441108
+  "bcm_tx_pkt_l2_map"                                     @ 113986cc  in FUN_10441230
+  "bcm_tx_pkt_setup"                                      @ 113986e0  in FUN_10441358
+  "bcm_tx_show"                                           @ 113986f4  in FUN_10441470
+  "FP(unit %d) Error: HiGig not in entry=%d Qset.\n"      @ 1139e050  in FUN_104ce330
+  "HiGigClassSelect"                                      @ 1139f8a8  in ?
+  "HiGig"                                                 @ 113a020c  in ?
+  "HiGigProxy"                                            @ 113a0214  in ?
+  "DstHiGig"                                              @ 113a0220  in ?
+  "EthernetOamTxPktUPMEP"                                 @ 113a1508  in ?
+  "STK: Invalid HG stk cfg. unit %d, port %d\n"           @ 113abcc4  in FUN_10641680
+  "soc_dma_abort_channel unit %d: channel %d abort timeou @ 113b5edc  in FUN_1078aa38
+  "soc_dma_abort_channel unit %d: channel %d abort timeou @ 113b5edc  in FUN_1078aa38
+  "soc_dma_abort_channel unit %d: channel %d abort timeou @ 113b5edc  in FUN_1078aa38
+  "combine-dcb "                                          @ 113b61e4  in FUN_1078ca54
+  "combine-dcb "                                          @ 113b61e4  in FUN_1078d198
+  "%sdv@%p unit %d dcbtype-%d op=%s vcnt=%d dcnt=%d cnt=% @ 113b61f4  in FUN_1078ca54
+  "%sdv@%p unit %d dcbtype-%d op=%s vcnt=%d dcnt=%d cnt=% @ 113b61f4  in FUN_1078d198
+  "sdma_dcb_alloc"                                        @ 113b63d8  in FUN_1078dc60
+  "sdma_dcb_alloc"                                        @ 113b63d8  in FUN_1078dc60
+  "sdma_dcb_alloc"                                        @ 113b63d8  in FUN_1078df9c
+  "sdma_dcb_alloc"                                        @ 113b63d8  in FUN_1078df9c
+  "soc_dma_dbg: irqStat: 0x%x/0x%x\n"                     @ 113b6418  in FUN_1078e85c
+  "_soc_dma_done_chain: NULL callback: unit=%d chain=%p\n @ 113b659c  in FUN_1078f5a0
+  "!(flags & ~(SOC_DMA_F_MBM | SOC_DMA_F_POLL | SOC_DMA_F @ 113b6690  in FUN_10790aa0
+  "!(flags & ~(SOC_DMA_F_MBM | SOC_DMA_F_POLL | SOC_DMA_F @ 113b6690  in FUN_10790aa0
+  "dcb_type3"                                             @ 113b8468  in ?
+  "dcb_type4"                                             @ 113b8474  in ?
+  "dcb_type5"                                             @ 113b8480  in ?
+  "dcb_type6"                                             @ 113b848c  in ?
+  "dcb_type7"                                             @ 113b8498  in ?
+  "dcb_type8"                                             @ 113b84a4  in ?
+  "dcb_type9"                                             @ 113b84b0  in ?
+  "dcb_type10"                                            @ 113b84bc  in ?
+  "dcb_type11"                                            @ 113b84c8  in ?
+  "dcb_type12"                                            @ 113b84d4  in ?
+  "dcb_type13"                                            @ 113b84e0  in ?
+  "dcb_type14"                                            @ 113b84ec  in ?
+  "dcb_type15"                                            @ 113b84f8  in ?
+  "dcb_type16"                                            @ 113b8504  in ?
+  "dcb_type17"                                            @ 113b8510  in ?
+  "dcb_type18"                                            @ 113b851c  in ?
+  "dcb_type19"                                            @ 113b8528  in ?
+  "dcb_type20"                                            @ 113b8534  in ?
+  "dcb_type21"                                            @ 113b8540  in ?
+  "dcb_type22"                                            @ 113b854c  in ?
+  "dcb_type23"                                            @ 113b8558  in ?
+  "dcb_type24"                                            @ 113b8564  in ?
+  "dcb_type25"                                            @ 113b8570  in ?
+  "dcb_type26"                                            @ 113b857c  in ?
+  "dcb_type27"                                            @ 113b8588  in ?
+  "dcb_type28"                                            @ 113b8594  in ?
+  "dcb_type29"                                            @ 113b85a0  in ?
+  "dcb_type30"                                            @ 113b85ac  in ?
+  "dcb_st0_bug"                                           @ 113b8840  in ?
+  "dbgc_higig_lkup"                                       @ 113b8bf4  in ?
+  "higig2"                                                @ 113b8c70  in ?
+  "higig_lookup"                                          @ 113b8d44  in ?
+  "rcpu_1"                                                @ 113b9134  in ?
+  "rcpu_priority"                                         @ 113b927c  in ?
+  "rcpu_tc_mapping"                                       @ 113b928c  in ?
+  "dcb_reason_hi"                                         @ 113b92ac  in ?
+  "field_udf_higig"                                       @ 113b95b4  in ?
+  "field_udf_higig2"                                      @ 113b95c4  in ?
+  "embedded_higig"                                        @ 113b9cc0  in ?
+  "no_higig"                                              @ 113b9e1c  in ?
+  "higig_misc_speed_support"                              @ 113ba2f8  in ?
+  "hg_set: unit %d: Unknown higig2 field=%d val=0x%x\n"   @ 113beb30  in FUN_107b372c
+  "CMIC_DMA_DESC0"                                        @ 113c5d48  in ?
+  "CMIC_DMA_DESC1"                                        @ 113c5d58  in ?
+  "CMIC_DMA_DESC2"                                        @ 113c5d68  in ?
+  "CMIC_DMA_DESC3"                                        @ 113c5d78  in ?
+  "HiGig"                                                 @ 113e16d8  in ?
+  "HiGig2"                                                @ 113e16e8  in ?
+  "HiGig2_L2"                                             @ 113e16f0  in ?
+  "HiGig2_IP_GRE"                                         @ 113e16fc  in ?
+  "HiGig"                                                 @ 113e1ff4  in ?
+  "HiGig2"                                                @ 113e2004  in ?
+  "HiGig2_L2"                                             @ 113e200c  in ?
+  "HiGig2_IP_GRE"                                         @ 113e2018  in ?
+  "HiGig2"                                                @ 113e2920  in FUN_1088f948
+  "HiGig2"                                                @ 113e2920  in ?
+  "HiGig2_L2"                                             @ 113e2928  in ?
+  "HiGig2_IP_GRE"                                         @ 113e2934  in ?
+  "HiGig"                                                 @ 113e3404  in ?
+  "HiGig2"                                                @ 113e3414  in ?
+  "HiGig2_L2"                                             @ 113e341c  in ?
+  "HiGig2_IP_GRE"                                         @ 113e3428  in ?
+  "HiGigClassSelect"                                      @ 113e61b8  in ?
+  "higig_trunk_override=0x"                               @ 113e9bb0  in FUN_109a8110
+  "DLB HGT member override bitmap"                        @ 113ea2b8  in FUN_109ce8c0
+  "DLB HGT member override bitmap"                        @ 113ea2b8  in FUN_109ce8c0
+  "DLB HGT member override bitmap"                        @ 113ea2b8  in FUN_109cf59c
+  "Block of DLB_HGT_FLOWSET entries"                      @ 113ea2f0  in FUN_109cf59c
+  "Unit %d - HG Trunk hash_value=%d\n"                    @ 113ecc90  in FUN_10a6f158
+  "Unit %d - HGT RH hash_sub_sel=%d, hash_offset=%d, conc @ 113ecd18  in FUN_10a6fffc
+  "Unit %d - HGT RH hash_value=%d\n"                      @ 113ecd58  in FUN_10a6fffc
+  "Unit %d - HGT DLB hash_sub_sel=%d, hash_offset=%d, con @ 113ecd78  in FUN_10a70620
+  "Unit %d - HGT DLB hash_value=%d\n"                     @ 113ecdb8  in FUN_10a70620
+  "Unit %d: DLB HGT flowset *resolved_member=%d\n"        @ 113ecf5c  in FUN_10a72158
+  "\tHG Trunk HW index 0x%08x\n"                          @ 113ed158  in FUN_10a74908
+  "\tHG Trunk group size 0x%08x\n"                        @ 113ed174  in FUN_10a74908
+  "\tHG-Trunk Hash value 0x%08x\n"                        @ 113ed374  in FUN_10a74e50
+  "\tHG-Trunk RH Hash value 0x%08x\n"                     @ 113ed394  in FUN_10a74e50
+  "\tHG-Trunk DLB Hash value 0x%08x\n"                    @ 113ed3b4  in FUN_10a74e50
+  "        Index RefCount EntriesPerSet - COS HG_COS\n"   @ 113ee624  in FUN_10aecea0
+  "        Index RefCount EntriesPerSet - COS HG_COS\n"   @ 113f4d14  in FUN_10c1f178
+  "Unit %d - HG Trunk hash_value=%d\n"                    @ 113fdedc  in FUN_10d8c568
+  "\tHG Trunk HW index 0x%08x\n"                          @ 113fe004  in FUN_10d8da64
+  "\tHG Trunk group size 0x%08x\n"                        @ 113fe020  in FUN_10d8da64
+  "\tHG-Trunk Hash value 0x%08x\n"                        @ 113fe1e4  in FUN_10d8dd54
+  "higig_max_speed"                                       @ 11403b84  in FUN_10e414f4
+  "higig_max_speed"                                       @ 11403b84  in FUN_10e414f4
+  "%sPKT DMA: dcb=t%d tpkt=%u tbyt=%u rpkt=%u rbyt=%u\n"  @ 11405ef0  in FUN_10e7b654
+  "\tHG ports\t%d\t%s (%d:%d)\n"                          @ 11406388  in FUN_10e7c1d8
+  "HiGig2"                                                @ 11406f88  in FUN_10e98624
+  "HiGig2"                                                @ 11406f88  in ?
+  "HiGig2_L2"                                             @ 11406f90  in ?
+  "HiGig2_IP_GRE"                                         @ 11406f9c  in ?
+  "higig2_multicast_vlan_range"                           @ 1141a3c4  in FUN_10f532bc
+  "IUNHGI"                                                @ 1141b1b8  in ?
+  "higig_max_speed"                                       @ 1141b6fc  in FUN_10f6c3f0
+  "higig2_multicast_vlan_range"                           @ 1141b7a0  in FUN_10f6c3f0
+  "HiGig"                                                 @ 1142b3a0  in ?
+  "HiGig2"                                                @ 1142b3b0  in ?
+  "HiGig2_L2"                                             @ 1142b3b8  in ?
+  "HiGig2_IP_GRE"                                         @ 1142b3c4  in ?
+  "WC config init, CL37 BAM is not enabled with HG/BAM mo @ 1142fdb4  in FUN_10fe0988
+  u"ttsssrrrqqpppooonnnmmlllkkkjjjiiihhhgggffeeedddccccbb @ 11434dc4  in FUN_110594b8
+  u"ttsssrrrqqpppooonnnmmlllkkkjjjiiihhhgggffeeedddccccbb @ 11434dc4  in FUN_110594b8
+  "AN type:%d rf:%d paus:%d, tech_ability:%d fec:%d higig @ 11443e90  in FUN_11182660
+  "WCMOD_SPD_10600_XFI_HG"                                @ 11445648  in ?
+  "TSCMOD_SPD_10600_XFI_HG"                               @ 1144dac8  in ?
+  "TSCMOD_DIAG_HG"                                        @ 1144e118  in ?
+  "TSCMOD_DIAG_HG_IDX"                                    @ 1144e36c  in ?
+  "  AN_X4_ABILITIES_LOCAL_DEVICE_OVER1G_ABILITIES_1r(%0x @ 1145291c  in FUN_111e616c
+  "       21GX4=%0d 24.45GX4=%0d 31.5GX4=%0d 32.7G=%0d 40 @ 11452f7c  in FUN_111e616c
+  "  AN_ABILITY_RESOLUTION_STATUSr(%0x) d=%0x err=%0d hcd @ 11453540  in FUN_111e616c
+  "DLB_HGT_ETHERTYPE_ELIGIBILITY_MAP"                     @ 11458ce8  in ?
+  "DLB_HGT_ETHERTYPE_ELIGIBILITY_MAP"                     @ 11458ce8  in ?
+  "DLB_HGT_FLOWSET"                                       @ 11458d0c  in ?
+  "DLB_HGT_FLOWSET"                                       @ 11458d0c  in ?
+  "DLB_HGT_FLOWSET_PORT"                                  @ 11458d1c  in ?
+  "DLB_HGT_FLOWSET_PORT"                                  @ 11458d1c  in ?
+  "DLB_HGT_FLOWSET_PORT_X"                                @ 11458d34  in ?
+  "DLB_HGT_FLOWSET_PORT_X"                                @ 11458d34  in ?
+  "DLB_HGT_FLOWSET_PORT_X"                                @ 11458d34  in ?
+  "DLB_HGT_FLOWSET_PORT_Y"                                @ 11458d4c  in ?
+  "DLB_HGT_FLOWSET_PORT_Y"                                @ 11458d4c  in ?
+  "DLB_HGT_FLOWSET_PORT_Y"                                @ 11458d4c  in ?
+  "DLB_HGT_FLOWSET_TIMESTAMP"                             @ 11458d64  in ?
+  "DLB_HGT_FLOWSET_TIMESTAMP"                             @ 11458d64  in ?
+  "DLB_HGT_FLOWSET_TIMESTAMP_PAGE"                        @ 11458d80  in ?
+  "DLB_HGT_FLOWSET_TIMESTAMP_PAGE"                        @ 11458d80  in ?
+  "DLB_HGT_FLOWSET_TIMESTAMP_PAGE_X"                      @ 11458da0  in ?
+  "DLB_HGT_FLOWSET_TIMESTAMP_PAGE_X"                      @ 11458da0  in ?
+  "DLB_HGT_FLOWSET_TIMESTAMP_PAGE_X"                      @ 11458da0  in ?
+  "DLB_HGT_FLOWSET_TIMESTAMP_PAGE_Y"                      @ 11458dc4  in ?
+  "DLB_HGT_FLOWSET_TIMESTAMP_PAGE_Y"                      @ 11458dc4  in ?
+  "DLB_HGT_FLOWSET_TIMESTAMP_PAGE_Y"                      @ 11458dc4  in ?
+  "DLB_HGT_FLOWSET_TIMESTAMP_X"                           @ 11458de8  in ?
+  "DLB_HGT_FLOWSET_TIMESTAMP_X"                           @ 11458de8  in ?
+  "DLB_HGT_FLOWSET_TIMESTAMP_X"                           @ 11458de8  in ?
+  "DLB_HGT_FLOWSET_TIMESTAMP_Y"                           @ 11458e04  in ?
+  "DLB_HGT_FLOWSET_TIMESTAMP_Y"                           @ 11458e04  in ?
+  "DLB_HGT_FLOWSET_TIMESTAMP_Y"                           @ 11458e04  in ?
+  "DLB_HGT_FLOWSET_X"                                     @ 11458e20  in ?
+  "DLB_HGT_FLOWSET_X"                                     @ 11458e20  in ?
+  "DLB_HGT_FLOWSET_X"                                     @ 11458e20  in ?
+  "DLB_HGT_FLOWSET_Y"                                     @ 11458e34  in ?
+  "DLB_HGT_FLOWSET_Y"                                     @ 11458e34  in ?
+  "DLB_HGT_FLOWSET_Y"                                     @ 11458e34  in ?
+  "DLB_HGT_GLB_QUANTIZE_THRESHOLDS"                       @ 11458e48  in ?
+  "DLB_HGT_GLB_QUANTIZE_THRESHOLDS"                       @ 11458e48  in ?
+  "DLB_HGT_GROUP_CONTROL"                                 @ 11458e68  in ?
+  "DLB_HGT_GROUP_CONTROL"                                 @ 11458e68  in ?
+  "DLB_HGT_GROUP_CONTROL_X"                               @ 11458e80  in ?
+  "DLB_HGT_GROUP_CONTROL_X"                               @ 11458e80  in ?
+  "DLB_HGT_GROUP_CONTROL_X"                               @ 11458e80  in ?
+  "DLB_HGT_GROUP_CONTROL_Y"                               @ 11458e98  in ?
+  "DLB_HGT_GROUP_CONTROL_Y"                               @ 11458e98  in ?
+  "DLB_HGT_GROUP_CONTROL_Y"                               @ 11458e98  in ?
+  "DLB_HGT_GROUP_MEMBERSHIP"                              @ 11458eb0  in ?
+  "DLB_HGT_GROUP_MEMBERSHIP"                              @ 11458eb0  in ?
+  "DLB_HGT_GROUP_STATS"                                   @ 11458ecc  in ?
+  "DLB_HGT_GROUP_STATS"                                   @ 11458ecc  in ?
+  "DLB_HGT_GROUP_STATS_X"                                 @ 11458ee0  in ?
+  "DLB_HGT_GROUP_STATS_X"                                 @ 11458ee0  in ?
+  "DLB_HGT_GROUP_STATS_X"                                 @ 11458ee0  in ?
+  "DLB_HGT_GROUP_STATS_Y"                                 @ 11458ef8  in ?
+  "DLB_HGT_GROUP_STATS_Y"                                 @ 11458ef8  in ?
+  "DLB_HGT_GROUP_STATS_Y"                                 @ 11458ef8  in ?
+  "DLB_HGT_HIST_LOAD"                                     @ 11458f10  in ?
+  "DLB_HGT_HIST_LOAD"                                     @ 11458f10  in ?
+  "DLB_HGT_INST_LOAD"                                     @ 11458f24  in ?
+  "DLB_HGT_INST_LOAD"                                     @ 11458f24  in ?
+  "DLB_HGT_LINK_CONTROL"                                  @ 11458f38  in ?
+  "DLB_HGT_LINK_CONTROL"                                  @ 11458f38  in ?
+  "DLB_HGT_MEMBER_ATTRIBUTE"                              @ 11458f50  in ?
+  "DLB_HGT_MEMBER_ATTRIBUTE"                              @ 11458f50  in ?
+  "DLB_HGT_MEMBER_HW_STATE"                               @ 11458f6c  in ?
+  "DLB_HGT_MEMBER_HW_STATE"                               @ 11458f6c  in ?
+  "DLB_HGT_MEMBER_STATUS"                                 @ 11458f84  in ?
+  "DLB_HGT_MEMBER_STATUS"                                 @ 11458f84  in ?
+  "DLB_HGT_MEMBER_SW_STATE"                               @ 11458f9c  in ?
+  "DLB_HGT_MEMBER_SW_STATE"                               @ 11458f9c  in ?
+  "DLB_HGT_OPTIMAL_CANDIDATE"                             @ 11458fb4  in ?
+  "DLB_HGT_OPTIMAL_CANDIDATE"                             @ 11458fb4  in ?
+  "DLB_HGT_OPTIMAL_CANDIDATE_X"                           @ 11458fd0  in ?
+  "DLB_HGT_OPTIMAL_CANDIDATE_X"                           @ 11458fd0  in ?
+  "DLB_HGT_OPTIMAL_CANDIDATE_X"                           @ 11458fd0  in ?
+  "DLB_HGT_OPTIMAL_CANDIDATE_Y"                           @ 11458fec  in ?
+  "DLB_HGT_OPTIMAL_CANDIDATE_Y"                           @ 11458fec  in ?
+  "DLB_HGT_OPTIMAL_CANDIDATE_Y"                           @ 11458fec  in ?
+  "DLB_HGT_PLA_QUANTIZE_THRESHOLD"                        @ 11459008  in ?
+  "DLB_HGT_PLA_QUANTIZE_THRESHOLD"                        @ 11459008  in ?
+  "DLB_HGT_PORT_MEMBER_MAP"                               @ 11459028  in ?
+  "DLB_HGT_PORT_MEMBER_MAP"                               @ 11459028  in ?
+  "DLB_HGT_PORT_QUALITY_MAPPING"                          @ 11459040  in ?
+  "DLB_HGT_PORT_QUALITY_MAPPING"                          @ 11459040  in ?
+  "DLB_HGT_PORT_STATE"                                    @ 11459060  in ?
+  "DLB_HGT_PORT_STATE"                                    @ 11459060  in ?
+  "DLB_HGT_QUALITY_CONTROL"                               @ 11459074  in ?
+  "DLB_HGT_QUALITY_CONTROL"                               @ 11459074  in ?
+  "DLB_HGT_QUALITY_MAPPING"                               @ 1145908c  in ?
+  "DLB_HGT_QUALITY_MAPPING"                               @ 1145908c  in ?
+  "DLB_HGT_QUALITY_RESULT"                                @ 114590a4  in ?
+  "DLB_HGT_QUALITY_RESULT"                                @ 114590a4  in ?
+  "DLB_HGT_QUANTIZE_THRESHOLD"                            @ 114590bc  in ?
+  "DLB_HGT_QUANTIZE_THRESHOLD"                            @ 114590bc  in ?
+  "DLB_HGT_RR_SELECTION_POINTER"                          @ 114590d8  in ?
+  "DLB_HGT_RR_SELECTION_POINTER"                          @ 114590d8  in ?
+  "EGR_EHG_QOS_MAPPING_TABLE"                             @ 11459a40  in ?
+  "EGR_EHG_QOS_MAPPING_TABLE"                             @ 11459a40  in ?
+  "EGR_MAC_DA_PROFILE"                                    @ 1145a0b0  in ?
+  "EGR_MAC_DA_PROFILE"                                    @ 1145a0b0  in ?
+  "FLOW_DESCRIPTOR_MEMORY_STATIC"                         @ 1145de80  in ?
+  "FLOW_DESCRIPTOR_MEMORY_STATIC"                         @ 1145de80  in ?
+  "FP_HG_CLASSID_SELECT"                                  @ 1145e00c  in ?
+  "FP_HG_CLASSID_SELECT"                                  @ 1145e00c  in ?
+  "FP_HG_CLASSID_SELECT"                                  @ 1145e00c  in ?
+  "GPORT_EHG_RX_TUNNEL_DATA"                              @ 1145e344  in ?
+  "GPORT_EHG_RX_TUNNEL_DATA"                              @ 1145e344  in ?
+  "GPORT_EHG_RX_TUNNEL_DATA"                              @ 1145e344  in ?
+  "GPORT_EHG_RX_TUNNEL_MASK"                              @ 1145e360  in ?
+  "GPORT_EHG_RX_TUNNEL_MASK"                              @ 1145e360  in ?
+  "GPORT_EHG_RX_TUNNEL_MASK"                              @ 1145e360  in ?
+  "GPORT_EHG_TX_TUNNEL_DATA"                              @ 1145e37c  in ?
+  "GPORT_EHG_TX_TUNNEL_DATA"                              @ 1145e37c  in ?
+  "GPORT_EHG_TX_TUNNEL_DATA"                              @ 1145e37c  in ?
+  "HGT_DLB_CONTROL"                                       @ 1145e3f0  in ?
+  "HGT_DLB_CONTROL"                                       @ 1145e3f0  in ?
+  "HG_TRUNK_BITMAP"                                       @ 1145e400  in ?
+  "HG_TRUNK_BITMAP"                                       @ 1145e400  in ?
+  "HG_TRUNK_FAILOVER_ENABLE"                              @ 1145e410  in ?
+  "HG_TRUNK_FAILOVER_ENABLE"                              @ 1145e410  in ?
+  "HG_TRUNK_FAILOVER_SET"                                 @ 1145e42c  in ?
+  "HG_TRUNK_FAILOVER_SET"                                 @ 1145e42c  in ?
+  "HG_TRUNK_GROUP"                                        @ 1145e444  in ?
+  "HG_TRUNK_GROUP"                                        @ 1145e444  in ?
+  "HG_TRUNK_MEMBER"                                       @ 1145e454  in ?
+  "HG_TRUNK_MEMBER"                                       @ 1145e454  in ?
+  "IPS_QDESC"                                             @ 11461790  in ?
+  "IPS_QDESC"                                             @ 11461790  in ?
+  "IPS_QDESC_TABLE"                                       @ 1146179c  in ?
+  "IPS_QDESC_TABLE"                                       @ 1146179c  in ?
+  "MMU_CBPPKTHEADERCPU"                                   @ 114643c4  in ?
+
+# Total: 500 hits
