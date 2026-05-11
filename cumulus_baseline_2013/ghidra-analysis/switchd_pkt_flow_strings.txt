@@ -1,0 +1,16 @@
+# Packet-flow function discovery via log strings
+
+  [bcm_rx_register]  ""%s %s:%d CRIT bcm_rx_register failed: %s\n""  in  FUN_10051be0 (size=15376)
+  [bcm_tx]  ""%s %s:%d ERR bcm_tx failed: %s\n""  in  FUN_1005b3e4 (size=1104)
+  [bcm_tx]  ""%s %s:%d ERR bcm_tx failed: %s\n""  in  FUN_1005b3e4 (size=1104)
+  [DMA TX]  ""%s: Unable to configure TX DMA channel: %s\n""  in  FUN_100c1f60 (size=708)
+  [bcm_rx_register]  ""%s: bcm_rx_register failed: %s\n""  in  FUN_10135e2c (size=540)
+  [bcm_tx]  ""bcm_tx failed: Unit %d: %s\n""  in  FUN_10136f78 (size=1300)
+  [bcm_tx]  ""bcm_tx failed: Unit %d: %s\n""  in  FUN_10186ea0 (size=1692)
+  [bcm_rx_register]  ""%s: bcm_rx_register failed: %s\n""  in  FUN_101912f4 (size=1504)
+  [bcm_tx]  ""bcm_tx failed2: TX Unit %d: %s\n""  in  FUN_101a70e8 (size=2108)
+  [bcm_tx]  ""ERROR: port %s: bcm_tx A #%d failed: %s\n""  in  FUN_101cfe60 (size=3588)
+  [bcm_tx]  ""ERROR: port %s: bcm_tx B #%d failed: %s\n""  in  FUN_101cfe60 (size=3588)
+  [DMA RX]  ""Failed to start RX DMA: %s\n""  in  FUN_101f2fac (size=628)
+  [DMA TX]  ""Failed to start TX DMA: %s\n""  in  FUN_101f33f8 (size=1152)
+  [bcm_rx_register]  ""bcm_rx_register""  in  FUN_1042b380 (size=324)
