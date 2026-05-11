@@ -1,0 +1,285 @@
+# BCM SDK call graph (depth ≤ 2 from labeled API roots)
+# Format: callee_addr  caller_count  caller_API_names
+
+bcm_port_link_failed_clear @ 0x10762108 (size=152)
+  called by 79 BCM APIs: FUN_10461a0c, bcm_eav_bandwidth_get, bcm_eav_bandwidth_set, bcm_eav_pcp_mapping_get, bcm_eav_pcp_mapping_set, bcm_eav_srp_mac_ethertype_get, bcm_eav_srp_mac_ethertype_set, bcm_field_entry_stat_attach, bcm_l2_addr_delete, bcm_l2_conflict_get, bcm_l2_tunnel_add, bcm_mcast_addr_remove, bcm_mcast_bitmap_del, bcm_mcast_bitmap_get, bcm_mcast_bitmap_max_set, bcm_mcast_bitmap_set, bcm_mim_detach, bcm_mim_init, bcm_mim_port_add, bcm_mim_port_delete
+
+FUN_10461a0c @ 0x10461a0c (size=748)
+  called by 78 BCM APIs: bcm_eav_bandwidth_get, bcm_eav_bandwidth_set, bcm_eav_pcp_mapping_get, bcm_eav_pcp_mapping_set, bcm_eav_srp_mac_ethertype_get, bcm_eav_srp_mac_ethertype_set, bcm_field_entry_stat_attach, bcm_l2_addr_delete, bcm_l2_conflict_get, bcm_l2_tunnel_add, bcm_mcast_addr_remove, bcm_mcast_bitmap_del, bcm_mcast_bitmap_get, bcm_mcast_bitmap_max_set, bcm_mcast_bitmap_set, bcm_mim_detach, bcm_mim_init, bcm_mim_port_add, bcm_mim_port_delete, bcm_mim_port_get_all
+
+FUN_112c5590 @ 0x112c5590 (size=288)
+  called by 78 BCM APIs: bcm_eav_bandwidth_get, bcm_eav_bandwidth_set, bcm_eav_pcp_mapping_get, bcm_eav_pcp_mapping_set, bcm_eav_srp_mac_ethertype_get, bcm_eav_srp_mac_ethertype_set, bcm_field_entry_stat_attach, bcm_l2_addr_delete, bcm_l2_conflict_get, bcm_l2_tunnel_add, bcm_mcast_addr_remove, bcm_mcast_bitmap_del, bcm_mcast_bitmap_get, bcm_mcast_bitmap_max_set, bcm_mcast_bitmap_set, bcm_mim_detach, bcm_mim_init, bcm_mim_port_add, bcm_mim_port_delete, bcm_mim_port_get_all
+
+FUN_10761a94 @ 0x10761a94 (size=220)
+  called by 52 BCM APIs: FUN_105a3948, FUN_105c0200, FUN_105c5398, FUN_105cfcb4, FUN_105d0a7c, FUN_1083aa9c, FUN_1083acfc, FUN_1083ade8, FUN_1083aec4, FUN_1083b078, FUN_1083b170, FUN_1083b24c, FUN_1083b338, FUN_1083b550, FUN_1083bc3c, FUN_1083bfbc, FUN_1083c3b4, FUN_1083c5b4, FUN_1083c690, FUN_1083cd54
+
+FUN_105a6a18 @ 0x105a6a18 (size=284)
+  called by 43 BCM APIs: FUN_105cfcb4, FUN_105d0a7c, FUN_106bac60, FUN_106bafa4, bcm_esw_port_vlan_member_get, bcm_esw_port_vlan_member_set, bcm_port_ability_advert_get, bcm_port_ability_advert_set, bcm_port_ability_get, bcm_port_advert_set, bcm_port_autoneg_get, bcm_port_autoneg_set, bcm_port_discard_get, bcm_port_discard_set, bcm_port_duplex_get, bcm_port_duplex_set, bcm_port_enable_set, bcm_port_encap_get, bcm_port_fault_get, bcm_port_info_get
+
+FUN_11312da0 @ 0x11312da0 (size=348)
+  called by 42 BCM APIs: FUN_1053ae58, FUN_1053b4ac, FUN_1053eacc, FUN_105a3948, FUN_106ba8cc, FUN_106bac60, FUN_106bafa4, FUN_107371ac, FUN_10737450, FUN_10c6ba88, FUN_10ca4dd8, FUN_10e2fcf8, bcm_esw_port_vlan_member_set, bcm_port_ability_advert_get, bcm_port_ability_advert_set, bcm_port_ability_get, bcm_port_advert_set, bcm_port_autoneg_get, bcm_port_autoneg_set, bcm_port_discard_set
+
+FUN_11312efc @ 0x11312efc (size=140)
+  called by 42 BCM APIs: FUN_1053ae58, FUN_1053b4ac, FUN_1053eacc, FUN_105a3948, FUN_106ba8cc, FUN_106bac60, FUN_106bafa4, FUN_107371ac, FUN_10737450, FUN_10c6ba88, FUN_10ca4dd8, FUN_10e2fcf8, bcm_esw_port_vlan_member_set, bcm_port_ability_advert_get, bcm_port_ability_advert_set, bcm_port_ability_get, bcm_port_advert_set, bcm_port_autoneg_get, bcm_port_autoneg_set, bcm_port_discard_set
+
+FUN_1038b364 @ 0x1038b364 (size=80)
+  called by 34 BCM APIs: bcm_eav_bandwidth_get, bcm_eav_bandwidth_set, bcm_mcast_bitmap_del, bcm_mcast_bitmap_get, bcm_mcast_bitmap_set, bcm_mim_port_add, bcm_mim_port_delete, bcm_mirror_destination_destroy, bcm_mirror_egress_set, bcm_mirror_ingress_set, bcm_mirror_port_dest_add, bcm_mirror_port_dest_delete, bcm_mirror_to_set, bcm_mirror_vlan_set, bcm_mpls_port_add, bcm_mpls_port_delete, bcm_mpls_tunnel_switch_add, bcm_mpls_tunnel_switch_delete, bcm_multicast_mim_encap_get, bcm_multicast_vpls_encap_get
+
+FUN_107a36e4 @ 0x107a36e4 (size=96)
+  called by 15 BCM APIs: FUN_10737450, FUN_1099a600, FUN_1099b8b4, FUN_109e36e0, FUN_109e42d4, FUN_10ac1724, FUN_10b70110, FUN_10b84620, FUN_10c6ba88, FUN_10c9d5e8, FUN_10ca4c64, FUN_10d156a0, FUN_10e27aa8, FUN_10e2fb84, bcm_esw_port_vlan_member_get
+
+FUN_1080290c @ 0x1080290c (size=208)
+  called by 15 BCM APIs: FUN_107371ac, FUN_10737450, FUN_1099b8b4, FUN_109e36e0, FUN_109e42d4, FUN_10ac1724, FUN_10b70110, FUN_10b84620, FUN_10c6ba88, FUN_10c9d5e8, FUN_10ca4c64, FUN_10e27aa8, FUN_10e2fb84, bcm_esw_port_vlan_member_get, bcm_esw_port_vlan_member_set
+
+memset @ 0x113179b0 (size=16)
+  called by 14 BCM APIs: FUN_105a3948, FUN_105a70e4, FUN_105c0200, FUN_105c5398, FUN_107371ac, FUN_107a6314, FUN_1083e2f4, FUN_1099a600, FUN_109e36e0, FUN_10d156a0, FUN_112b50e4, bcm_fb_l3_intf_ip_options_profile_id_set, bcm_port_ability_advert_get, bcm_port_ability_get
+
+FUN_10839f58 @ 0x10839f58 (size=216)
+  called by 10 BCM APIs: FUN_1083ade8, FUN_1083aec4, FUN_1083b170, FUN_1083b338, FUN_1083c5b4, FUN_1083c690, FUN_1083cd54, FUN_1083ce30, FUN_1083cf1c, FUN_1083d1f8
+
+FUN_11312544 @ 0x11312544 (size=84)
+  called by 9 BCM APIs: FUN_106ba8cc, FUN_10847ab4, FUN_1084a784, FUN_1084bf98, FUN_1084c8b4, FUN_1084d57c, FUN_1084ea88, FUN_11312da0, FUN_11312efc
+
+bcm_mirror_ingress_get @ 0x10762a98 (size=512)
+  called by 9 BCM APIs: FUN_1053b4ac, FUN_1053eacc, FUN_1053f450, FUN_106bac60, FUN_106bafa4, FUN_108469c0, FUN_10849350, bcm_port_pfm_get, bcm_port_pfm_set
+
+FUN_1038b3b4 @ 0x1038b3b4 (size=80)
+  called by 9 BCM APIs: bcm_mim_port_add, bcm_mim_port_get_all, bcm_mirror_to_get, bcm_mpls_port_add, bcm_mpls_port_get_all, bcm_wlan_client_add, bcm_wlan_client_get, bcm_wlan_port_add, bcm_wlan_port_get
+
+FUN_10bf748c @ 0x10bf748c (size=3156)
+  called by 8 BCM APIs: FUN_1099b8b4, FUN_10ac1724, FUN_10b70110, FUN_10c6ba88, FUN_10c9d5e8, FUN_10ca4c64, FUN_10e27aa8, FUN_10e2fb84
+
+FUN_1083a030 @ 0x1083a030 (size=320)
+  called by 8 BCM APIs: FUN_1083acfc, FUN_1083b078, FUN_1083b24c, FUN_1083b550, FUN_1083c3b4, FUN_1083d4dc, FUN_1083e2f4, FUN_1083e474
+
+FUN_1076193c @ 0x1076193c (size=220)
+  called by 8 BCM APIs: FUN_10461a0c, FUN_105a3948, FUN_10847ab4, FUN_1084a784, FUN_1084bf98, FUN_1084c8b4, FUN_1084d57c, FUN_1084ea88
+
+FUN_1084a784 @ 0x1084a784 (size=512)
+  called by 7 BCM APIs: FUN_105a9744, FUN_105c0200, bcm_esw_port_vlan_member_set, bcm_port_loopback_set, bcm_rate_bcast_port_set, bcm_rate_dlfbcast_port_set, bcm_rate_mcast_port_set
+
+FUN_1084d57c @ 0x1084d57c (size=1264)
+  called by 7 BCM APIs: FUN_105a9744, FUN_105c0200, bcm_esw_port_vlan_member_set, bcm_port_loopback_set, bcm_rate_bcast_port_set, bcm_rate_dlfbcast_port_set, bcm_rate_mcast_port_set
+
+FUN_10847ab4 @ 0x10847ab4 (size=544)
+  called by 6 BCM APIs: FUN_105a9744, FUN_105c0200, bcm_esw_port_vlan_member_get, bcm_esw_port_vlan_member_set, bcm_port_encap_get, bcm_port_loopback_set
+
+FUN_10619410 @ 0x10619410 (size=984)
+  called by 6 BCM APIs: FUN_1053eacc, FUN_1053f450, FUN_105a6a18, bcm_rate_bcast_port_set, bcm_rate_dlfbcast_port_set, bcm_rate_mcast_port_set
+
+FUN_107a37cc @ 0x107a37cc (size=92)
+  called by 6 BCM APIs: FUN_105a3948, FUN_107371ac, FUN_1099a600, FUN_109e36e0, FUN_10d156a0, bcm_esw_port_vlan_member_set
+
+FUN_107a2bf8 @ 0x107a2bf8 (size=696)
+  called by 5 BCM APIs: FUN_10737450, FUN_1099a600, FUN_10ca4c64, FUN_10d156a0, FUN_10e2fb84
+
+FUN_1062a874 @ 0x1062a874 (size=1232)
+  called by 4 BCM APIs: bcm_port_autoneg_get, bcm_port_autoneg_set, bcm_port_loopback_get, bcm_port_loopback_set
+
+FUN_1053ae58 @ 0x1053ae58 (size=648)
+  called by 4 BCM APIs: bcm_port_duplex_set, bcm_port_interface_set, bcm_port_master_set, bcm_port_speed_set
+
+FUN_108508ac @ 0x108508ac (size=8596)
+  called by 4 BCM APIs: FUN_108469c0, FUN_10847ab4, FUN_10849350, FUN_1084a784
+
+FUN_1083a2a0 @ 0x1083a2a0 (size=852)
+  called by 4 BCM APIs: FUN_1083b414, FUN_1083b658, FUN_1083bfbc, FUN_1083c4a0
+
+FUN_10808e6c @ 0x10808e6c (size=208)
+  called by 4 BCM APIs: FUN_105a3948, FUN_107371ac, FUN_109e36e0, bcm_esw_port_vlan_member_set
+
+bcm_port_ability_get @ 0x105cc324 (size=820)
+  called by 4 BCM APIs: FUN_105d0a7c, bcm_port_ability_advert_set, bcm_port_advert_set, bcm_port_speed_max
+
+FUN_10b89ddc @ 0x10b89ddc (size=192)
+  called by 4 BCM APIs: FUN_10c9d5e8, FUN_10ca4c64, FUN_10e27aa8, FUN_10e2fb84
+
+FUN_112b0ae8 @ 0x112b0ae8 (size=60)
+  called by 4 BCM APIs: FUN_105cff2c, bcm_esw_port_vlan_member_get, bcm_esw_port_vlan_member_set, bcm_port_pfm_get
+
+FUN_1083aa9c @ 0x1083aa9c (size=608)
+  called by 3 BCM APIs: FUN_105c5398, bcm_port_enable_set, bcm_port_loopback_set
+
+FUN_10632870 @ 0x10632870 (size=1232)
+  called by 3 BCM APIs: bcm_rate_bcast_port_set, bcm_rate_dlfbcast_port_set, bcm_rate_mcast_port_set
+
+FUN_1038b404 @ 0x1038b404 (size=80)
+  called by 3 BCM APIs: bcm_l2_conflict_get, bcm_mcast_bitmap_del, bcm_mcast_bitmap_set
+
+FUN_1083e8a8 @ 0x1083e8a8 (size=508)
+  called by 3 BCM APIs: FUN_105a70e4, FUN_105c5398, bcm_port_speed_max
+
+FUN_1053b0e0 @ 0x1053b0e0 (size=504)
+  called by 3 BCM APIs: FUN_1053b2d8, FUN_105cfcb4, bcm_port_link_status_get
+
+FUN_10ca4c64 @ 0x10ca4c64 (size=372)
+  called by 3 BCM APIs: FUN_10ca50fc, FUN_10ca51f0, bcm_esw_port_vlan_member_get
+
+FUN_1053b4ac @ 0x1053b4ac (size=1460)
+  called by 3 BCM APIs: FUN_105a3948, bcm_port_enable_set, bcm_port_loopback_set
+
+FUN_103256c4 @ 0x103256c4 (size=92)
+  called by 3 BCM APIs: FUN_1053ae58, FUN_1053b4ac, FUN_1053eacc
+
+FUN_1084bf98 @ 0x1084bf98 (size=1072)
+  called by 3 BCM APIs: bcm_esw_port_vlan_member_get, bcm_esw_port_vlan_member_set, bcm_port_encap_get
+
+FUN_10e2fb84 @ 0x10e2fb84 (size=372)
+  called by 3 BCM APIs: FUN_10e30024, FUN_10e30120, bcm_esw_port_vlan_member_get
+
+FUN_1083b338 @ 0x1083b338 (size=220)
+  called by 3 BCM APIs: FUN_105c5398, bcm_port_autoneg_set, bcm_port_duplex_set
+
+bcm_port_speed_max @ 0x105c3dbc (size=2632)
+  called by 3 BCM APIs: FUN_105c5398, FUN_105d0a7c, bcm_port_speed_set
+
+FUN_10e2fcf8 @ 0x10e2fcf8 (size=172)
+  called by 2 BCM APIs: FUN_10e300a4, bcm_esw_port_vlan_member_set
+
+FUN_1083c690 @ 0x1083c690 (size=216)
+  called by 2 BCM APIs: FUN_105c0200, bcm_port_interface_get
+
+FUN_1053f450 @ 0x1053f450 (size=688)
+  called by 2 BCM APIs: FUN_105cfcb4, bcm_port_linkscan_get
+
+FUN_1084c8b4 @ 0x1084c8b4 (size=1152)
+  called by 2 BCM APIs: bcm_esw_port_vlan_member_get, bcm_esw_port_vlan_member_set
+
+FUN_108158a4 @ 0x108158a4 (size=1820)
+  called by 2 BCM APIs: FUN_1099a600, FUN_10d156a0
+
+FUN_1083d4dc @ 0x1083d4dc (size=232)
+  called by 2 BCM APIs: bcm_port_enable_set, bcm_port_loopback_set
+
+FUN_10880ed8 @ 0x10880ed8 (size=88)
+  called by 2 BCM APIs: FUN_1083bc3c, FUN_1083bfbc
+
+FUN_1084bccc @ 0x1084bccc (size=716)
+  called by 2 BCM APIs: bcm_esw_port_vlan_member_get, bcm_port_encap_get
+
+FUN_1083aec4 @ 0x1083aec4 (size=216)
+  called by 2 BCM APIs: FUN_105c0200, bcm_port_duplex_get
+
+bcm_port_link_status_get @ 0x105cfe1c (size=160)
+  called by 2 BCM APIs: FUN_105a9744, FUN_105d0a7c
+
+FUN_1083acfc @ 0x1083acfc (size=236)
+  called by 2 BCM APIs: FUN_105c5398, bcm_port_loopback_set
+
+FUN_1083e2f4 @ 0x1083e2f4 (size=384)
+  called by 2 BCM APIs: FUN_105c0200, bcm_port_ability_advert_get
+
+FUN_10325444 @ 0x10325444 (size=92)
+  called by 2 BCM APIs: bcm_port_enable_set, bcm_port_loopback_set
+
+FUN_1038b454 @ 0x1038b454 (size=80)
+  called by 2 BCM APIs: bcm_l2_conflict_get, bcm_mcast_bitmap_get
+
+FUN_11312150 @ 0x11312150 (size=276)
+  called by 2 BCM APIs: FUN_106ba8cc, FUN_109e36e0
+
+FUN_10849218 @ 0x10849218 (size=312)
+  called by 2 BCM APIs: FUN_10849350, FUN_1084a784
+
+FUN_1083bc3c @ 0x1083bc3c (size=896)
+  called by 2 BCM APIs: FUN_105c5398, bcm_port_loopback_set
+
+FUN_1038a488 @ 0x1038a488 (size=600)
+  called by 2 BCM APIs: FUN_1038b364, FUN_1038b3b4
+
+FUN_1131299c @ 0x1131299c (size=184)
+  called by 2 BCM APIs: FUN_11312da0, FUN_11312efc
+
+FUN_1038a6e0 @ 0x1038a6e0 (size=1168)
+  called by 2 BCM APIs: FUN_1038b404, FUN_1038b454
+
+FUN_10321ae0 @ 0x10321ae0 (size=172)
+  called by 2 BCM APIs: bcm_tr2_wlan_cli_client_print, bcm_tr2_wlan_cli_port_print
+
+FUN_107a2eb0 @ 0x107a2eb0 (size=524)
+  called by 2 BCM APIs: FUN_107a36e4, FUN_107a6314
+
+FUN_1084264c @ 0x1084264c (size=1388)
+  called by 2 BCM APIs: FUN_1083e2f4, bcm_port_advert_set
+
+FUN_107a30bc @ 0x107a30bc (size=516)
+  called by 2 BCM APIs: FUN_107a37cc, FUN_107a6268
+
+FUN_1083b078 @ 0x1083b078 (size=248)
+  called by 2 BCM APIs: FUN_105c0200, bcm_port_speed_get
+
+FUN_1083e474 @ 0x1083e474 (size=368)
+  called by 2 BCM APIs: bcm_port_ability_advert_set, bcm_port_advert_set
+
+FUN_105cfcb4 @ 0x105cfcb4 (size=360)
+  called by 2 BCM APIs: bcm_port_enable_set, bcm_port_link_status_get
+
+FUN_105ab6b8 @ 0x105ab6b8 (size=972)
+  called by 2 BCM APIs: FUN_1053eacc, FUN_105d0a7c
+
+FUN_105a9744 @ 0x105a9744 (size=1280)
+  called by 2 BCM APIs: bcm_port_loopback_set, bcm_port_update
+
+FUN_1131262c @ 0x1131262c (size=156)
+  called by 2 BCM APIs: bcm_port_duplex_set, bcm_port_speed_set
+
+FUN_1086559c @ 0x1086559c (size=156)
+  called by 2 BCM APIs: FUN_10849350, FUN_1084a784
+
+FUN_10ca4dd8 @ 0x10ca4dd8 (size=172)
+  called by 2 BCM APIs: FUN_10ca5174, bcm_esw_port_vlan_member_set
+
+FUN_1061ed70 @ 0x1061ed70 (size=5200)
+  called by 2 BCM APIs: FUN_1099a600, FUN_10d156a0
+
+FUN_11313a38 @ 0x11313a38 (size=216)
+  called by 2 BCM APIs: FUN_105a3948, bcm_port_enable_set
+
+FUN_1084a384 @ 0x1084a384 (size=1024)
+  called by 2 BCM APIs: FUN_10849350, FUN_1084a784
+
+FUN_10842bb8 @ 0x10842bb8 (size=1372)
+  called by 2 BCM APIs: FUN_105d0a7c, FUN_1083e474
+
+FUN_1083c3b4 @ 0x1083c3b4 (size=236)
+  called by 2 BCM APIs: FUN_105c5398, bcm_port_loopback_get
+
+bcm_port_loopback_get @ 0x105c8904 (size=1252)
+  called by 2 BCM APIs: FUN_105d0a7c, bcm_port_enable_set
+
+FUN_107d6928 @ 0x107d6928 (size=132)
+  called by 2 BCM APIs: FUN_105a3948, bcm_port_enable_set
+
+FUN_11312078 @ 0x11312078 (size=68)
+  called by 2 BCM APIs: FUN_106bab70, FUN_109e36e0
+
+FUN_108469c0 @ 0x108469c0 (size=1576)
+  called by 2 BCM APIs: bcm_esw_port_vlan_member_get, bcm_esw_port_vlan_member_set
+
+FUN_109ddd1c @ 0x109ddd1c (size=400)
+  called by 2 BCM APIs: FUN_109e36e0, FUN_109e42d4
+
+FUN_10880f30 @ 0x10880f30 (size=316)
+  called by 2 BCM APIs: FUN_1083bc3c, FUN_1083bfbc
+
+FUN_10846528 @ 0x10846528 (size=1176)
+  called by 2 BCM APIs: FUN_108469c0, FUN_10847ab4
+
+FUN_10847350 @ 0x10847350 (size=1892)
+  called by 2 BCM APIs: FUN_108469c0, FUN_10847ab4
+
+bcm_port_ability_advert_get @ 0x105cad88 (size=724)
+  called by 2 BCM APIs: FUN_105d0a7c, bcm_port_advert_set
+
+FUN_1083b550 @ 0x1083b550 (size=264)
+  called by 2 BCM APIs: FUN_105c0200, bcm_port_autoneg_get
+
+FUN_105befa0 @ 0x105befa0 (size=4704)
+  called by 2 BCM APIs: FUN_105c0200, FUN_105c5398
+
+FUN_1071d384 @ 0x1071d384 (size=1164)
+  called by 2 BCM APIs: FUN_1099a600, FUN_10d156a0
+
+FUN_10845164 @ 0x10845164 (size=196)
+  called by 2 BCM APIs: FUN_108469c0, FUN_10849350
+
