@@ -39,11 +39,14 @@ starting fresh".
 | Hash table SCHAN opcodes (NEW) | `cumulus_baseline_2013/TABLE_ENTRY_HASH_OPS.md` |
 | MMU buffer pool / FP TCAM | `cumulus_baseline_2013/FP_MMU_AND_REMAINING.md` |
 | Init scripts (rc.soc) decoded | `cumulus_baseline_2013/ASIC_INIT_COOKBOOK.md` |
-| PHY firmware + Warpcore SerDes | [`PHY_FIRMWARE_FUNCTIONS.md`](PHY_FIRMWARE_FUNCTIONS.md) + [`SERDES_WC_INIT.md`](SERDES_WC_INIT.md) |
+| PHY firmware + Warpcore SerDes | [`cumulus_baseline_2013/ghidra-analysis/PHY_FIRMWARE_FUNCTIONS.md`](cumulus_baseline_2013/ghidra-analysis/PHY_FIRMWARE_FUNCTIONS.md) + [`SERDES_WC_INIT.md`](SERDES_WC_INIT.md) |
 | PAXB sub-windows | [`PAXB_SUBWINDOW_MECHANISM.md`](PAXB_SUBWINDOW_MECHANISM.md) |
 | switchd FUSE control plane | `cumulus_baseline_2013/fuse-explore/SWITCHD_SFS_INTERNALS.md` |
 | Current gap analysis | `cumulus_baseline_2013/WHATS_MISSING.md` |
 | Known-good Cumulus baseline | `cumulus_baseline_2013/PROVEN_WORKING_CONFIG.md` |
+| Hardware-layer map (BAR0/CMICm/I²C/retimers/CPLD) | [`cumulus_baseline_2013/TO_THE_SILICON.md`](cumulus_baseline_2013/TO_THE_SILICON.md) |
+| Live runtime state (PCI BAR, /proc/iomem, IRQs, fds, I²C tree, bcm.d/rc.soc) | [`cumulus_baseline_2013/LIVE_SYSTEM_DEEP_DIVE.md`](cumulus_baseline_2013/LIVE_SYSTEM_DEEP_DIVE.md) |
+| Default CoPP ACL + Python framework + clcmd_uds pickle protocol | [`cumulus_baseline_2013/CONTROL_PLANE_AND_PY_FRAMEWORK.md`](cumulus_baseline_2013/CONTROL_PLANE_AND_PY_FRAMEWORK.md) |
 
 ---
 
@@ -269,6 +272,9 @@ Without this, bulk MAC deletes overflow the FIFO and learn events get lost.
 │   ├── TABLE_ENTRY_HASH_OPS.md
 │   ├── FP_MMU_AND_REMAINING.md
 │   ├── WHATS_MISSING.md
+│   ├── TO_THE_SILICON.md                  ← Hardware-layer map (May 11)
+│   ├── LIVE_SYSTEM_DEEP_DIVE.md           ← Live runtime state (May 11)
+│   ├── CONTROL_PLANE_AND_PY_FRAMEWORK.md  ← CoPP + Python (May 11)
 │   ├── ghidra-analysis/         ← Per-binary decomps
 │   ├── fuse-explore/            ← switchd FUSE filesystem (298 files)
 │   ├── captures/                ← BAR0 dump + state
@@ -284,7 +290,7 @@ Without this, bulk MAC deletes overflow the FIFO and learn events get lost.
 ├── PORT_BRINGUP_REGISTER_MAP.md
 ├── STATS_COUNTER_FORMAT.md
 ├── PAXB_SUBWINDOW_MECHANISM.md
-├── PHY_FIRMWARE_FUNCTIONS.md
+├── (PHY_FIRMWARE_FUNCTIONS.md lives under cumulus_baseline_2013/ghidra-analysis/)
 ├── LED_ARCHITECTURE.md
 ├── ECMP_GROUP_LAYOUT_FROM_01a1572c.md
 ├── (~70 more docs, see DOCUMENTATION_INDEX.md for full catalog)
@@ -323,6 +329,8 @@ hardware — without depending on Broadcom-licensed binaries.
 
 ---
 
-*Last major update: 2026-05-11 after deep static-analysis session
-covering SCHAN protocol, packet I/O end-to-end, L3/L2 programming,
-FP TCAM, MMU, and hash-table opcodes.*
+*Last major update: 2026-05-11 — live-chassis dig from documentation
+down to the silicon: BAR0 layout, kernel-BDE module parameters,
+I²C tree, 32 DS100DF410 retimers via sysfs, CPLD driver origin,
+chip die-temperature path via hwmon. See `TO_THE_SILICON.md`,
+`LIVE_SYSTEM_DEEP_DIVE.md`, `CONTROL_PLANE_AND_PY_FRAMEWORK.md`.*

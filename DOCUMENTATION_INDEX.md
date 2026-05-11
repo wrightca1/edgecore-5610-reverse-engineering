@@ -1,7 +1,7 @@
 # Master Documentation Index — AS5610-52X / BCM56846 RE
 
-**Last updated**: 2026-05-11 (post-static-analysis session)
-**Total docs**: 194 .md files across `./` and `cumulus_baseline_2013/`
+**Last updated**: 2026-05-11 (post-live-chassis deep dive)
+**Total docs**: 197 .md files across `./` and `cumulus_baseline_2013/`
 
 This is the **canonical entry point** for all reverse-engineering
 documentation. Use this index to find the **current authoritative
@@ -35,6 +35,9 @@ source** for any topic — older docs in the parent directory may be
 | **I²C / SFP access** | `CUMULUS_I2C_HARDWARE_INVENTORY.md` + `I2C_BUS_TOPOLOGY_AND_SFP_CONTROL.md` |
 | **switchd FUSE control plane** | `cumulus_baseline_2013/fuse-explore/SWITCHD_SFS_INTERNALS.md` |
 | **Current gap analysis** | `cumulus_baseline_2013/WHATS_MISSING.md` |
+| **The actual hardware** (PCI, IRQ, BAR0, modules) | `cumulus_baseline_2013/TO_THE_SILICON.md` (NEW) |
+| **Live runtime state** (fds, /proc/iomem, I²C tree) | `cumulus_baseline_2013/LIVE_SYSTEM_DEEP_DIVE.md` (NEW) |
+| **Control-plane CoPP + Python framework** | `cumulus_baseline_2013/CONTROL_PLANE_AND_PY_FRAMEWORK.md` (NEW) |
 
 ---
 

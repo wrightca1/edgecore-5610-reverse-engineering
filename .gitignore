@@ -2,3 +2,6 @@ output/linux-kernel-bde.ko
 output/linux-kernel-bde-raw.ko
 output/switchd.new
 INFRASTRUCTURE.md
+
+# Redundant raw text captures — keep .bin and .gz, drop .txt to save space
+cumulus_baseline_2013/captures/*.txt
