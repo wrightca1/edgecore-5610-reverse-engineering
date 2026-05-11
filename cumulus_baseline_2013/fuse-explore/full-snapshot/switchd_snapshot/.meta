@@ -1,0 +1,295 @@
+/config/interface/swp9/storm_control/multicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp34/storm_control/multicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp27/storm_control/unknown_unicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/coalesce/reducer	Coalescing reduction factor for accumulating changes to reduce CPU load	uint16_t	1	0	0
+/config/interface/swp43/interface_mode	Port Interface Mode	enum	Invalid	Invalid None XGMII XLAUI SFI XFI KR KR4 CR CR4 SR SR4 LR LR4 ZR 
+/config/interface/swp7/storm_control/broadcast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp6/storm_control/multicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp18/interface_mode	Port Interface Mode	enum	Invalid	Invalid None XGMII XLAUI SFI XFI KR KR4 CR CR4 SR SR4 LR LR4 ZR 
+/config/interface/swp3/storm_control/broadcast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp46/storm_control/broadcast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp48/interface_mode	Port Interface Mode	enum	Invalid	Invalid None XGMII XLAUI SFI XFI KR KR4 CR CR4 SR SR4 LR LR4 ZR 
+/run/route_info/route/count_total	Route table current total count	int	0	0	0
+/config/interface/swp40/storm_control/broadcast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp13/interface_mode	Port Interface Mode	enum	Invalid	Invalid None XGMII XLAUI SFI XFI KR KR4 CR CR4 SR SR4 LR LR4 ZR 
+/run/route_info/mac/max	L2 table maximum size	int	0	0	0
+/config/interface/swp33/interface_mode	Port Interface Mode	enum	Invalid	Invalid None XGMII XLAUI SFI XFI KR KR4 CR CR4 SR SR4 LR LR4 ZR 
+/config/interface/swp37/storm_control/broadcast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/run/route_info/host/max	Host table maximum size	int	0	0	0
+/config/interface/swp39/storm_control/multicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp32/storm_control/multicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp2/storm_control/unknown_unicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/stats/vdev_hw_poll_interval	HW statistics poll interval (in seconds)	uint32_t	5	1	3600
+/config/netlink/buf_size	netlink buffer size	int	94371840	94371840	188743680
+/config/interface/swp43/storm_control/unknown_unicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp20/interface_mode	Port Interface Mode	enum	Invalid	Invalid None XGMII XLAUI SFI XFI KR KR4 CR CR4 SR SR4 LR LR4 ZR 
+/config/interface/swp28/storm_control/broadcast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp42/storm_control/multicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp9/storm_control/unknown_unicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp2/storm_control/broadcast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp48/storm_control/unknown_unicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp1/interface_mode	Port Interface Mode	enum	Invalid	Invalid None XGMII XLAUI SFI XFI KR KR4 CR CR4 SR SR4 LR LR4 ZR 
+/config/interface/swp27/interface_mode	Port Interface Mode	enum	Invalid	Invalid None XGMII XLAUI SFI XFI KR KR4 CR CR4 SR SR4 LR LR4 ZR 
+/config/interface/swp5/storm_control/unknown_unicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp19/storm_control/multicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/ctrl/netlink/resync	Resync netlink cache with kernel	trigger	1
+/config/interface/swp7/storm_control/unknown_unicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/buf_util/poll_interval	Buffer utilization poll interval (in msec)	uint16_t	0	0	1000
+/config/interface/swp52/storm_control/multicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/run/acl_info/ingress/entries_total	Total entries available	int	0	0	0
+/run/route_info/mac/count	L2 table current count	char *
+/config/interface/swp39/storm_control/broadcast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/run/acl_info/ingress/counters_total	Total counters available	int	0	0	0
+/config/interface/swp45/storm_control/multicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/route/max_routes	Maximum number of routes supported in switchd	uint32_t	32768	16384	65536
+/config/interface/swp18/storm_control/unknown_unicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp37/storm_control/multicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp32/interface_mode	Port Interface Mode	enum	Invalid	Invalid None XGMII XLAUI SFI XFI KR KR4 CR CR4 SR SR4 LR LR4 ZR 
+/config/stats/vlan/aggregate	Enable vlan hw statisticsLEVEL := {NONE, BRIEF, DETAIL}	char *	4
+/config/stats/vxlan/member	Enable vxlan member port hw statisticsLEVEL := {NONE, BRIEF, DETAIL}	char *	4
+/config/interface/swp49/storm_control/broadcast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/traffic/dos/sip_eq_dip	DOS source IP equals dst IP check mode	bool	FALSE
+/config/interface/swp18/storm_control/broadcast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp43/storm_control/multicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/stats/vxlan/aggregate	Enable vxlan hw statisticsLEVEL := {NONE, BRIEF, DETAIL}	char *	4
+/config/interface/swp50/interface_mode	Port Interface Mode	enum	Invalid	Invalid None XGMII XLAUI SFI XFI KR KR4 CR CR4 SR SR4 LR LR4 ZR 
+/config/interface/swp25/storm_control/multicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp18/storm_control/multicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/run/stats/vlan/all	hardware stats	char *
+/config/interface/swp26/storm_control/unknown_unicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp10/storm_control/unknown_unicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp5/storm_control/broadcast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp48/storm_control/broadcast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp4/interface_mode	Port Interface Mode	enum	Invalid	Invalid None XGMII XLAUI SFI XFI KR KR4 CR CR4 SR SR4 LR LR4 ZR 
+/config/interface/swp17/storm_control/unknown_unicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp8/storm_control/unknown_unicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp52/interface_mode	Port Interface Mode	enum	Invalid	Invalid None XGMII XLAUI SFI XFI KR KR4 CR CR4 SR SR4 LR LR4 ZR 
+/config/interface/swp23/storm_control/unknown_unicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/run/route_info/ecmp_nh/max	ECMP next-hop table miximum size	int	0	0	0
+/config/interface/swp50/storm_control/multicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp12/storm_control/unknown_unicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp38/storm_control/unknown_unicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/traffic/dos/tcp_syn_frag	DOS TCP SYN framgmented check mode	bool	FALSE
+/run/route_info/route/max_total	Total number of routes supported	int	0	0	0
+/config/interface/swp41/storm_control/multicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp14/storm_control/multicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp40/storm_control/multicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp52/storm_control/unknown_unicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp31/storm_control/broadcast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp47/interface_mode	Port Interface Mode	enum	Invalid	Invalid None XGMII XLAUI SFI XFI KR KR4 CR CR4 SR SR4 LR LR4 ZR 
+/config/interface/swp39/interface_mode	Port Interface Mode	enum	Invalid	Invalid None XGMII XLAUI SFI XFI KR KR4 CR CR4 SR SR4 LR LR4 ZR 
+/config/route/delete_dead_routes	Delete routes on interfaces with link-down	bool	TRUE
+/run/route_info/route/count_v6	Route table current IPv6 count	int	0	0	0
+/config/interface/swp29/storm_control/broadcast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp15/storm_control/broadcast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/run/route_info/route/count_0	Route table current count	int	0	0	0
+/config/interface/swp51/interface_mode	Port Interface Mode	enum	Invalid	Invalid None XGMII XLAUI SFI XFI KR KR4 CR CR4 SR SR4 LR LR4 ZR 
+/config/disable_internal_parity_restart	Disable internal parity error restart mechanism	bool	TRUE
+/config/interface/swp26/storm_control/broadcast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp51/storm_control/unknown_unicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp16/interface_mode	Port Interface Mode	enum	Invalid	Invalid None XGMII XLAUI SFI XFI KR KR4 CR CR4 SR SR4 LR LR4 ZR 
+/config/interface/swp37/interface_mode	Port Interface Mode	enum	Invalid	Invalid None XGMII XLAUI SFI XFI KR KR4 CR CR4 SR SR4 LR LR4 ZR 
+/config/interface/swp21/storm_control/multicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/coalesce/offset	Coalescing fixed sync offset to delay syncs changes to reduce CPU load	uint16_t	0	0	0
+/config/interface/swp11/interface_mode	Port Interface Mode	enum	Invalid	Invalid None XGMII XLAUI SFI XFI KR KR4 CR CR4 SR SR4 LR LR4 ZR 
+/run/stats/vxlan/all	hardware stats	char *
+/config/interface/swp22/storm_control/broadcast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp49/storm_control/multicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp24/storm_control/multicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp44/interface_mode	Port Interface Mode	enum	Invalid	Invalid None XGMII XLAUI SFI XFI KR KR4 CR CR4 SR SR4 LR LR4 ZR 
+/config/interface/swp49/interface_mode	Port Interface Mode	enum	Invalid	Invalid None XGMII XLAUI SFI XFI KR KR4 CR CR4 SR SR4 LR LR4 ZR 
+/run/route_info/route/count_v4	Route table current IPv4 count	int	0	0	0
+/config/interface/swp46/storm_control/multicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp25/storm_control/unknown_unicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp34/storm_control/unknown_unicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/traffic/dos/tcp_ports_eq	DOS TCP source and dst ports equal check mode	bool	FALSE
+/config/traffic/dos/tcp_flags_fup_seq0	DOS TCP hdr with FIN, URG, PSH flags with SEQ 0 check mode	bool	FALSE
+/config/interface/swp7/storm_control/multicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp3/storm_control/multicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp42/interface_mode	Port Interface Mode	enum	Invalid	Invalid None XGMII XLAUI SFI XFI KR KR4 CR CR4 SR SR4 LR LR4 ZR 
+/run/acl_info/ingress/entries	Entries in use	int	0	0	0
+/config/interface/swp27/storm_control/multicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp48/storm_control/multicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp35/storm_control/unknown_unicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/run/acl_info/egress/slices_total	Total slices available	int	0	0	0
+/config/interface/swp1/storm_control/multicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/run/acl_info/egress/meters_total	Total meters available	int	0	0	0
+/config/interface/swp10/storm_control/multicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp33/storm_control/multicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp14/storm_control/broadcast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp21/storm_control/broadcast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/ctrl/netlink/nl_logger	Set NL_DEBUG value [0-5]	int	0	0	5
+/config/interface/swp27/storm_control/broadcast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/resv_vlan_range	Reserved vlan range, e.g. 3300-3999	char *	256
+/config/traffic/cut_through_enable	Enabling/Disabling Cut-through Forwarding	bool	TRUE
+/config/interface/swp21/interface_mode	Port Interface Mode	enum	Invalid	Invalid None XGMII XLAUI SFI XFI KR KR4 CR CR4 SR SR4 LR LR4 ZR 
+/config/interface/swp45/storm_control/broadcast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp24/storm_control/broadcast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp38/storm_control/multicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp14/storm_control/unknown_unicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp3/interface_mode	Port Interface Mode	enum	Invalid	Invalid None XGMII XLAUI SFI XFI KR KR4 CR CR4 SR SR4 LR LR4 ZR 
+/config/traffic/dos/ipv6_min_frag	DOS IPv6 frgament min size check mode	bool	FALSE
+/config/interface/swp25/interface_mode	Port Interface Mode	enum	Invalid	Invalid None XGMII XLAUI SFI XFI KR KR4 CR CR4 SR SR4 LR LR4 ZR 
+/config/interface/swp25/storm_control/broadcast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp6/storm_control/unknown_unicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp35/interface_mode	Port Interface Mode	enum	Invalid	Invalid None XGMII XLAUI SFI XFI KR KR4 CR CR4 SR SR4 LR LR4 ZR 
+/config/buf_util/measure_interval	Buffer utilization measurement interval (in mins)	uint16_t	0	0	60
+/config/interface/swp19/storm_control/broadcast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp15/storm_control/unknown_unicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/stats/vlan/show_internal_vlans	Display internal vlans	bool	FALSE
+/config/interface/swp40/storm_control/unknown_unicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp29/storm_control/multicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp4/storm_control/broadcast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp23/storm_control/multicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp31/storm_control/unknown_unicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp33/storm_control/unknown_unicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp26/storm_control/multicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp8/storm_control/multicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp5/storm_control/multicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp42/storm_control/unknown_unicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/clear/stats/vxlan	clear hardware stats	trigger	1
+/config/interface/swp19/interface_mode	Port Interface Mode	enum	Invalid	Invalid None XGMII XLAUI SFI XFI KR KR4 CR CR4 SR SR4 LR LR4 ZR 
+/config/interface/swp10/storm_control/broadcast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp6/storm_control/broadcast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp30/interface_mode	Port Interface Mode	enum	Invalid	Invalid None XGMII XLAUI SFI XFI KR KR4 CR CR4 SR SR4 LR LR4 ZR 
+/config/interface/swp46/interface_mode	Port Interface Mode	enum	Invalid	Invalid None XGMII XLAUI SFI XFI KR KR4 CR CR4 SR SR4 LR LR4 ZR 
+/config/interface/swp5/interface_mode	Port Interface Mode	enum	Invalid	Invalid None XGMII XLAUI SFI XFI KR KR4 CR CR4 SR SR4 LR LR4 ZR 
+/config/interface/swp32/storm_control/broadcast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp24/storm_control/unknown_unicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp24/interface_mode	Port Interface Mode	enum	Invalid	Invalid None XGMII XLAUI SFI XFI KR KR4 CR CR4 SR SR4 LR LR4 ZR 
+/config/interface/swp23/interface_mode	Port Interface Mode	enum	Invalid	Invalid None XGMII XLAUI SFI XFI KR KR4 CR CR4 SR SR4 LR LR4 ZR 
+/config/interface/swp37/storm_control/unknown_unicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/bridge/broadcast_frame_to_cpu	Send broadcast frame to cpu even if SVI is not enabled	bool	FALSE
+/config/interface/swp11/storm_control/broadcast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp50/storm_control/unknown_unicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp35/storm_control/broadcast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/run/route_info/route/max_0	Route table maximum size	int	0	0	0
+/config/interface/swp22/storm_control/unknown_unicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/traffic/dos/icmp_frag	DOS ICMP fragmented pkt check mode	bool	FALSE
+/config/interface/swp23/storm_control/broadcast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp13/storm_control/broadcast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp52/storm_control/broadcast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp36/storm_control/unknown_unicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/run/route_info/host/count_v4	Host table current IPv4 count	int	0	0	0
+/run/acl_info/ingress/slices	Slices in use	int	0	0	0
+/config/interface/swp10/interface_mode	Port Interface Mode	enum	Invalid	Invalid None XGMII XLAUI SFI XFI KR KR4 CR CR4 SR SR4 LR LR4 ZR 
+/config/interface/swp47/storm_control/unknown_unicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp8/interface_mode	Port Interface Mode	enum	Invalid	Invalid None XGMII XLAUI SFI XFI KR KR4 CR CR4 SR SR4 LR LR4 ZR 
+/config/interface/swp7/interface_mode	Port Interface Mode	enum	Invalid	Invalid None XGMII XLAUI SFI XFI KR KR4 CR CR4 SR SR4 LR LR4 ZR 
+/config/interface/swp2/interface_mode	Port Interface Mode	enum	Invalid	Invalid None XGMII XLAUI SFI XFI KR KR4 CR CR4 SR SR4 LR LR4 ZR 
+/config/interface/swp39/storm_control/unknown_unicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/acl/optimize_hw	Optimize ACL HW resources for better utilization	bool	FALSE
+/config/interface/swp12/storm_control/broadcast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/run/route_info/route/max_1	Route table maximum size	int	0	0	0
+/config/traffic/dos/udp_ports_eq	DOS UDP source and dst ports equal check mode	bool	FALSE
+/config/interface/swp29/interface_mode	Port Interface Mode	enum	Invalid	Invalid None XGMII XLAUI SFI XFI KR KR4 CR CR4 SR SR4 LR LR4 ZR 
+/ctrl/logger	Make entries in log	char *
+/config/interface/swp14/interface_mode	Port Interface Mode	enum	Invalid	Invalid None XGMII XLAUI SFI XFI KR KR4 CR CR4 SR SR4 LR LR4 ZR 
+/run/acl_info/egress/slices	Slices in use	int	0	0	0
+/clear/stats/vlan	clear hardware stats	trigger	1
+/run/acl_info/egress/meters	Meters in use	int	0	0	0
+/config/interface/swp28/interface_mode	Port Interface Mode	enum	Invalid	Invalid None XGMII XLAUI SFI XFI KR KR4 CR CR4 SR SR4 LR LR4 ZR 
+/config/logging	Log messages using the given BACKEND=LEVEL, space separate multiple BACKEND=LEVEL pairs.  BACKEND := {stderr, file:filename, syslog, program:executable}, LEVEL := {CRIT, ERR, WARN, INFO, DEBUG}	char *	256
+/config/interface/swp20/storm_control/multicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp41/storm_control/broadcast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/run/acl_info/ingress/counters	Counters in use	int	0	0	0
+/config/interface/swp41/storm_control/unknown_unicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/traffic/dos_enable	Enabling/Disabling of DOS prevention checks	bool	FALSE
+/version	Switchd version	char *	10
+/config/interface/swp13/storm_control/unknown_unicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/run/route_info/route/count_1	Route table current count	int	0	0	0
+/config/interface/swp44/storm_control/multicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp1/storm_control/unknown_unicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp12/storm_control/multicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp36/interface_mode	Port Interface Mode	enum	Invalid	Invalid None XGMII XLAUI SFI XFI KR KR4 CR CR4 SR SR4 LR LR4 ZR 
+/run/route_info/ecmp_nh/max_per_route	ECMP next-hop table maximum next-hops per route	int	0	0	0
+/config/interface/swp4/storm_control/multicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/run/route_info/host/count_v6	Host table current IPv6 count	int	0	0	0
+/run/route_info/ecmp_nh/count	ECMP next-hop table current count	int	0	0	0
+/config/interface/swp47/storm_control/multicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp6/interface_mode	Port Interface Mode	enum	Invalid	Invalid None XGMII XLAUI SFI XFI KR KR4 CR CR4 SR SR4 LR LR4 ZR 
+/config/interface/swp11/storm_control/unknown_unicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/traffic/dos/tcp_hdr_partial	DOS first TCP fragment partial header check mode	bool	FALSE
+/config/interface/swp15/interface_mode	Port Interface Mode	enum	Invalid	Invalid None XGMII XLAUI SFI XFI KR KR4 CR CR4 SR SR4 LR LR4 ZR 
+/config/interface/swp13/storm_control/multicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp1/storm_control/broadcast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp29/storm_control/unknown_unicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/run/acl_info/ingress/slices_total	Total slices available	int	0	0	0
+/config/interface/swp2/storm_control/multicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp42/storm_control/broadcast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp8/storm_control/broadcast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/ignore_non_swps	Ignore non-swp interfaces	bool	FALSE
+/config/interface/swp15/storm_control/multicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/route/host_max_percent	Maximum hardware neighbor table occupancy (percent of hardware table size)	uint16_t	50	1	100
+/config/interface/swp31/storm_control/multicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp19/storm_control/unknown_unicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/ctrl/hal/resync	Resync hardware cache with hardware	trigger	1
+/ctrl/resync	Resync netlink cache with hardware cache	trigger	1
+/config/interface/swp20/storm_control/unknown_unicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp45/interface_mode	Port Interface Mode	enum	Invalid	Invalid None XGMII XLAUI SFI XFI KR KR4 CR CR4 SR SR4 LR LR4 ZR 
+/config/interface/swp47/storm_control/broadcast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp16/storm_control/broadcast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp17/interface_mode	Port Interface Mode	enum	Invalid	Invalid None XGMII XLAUI SFI XFI KR KR4 CR CR4 SR SR4 LR LR4 ZR 
+/config/interface/swp9/storm_control/broadcast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp22/interface_mode	Port Interface Mode	enum	Invalid	Invalid None XGMII XLAUI SFI XFI KR KR4 CR CR4 SR SR4 LR LR4 ZR 
+/config/interface/swp22/storm_control/multicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp16/storm_control/multicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp34/storm_control/broadcast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/run/acl_info/egress/entries_total	Total entries available	int	0	0	0
+/config/interface/swp49/storm_control/unknown_unicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp36/storm_control/broadcast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/traffic/dos/tcp_ctrl0_seq0	DOS TCP pkt with control flags and seq num 0 check mode	bool	FALSE
+/ctrl/sample/ulog_channel	netlink channel for ULOG sampled packets	uint16_t	1	1	32
+/config/route/table	Kernel routing table ID, range 1 - 2^31, default 254	uint32_t	254	1	2147483648
+/run/route_info/host/count	Host table current count	int	0	0	0
+/config/interface/swp35/storm_control/multicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp43/storm_control/broadcast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/run/route_info/route/mask_limit	Route table short/long IPv6 address split	int	0	0	0
+/config/interface/swp20/storm_control/broadcast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/disable_internal_hw_err_restart	Disable internal hardware error restart mechanism	bool	FALSE
+/config/interface/swp3/storm_control/unknown_unicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp17/storm_control/broadcast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp41/interface_mode	Port Interface Mode	enum	Invalid	Invalid None XGMII XLAUI SFI XFI KR KR4 CR CR4 SR SR4 LR LR4 ZR 
+/config/interface/swp46/storm_control/unknown_unicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/arp/next_hops	Send ARPs for next hops	bool	TRUE
+/config/traffic/dos/icmpv4_length	DOS ICMPv4 ping length check mode	bool	FALSE
+/config/interface/swp40/interface_mode	Port Interface Mode	enum	Invalid	Invalid None XGMII XLAUI SFI XFI KR KR4 CR CR4 SR SR4 LR LR4 ZR 
+/config/interface/swp30/storm_control/multicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp12/interface_mode	Port Interface Mode	enum	Invalid	Invalid None XGMII XLAUI SFI XFI KR KR4 CR CR4 SR SR4 LR LR4 ZR 
+/config/interface/swp9/interface_mode	Port Interface Mode	enum	Invalid	Invalid None XGMII XLAUI SFI XFI KR KR4 CR CR4 SR SR4 LR LR4 ZR 
+/config/stats/poll_interval	Port statistics poll interval (in msec)	uint16_t	5000	500	10000
+/config/interface/swp26/interface_mode	Port Interface Mode	enum	Invalid	Invalid None XGMII XLAUI SFI XFI KR KR4 CR CR4 SR SR4 LR LR4 ZR 
+/config/interface/swp51/storm_control/broadcast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/run/acl_info/egress/counters_total	Total counters available	int	0	0	0
+/config/traffic/dos/tcp_offset1	DOS TCP pkt with fragment offset 1 check mode	bool	FALSE
+/config/coalesce/timeout	Coalescing time limit, in seconds	uint16_t	10	0	0
+/config/interface/swp33/storm_control/broadcast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp17/storm_control/multicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/traffic/dos/icmpv6_length	DOS ICMPv6 ping length check mode	bool	FALSE
+/config/interface/swp28/storm_control/multicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp28/storm_control/unknown_unicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/traffic/dos/smac_eq_dmac	DOS source MAC equals dst MAC check mode	bool	FALSE
+/config/interface/swp30/storm_control/broadcast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp31/interface_mode	Port Interface Mode	enum	Invalid	Invalid None XGMII XLAUI SFI XFI KR KR4 CR CR4 SR SR4 LR LR4 ZR 
+/config/interface/swp34/interface_mode	Port Interface Mode	enum	Invalid	Invalid None XGMII XLAUI SFI XFI KR KR4 CR CR4 SR SR4 LR LR4 ZR 
+/run/acl_info/egress/entries	Entries in use	int	0	0	0
+/config/interface/swp16/storm_control/unknown_unicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/run/acl_info/egress/counters	Counters in use	int	0	0	0
+/config/traffic/dos/tcp_flags_syn_fin	DOS TCP hdr with SYN and FIN flags check mode	bool	FALSE
+/config/interface/swp38/storm_control/broadcast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp4/storm_control/unknown_unicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp44/storm_control/unknown_unicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/acl/non_atomic_update_mode	ACL non atomic update mode	bool	FALSE
+/config/interface/swp32/storm_control/unknown_unicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/run/acl_info/ingress/meters	Meters in use	int	0	0	0
+/config/vxlan/default_ttl	Default TTL for outer ip header in VxLAN packet	uint16_t	64	2	255
+/config/interface/swp36/storm_control/multicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp38/interface_mode	Port Interface Mode	enum	Invalid	Invalid None XGMII XLAUI SFI XFI KR KR4 CR CR4 SR SR4 LR LR4 ZR 
+/run/acl_info/ingress/meters_total	Total meters available	int	0	0	0
+/config/interface/swp11/storm_control/multicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp21/storm_control/unknown_unicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp30/storm_control/unknown_unicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp51/storm_control/multicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp44/storm_control/broadcast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp50/storm_control/broadcast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
+/config/interface/swp45/storm_control/unknown_unicast	Storm Control Rate (pps)	uint32_t	0	0	4294967295
