@@ -59,6 +59,18 @@ What's been covered vs. what remains, as of commit `a2c37b9`.
 - DS100DF410 sysfs state for all 32 retimers
 - 36,896 BCM register names
 
+### switchd FUSE filesystem (SFS) — fully reverse-engineered
+- `lib/sfs/sfs.c` semantics fully recovered (mount, dispatch, register, types)
+- All 19 `fuse_operations` callbacks identified at `0x11819868`
+- 76 static `sfs_register` call sites enumerated
+- Read/write/getattr/readdir/release flow traced end-to-end
+- `/ctrl/hal/resync` mark-and-sweep algorithm decoded (3 workers)
+- 8 SFS types decoded (matches `.meta` schema)
+- 295-entry `.meta` schema captured + parsed
+- Worked example: `interface_mode` enum (15 values) → HAL → BCM
+- See: `fuse-explore/SWITCHD_SFS_INTERNALS.md`
+- See: `fuse-explore/SWITCHD_FUSE_API.md`
+
 ## ⚠️ Partially covered
 
 ### switchd internals
@@ -104,8 +116,9 @@ What's been covered vs. what remains, as of commit `a2c37b9`.
 | **ECMP / multipath** | Hash bin programming |
 | **Mirror/SPAN** | Mirror destination programming |
 | **Storm control** | Rate limiting per port |
-| **switchd's config parser** | `/etc/cumulus/switchd.conf` → runtime state |
 | **License validator** | `cl-license` interaction (we have the wrapper script but not the validation logic in switchd) |
+
+(`switchd.conf` parser identified at `FUN_10005eac` — bridges conf-file keys to SFS paths via 28 `sfs_register` calls; tree structure now understood, individual key-validators not yet decoded.)
 
 ### Tools we have but haven't analyzed
 

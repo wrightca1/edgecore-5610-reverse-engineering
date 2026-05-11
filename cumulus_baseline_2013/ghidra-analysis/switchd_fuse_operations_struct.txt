@@ -1,0 +1,51 @@
+# fuse_operations struct at 0x11819868
+# (passed as op-arg into fuse_new() — bytes resolve as BE func pointers)
+
+[ 0] +0x00  .getattr                = 0x100496e4  → FUN_100496e4 (size=376)
+[ 1] +0x04  .readlink               = 0x00000000
+[ 2] +0x08  .getdir                 = 0x00000000
+[ 3] +0x0c  .mknod                  = 0x1004996c  → FUN_1004996c (size=52)
+[ 4] +0x10  .mkdir                  = 0x100499a0  → FUN_100499a0 (size=44)
+[ 5] +0x14  .unlink                 = 0x100499cc  → FUN_100499cc (size=40)
+[ 6] +0x18  .rmdir                  = 0x100499f4  → FUN_100499f4 (size=40)
+[ 7] +0x1c  .symlink                = 0x10049a1c  → FUN_10049a1c (size=44)
+[ 8] +0x20  .rename                 = 0x10049a48  → FUN_10049a48 (size=44)
+[ 9] +0x24  .link                   = 0x10049a74  → FUN_10049a74 (size=44)
+[10] +0x28  .chmod                  = 0x10049aa0  → FUN_10049aa0 (size=44)
+[11] +0x2c  .chown                  = 0x10049acc  → FUN_10049acc (size=48)
+[12] +0x30  .truncate               = 0x1004acec  → FUN_1004acec (size=48)
+[13] +0x34  .utime                  = 0x10049afc  → FUN_10049afc (size=44)
+[14] +0x38  .open                   = 0x10049b88  → FUN_10049b88 (size=332)
+[15] +0x3c  .read                   = 0x1004a264  → FUN_1004a264 (size=452)
+[16] +0x40  .write                  = 0x1004abb4  → FUN_1004abb4 (size=124)
+[17] +0x44  .statfs                 = 0x00000000
+[18] +0x48  .flush                  = 0x1004ac30  → FUN_1004ac30 (size=188)
+[19] +0x4c  .release                = 0x10049cd4  → FUN_10049cd4 (size=196)
+[20] +0x50  .fsync                  = 0x10049b28  → FUN_10049b28 (size=48)
+[21] +0x54  .setxattr               = 0x00000000
+[22] +0x58  .getxattr               = 0x00000000
+[23] +0x5c  .listxattr              = 0x00000000
+[24] +0x60  .removexattr            = 0x00000000
+[25] +0x64  .opendir                = 0x00000000
+[26] +0x68  .readdir                = 0x1004985c  → FUN_1004985c (size=272)
+[27] +0x6c  .releasedir             = 0x00000000
+[28] +0x70  .fsyncdir               = 0x00000000
+[29] +0x74  .init                   = 0x00000000
+[30] +0x78  .destroy                = 0x00000000
+[31] +0x7c  .access                 = 0x00000000
+[32] +0x80  .create                 = 0x10049b58  → FUN_10049b58 (size=48)
+[33] +0x84  .ftruncate              = 0x00000000
+[34] +0x88  .fgetattr               = 0x00000000
+[35] +0x8c  .lock                   = 0x00000000
+[36] +0x90  .utimens                = 0x00000000
+[37] +0x94  .bmap                   = 0x00000000
+[38] +0x98  .flag_nullpath_ok       = 0x00000000
+[39] +0x9c  .flag_nopath            = 0x00000000
+[40] +0xa0  .flag_utime_omit_ok     = 0x1004ad1c  → FUN_1004ad1c (size=264)
+[41] +0xa4  .flag_reserved          = 0x00000000
+[42] +0xa8  .ioctl                  = 0x00000000
+[43] +0xac  .poll                   = 0x00000000
+[44] +0xb0  .write_buf              = 0x00000000
+[45] +0xb4  .read_buf               = 0x00000000
+[46] +0xb8  .flock                  = 0x00000124
+[47] +0xbc  .fallocate              = 0x00000000

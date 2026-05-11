@@ -1,0 +1,100 @@
+# Path-string xrefs (where switchd dispatches FUSE paths)
+
+  "/var/run/switchd.restart"                         @ 0x113172c4   used in FUN_10007af8                             @ 0x10007af8
+  "/var/run/switchd.restart"                         @ 0x113172c4   used in FUN_100076fc                             @ 0x100076fc
+  "/var/run/switchd.restart"                         @ 0x113172c4   used in FUN_100076fc                             @ 0x100076fc
+  "switchd.c"                                        @ 0x113178b8   used in FUN_10006b94                             @ 0x10006b94
+  "switchd.c"                                        @ 0x113178b8   used in FUN_10006b94                             @ 0x10006b94
+  "switchd.c"                                        @ 0x113178b8   used in FUN_10006b94                             @ 0x10006b94
+  "switchd.c"                                        @ 0x113178b8   used in FUN_10006b94                             @ 0x10006b94
+  "switchd.c"                                        @ 0x113178b8   used in FUN_10007af8                             @ 0x10007af8
+  "switchd.c"                                        @ 0x113178b8   used in FUN_10007af8                             @ 0x10007af8
+  "switchd.c"                                        @ 0x113178b8   used in FUN_10007af8                             @ 0x10007af8
+  "switchd.c"                                        @ 0x113178b8   used in FUN_10007af8                             @ 0x10007af8
+  "switchd.c"                                        @ 0x113178b8   used in FUN_10007af8                             @ 0x10007af8
+  "switchd.c"                                        @ 0x113178b8   used in FUN_10007af8                             @ 0x10007af8
+  "switchd.c"                                        @ 0x113178b8   used in FUN_10007084                             @ 0x10007084
+  "switchd.c"                                        @ 0x113178b8   used in FUN_100076fc                             @ 0x100076fc
+  "/config/stats/vdev_hw_poll_interval"              @ 0x11317c00   used in FUN_10005eac                             @ 0x10005eac
+  "/config/stats/vlan/aggregate"                     @ 0x11317c24   used in FUN_10005eac                             @ 0x10005eac
+  "/config/stats/vlan/show_internal_vlans"           @ 0x11317c44   used in FUN_10005eac                             @ 0x10005eac
+  "/config/stats/vxlan/aggregate"                    @ 0x11317c6c   used in FUN_10005eac                             @ 0x10005eac
+  "/config/stats/vxlan/member"                       @ 0x11317c8c   used in FUN_10005eac                             @ 0x10005eac
+  "/config/buf_util/poll_interval"                   @ 0x11317ca8   used in FUN_10005eac                             @ 0x10005eac
+  "/config/buf_util/measure_interval"                @ 0x11317cc8   used in FUN_10005eac                             @ 0x10005eac
+  "/config/acl/optimize_hw"                          @ 0x11317cec   used in FUN_10005eac                             @ 0x10005eac
+  "/config/acl/non_atomic_update_mode"               @ 0x11317d04   used in FUN_10005eac                             @ 0x10005eac
+  "/config/arp/next_hops"                            @ 0x11317d28   used in FUN_10005eac                             @ 0x10005eac
+  "/config/ignore_non_swps"                          @ 0x11317d40   used in FUN_10005eac                             @ 0x10005eac
+  "/config/disable_internal_parity_restart"          @ 0x11317d58   used in FUN_10005eac                             @ 0x10005eac
+  "/config/disable_internal_hw_err_restart"          @ 0x11317d80   used in FUN_10005eac                             @ 0x10005eac
+  "/config/route/table"                              @ 0x11317da8   used in FUN_10005eac                             @ 0x10005eac
+  "/config/route/host_max_percent"                   @ 0x11317dbc   used in FUN_10005eac                             @ 0x10005eac
+  "/config/route/delete_dead_routes"                 @ 0x11317ddc   used in FUN_10005eac                             @ 0x10005eac
+  "/config/coalesce/reducer"                         @ 0x11317e00   used in FUN_10005eac                             @ 0x10005eac
+  "/config/coalesce/timeout"                         @ 0x11317e1c   used in FUN_10005eac                             @ 0x10005eac
+  "/config/coalesce/offset"                          @ 0x11317e38   used in FUN_10005eac                             @ 0x10005eac
+  "/config/logging"                                  @ 0x11317e50   used in FUN_10005eac                             @ 0x10005eac
+  "/config/route/max_routes"                         @ 0x11317e60   used in FUN_10005eac                             @ 0x10005eac
+  "/config/resv_vlan_range"                          @ 0x11317e84   used in FUN_10005eac                             @ 0x10005eac
+  "/config/vxlan/default_ttl"                        @ 0x11317e9c   used in FUN_10005eac                             @ 0x10005eac
+  "/config/bridge/broadcast_frame_to_cpu"            @ 0x11317eb8   used in FUN_10005eac                             @ 0x10005eac
+  "/etc/cumulus/switchd.conf"                        @ 0x11317ee0   used in FUN_10007af8                             @ 0x10007af8
+  "/etc/cumulus/switchd.conf"                        @ 0x11317ee0   used in FUN_10007af8                             @ 0x10007af8
+  "/etc/cumulus/switchd.conf"                        @ 0x11317ee0   used in FUN_10005eac                             @ 0x10005eac
+  "/run/stats/vlan/%d/aggregate"                     @ 0x113180d4   used in FUN_10006840                             @ 0x10006840
+  "/run/stats/vxlan/all"                             @ 0x11318108   used in FUN_10006a1c                             @ 0x10006a1c
+  "/clear/stats/vxlan"                               @ 0x1131816c   used in FUN_10006b20                             @ 0x10006b20
+  "/var/run/switchd.ready"                           @ 0x11318258   used in FUN_10007af8                             @ 0x10007af8
+  "/var/run/switchd.ready"                           @ 0x11318258   used in FUN_10006fc0                             @ 0x10006fc0
+  "/var/run/switchd.ready"                           @ 0x11318258   used in FUN_10007948                             @ 0x10007948
+  "    -V: Display switchd version information.\n"   @ 0x1131859c   used in FUN_10007a04                             @ 0x10007a04
+  "See switchd man page for switchd configuration\n" @ 0x113185cc   used in FUN_10007a04                             @ 0x10007a04
+  "/var/run/switchd.pid"                             @ 0x1131867c   used in FUN_10007af8                             @ 0x10007af8
+  "/var/run/switchd.pid"                             @ 0x1131867c   used in FUN_10007af8                             @ 0x10007af8
+  "/var/run/switchd.pid"                             @ 0x1131867c   used in FUN_10007af8                             @ 0x10007af8
+  "/var/run/switchd.pid"                             @ 0x1131867c   used in FUN_10007af8                             @ 0x10007af8
+  "/var/run/switchd.pid"                             @ 0x1131867c   used in FUN_10007af8                             @ 0x10007af8
+  "%s %s:%d switchd cmdline:"                        @ 0x113187f8   used in FUN_10007af8                             @ 0x10007af8
+  "%s %s:%d switchd cmdline:"                        @ 0x113187f8   used in FUN_10007af8                             @ 0x10007af8
+  "/ctrl/logger"                                     @ 0x11318860   used in FUN_10007af8                             @ 0x10007af8
+  "/ctrl/debug"                                      @ 0x11318870   used in FUN_10007af8                             @ 0x10007af8
+  "/cumulus/switchd"                                 @ 0x113189e0   used in FUN_10007af8                             @ 0x10007af8
+  "/config/netlink/buf_size"                         @ 0x11318eb8   used in FUN_10009b6c                             @ 0x10009b6c
+  "/etc/cumulus/switchd.conf"                        @ 0x11318ed4   used in FUN_10009b6c                             @ 0x10009b6c
+  "/ctrl/netlink/resync"                             @ 0x11318f08   used in FUN_10009b6c                             @ 0x10009b6c
+  "/ctrl/netlink/nl_logger"                          @ 0x11318f20   used in FUN_10009b6c                             @ 0x10009b6c
+  "/config/interface/%s/interface_mode"              @ 0x113199f0   used in FUN_1000e958                             @ 0x1000e958
+  "/config/interface/%s/storm_control/broadcast"     @ 0x11319a30   used in FUN_1000ead4                             @ 0x1000ead4
+  "/config/interface/%s/storm_control/multicast"     @ 0x11319a60   used in FUN_1000ead4                             @ 0x1000ead4
+  "/config/interface/%s/storm_control/unknown_unicas @ 0x11319a90   used in FUN_1000ead4                             @ 0x1000ead4
+  "/run/route_info%s"                                @ 0x11319ca8   used in FUN_1000fa58                             @ 0x1000fa58
+  "/run/route_info%s"                                @ 0x11319ca8   used in FUN_1000fb10                             @ 0x1000fb10
+  "/etc/cumulus/switchd.conf"                        @ 0x1131a018   used in FUN_1000ff00                             @ 0x1000ff00
+  "/etc/cumulus/switchd.conf"                        @ 0x1131a018   used in FUN_1000ff00                             @ 0x1000ff00
+  "/etc/cumulus/switchd.conf"                        @ 0x1131a018   used in FUN_1000ff00                             @ 0x1000ff00
+  "/etc/cumulus/switchd.conf"                        @ 0x1131a018   used in FUN_1000ff00                             @ 0x1000ff00
+  "/etc/cumulus/switchd.conf"                        @ 0x1131a018   used in FUN_1000ff00                             @ 0x1000ff00
+  "/etc/cumulus/switchd.conf"                        @ 0x1131a018   used in FUN_1000ff00                             @ 0x1000ff00
+  "/etc/cumulus/switchd.conf"                        @ 0x1131a018   used in FUN_1000ff00                             @ 0x1000ff00
+  "/etc/cumulus/switchd.conf"                        @ 0x1131a018   used in FUN_1000ff00                             @ 0x1000ff00
+  "/etc/cumulus/switchd.conf"                        @ 0x1131a018   used in FUN_1000ff00                             @ 0x1000ff00
+  "/etc/cumulus/switchd.conf"                        @ 0x1131a018   used in FUN_1000ff00                             @ 0x1000ff00
+  "/config/"                                         @ 0x1131a034   used in FUN_1000ff00                             @ 0x1000ff00
+  "/config/"                                         @ 0x1131a034   used in FUN_1000ff00                             @ 0x1000ff00
+  "/ctrl/hal/resync"                                 @ 0x1131c130   used in FUN_10021884                             @ 0x10021884
+  "/ctrl/sample/ulog_channel"                        @ 0x1131cb54   used in FUN_10029984                             @ 0x10029984
+  "/ctrl/acl/log"                                    @ 0x1131e74c   used in FUN_10031ee0                             @ 0x10031ee0
+  "/run/acl_info%s"                                  @ 0x1131f678   used in FUN_100398d0                             @ 0x100398d0
+  "/ctrl/acl/reset_stats_sync"                       @ 0x1131f6a4   used in FUN_10039988                             @ 0x10039988
+  "/ctrl/acl/resync"                                 @ 0x1131f6c0   used in FUN_10039988                             @ 0x10039988
+  "/config/traffic/link_pause/%s/port_set"           @ 0x113217f0   used in FUN_100427d4                             @ 0x100427d4
+  "/config/traffic/link_pause/%s/tx_enable"          @ 0x11321830   used in FUN_100427d4                             @ 0x100427d4
+  "/config/traffic/link_pause/%s/rx_enable"          @ 0x11321858   used in FUN_100427d4                             @ 0x100427d4
+  "switchd"                                          @ 0x11322074   used in FUN_1004789c                             @ 0x1004789c
+  ".meta"                                            @ 0x11322560   used in FUN_1004b300                             @ 0x1004b300
+  "/var/run/switchd.socket"                          @ 0x11327e38   used in FUN_100728ac                             @ 0x100728ac
+  "/var/run/switchd.socket"                          @ 0x11327e38   used in FUN_100728ac                             @ 0x100728ac
+  "cl-support 'switchd rc script failed'"            @ 0x11327f4c   used in FUN_10072bbc                             @ 0x10072bbc
+  "cl-support 'switchd rc script failed'"            @ 0x11327f4c   used in FUN_10072bbc                             @ 0x10072bbc
+  "'C-d' to leave the diag shell, 'exitharder' to qu @ 0x11346240   used in FUN_100ef8a0                             @ 0x100ef8a0

@@ -1,0 +1,20 @@
+=== fuse_destroy (1 callers) ===
+  FUN_1004b924                             @ 0x1004b924 (size=188)
+
+=== fuse_get_context (2 callers) ===
+  FUN_10049b88                             @ 0x10049b88 (size=332)
+  FUN_1004965c                             @ 0x1004965c (size=136)
+
+=== fuse_new (1 callers) ===
+  FUN_1004b638                             @ 0x1004b638 (size=596)
+
+=== fuse_mount (1 callers) ===
+  FUN_1004b638                             @ 0x1004b638 (size=596)
+
+=== fuse_opt_add_arg (1 callers) ===
+  FUN_1004b638                             @ 0x1004b638 (size=596)
+
+=== fuse_unmount (2 callers) ===
+  FUN_1004b924                             @ 0x1004b924 (size=188)
+  FUN_1004b638                             @ 0x1004b638 (size=596)
+

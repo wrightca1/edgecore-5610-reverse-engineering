@@ -1,0 +1,4 @@
+"/clear/stats/vxlan"                               @ 0x1131816c   used in FUN_10006b20                   @ 0x10006b20
+"/ctrl/logger"                                     @ 0x11318860   used in FUN_10007af8                   @ 0x10007af8
+"/ctrl/debug"                                      @ 0x11318870   used in FUN_10007af8                   @ 0x10007af8
+"/ctrl/hal/resync"                                 @ 0x1131c130   used in FUN_10021884                   @ 0x10021884

@@ -1,0 +1,7 @@
+# libfuse symbols found in switchd
+fuse_destroy                             @ 0x11315820
+fuse_get_context                         @ 0x11316360
+fuse_mount                               @ 0x11316660
+fuse_new                                 @ 0x11316bc0
+fuse_opt_add_arg                         @ 0x11315c30
+fuse_unmount                             @ 0x11315fb0
