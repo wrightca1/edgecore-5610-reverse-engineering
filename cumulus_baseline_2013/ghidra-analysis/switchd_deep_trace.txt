@@ -1,0 +1,378 @@
+# Deep BCM SDK call-graph trace (depth ≤ 5)
+# Functions ranked by chip-register-keyword string references
+
+0x103230a4    FUN_103230a4                              depth=4 size=2372  hw_refs=14
+    "/work/monster-03/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/build/powerpc/bcm-sdk/syst...
+    "/dev/linux-kernel-bde"
+    "_ioctl(LUBDE_GET_NUM_DEVICES, &devio) == 0"
+    "/dev/linux-user-bde"
+    "/sbin/insmod linux-kernel-bde.ko"
+
+0x10820164    FUN_10820164                              depth=4 size=1432  hw_refs=4
+    "soc_mem_entries: invalid block %d for memory %s\n"
+    "soc_mem_is_sorted(unit, mem) || soc_mem_is_hashed(unit, mem) || soc_mem_is_cam(unit, mem) || soc_me...
+    "/work/monster-03/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/build/powerpc/bcm-sdk/src/...
+    "soc_attached(unit)"
+
+0x10803190    FUN_10803190                              depth=4 size=2636  hw_refs=3
+    "soc_mem_index_valid(unit, mem, index_min)"
+    "soc_mem_index_valid(unit, mem, index_max)"
+    "/work/monster-03/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/build/powerpc/bcm-sdk/src/...
+
+0x108623e4    FUN_108623e4                              depth=3 size=8176  hw_refs=3
+    "dwc_write <= CMIC_SCHAN_WORDS(unit)"
+    "/work/monster-03/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/build/powerpc/bcm-sdk/src/...
+    "dwc_read <= CMIC_SCHAN_WORDS(unit)"
+
+0x1080c940    FUN_1080c940                              depth=3 size=4848  hw_refs=3
+    "/work/monster-03/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/build/powerpc/bcm-sdk/src/...
+    "soc_attached(unit)"
+    "soc_mem_generic_lookup: invalid block %d for memory %s\n"
+
+0x10844e8c    FUN_10844e8c                              depth=3 size=320  hw_refs=2
+    "soc_reg%d_%s unit %d: %s[%d][0x%x] data=0x%08x_%08x\n"
+    "soc_reg%d_%s unit %d: %s[%d][0x%x] data=0x%08x\n"
+
+0x1083bfbc    FUN_1083bfbc                              depth=1 size=1016  hw_refs=2
+    "soc_phyctrl_redirect_loopback_set: u=%d p=%d TIMEOUT\n"
+    "entered soc_phyctrl_redirect_loopback_set: unit %d, port %d, enable %d\n"
+
+0x10847ab4    FUN_10847ab4                              depth=1 size=544  hw_refs=2
+    "/work/monster-03/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/build/powerpc/bcm-sdk/src/...
+    "reg %s is > 32 bit , but called with soc_reg32_get\n"
+
+0x108158a4    FUN_108158a4                              depth=2 size=1820  hw_refs=2
+    "soc_mem_is_sorted(unit, mem) || soc_mem_is_hashed(unit, mem) || soc_mem_is_cam(unit, mem) || soc_me...
+    "/work/monster-03/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/build/powerpc/bcm-sdk/src/...
+
+0x105c0200    FUN_105c0200                              depth=1 size=4148  hw_refs=2
+    "u=%d p=%d soc_phyctrl_linkup_evt rv=%d\n"
+    "u=%d p=%d soc_phyctrl_linkdn_evt rv=%d\n"
+
+0x107a213c    FUN_107a213c                              depth=3 size=2748  hw_refs=2
+    "_soc_field_value_fit(fieldinfo, fldbuf)"
+    "/work/monster-03/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/build/powerpc/bcm-sdk/src/...
+
+0x10848708    FUN_10848708                              depth=3 size=540  hw_refs=2
+    "soc_reg64_write_iterative: WARNING: iteration %d PLL went out of lock"
+    "soc_reg64_write_iterative: operation failed:\n"
+
+0x1083bc3c    FUN_1083bc3c                              depth=1 size=896  hw_refs=2
+    "soc_phyctrl_loopback_set: u=%d p=%d TIMEOUT\n"
+    "entered soc_phyctrl_loopback_set: unit %d, port %d, enable %d\n"
+
+0x10845228    FUN_10845228                              depth=3 size=532  hw_refs=2
+    "soc_reg64_read_iterative: WARNING: iteration %d PLL went out of lock"
+    "soc_reg64_read_iterative: operation failed:\n"
+
+0x105c90fc    bcm_port_duplex_set                       depth=0 size=1512  hw_refs=2
+    "PHY_DUPLEX_SET failed: %s\n"
+    "PHY_AUTONEG_SET failed: %s\n"
+
+0x10322de8    FUN_10322de8                              depth=2 size=140  hw_refs=2
+    "/work/monster-03/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/build/powerpc/bcm-sdk/syst...
+    "ioctl(_devfd, command, pdevio) == 0"
+
+0x10845948    FUN_10845948                              depth=2 size=548  hw_refs=2
+    "soc_reg64_get_iterative: WARNING: iteration %d PLL went out of lock"
+    "soc_reg64_get_iterative: operation failed:\n"
+
+0x10848a78    FUN_10848a78                              depth=2 size=556  hw_refs=2
+    "soc_reg64_set_iterative: operation failed:\n"
+    "soc_reg64_set_iterative: WARNING: iteration %d PLL went out of lock"
+
+0x10844d6c    FUN_10844d6c                              depth=3 size=288  hw_refs=2
+    "soc_reg%d_%s unit %d: %s[0x%x] data=0x%08x_%08x\n"
+    "soc_reg%d_%s unit %d: %s[0x%x] data=0x%08x\n"
+
+0x1083af9c    FUN_1083af9c                              depth=2 size=220  hw_refs=1
+    "entered soc_phyctrl_speed_set: unit %d, port %d, speed %d\n"
+
+0x1083aa9c    FUN_1083aa9c                              depth=1 size=608  hw_refs=1
+    "entered soc_phyctrl_enable_set: unit %d, port %d, enable %d\n"
+
+0x10766a68    FUN_10766a68                              depth=3 size=3940  hw_refs=1
+    "/work/monster-03/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/build/powerpc/bcm-sdk/src/...
+
+0x1084bf98    FUN_1084bf98                              depth=1 size=1072  hw_refs=1
+    "/work/monster-03/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/build/powerpc/bcm-sdk/src/...
+
+0x1086529c    FUN_1086529c                              depth=2 size=768  hw_refs=1
+    "/work/monster-03/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/build/powerpc/bcm-sdk/src/...
+
+0x105c7144    bcm_port_interface_set                    depth=0 size=1116  hw_refs=1
+    "PHY_INTERFACE_SET failed: %s\n"
+
+0x105c6a48    bcm_port_master_set                       depth=0 size=1012  hw_refs=1
+    "PHY_MASTER_SET failed: %s\n"
+
+0x1083c690    FUN_1083c690                              depth=1 size=216  hw_refs=1
+    "entered soc_phyctrl_interface_get: unit %d, port %d\n"
+
+0x10760d64    FUN_10760d64                              depth=3 size=612  hw_refs=1
+    "/work/monster-03/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/build/powerpc/bcm-sdk/src/...
+
+0x1084ea88    FUN_1084ea88                              depth=1 size=1512  hw_refs=1
+    "/work/monster-03/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/build/powerpc/bcm-sdk/src/...
+
+0x1079ff70    FUN_1079ff70                              depth=3 size=1772  hw_refs=1
+    "/work/monster-03/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/build/powerpc/bcm-sdk/src/...
+
+0x1083cb84    FUN_1083cb84                              depth=2 size=208  hw_refs=1
+    "entered soc_phyctrl_linkdn_evt: unit %d, port %d\n"
+
+0x10415744    bcm_port_control_phy_oam_set              depth=0 size=332  hw_refs=1
+    "bcm_port_control_phy_oam_set"
+
+0x1084a784    FUN_1084a784                              depth=1 size=512  hw_refs=1
+    "/work/monster-03/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/build/powerpc/bcm-sdk/src/...
+
+0x10802e80    FUN_10802e80                              depth=3 size=784  hw_refs=1
+    "Unit:%d Mem[%s] DMA data from cache.\n"
+
+0x107a8744    FUN_107a8744                              depth=4 size=1804  hw_refs=1
+    "/work/monster-03/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/build/powerpc/bcm-sdk/src/...
+
+0x107f6d44    FUN_107f6d44                              depth=5 size=9176  hw_refs=1
+    "_soc_xgs3_mem_dma: unit %d mem %s.%s index %d-%d buffer %p\n"
+
+0x10fa88c0    FUN_10fa88c0                              depth=3 size=692  hw_refs=1
+    "soc_fb_vlanmac_entry_del: bucket %d\n"
+
+0x10e9bdd0    FUN_10e9bdd0                              depth=5 size=664  hw_refs=1
+    "soc_fb_vlan_mac_hash: invalid hash_sel %d\n"
+
+0x1084aebc    FUN_1084aebc                              depth=3 size=400  hw_refs=1
+    "/work/monster-03/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/build/powerpc/bcm-sdk/src/...
+
+0x1083c3b4    FUN_1083c3b4                              depth=1 size=236  hw_refs=1
+    "entered soc_phyctrl_loopback_get: unit %d, port %d\n"
+
+0x1083cab4    FUN_1083cab4                              depth=2 size=208  hw_refs=1
+    "entered soc_phyctrl_linkup_evt: unit %d, port %d\n"
+
+0x1083c5b4    FUN_1083c5b4                              depth=1 size=220  hw_refs=1
+    "entered soc_phyctrl_interface_set: unit %d, port %d, pif %d\n"
+
+0x107d864c    FUN_107d864c                              depth=2 size=1772  hw_refs=1
+    "/work/monster-03/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/build/powerpc/bcm-sdk/src/...
+
+0x1084c8b4    FUN_1084c8b4                              depth=1 size=1152  hw_refs=1
+    "/work/monster-03/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/build/powerpc/bcm-sdk/src/...
+
+0x1083e8a8    FUN_1083e8a8                              depth=1 size=508  hw_refs=1
+    "entered soc_phyctrl_ability_local_get: unit %d, port %d\n"
+
+0x108508ac    FUN_108508ac                              depth=2 size=8596  hw_refs=1
+    "/work/monster-03/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/build/powerpc/bcm-sdk/src/...
+
+0x1083a9a4    FUN_1083a9a4                              depth=5 size=248  hw_refs=1
+    "entered soc_phyctrl_linkfault_get: unit %d, port %d\n"
+
+0x10848ca4    FUN_10848ca4                              depth=2 size=1396  hw_refs=1
+    "soc_reg_write: Use soc_reg_above_64_set \n"
+
+0x1083d4dc    FUN_1083d4dc                              depth=1 size=232  hw_refs=1
+    "entered soc_phyctrl_control_set: unit %d, port %d, phy_ctrl %d, value %u\n"
+
+0x107d5f20    FUN_107d5f20                              depth=2 size=2116  hw_refs=1
+    "_soc_link_update: link=%s m2=%s pbm=%s\n"
+
+0x107a8020    FUN_107a8020                              depth=5 size=1828  hw_refs=1
+    "/work/monster-03/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/build/powerpc/bcm-sdk/src/...
+
+0x11312264    FUN_11312264                              depth=3 size=412  hw_refs=1
+    "/work/monster-03/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/build/powerpc/bcm-sdk/src/...
+
+0x1042d410    bcm_rx_unregister                         depth=0 size=300  hw_refs=1
+    "bcm_rx_unregister"
+
+0x108485cc    FUN_108485cc                              depth=3 size=316  hw_refs=1
+    "/work/monster-03/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/build/powerpc/bcm-sdk/src/...
+
+0x1083aec4    FUN_1083aec4                              depth=1 size=216  hw_refs=1
+    "entered soc_phyctrl_duplex_get: unit %d, port %d\n"
+
+0x1083d5c4    FUN_1083d5c4                              depth=5 size=248  hw_refs=1
+    "entered soc_phyctrl_control_get: unit %d, port %d, phy_ctrl %d\n"
+
+0x108469c0    FUN_108469c0                              depth=1 size=1576  hw_refs=1
+    "soc_reg_get: Use soc_reg_above_64_get \n"
+
+0x10415600    bcm_port_control_phy_oam_get              depth=0 size=324  hw_refs=1
+    "bcm_port_control_phy_oam_get"
+
+0x1083acfc    FUN_1083acfc                              depth=1 size=236  hw_refs=1
+    "entered soc_phyctrl_enable_get: unit %d, port %d\n"
+
+0x1083d1f8    FUN_1083d1f8                              depth=1 size=236  hw_refs=1
+    "entered soc_phyctrl_medium_get: unit %d, port %d\n"
+
+0x1083e2f4    FUN_1083e2f4                              depth=1 size=384  hw_refs=1
+    "entered soc_phyctrl_ability_advert_get: unit %d, port %d\n"
+
+0x10ebc198    FUN_10ebc198                              depth=4 size=2108  hw_refs=1
+    "soc_fb_l3x_lookup: invalid S-Channel reply, expected L3X2_LOOKUP_ACK_MSG:\n"
+
+0x108417f4    FUN_108417f4                              depth=4 size=548  hw_refs=1
+    "entered soc_phyctrl_notify: unit %d, port %d, event %d, data %u\n"
+
+0x10763d18    FUN_10763d18                              depth=4 size=2156  hw_refs=1
+    "/work/monster-03/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/build/powerpc/bcm-sdk/src/...
+
+0x1083ade8    FUN_1083ade8                              depth=1 size=220  hw_refs=1
+    "entered soc_phyctrl_duplex_set: unit %d, port %d, duplex %d\n"
+
+0x11313158    FUN_11313158                              depth=4 size=112  hw_refs=1
+    "/work/monster-03/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/build/powerpc/bcm-sdk/src/...
+
+0x10633104    FUN_10633104                              depth=3 size=1264  hw_refs=1
+    "/work/monster-03/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/build/powerpc/bcm-sdk/src/...
+
+0x1083e5e4    FUN_1083e5e4                              depth=2 size=384  hw_refs=1
+    "entered soc_phyctrl_ability_remote_get: unit %d, port %d\n"
+
+0x10414d24    bcm_port_config_phy_oam_set               depth=0 size=312  hw_refs=1
+    "bcm_port_config_phy_oam_set"
+
+0x107d7418    FUN_107d7418                              depth=3 size=2424  hw_refs=1
+    "soc_linkscan_pause: pausing hw linkscan failed\n"
+
+0x107f911c    FUN_107f911c                              depth=5 size=10188  hw_refs=1
+    "_soc_xgs3_mem_slam: unit %d mem %s.%s index %d-%d buffer %p\n"
+
+0x1083cf1c    FUN_1083cf1c                              depth=1 size=236  hw_refs=1
+    "entered soc_phyctrl_mdix_status_get: unit %d, port %d\n"
+
+0x104159d4    bcm_port_control_phy_timesync_set         depth=0 size=332  hw_refs=1
+    "bcm_port_control_phy_timesync_set"
+
+0x11312da0    FUN_11312da0                              depth=1 size=348  hw_refs=1
+    "/work/monster-03/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/build/powerpc/bcm-sdk/src/...
+
+0x107c81fc    FUN_107c81fc                              depth=5 size=624  hw_refs=1
+    "soc_cmicm_intr0_disable cmc %d unit %d: mask 0x%8x\n"
+
+0x10865638    FUN_10865638                              depth=3 size=788  hw_refs=1
+    "/work/monster-03/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/build/powerpc/bcm-sdk/src/...
+
+0x1083b338    FUN_1083b338                              depth=1 size=220  hw_refs=1
+    "entered soc_phyctrl_auto_negotiate_set: unit %d, port %d, an %d\n"
+
+0x10536fe4    FUN_10536fe4                              depth=3 size=14624  hw_refs=1
+    "/work/monster-03/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/build/powerpc/bcm-sdk/src/...
+
+0x1083ce30    FUN_1083ce30                              depth=1 size=236  hw_refs=1
+    "entered soc_phyctrl_mdix_get: unit %d, port %d\n"
+
+0x10822930    FUN_10822930                              depth=5 size=296  hw_refs=1
+    "/work/monster-03/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/build/powerpc/bcm-sdk/src/...
+
+0x10414bec    bcm_port_config_phy_oam_get               depth=0 size=312  hw_refs=1
+    "bcm_port_config_phy_oam_get"
+
+0x1131299c    FUN_1131299c                              depth=2 size=184  hw_refs=1
+    "/work/monster-03/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/build/powerpc/bcm-sdk/src/...
+
+0x10846528    FUN_10846528                              depth=2 size=1176  hw_refs=1
+    "_soc_reg32_get: invalid S-Channel reply, expected READ_REG_ACK:\n"
+
+0x10eb6940    FUN_10eb6940                              depth=4 size=1296  hw_refs=1
+    "soc_fb_l2x_bank_lookup: invalid S-Channel reply, expected L2_LOOKUP_ACK_MSG:\n"
+
+0x106ba8cc    FUN_106ba8cc                              depth=1 size=676  hw_refs=1
+    "/work/monster-03/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/build/powerpc/bcm-sdk/src/...
+
+0x11313094    FUN_11313094                              depth=4 size=196  hw_refs=1
+    "/work/monster-03/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/build/powerpc/bcm-sdk/src/...
+
+0x1083a75c    FUN_1083a75c                              depth=3 size=584  hw_refs=1
+    "entered soc_phyctrl_link_get: unit %d, port %d\n"
+
+0x107659ac    FUN_107659ac                              depth=3 size=4284  hw_refs=1
+    "/work/monster-03/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/build/powerpc/bcm-sdk/src/...
+
+0x1083cd54    FUN_1083cd54                              depth=1 size=220  hw_refs=1
+    "entered soc_phyctrl_mdix_set: unit %d, port %d, mdix %d\n"
+
+0x10849350    FUN_10849350                              depth=1 size=1776  hw_refs=1
+    "soc_reg_set: Use soc_reg_above_64_set \n"
+
+0x1083b550    FUN_1083b550                              depth=1 size=264  hw_refs=1
+    "entered soc_phyctrl_auto_negotiate_get: unit %d, port %d\n"
+
+0x113100e0    FUN_113100e0                              depth=5 size=520  hw_refs=1
+    "/work/monster-03/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/build/powerpc/bcm-sdk/src/...
+
+0x10415890    bcm_port_control_phy_timesync_get         depth=0 size=324  hw_refs=1
+    "bcm_port_control_phy_timesync_get"
+
+0x1083b24c    FUN_1083b24c                              depth=1 size=236  hw_refs=1
+    "entered soc_phyctrl_master_get: unit %d, port %d\n"
+
+0x107aa3b4    FUN_107aa3b4                              depth=5 size=632  hw_refs=1
+    "/work/monster-03/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/build/powerpc/bcm-sdk/src/...
+
+0x11312efc    FUN_11312efc                              depth=1 size=140  hw_refs=1
+    "/work/monster-03/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/build/powerpc/bcm-sdk/src/...
+
+0x107a2eb0    FUN_107a2eb0                              depth=2 size=524  hw_refs=1
+    "/work/monster-03/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/build/powerpc/bcm-sdk/src/...
+
+0x107a30bc    FUN_107a30bc                              depth=2 size=516  hw_refs=1
+    "/work/monster-03/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/build/powerpc/bcm-sdk/src/...
+
+0x1041f484    bcm_port_phy_timesync_config_get          depth=0 size=312  hw_refs=1
+    "bcm_port_phy_timesync_config_get"
+
+0x1041f5bc    bcm_port_phy_timesync_config_set          depth=0 size=312  hw_refs=1
+    "bcm_port_phy_timesync_config_set"
+
+0x1083b078    FUN_1083b078                              depth=1 size=248  hw_refs=1
+    "entered soc_phyctrl_speed_get: unit %d, port %d\n"
+
+0x1084d57c    FUN_1084d57c                              depth=1 size=1264  hw_refs=1
+    "/work/monster-03/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/build/powerpc/bcm-sdk/src/...
+
+0x1083e474    FUN_1083e474                              depth=1 size=368  hw_refs=1
+    "entered soc_phyctrl_ability_advert_set: unit %d, port %d\n"
+
+0x10822674    FUN_10822674                              depth=5 size=296  hw_refs=1
+    "/work/monster-03/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/build/powerpc/bcm-sdk/src/...
+
+0x1084f070    FUN_1084f070                              depth=3 size=6204  hw_refs=1
+    "/work/monster-03/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/build/powerpc/bcm-sdk/src/...
+
+0x1083b170    FUN_1083b170                              depth=1 size=220  hw_refs=1
+    "entered soc_phyctrl_master_set: unit %d, port %d, master %d\n"
+
+0x113127c0    FUN_113127c0                              depth=3 size=136  hw_refs=1
+    "/work/monster-03/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/build/powerpc/bcm-sdk/src/...
+
+0x1053adbc    FUN_1053adbc                              depth=2 size=156  hw_refs=1
+    "Linkscan interrupt unit %d\n"
+
+0x107d7d90    FUN_107d7d90                              depth=3 size=2108  hw_refs=1
+    "/work/monster-03/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/build/powerpc/bcm-sdk/src/...
+
+0x107c7f90    FUN_107c7f90                              depth=5 size=620  hw_refs=1
+    "soc_cmicm_intr0_enable cmc %d unit %d: mask 0x%8x\n"
+
+0x107f5e94    FUN_107f5e94                              depth=5 size=2340  hw_refs=1
+    "/work/monster-03/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/build/powerpc/bcm-sdk/src/...
+
+0x10845b6c    FUN_10845b6c                              depth=2 size=1328  hw_refs=1
+    "soc_reg_read: Use soc_reg_above_64_get \n"
+
+0x1083e764    FUN_1083e764                              depth=2 size=324  hw_refs=1
+    "entered soc_phy_ability_local_get: unit %d, port %d\n"
+
+0x10805c64    FUN_10805c64                              depth=4 size=6640  hw_refs=1
+    "soc_mem_write: attempt to write R/O memory %s\n"
+
+0x10760a94    FUN_10760a94                              depth=3 size=720  hw_refs=1
+    "/work/monster-03/build.slave/workspace/CumulusLinux-2.5_br_BUILD_powerpc/build/powerpc/bcm-sdk/src/...
+
+0x1080b060    FUN_1080b060                              depth=3 size=980  hw_refs=1
+    "soc_mem_search: read %s.%s[%d] failed\n"
+
