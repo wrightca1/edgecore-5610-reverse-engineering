@@ -1,0 +1,14 @@
+# Functions that reference specific BCM register names
+
+==== CX_WC_PLL_CONTROL ====
+
+==== CMIC_CMC0_MIIM_CTRL ====
+
+==== CMIC_CMC0_SCHAN_CTRL ====
+
+==== CMIC_CMC0_MIIM_PARAM ====
+
+==== CMIC_CMC0_FSCHAN_OPCODE ====
+
+==== CX_WC_PLL_RESET ====
+

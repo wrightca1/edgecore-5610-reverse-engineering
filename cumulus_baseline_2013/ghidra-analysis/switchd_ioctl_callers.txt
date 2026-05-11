@@ -1,0 +1,4 @@
+# Functions calling ioctl() - candidates for BDE ioctl wrappers
+# 1 callers found
+
+ioctl                                    @ 0x11317c50 (size=16)
