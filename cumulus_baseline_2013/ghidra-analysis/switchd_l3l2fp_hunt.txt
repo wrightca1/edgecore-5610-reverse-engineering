@@ -1,0 +1,600 @@
+# Function discovery: L3, L2, FP TCAM, ECMP, MMU, VLAN, Linkscan, knet stub, Mirror, Storm
+
+========================================
+== L3_route — 37 functions
+========================================
+  FUN_1005f1b4  size=1480    3 distinct strings
+      ""%s %s:%d CRIT bcm_l3_host_add failed for hal route %s: %s\n""
+      ""%s %s:%d CRIT bcm_l3_route_get failed for hal route %s: %s\n""
+      ""%s %s:%d CRIT bcm_l3_route_add failed for hal route %s: %s\n""
+  FUN_1075cff0  size=1008    3 distinct strings
+      ""\ndefip_nexthop_ip6 - ""
+      ""defip_sub_len: %d defip_index: %d\n""
+      ""defip_tunnel: %d defip_prio: %d\n""
+  FUN_1005f7d0  size=872     2 distinct strings
+      ""%s %s:%d CRIT bcm_l3_host_delete for HAL route %s failed: %s\n""
+      ""%s %s:%d CRIT bcm_l3_route_delete hal route %s failed: %s\n""
+  FUN_101d8854  size=12256   2 distinct strings
+      ""bcm_l3_route_add: c = %d %s\n""
+      ""L3 DEFIP IPV4 Routes Add""
+  FUN_1123f2f8  size=2572    2 distinct strings
+      ""L3_DEFIP""
+      ""L3_DEFIP_ALPM_IPV6_64""
+  FUN_1005a5a8  size=2456    1 distinct strings
+      ""%s %s:%d CRIT bcm_l3_intf_create failed for %d: %s\n""
+  FUN_1005d898  size=1564    1 distinct strings
+      ""%s %s:%d CRIT bcm_l3_egress_create failed: %s\n""
+  FUN_1005dfe4  size=376     1 distinct strings
+      ""%s %s:%d CRIT bcm_l3_egress_destroy failed: %s\n""
+  FUN_100637a8  size=708     1 distinct strings
+      ""%s %s:%d ERR bcm_l3_intf_create failed, svi %d (%s)\n""
+  FUN_10063dd0  size=1996    1 distinct strings
+      ""%s %s:%d ERR bcm_l3_intf_create failed, svi %d (%s)\n""
+  FUN_10066768  size=1240    1 distinct strings
+      ""%s %s:%d CRIT bcm_l3_intf_create failed: %s\n""
+  FUN_1006a82c  size=1432    1 distinct strings
+      ""%s %s:%d CRIT bcm_l3_intf_create failed for intf %d: vlan %d %s\n""
+  FUN_10083810  size=1628    1 distinct strings
+      ""%s %s:%d CRIT bcm_l3_egress_create failed:%s\n""
+  FUN_10133e74  size=2272    1 distinct strings
+      ""l3-defip""
+  FUN_101418b8  size=8744    1 distinct strings
+      ""1 should be L3 routed 0 otherwise""
+  FUN_10166948  size=1416    1 distinct strings
+      ""%s: Error creating entry in L3 host table: %s\n""
+  FUN_103f054c  size=300     1 distinct strings
+      ""bcm_l3_egress_create""
+  FUN_103f0678  size=280     1 distinct strings
+      ""bcm_l3_egress_destroy""
+  FUN_103f3128  size=368     1 distinct strings
+      ""bcm_l3_host_add""
+  FUN_103f34f4  size=368     1 distinct strings
+      ""bcm_l3_host_delete""
+  FUN_103f3664  size=368     1 distinct strings
+      ""bcm_l3_host_delete_all""
+  FUN_103f37d4  size=368     1 distinct strings
+      ""bcm_l3_host_delete_by_interface""
+  FUN_103f3944  size=368     1 distinct strings
+      ""bcm_l3_host_delete_by_network""
+  FUN_103f5ef8  size=280     1 distinct strings
+      ""bcm_l3_intf_create""
+  FUN_103f85a0  size=368     1 distinct strings
+      ""bcm_l3_route_add""
+  FUN_103f883c  size=368     1 distinct strings
+      ""bcm_l3_route_delete""
+  FUN_103f89ac  size=368     1 distinct strings
+      ""bcm_l3_route_delete_all""
+  FUN_103f8b1c  size=368     1 distinct strings
+      ""bcm_l3_route_delete_by_interface""
+  FUN_103f8e24  size=344     1 distinct strings
+      ""bcm_l3_route_get""
+  FUN_107575ec  size=688     1 distinct strings
+      ""td2_l3_defip_pair128""
+
+========================================
+== L2_fdb — 27 functions
+========================================
+  FUN_101c86e4  size=2824    2 distinct strings
+      ""bcm_l2_addr_delete failed: %s\n""
+      ""bcm_l2_addr_add failed: %s\n""
+  FUN_10060c7c  size=1028    1 distinct strings
+      ""%s %s:%d CRIT bcm_l2_addr_add failed %s\n""
+  FUN_10061080  size=376     1 distinct strings
+      ""%s %s:%d bcm_l2_addr_delete: %s\n""
+  FUN_100611f8  size=524     1 distinct strings
+      ""%s %s:%d bcm_l2_addr_delete for %s: %s\n""
+  FUN_10061404  size=532     1 distinct strings
+      ""%s %s:%d CRIT bcm_l2_addr_add failed %s\n""
+  FUN_10066c40  size=1568    1 distinct strings
+      ""%s %s:%d bcm_l2_addr_delete_by_trunk failed: %s\n""
+  FUN_1006f30c  size=240     1 distinct strings
+      ""%s %s:%d CRIT bcm_l2_age_timer_set failed %s\n""
+  FUN_10178804  size=680     1 distinct strings
+      ""MIM_CLI: Error: bcm_l2_addr_add failed, %s\n""
+  FUN_10181cb0  size=676     1 distinct strings
+      ""MPLS_CLI: Error: bcm_l2_addr_add failed, %s\n""
+  FUN_101b5784  size=680     1 distinct strings
+      ""WLAN_CLI: Error: bcm_l2_addr_add failed, %s\n""
+  FUN_101b8da8  size=228     1 distinct strings
+      ""bcm_l2_addr_delete FAILED\n""
+  FUN_103e6cf0  size=476     1 distinct strings
+      ""bcm_l2_addr_add""
+  FUN_103e6ecc  size=300     1 distinct strings
+      ""bcm_l2_addr_delete""
+  FUN_103e6ff8  size=288     1 distinct strings
+      ""bcm_l2_addr_delete_by_mac""
+  FUN_103e7118  size=304     1 distinct strings
+      ""bcm_l2_addr_delete_by_mac_port""
+  FUN_103e7248  size=296     1 distinct strings
+      ""bcm_l2_addr_delete_by_port""
+  FUN_103e7370  size=292     1 distinct strings
+      ""bcm_l2_addr_delete_by_trunk""
+  FUN_103e7494  size=312     1 distinct strings
+      ""bcm_l2_addr_delete_by_vlan""
+  FUN_103e75cc  size=468     1 distinct strings
+      ""bcm_l2_addr_delete_by_vlan_gport_multi""
+  FUN_103e77a0  size=324     1 distinct strings
+      ""bcm_l2_addr_delete_by_vlan_port""
+  FUN_103e78e4  size=316     1 distinct strings
+      ""bcm_l2_addr_delete_by_vlan_trunk""
+  FUN_103e7b30  size=340     1 distinct strings
+      ""bcm_l2_addr_get""
+  FUN_103e8204  size=280     1 distinct strings
+      ""bcm_l2_age_timer_get""
+  FUN_103e831c  size=280     1 distinct strings
+      ""bcm_l2_age_timer_set""
+  FUN_103eb804  size=512     1 distinct strings
+      ""bcm_l2_replace""
+  FUN_103eba04  size=1100    1 distinct strings
+      ""bcm_l2_replace_match""
+  FUN_10eaf31c  size=932     1 distinct strings
+      ""AbnormalThreadExit:soc_l2mod_fifo_thread,DMA failed: %s\n""
+
+========================================
+== ECMP — 35 functions
+========================================
+  FUN_1098a1d0  size=2212    9 distinct strings
+      ""\tRTAG7 A1 0x%08x\n""
+      ""\tRTAG7 B hashes invalid due to missing packet info\n""
+      ""\tRTAG7 B1 0x%08x\n""
+  FUN_10a74e50  size=3664    9 distinct strings
+      ""\tRTAG7 A1 0x%08x\n""
+      ""\tRTAG7 B hashes invalid due to missing packet info\n""
+      ""\tRTAG7 B1 0x%08x\n""
+  FUN_10d8dd54  size=2564    9 distinct strings
+      ""\tRTAG7 A1 0x%08x\n""
+      ""\tRTAG7 B hashes invalid due to missing packet info\n""
+      ""\tRTAG7 B1 0x%08x\n""
+  FUN_10005eac  size=1052    1 distinct strings
+      ""/config/arp/next_hops""
+  FUN_100124d0  size=3280    1 distinct strings
+      ""hal_route->num_next_hops == 1""
+  FUN_10027bbc  size=296     1 distinct strings
+      ""single->next_hops != NULL""
+  FUN_103f0790  size=288     1 distinct strings
+      ""bcm_l3_egress_ecmp_add""
+  FUN_103f08b0  size=296     1 distinct strings
+      ""bcm_l3_egress_ecmp_create""
+  FUN_103f09d8  size=288     1 distinct strings
+      ""bcm_l3_egress_ecmp_delete""
+  FUN_103f0af8  size=280     1 distinct strings
+      ""bcm_l3_egress_ecmp_destroy""
+  FUN_103f0c10  size=304     1 distinct strings
+      ""bcm_l3_egress_ecmp_ethertype_get""
+  FUN_103f0d40  size=300     1 distinct strings
+      ""bcm_l3_egress_ecmp_ethertype_set""
+  FUN_103f0e6c  size=296     1 distinct strings
+      ""bcm_l3_egress_ecmp_find""
+  FUN_103f0f94  size=304     1 distinct strings
+      ""bcm_l3_egress_ecmp_get""
+  FUN_103f10c4  size=288     1 distinct strings
+      ""bcm_l3_egress_ecmp_member_status_get""
+  FUN_103f11e4  size=288     1 distinct strings
+      ""bcm_l3_egress_ecmp_member_status_set""
+  FUN_103f1304  size=308     1 distinct strings
+      ""bcm_l3_egress_ecmp_resilient_replace""
+  FUN_103f1438  size=308     1 distinct strings
+      ""bcm_l3_egress_ecmp_resilient_traverse""
+  FUN_103f156c  size=288     1 distinct strings
+      ""bcm_l3_egress_ecmp_traverse""
+  FUN_108e4bc0  size=344     1 distinct strings
+      ""ecmp_group_hash""
+  FUN_109890b8  size=764     1 distinct strings
+      ""Unit %d - NonUC trunk Hash calculation:  non rtag7 calc not supported\n""
+  FUN_109893b4  size=912     1 distinct strings
+      ""Unit %d - Hash calculation: uport only RTAG7 calc no support for rtag %d\n""
+  FUN_10a6daf4  size=1752    1 distinct strings
+      ""Unit %d - ECMP Hash calculation:  non rtag7 calc not supported\n""
+  FUN_10a6e1cc  size=1752    1 distinct strings
+      ""Unit %d - ECMP RH Hash calculation:  non rtag7 calc not supported\n""
+  FUN_10a6e8a4  size=2228    1 distinct strings
+      ""Unit %d - NonUC trunk Hash calculation:  non rtag7 calc not supported\n""
+  FUN_10a6f90c  size=1776    1 distinct strings
+      ""Unit %d - NonUC trunk Hash calculation:  non rtag7 calc not supported\n""
+  FUN_10a73dac  size=1236    1 distinct strings
+      ""Unit %d - Hash calculation: uport only RTAG7 calc no support for rtag %d\n""
+  FUN_10a74908  size=1352    1 distinct strings
+      ""Unit %d - Hash calculation: uport only RTAG7 calc no support for rtag %d\n""
+  FUN_10a962ac  size=428     1 distinct strings
+      ""  L3 interface %4d: virtual_port:next_hop_index""
+  FUN_10b54548  size=1060    1 distinct strings
+      ""egr_l3_next_hop traverse""
+
+========================================
+== FP_TCAM — 857 functions
+========================================
+  FUN_100769bc  size=5792    15 distinct strings
+      ""%s %s:%d ERR bcm_field_qualify_SrcIp6 failed %s\n""
+      ""%s %s:%d ERR bcm_field_qualify_DstIp6 failed %s\n""
+      ""%s %s:%d ERR bcm_field_qualify_DstClassL3 failed %s\n""
+  FUN_1013df90  size=4060    5 distinct strings
+      ""bcm_field_group_create""
+      ""bcm_field_group_create_mode_id""
+      ""bcm_field_group_create_id""
+  FUN_100752c4  size=1468    4 distinct strings
+      ""%s %s:%d ERR bcm_field_qualify_IcmpTypeCode failed %s\n""
+      ""%s %s:%d ERR bcm_field_qualify_L4DstPort failed %s\n""
+      ""%s %s:%d ERR bcm_field_qualify_TcpControl failed %s\n""
+  FUN_10079718  size=1488    4 distinct strings
+      ""%s %s:%d ERR bcm_field_entry_enable_get failed %s\n""
+      ""%s %s:%d ERR bcm_field_entry_enable_set failed %s\n""
+      ""%s %s:%d ERR bcm_field_entry_reinstall failed %s\n""
+  FUN_1013c600  size=936     4 distinct strings
+      ""FP(unit %d) verb:  bcm_field_entry_copy_id(src_eid=%d, dst_eid=%d)\n""
+      ""bcm_field_entry_copy_id""
+      ""bcm_field_entry_copy""
+  FUN_1013cc7c  size=788     4 distinct strings
+      ""bcm_field_entry_destroy_all""
+      ""FP(unit %d) verb: bcm_field_entry_destroy(eid=%d)\n""
+      ""bcm_field_entry_destroy""
+  FUN_1013d8e0  size=1152    4 distinct strings
+      ""FP(unit %d) verb: bcm_field_entry_prio_set(eid=%d, prio=%d)\n""
+      ""bcm_field_entry_prio_set""
+      ""FP(unit %d) verb: bcm_field_entry_prio_get(eid=%d)\n""
+  FUN_10075b00  size=888     3 distinct strings
+      ""%s %s:%d ERR bcm_field_qualify_InterfaceClassPort failed %s\n""
+      ""%s %s:%d ERR bcm_field_qualify_Vlan failed %s\n""
+      ""%s %s:%d ERR bcm_field_qualify_DstTrunk failed %s\n""
+  FUN_10075e78  size=2764    3 distinct strings
+      ""%s %s:%d ERR bcm_field_qualify_DstPort failed %s\n""
+      ""%s %s:%d ERR bcm_field_qualify_Vlan failed %s\n""
+      ""%s %s:%d ERR bcm_field_qualify_InPorts failed %s\n""
+  FUN_1014460c  size=888     3 distinct strings
+      ""FP(unit %d) verb:fp_qset_add: data qualifier=%d\n""
+      ""FP(unit %d) Error: Unknown qualifier: %s\n""
+      ""bcm_field_qset_data_qualifier_add""
+  FUN_10145c7c  size=8912    3 distinct strings
+      ""FP(unit %d) Error: Unknown qualifier: %s\n""
+      ""bcm_field_qualify_clear""
+      ""bcm_field_qualifier_delete""
+  FUN_10216970  size=4192    3 distinct strings
+      ""bcm_field_action_add""
+      ""bcm_field_stat_create""
+      ""bcm_field_entry_stat_attach""
+  FUN_10075880  size=640     2 distinct strings
+      ""%s %s:%d ERR bcm_field_qualify_OutPort failed %s\n""
+      ""%s %s:%d ERR bcm_field_qualify_Vlan failed %s\n""
+  FUN_1007b060  size=712     2 distinct strings
+      ""%s %s:%d ERR bcm_field_stat_attach failed %s\n""
+      ""%s %s:%d ERR bcm_field_stat_create failed %s\n""
+  FUN_1013b74c  size=868     2 distinct strings
+      ""bcm_field_action_remove_all""
+      ""bcm_field_action_remove""
+  FUN_1013c260  size=928     2 distinct strings
+      ""bcm_field_entry_create_id""
+      ""bcm_field_entry_create""
+  FUN_1013c9a8  size=724     2 distinct strings
+      ""FP(unit %d) verb: bcm_field_entry_operation(eid=%d, oper=0x%x)\n""
+      ""bcm_field_entry_operation""
+  FUN_10140924  size=548     2 distinct strings
+      ""bcm_field_group_mode_get""
+      ""FP(unit %d) verb:bcm_field_group_mode_get gid=%d\n""
+  FUN_10143cdc  size=492     2 distinct strings
+      ""bcm_field_group_compress""
+      ""FP(unit %d) verb:bcm_field_group_compress(gid=%d)\n""
+  FUN_10143ec8  size=756     2 distinct strings
+      ""FP(unit %d) verb:bcm_field_group_enable_get(gid=%d)\n""
+      ""bcm_field_group_enable_get""
+  FUN_101441bc  size=384     2 distinct strings
+      ""FP(unit %d) verb:bcm_field_group_enable_set(gid=%d, enable=%d)\n""
+      ""bcm_field_group_enable_set""
+  FUN_1014b97c  size=840     2 distinct strings
+      ""FP(unit %d) verb:bcm_field_qualify_IpInfo(entry=%d, data=%#x, mask=%#x)\n""
+      ""bcm_field_qualify_IpInfo""
+  FUN_1014bd3c  size=524     2 distinct strings
+      ""bcm_field_qualify_PacketRes""
+      ""FP(unit %d) verb:bcm_field_qualify_PacketRes(entry=%d, data=%#x, mask=%#x)\n""
+  FUN_1014bfdc  size=584     2 distinct strings
+      ""bcm_field_qualify_Color""
+      ""FP(unit %d) verb: bcm_field_qualify_(entry=%d, data=%#x)\n""
+  FUN_1014c3e0  size=568     2 distinct strings
+      ""FP(unit %d) verb:bcm_field_qualify_ForwardingType(entry=%d, data=%#x)\n""
+      ""bcm_field_qualify_ForwardingType""
+  FUN_1014c618  size=508     2 distinct strings
+      ""FP(unit %d) verb:bcm_field_qualify_IpFrag(entry=%d, data=%#x)\n""
+      ""bcm_field_qualify_IpFrag""
+  FUN_1014c8a8  size=508     2 distinct strings
+      ""FP(unit %d) verb: bcm_field_qualify_LoopbackType(entry=%d, data=%#x)\n""
+      ""bcm_field_qualify_LoopbackType""
+  FUN_1014cb38  size=508     2 distinct strings
+      ""bcm_field_qualify_TunnelType""
+      ""FP(unit %d) verb: bcm_field_qualify_TunnelType(entry=%d, data=%#x)\n""
+  FUN_1014eb34  size=480     2 distinct strings
+      ""ERROR: bcm_field_stat_destroy_all: Unimplemented\n""
+      ""ERROR: bcm_field_stat_destroy(unit=%d, id=%d) failed (%s) \n""
+  FUN_1014f3a8  size=1364    2 distinct strings
+      ""bcm_field_stat_get""
+      ""bcm_field_stat_config_get""
+
+========================================
+== MMU — 141 functions
+========================================
+  FUN_10126da4  size=15120   2 distinct strings
+      ""%s: bcm_cosq_gport_attach ERROR: port %s: %s\n""
+      ""%s: bcm_cosq_gport_add ERROR: port %s: %s\n""
+  FUN_10eedbdc  size=4172    2 distinct strings
+      ""  Global headroom: %d\n""
+      ""  Pool %d total prigroup headroom: %d\n""
+  FUN_10f17604  size=2084    2 distinct strings
+      ""  Global headroom: %d\n""
+      ""  Pool %d total prigroup headroom: %d\n""
+  FUN_1038d0bc  size=328     1 distinct strings
+      ""bcm_cosq_bst_profile_get""
+  FUN_1038d204  size=328     1 distinct strings
+      ""bcm_cosq_bst_profile_set""
+  FUN_1038d34c  size=320     1 distinct strings
+      ""bcm_cosq_bst_stat_clear""
+  FUN_1038d48c  size=336     1 distinct strings
+      ""bcm_cosq_bst_stat_get""
+  FUN_1038d5dc  size=336     1 distinct strings
+      ""bcm_cosq_bst_stat_get32""
+  FUN_1038d72c  size=344     1 distinct strings
+      ""bcm_cosq_bst_stat_multi_get""
+  FUN_1038d884  size=344     1 distinct strings
+      ""bcm_cosq_bst_stat_multi_get32""
+  FUN_1038d9dc  size=284     1 distinct strings
+      ""bcm_cosq_bst_stat_sync""
+  FUN_1038daf8  size=376     1 distinct strings
+      ""bcm_cosq_classifier_create""
+  FUN_1038dc70  size=280     1 distinct strings
+      ""bcm_cosq_classifier_destroy""
+  FUN_1038dd88  size=320     1 distinct strings
+      ""bcm_cosq_classifier_get""
+  FUN_1038dec8  size=312     1 distinct strings
+      ""bcm_cosq_classifier_mapping_clear""
+  FUN_1038e000  size=348     1 distinct strings
+      ""bcm_cosq_classifier_mapping_get""
+  FUN_1038e15c  size=364     1 distinct strings
+      ""bcm_cosq_classifier_mapping_multi_get""
+  FUN_1038e2c8  size=364     1 distinct strings
+      ""bcm_cosq_classifier_mapping_multi_set""
+  FUN_1038e434  size=356     1 distinct strings
+      ""bcm_cosq_classifier_mapping_set""
+  FUN_1038e598  size=280     1 distinct strings
+      ""bcm_cosq_config_get""
+  FUN_1038e6b0  size=280     1 distinct strings
+      ""bcm_cosq_config_set""
+  FUN_1038e7c8  size=328     1 distinct strings
+      ""bcm_cosq_control_get""
+  FUN_1038e910  size=328     1 distinct strings
+      ""bcm_cosq_control_set""
+  FUN_1038ea58  size=288     1 distinct strings
+      ""bcm_cosq_cpu_cosq_enable_get""
+  FUN_1038eb78  size=288     1 distinct strings
+      ""bcm_cosq_cpu_cosq_enable_set""
+  FUN_1038ec98  size=288     1 distinct strings
+      ""bcm_cosq_delay_tolerance_level_get""
+  FUN_1038edb8  size=288     1 distinct strings
+      ""bcm_cosq_delay_tolerance_level_set""
+  FUN_1038eed8  size=288     1 distinct strings
+      ""bcm_cosq_dest_credit_size_get""
+  FUN_1038eff8  size=292     1 distinct strings
+      ""bcm_cosq_dest_credit_size_set""
+  FUN_1038f11c  size=272     1 distinct strings
+      ""bcm_cosq_detach""
+
+========================================
+== VLAN_xlate — 76 functions
+========================================
+  FUN_1006e61c  size=2340    1 distinct strings
+      ""%s %s:%d ERR bcm_vlan_translate_egress_delete failed, port %d vlan %d: %d\n""
+  FUN_1044d118  size=364     1 distinct strings
+      ""bcm_vlan_translate_action_add""
+  FUN_1044d284  size=280     1 distinct strings
+      ""bcm_vlan_translate_action_class_get""
+  FUN_1044d39c  size=280     1 distinct strings
+      ""bcm_vlan_translate_action_class_set""
+  FUN_1044d4b4  size=364     1 distinct strings
+      ""bcm_vlan_translate_action_create""
+  FUN_1044d620  size=356     1 distinct strings
+      ""bcm_vlan_translate_action_delete""
+  FUN_1044d784  size=364     1 distinct strings
+      ""bcm_vlan_translate_action_get""
+  FUN_1044d8f0  size=292     1 distinct strings
+      ""bcm_vlan_translate_action_id_create""
+  FUN_1044da14  size=292     1 distinct strings
+      ""bcm_vlan_translate_action_id_destroy""
+  FUN_1044db38  size=284     1 distinct strings
+      ""bcm_vlan_translate_action_id_destroy_all""
+  FUN_1044dc54  size=300     1 distinct strings
+      ""bcm_vlan_translate_action_id_get""
+  FUN_1044dd80  size=300     1 distinct strings
+      ""bcm_vlan_translate_action_id_set""
+  FUN_1044deac  size=388     1 distinct strings
+      ""bcm_vlan_translate_action_range_add""
+  FUN_1044e030  size=384     1 distinct strings
+      ""bcm_vlan_translate_action_range_delete""
+  FUN_1044e1b0  size=272     1 distinct strings
+      ""bcm_vlan_translate_action_range_delete_all""
+  FUN_1044e2c0  size=388     1 distinct strings
+      ""bcm_vlan_translate_action_range_get""
+  FUN_1044e444  size=288     1 distinct strings
+      ""bcm_vlan_translate_action_range_traverse""
+  FUN_1044e564  size=288     1 distinct strings
+      ""bcm_vlan_translate_action_traverse""
+  FUN_1044e684  size=360     1 distinct strings
+      ""bcm_vlan_translate_add""
+  FUN_1044e7ec  size=332     1 distinct strings
+      ""bcm_vlan_translate_delete""
+  FUN_1044e938  size=272     1 distinct strings
+      ""bcm_vlan_translate_delete_all""
+  FUN_1044ea48  size=336     1 distinct strings
+      ""bcm_vlan_translate_egress_action_add""
+  FUN_1044eb98  size=328     1 distinct strings
+      ""bcm_vlan_translate_egress_action_delete""
+  FUN_1044ece0  size=336     1 distinct strings
+      ""bcm_vlan_translate_egress_action_get""
+  FUN_1044ee30  size=288     1 distinct strings
+      ""bcm_vlan_translate_egress_action_traverse""
+  FUN_1044ef50  size=360     1 distinct strings
+      ""bcm_vlan_translate_egress_add""
+  FUN_1044f0b8  size=332     1 distinct strings
+      ""bcm_vlan_translate_egress_delete""
+  FUN_1044f204  size=272     1 distinct strings
+      ""bcm_vlan_translate_egress_delete_all""
+  FUN_1044f314  size=348     1 distinct strings
+      ""bcm_vlan_translate_egress_get""
+  FUN_1044f470  size=336     1 distinct strings
+      ""bcm_vlan_translate_egress_stat_attach""
+
+========================================
+== Linkscan — 17 functions
+========================================
+  FUN_1008f9cc  size=1296    1 distinct strings
+      ""bcm_linkscan_interval""
+  FUN_100cfcdc  size=7072    1 distinct strings
+      ""bcm_linkscan_interval""
+  FUN_103fd718  size=272     1 distinct strings
+      ""bcm_linkscan_detach""
+  FUN_103fd828  size=272     1 distinct strings
+      ""bcm_linkscan_dump""
+  FUN_103fd938  size=280     1 distinct strings
+      ""bcm_linkscan_enable_get""
+  FUN_103fda50  size=304     1 distinct strings
+      ""bcm_linkscan_enable_port_get""
+  FUN_103fdb80  size=280     1 distinct strings
+      ""bcm_linkscan_enable_set""
+  FUN_103fdc98  size=272     1 distinct strings
+      ""bcm_linkscan_init""
+  FUN_103fdda8  size=312     1 distinct strings
+      ""bcm_linkscan_mode_get""
+  FUN_103fdee0  size=312     1 distinct strings
+      ""bcm_linkscan_mode_set""
+  FUN_103fe018  size=504     1 distinct strings
+      ""bcm_linkscan_mode_set_pbm""
+  FUN_103fe210  size=312     1 distinct strings
+      ""bcm_linkscan_port_register""
+  FUN_103fe348  size=312     1 distinct strings
+      ""bcm_linkscan_port_unregister""
+  FUN_103fe480  size=280     1 distinct strings
+      ""bcm_linkscan_register""
+  FUN_103fe598  size=280     1 distinct strings
+      ""bcm_linkscan_unregister""
+  FUN_103fe6b0  size=496     1 distinct strings
+      ""bcm_linkscan_update""
+  FUN_1053bcd0  size=3624    1 distinct strings
+      ""bcm_linkscan_errdelay""
+
+========================================
+== knet_stub — 10 functions
+========================================
+  FUN_103e6130  size=272     1 distinct strings
+      ""bcm_knet_cleanup""
+  FUN_103e6240  size=344     1 distinct strings
+      ""bcm_knet_filter_create""
+  FUN_103e6398  size=280     1 distinct strings
+      ""bcm_knet_filter_destroy""
+  FUN_103e64b0  size=320     1 distinct strings
+      ""bcm_knet_filter_get""
+  FUN_103e65f0  size=288     1 distinct strings
+      ""bcm_knet_filter_traverse""
+  FUN_103e6710  size=272     1 distinct strings
+      ""bcm_knet_init""
+  FUN_103e6820  size=344     1 distinct strings
+      ""bcm_knet_netif_create""
+  FUN_103e6978  size=280     1 distinct strings
+      ""bcm_knet_netif_destroy""
+  FUN_103e6a90  size=320     1 distinct strings
+      ""bcm_knet_netif_get""
+  FUN_103e6bd0  size=288     1 distinct strings
+      ""bcm_knet_netif_traverse""
+
+========================================
+== Mirror_SPAN — 35 functions
+========================================
+  FUN_1017a748  size=2844    6 distinct strings
+      ""%s bcm_mirror_destination_destroy failed()  %s\n""
+      ""%s bcm_mirror_destination_create() failed  %s\n""
+      ""%s bcm_mirror_port_dest_add() failed  %s\n""
+  FUN_1017c208  size=704     4 distinct strings
+      ""Mirror""
+      ""Mirror ingress""
+      ""Mirror all""
+  FUN_10073720  size=1008    2 distinct strings
+      ""%s %s:%d ERR Setting bcmSwitchMirrorPktChecksEnable failed: %s\n""
+      ""%s %s:%d ERR Setting bcmSwitchDirectedMirroring failed: %s\n""
+  FUN_101418b8  size=8744    2 distinct strings
+      ""Mirrored only mask""
+      ""Mirrored only""
+  FUN_1017b264  size=864     2 distinct strings
+      ""bcm_mirror_port_dest_get() FAILED: %s\n""
+      ""bcm_mirror_destination_get() FAILED: %s\n""
+  FUN_1017c4c8  size=3788    2 distinct strings
+      ""%s: bcm_mirror_port_set: %s\n""
+      ""%s: bcm_mirror_port_get: %s\n""
+  FUN_1055f1f8  size=5176    2 distinct strings
+      ""Mirror destinations""
+      ""Mirror module""
+  FUN_10074d18  size=1452    1 distinct strings
+      ""%s %s:%d ERR bcm_mirror_dest_destroy failed %s\n""
+  FUN_10078e68  size=956     1 distinct strings
+      ""%s %s:%d ERR bcm_mirror_destination_create failed %s\n""
+  FUN_10097904  size=1920    1 distinct strings
+      "" Mirror""
+  FUN_10098084  size=1688    1 distinct strings
+      "" Mirror""
+  FUN_10145c7c  size=8912    1 distinct strings
+      ""MirrorCopy""
+  FUN_1017a130  size=1560    1 distinct strings
+      ""Mirror ID: %2d; ""
+  FUN_103cbb1c  size=328     1 distinct strings
+      ""bcm_field_qualify_MirrorCopy""
+  FUN_103cbc64  size=296     1 distinct strings
+      ""bcm_field_qualify_MirrorCopy_get""
+  FUN_10402218  size=400     1 distinct strings
+      ""bcm_mirror_destination_create""
+  FUN_104023a8  size=304     1 distinct strings
+      ""bcm_mirror_destination_destroy""
+  FUN_104024d8  size=432     1 distinct strings
+      ""bcm_mirror_destination_get""
+  FUN_10402688  size=288     1 distinct strings
+      ""bcm_mirror_destination_traverse""
+  FUN_10402fc8  size=344     1 distinct strings
+      ""bcm_mirror_port_dest_add""
+  FUN_10403120  size=344     1 distinct strings
+      ""bcm_mirror_port_dest_delete""
+  FUN_10403278  size=316     1 distinct strings
+      ""bcm_mirror_port_dest_delete_all""
+  FUN_104033b4  size=432     1 distinct strings
+      ""bcm_mirror_port_dest_get""
+  FUN_10403564  size=328     1 distinct strings
+      ""bcm_mirror_port_get""
+  FUN_104036ac  size=352     1 distinct strings
+      ""bcm_mirror_port_info_get""
+  FUN_1040380c  size=408     1 distinct strings
+      ""bcm_mirror_port_info_set""
+  FUN_104039a4  size=328     1 distinct strings
+      ""bcm_mirror_port_set""
+  FUN_10403aec  size=368     1 distinct strings
+      ""bcm_mirror_port_vlan_dest_add""
+  FUN_10403c5c  size=368     1 distinct strings
+      ""bcm_mirror_port_vlan_dest_delete""
+  FUN_10403dcc  size=340     1 distinct strings
+      ""bcm_mirror_port_vlan_dest_delete_all""
+
+========================================
+== Storm_control — 3 functions
+========================================
+  FUN_1000ead4  size=472     3 distinct strings
+      ""/config/interface/%s/storm_control/broadcast""
+      ""/config/interface/%s/storm_control/unknown_unicast""
+      ""/config/interface/%s/storm_control/multicast""
+  FUN_10427ffc  size=288     1 distinct strings
+      ""bcm_rate_get""
+  FUN_10428394  size=288     1 distinct strings
+      ""bcm_rate_set""
+
+========================================
+== Stats — 5 functions
+========================================
+  FUN_1008d168  size=696     1 distinct strings
+      ""%s %s:%d CRIT bcm_stat_init failed: %s\n""
+  FUN_1042c77c  size=304     1 distinct strings
+      ""bcm_stat_clear""
+  FUN_1042d2b4  size=324     1 distinct strings
+      ""bcm_stat_get""
+  FUN_1042d3f8  size=324     1 distinct strings
+      ""bcm_stat_get32""
+  FUN_1042de9c  size=272     1 distinct strings
+      ""bcm_stat_init""
+
