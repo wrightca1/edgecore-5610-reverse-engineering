@@ -1,0 +1,422 @@
+#!/usr/bin/python
+#--------------------------------------------------------------------------
+#
+# Copyright 2013 Cumulus Networks, inc  all rights reserved
+#
+#--------------------------------------------------------------------------
+
+# For set_temp_host
+import contextlib
+
+# for str_to_tmp_file
+import tempfile
+
+import os
+import argparse
+import ConfigParser
+import urllib2
+import subprocess
+import sys
+import syslog
+import time
+
+BOOT_DONE_FILE = '/var/run/boot.done'
+config_dir = '/var/lib/cumulus'
+config_file = 'autoprovision.conf'
+license_file = '/etc/cumulus/.license.txt'
+osrelease_file = '/etc/os-release'
+dmidecode_path = '/usr/sbin/dmidecode'
+uname_path = '/bin/uname'
+script_flag = 'CUMULUS-AUTOPROVISIONING'
+config = {}
+debug = False
+verbose = False
+quiet = False
+log_method = ""
+log_handler = None
+verbose = False
+version = '0.4'
+
+### Logging
+
+syslog_priority_map = {"crit": syslog.LOG_CRIT,
+                       "error": syslog.LOG_ERR,
+                       "info": syslog.LOG_INFO,
+                       "warn": syslog.LOG_WARNING,
+                       "debug": syslog.LOG_DEBUG}
+
+stdout_priority_map = {"crit": "error",
+                       "error": "error",
+                       "info": "",
+                       "warn": "warning",
+                       "debug": "debug"}
+
+def is_boot_done_file_present():
+    return os.path.isfile(BOOT_DONE_FILE)
+
+
+def is_done_booting():
+    return is_boot_done_file_present()
+
+@contextlib.contextmanager
+def str_to_tmp_file(data):
+    """ Write a string to a temp file
+
+    file is deleted after exiting the with block.
+
+    >>> with str_to_tmp_file("foo") as tmpfoo:
+    ...     print 'tempfilename:', tmpfoo
+    ...     print open(tmpfoo).read()
+    """
+    file_fd, filename = tempfile.mkstemp(text=True)
+    os.write(file_fd, data)
+    os.close(file_fd)
+    yield filename
+    os.unlink(filename)
+
+def log_handler_stdout(priority, buf):
+    p = stdout_priority_map.get(priority, "")
+    if p != "":
+        p = p + ': '
+    print p + buf
+    sys.stdout.flush()
+
+
+def log_handler_syslog(priority, buf):
+    syslog.syslog(syslog_priority_map.get(priority, syslog.LOG_INFO), buf)
+
+
+def log_msg_begin(*args, **kwargs):
+    if quiet is False:
+        log_handler('', ''.join(args))
+
+
+def log_msg_end(ret):
+    if quiet is False:
+        if ret == 0:
+            log_handler('', 'done.')
+        else:
+            log_handler('', 'failed.')
+
+
+def log(*args, **kwargs):
+    if quiet is False:
+        log_handler("info", ''.join(args))
+
+
+def log_debug(*args, **kwargs):
+    if debug is True:
+        log_handler("debug", ''.join(args))
+
+
+def log_verbose(*args, **kargs):
+    if verbose is True:
+        log_handler("", ''.join(args))
+
+
+def log_error(*args, **kwargs):
+    log_handler("error", ''.join(args))
+
+
+def log_warn(*args, **kwargs):
+    log_handler("warn", ''.join(args))
+
+
+def log_crit(*args, **kwargs):
+    log_handler("crit", ''.join(args))
+
+
+def log_cmderr(cmd, cmdout):
+    if cmdout is None:
+        return
+    log('\n')
+    if len(cmdout) == 0:
+        log_error('cmd \'%s\'' % cmd.rstrip('\n') +
+                  ' failed with unexpected error')
+    else:
+        log_error('cmd \'%s\'' % cmd.rstrip('\n') +
+                  ' failed with error:\n' +
+                  '(' + cmdout.rstrip('\n') + ')')
+
+
+def log_init():
+    global log_handler
+
+    if log_method == "syslog":
+        syslog.openlog("cl-autoprovision", syslog.LOG_CONS | syslog.LOG_PID,
+                       syslog.LOG_DAEMON)
+        log_handler = log_handler_syslog
+    else:
+        log_handler = log_handler_stdout
+
+### Config
+
+
+def config_setup():
+    global config
+    config = ConfigParser.RawConfigParser()
+    if os.path.exists(config_dir) is False:
+        os.mkdir(config_dir)
+    if os.path.isfile(config_dir + '/' + config_file):
+        config.read(config_dir + '/' + config_file)
+    else:
+        config_defaults()
+        config_save()
+    return
+
+
+def config_defaults():
+    config.add_section("discovery")
+    config.set("discovery", "count", "0")
+    config.set("discovery", "max", "32")
+    config.add_section("provisioning")
+    config.set("provisioning", "enabled", "True")
+    config.set("provisioning", "complete", "False")
+    config.set("provisioning", "datetime", "")
+    config.set("provisioning", "method", "")
+    config.set("provisioning", "detail", "")
+    return
+
+
+def config_save():
+    fsobj = open(config_dir + '/' + config_file, 'w')
+    config.write(fsobj)
+    fsobj.close()
+    return
+
+
+def config_set(section, option, value):
+    config.set(section, option, value)
+    config_save()
+    return
+
+
+def config_incr(section, option):
+    val = config.getint(section, option)
+    val += 1
+    config.set(section, option, val)
+    config_save()
+    return
+
+### HTTP Headers
+
+
+def license_installed():
+    if os.path.isfile(license_file):
+        return 1
+    else:
+        return 0
+
+
+def dmidecode_val(line, field):
+    pos = line.find(field)
+    if pos > -1:
+        pos2 = pos+len(field)+2
+        return line[pos2:len(line)].strip()
+    else:
+        return ""
+
+
+def osrelease_val(field):
+    for line in open(osrelease_file, 'r'):
+        field2 = field + "="
+        pos = line.find(field2)
+        if pos > -1:
+            pos2 = pos+len(field)+1
+            return line[pos2:len(line)].strip().replace("\"", "")
+    return ""
+
+
+def uname_arch():
+    cmd = "%s -p" % (uname_path)
+    proc = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
+    for line in proc.stdout:
+        return line.strip()
+    return ""
+
+
+def boot_in_progress():
+    return not is_done_booting()
+
+
+def add_cumulus_headers(req):
+    mfgr = ""
+    prodname = ""
+    serial = ""
+    proc = subprocess.Popen(dmidecode_path, shell=True, stdout=subprocess.PIPE)
+    for line in proc.stdout:
+        if line.find("Manufacturer") > -1:
+            mfgr = dmidecode_val(line, "Manufacturer")
+        if line.find("Product Name") > -1:
+            prodname = dmidecode_val(line, "Product Name")
+        if line.find("Serial Number") > -1:
+            serial = dmidecode_val(line, "Serial Number")
+    # assemble headers to send the server
+    pfx = "CUMULUS"
+    req.add_header('User-agent', "CumulusLinux-AutoProvision/%s" % (version))
+    req.add_header(pfx + '-ARCH', uname_arch())
+    req.add_header(pfx + '-BUILD', osrelease_val("VERSION"))
+    req.add_header(pfx + '-LICENSE-INSTALLED', license_installed())
+    req.add_header(pfx + '-MANUFACTURER', mfgr)
+    req.add_header(pfx + '-PRODUCTNAME', prodname)
+    req.add_header(pfx + '-PROV-COUNT', config.getint("discovery", "count"))
+    req.add_header(pfx + '-PROV-MAX', config.getint("discovery", "max"))
+    req.add_header(pfx + '-SERIAL', serial)
+    req.add_header(pfx + '-VERSION', osrelease_val("VERSION_ID"))
+    return req
+
+
+def tryurl(url, doexec, method):
+    success = False
+    # should support additional protocols in the future tftp:// + ftp://
+    if url.lower().startswith("http://"):
+        success = processweb(url, doexec, method)
+    elif url.lower().startswith("https://"):
+        success = processweb(url, doexec, method)
+    elif url.lower().startswith("file://"):
+        success = processweb(url, doexec, "Local Script")
+    return success
+
+
+def processweb(url, doexec, method):
+    success = False
+    req = urllib2.Request(url)
+    add_cumulus_headers(req)
+    try:
+        resp = urllib2.urlopen(req)
+    except urllib2.URLError, error:
+        log_error('URL Error %s' % error)
+    except urllib2.HTTPError, error:
+        log_error('HTTP Error %s' % error.code)
+    else:
+        # code ok, check marker
+        scriptcontent = resp.read()
+        log("URL response code %s" % resp.code)
+        if scriptcontent.find(script_flag) > -1:
+            log("Markers ok")
+            while boot_in_progress():
+                log("Boot in progress, delaying auto provision")
+                time.sleep(5)
+            log("Executing user provided script")
+            with str_to_tmp_file(scriptcontent) as script_file:
+                os.chmod(script_file, 0777)
+                try:
+                    subprocess.check_call(script_file)
+                except subprocess.CalledProcessError, cpe:
+                    log_error("Payload returned code %s" % cpe.returncode)
+                except OSError, ose:
+                    if ose.errno == 2:
+                        log_error("Could not find referenced script/interpreter " \
+                                  "in downloaded payload.")
+                    elif ose.errno == 8:
+                        log_error("Could not find interpreter line (#!<path_to_interpreter>) " \
+                                  "in downloaded payload.")
+                    else:
+                        log_error("Unexpected OS error: %s" % str(ose))
+                except BaseException, be:
+                    log_error("Unexpected error: %s" % str(be))
+                else:
+                    log("Scripted returned success")
+                    config_set("provisioning", "complete", True)
+                    config_set("provisioning", "method", method)
+                    config_set("provisioning", "detail", url)
+                    config_set("provisioning", "datetime", int(time.time()))
+                    success = True
+        else:
+            # code ok, but no markers
+            log_error("No marker '%s' found" % script_flag)
+    return success
+
+
+if __name__ == "__main__":
+    """ main function """
+    descr = 'Cumulus Linux auto provisioning'
+    ret = 0
+
+    if not os.geteuid() == 0:
+            log_error('Error: Must be root to run this command')
+            exit(1)
+
+    arg_parser = argparse.ArgumentParser(description=descr)
+
+    # Command line arg parser
+    #
+    group = arg_parser.add_mutually_exclusive_group(required=True)
+
+    group.add_argument('-u', '--url', dest='url',
+                       action='store',
+                       help='Provision from URL')
+
+    group.add_argument('-i', '--file', dest='script',
+                       action='store',
+                       help='Provision from a script')
+
+    group.add_argument('-x', '--disable', dest='disable',
+                       action='store_true',
+                       help='Disable startup provisioning')
+
+    group.add_argument('-e', '--enable', dest='enable',
+                       action='store_true',
+                       help='Enable startup provisioning')
+
+    group.add_argument('-s', '--startup', dest='startup',
+                       action='store_true',
+                       help='Startup discovery, normally only called at boot')
+
+    arg_parser.add_argument('-f', '--force', dest='force',
+                            action='store_true', help='Force')
+
+    arg_parser.add_argument('--log', dest='log',
+                            choices=['syslog'],
+                            help=argparse.SUPPRESS)
+
+    # Parse command line arguments
+    cmdline_args = arg_parser.parse_args()
+    if cmdline_args.log is not None:
+        log_method = cmdline_args.log
+
+    log_init()
+    log('version: %s' % version)
+
+    config_setup()
+
+    if cmdline_args.script:
+        cmdline_args.url = 'file://' + cmdline_args.script
+    checkcriteria = cmdline_args.url
+
+    if checkcriteria:
+        if config.getboolean("provisioning", "complete") is True and cmdline_args.force is False:
+            log("Provisioning has already occured, use --force to override")
+            exit(1)
+
+        if config.getboolean("provisioning", "enabled") is False and cmdline_args.force is False:
+            log("Provisioning disabled in config, use --force to override")
+            exit(1)
+
+        dcount = config.getint("discovery", "count")
+        dmax = config.getint("discovery", "max")
+        if (dcount >= dmax) and (cmdline_args.force is False):
+            log("Maximum discovers reached (%s)" % dmax)
+            exit(1)
+
+    # url called manually
+    if cmdline_args.url is not None:
+        if len(cmdline_args.url) > 0:
+            log("Attempting to provision from '%s'" % cmdline_args.url)
+            config_incr("discovery", "count")
+            tryurl(cmdline_args.url, True, "DHCP Option")
+        else:
+            log("Called with missing URL")
+
+    if cmdline_args.disable is True:
+        log("Disabling provisioning")
+        config_set("provisioning", "enabled", False)
+
+    if cmdline_args.enable is True:
+        log("Enabling provisioning")
+        config_set("provisioning", "enabled", True)
+
+    log("Exiting")
+    exit(0)
+
+

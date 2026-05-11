@@ -1,0 +1,150 @@
+#!/usr/bin/python
+#
+# Copyright 2013-2014.  Cumulus Networks, Inc.
+# Author: Elizabeth Seamans, seamans@cumulusnetworks.com
+#
+# cl-resource-query --
+#    tool to report hardware route table occupancy
+#
+try:
+	import argparse
+	import os
+	import shutil
+	import subprocess
+	import sys
+	import syslog
+except ImportError, e:
+	raise ImportError (str(e) + "- required module not found")
+
+stat_path = '/cumulus/switchd/run/'
+
+class stat :
+	def __init__(self, name, key, count_file, max_file):
+		self.name       = name
+		self.key	= key
+		self.count_file = count_file
+		self.max_file   = max_file
+
+stat_list = [stat('Host entries',    'host_entry',        'route_info/host/count',       'route_info/host/max'),
+             stat('IPv4 neighbors',  'host_v4_entry',     'route_info/host/count_v4',    None),
+             stat('IPv6 neighbors',  'host_v6_entry',     'route_info/host/count_v6',    None),
+             stat('Route 0 entries', 'route_0_entry',     'route_info/route/count_0',    'route_info/route/max_0'),
+             stat('Route 1 entries', 'route_1_entry',     'route_info/route/count_1',    'route_info/route/max_1'),
+             stat('IPv4 Routes',     'route_v4_entry',    'route_info/route/count_v4',   None),
+             stat('IPv6 Routes',     'route_v6_entry',    'route_info/route/count_v6',   None),
+             stat('Total Routes',    'route_total_entry', 'route_info/route/count_total','route_info/route/max_total'),
+             stat('ECMP nexthops',   'ecmp_nh_entry',     'route_info/ecmp_nh/count',    'route_info/ecmp_nh/max'),
+             stat('MAC entries',     'mac_entry',         'route_info/mac/count',        'route_info/mac/max'),
+             stat('Ingress ACL entries', 'in_acl_entry',  'acl_info/ingress/entries',    'acl_info/ingress/entries_total'),
+             stat('Ingress ACL counters','in_acl_counter','acl_info/ingress/counters',   'acl_info/ingress/counters_total'),
+             stat('Ingress ACL meters',  'in_acl_meter',  'acl_info/ingress/meters',     'acl_info/ingress/meters_total'),
+             stat('Ingress ACL slices',  'in_acl_slice',  'acl_info/ingress/slices',     'acl_info/ingress/slices_total'),
+             stat('Egress ACL entries',  'eg_acl_entry',  'acl_info/egress/entries',     'acl_info/egress/entries_total'),
+             stat('Egress ACL counters', 'eg_acl_counter','acl_info/egress/counters',    'acl_info/egress/counters_total'),
+             stat('Egress ACL meters',   'eg_acl_meter',  'acl_info/egress/meters',      'acl_info/egress/meters_total'),
+             stat('Egress ACL slices',   'eg_acl_slice',  'acl_info/egress/slices',      'acl_info/egress/slices_total')]
+
+class bcolors:
+	    HEADER  = '\033[95m'
+	    OKBLUE  = '\033[94m'
+	    OKGREEN = '\033[92m'
+	    WARNING = '\033[93m'
+	    FAIL    = '\033[91m'
+	    ENDC    = '\033[0m'
+
+	    def disable(self):
+		    self.HEADER = ''
+		    self.OKBLUE = ''
+		    self.OKGREEN = ''
+		    self.WARNING = ''
+		    self.FAIL = ''
+		    self.ENDC = ''
+
+def generate_report(key_value_flag) :
+
+	# fetch the route table mode
+	mode_file = stat_path + 'route_info/route/mode'
+	try :
+		with open(mode_file, 'r') as f:
+			mode = int(f.readline())
+	except IOError :
+		print 'route table mode is not available'
+		return -1
+
+	for stat in stat_list :
+
+		if stat.key == 'route_0_entry' :
+			if mode == 1 :
+				stat.name = 'IPv4/IPv6 entries'
+			elif mode == 2 :
+				stat.name = 'IPv4 entries'
+
+		if stat.key == 'route_1_entry' :
+			if mode == 1 :
+				stat.name = 'Long IPv6 entries'
+			elif mode == 2 :
+				stat.name = 'IPv6 entries'
+
+		count_file = stat_path + stat.count_file
+		max_file = stat_path + stat.max_file if stat.max_file else None
+
+		try :
+			with open(count_file, 'r') as f:
+				count = int(f.readline())
+		except IOError :
+			print '%s count is not available' % stat.name
+			return -1
+
+		if max_file:
+			try :
+				with open(max_file, 'r') as f:
+					max_value = int(f.readline())
+			except IOError :
+				print '%s max value is not available' % stat.name
+				return -1
+
+		if key_value_flag == True :
+			print stat.key + '_count=' + '%d' % count
+			if max_file:
+				print stat.key + '_max=' + '%d' % max_value
+
+		else :
+			if max_file :
+				percent_occupancy = float(count) / float(max_value)
+				output = '%-22s %6d, %3d%% of maximum value %6d' % (stat.name + ':',
+										    count,
+										    int(percent_occupancy * 100),
+										    max_value)
+				if percent_occupancy > 0.90 :
+					color = bcolors.FAIL
+				elif percent_occupancy > 0.75 :
+					color = bcolors.WARNING
+				else :
+					color = None
+				if color:
+					print color + output + bcolors.ENDC
+				else:
+					print output
+			else :
+				print '%-22s %6d' % (stat.name + ':', count)
+
+def main (argv) :
+	""" main function """
+	descr = 'Cumulus Resource Reporting'
+
+	arg_parser = argparse.ArgumentParser(description=descr)
+	# Command line arg parser
+	#
+	arg_parser.add_argument('-k', '--key-value', dest='key_value',
+				action='store_true',
+				default='False',
+				help='Report key=value pairs')
+
+	# Parse command line arguments
+	cmdline_args = arg_parser.parse_args()
+
+        ret = generate_report(cmdline_args.key_value)
+
+if __name__ == "__main__":
+   main(sys.argv[1:])
+

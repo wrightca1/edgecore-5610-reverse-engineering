@@ -1,0 +1,51 @@
+#!/usr/bin/python
+# Copyright 2014 Cumulus Networks, Inc.
+#
+# portsamp
+#
+# Utility to configure packet sampling on physical interfaces.
+#
+import sys
+import cumulus.porttab as porttab
+import bcmshell
+
+def usage():
+    sys.stderr.write("Usage: %s (swp##|swp*) ingr_rate egr_rate "
+                     "ulog_group\n" % sys.argv[0])
+    sys.stderr.write("  On average, every 1/rate packets will be sampled.  A\n")
+    sys.stderr.write("  rate of 0 means no sampling, 1 means all packets\n")
+    sys.stderr.write("  sampled.\n")
+    sys.exit(10)
+
+if len(sys.argv) != 5:
+    usage()
+
+intf = sys.argv[1]
+try:
+    ingr_rate = int(sys.argv[2])
+    egr_rate = int(sys.argv[3])
+    ulog_group = int(sys.argv[4])
+except:
+    sys.stderr.write("Rates and ulog_group must be integers.\n\n")
+    usage()
+if ulog_group <= 0 or ulog_group > 32:
+    sys.stderr.write("ulog_group must be between 1 and 32\n\n")
+    usage()
+
+pt = porttab.porttab()
+if intf == "swp*":
+    interfaces = pt.get_bcm_ports()
+else:
+    try:
+        interfaces = [ pt.linux2bcm(intf) ]
+    except:
+        sys.stderr.write("Interface %s couldn't be found.\n\n" % intf);
+        usage()
+
+with open('/cumulus/switchd/ctrl/sample/ulog_channel', 'w') as f:
+    f.write('%s\n' % ulog_group)
+
+bcm = bcmshell.bcmshell(keepopen=True)
+for i in interfaces:
+    bcm.run("portsamprate %s %s %s" % (i, ingr_rate, egr_rate))
+bcm.close()

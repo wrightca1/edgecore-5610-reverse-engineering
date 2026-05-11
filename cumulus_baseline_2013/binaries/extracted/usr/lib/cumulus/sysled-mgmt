@@ -1,0 +1,169 @@
+#!/usr/bin/python
+#
+#-------------------------------------------------------------------------------
+#
+# Copyright 2013, Cumulus Networks Inc.  all rights reserved
+#
+#-------------------------------------------------------------------------------
+#
+# sysled-mgmt --
+#   CLI to manage System LEDs
+#
+#
+
+import os
+import syslog
+import warnings
+import sys
+import argparse
+import signal
+import traceback
+
+import cumulus.sysledcontrol
+
+#-------------------------------------------------------------------------------
+#
+# Classes
+#
+
+class ArgParseError(RuntimeError):
+    pass
+
+
+class LEDMGMTRuntimeError(RuntimeError):
+    pass
+
+#-------------------------------------------------------------------------------
+#
+# Functions
+#
+
+#--------------------
+#
+# warning formats
+#
+def ledmgmtwarn(message, category, filename, lineno, line=None):
+    return '%s:%s : %s : %s\n' % (filename, lineno, category.__name__, message)
+
+
+#--------------------
+#
+# normal exit
+#
+def exit_normally(signum=0, frame=None):
+    syslog.syslog(syslog.LOG_INFO, "exiting normally")
+    sys.stderr.write("%s : exiting normally\n" % sys.argv[0])
+    exit(0)
+
+
+########################################################################
+#
+# MAIN
+#
+# Parses arguments, reads/sets led states
+#
+########################################################################
+def main():
+    parser = argparse.ArgumentParser(
+        description='Manage System LEDs')
+    parser.add_argument('-v', '--verbose',
+        required=False,
+        action='store_true',
+        help='Verbose output')
+    parser.add_argument('-u', '--update',
+        required=False,
+        action='store_true',
+        help='Update system LEDs based on the existing faults')
+    parser.add_argument('-r', '--reset',
+        required=False,
+        action='store_true',
+        help='Clear faults, determine faults based on system unit state and reset system LEDs')
+    parser.add_argument("-f", "--config", dest="config_file", action="store",
+        help="get settings from CONFIG_FILE (default is /etc/cumulus/sysledcontrol.conf)",
+        default = "/etc/cumulus/sysledcontrol.conf")
+
+    try:
+        args = parser.parse_args()
+    except ArgParseError, e:
+        parser.error(str(e))
+        sys.exit(-1)
+
+    platform = os.popen('platform-detect -m').read().strip()
+    revision = os.popen('platform-detect -r').read().strip()
+
+    if args.verbose:
+        sys.stdout.write('configuring System LEDs for %s revision %s\n'
+                % (platform, revision))
+    systemunits = cumulus.sysledcontrol.SystemLEDControl(platform, revision,
+                            verbose=args.verbose, interval=0)
+
+    if args.verbose:
+        sys.stdout.write('read %s\n' % args.config_file)
+
+    systemunits.read_config(args.config_file)
+
+    if args.reset:
+        '''
+            Clear the existing faults
+            Determine the health of system unit
+            Set the system leds with updated fault information
+        '''
+        if args.verbose:
+            sys.stdout.write('Clearing and Setting the system LED(s) based on health of system unit\n')
+        try:
+            systemunits.init_operational_state()
+            systemunits.update_state()
+        except IOError as e:
+            sys.exit(e.errno)
+        else:
+            sys.stdout.write('System Unit Status is reset\n')
+            args.update = True
+
+
+    if args.update:
+        '''
+            Set the LED colors based on state/health of system unit if exists
+        '''
+        if args.verbose:
+            sys.stdout.write('Setting the LED(s) based on the system unit state\n')
+        try:
+            systemunits.set_leds()
+        except IOError as e:
+            sys.exit(e.errno)
+        else:
+            sys.stdout.write("System LEDs have been set\n")
+            sys.exit(0)
+
+    if args.verbose:
+        sys.stdout.write('Reading current LEDs\n')
+
+    sys.stdout.write('%s \n' % systemunits.get_leds())
+
+    return 0
+
+#--------------------
+#
+# execution check
+#
+if __name__ == "__main__":
+    try:
+        signal.signal(signal.SIGTERM, exit_normally)
+        # Cause all warnings to always be triggered.
+        warnings.simplefilter("always")
+        warnings.formatwarning = ledmgmtwarn
+        syslog.openlog(": %s : " % sys.argv[0])
+        exit(main())
+    except LEDMGMTRuntimeError, errstr:
+        syslog.syslog(syslog.LOG_ERR, "ERROR : %s" % str(errstr))
+        sys.stderr.write("%s : ERROR : %s\n" % (sys.argv[0], str(errstr)))
+        exit(1)
+    except KeyboardInterrupt:
+        exit_normally()
+    except Exception:
+        (exc_type, exc_value, exc_traceback) = sys.exc_info()
+        err = ''.join(traceback.format_exception(exc_type, exc_value, exc_traceback))
+        log = 'Unhandled Exception : %s' % err
+        syslog.syslog(syslog.LOG_ERR, log)
+        sys.stderr.write(log)
+
+

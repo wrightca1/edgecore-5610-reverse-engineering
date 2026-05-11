@@ -1,0 +1,164 @@
+#! /usr/bin/python
+#-------------------------------------------------------------------------------
+#
+# Copyright 2013, Cumulus Networks Inc  all rights reserved
+#
+#-------------------------------------------------------------------------------
+#
+
+#-------------------------------------------------------------------------------
+#
+# Imports
+#
+
+import syslog
+import warnings
+import exceptions
+import re
+import os
+import sys
+import time
+import signal
+import traceback
+import argparse
+import ConfigParser
+import cumulus.platformdb
+import shutil
+
+# Classes
+#
+class ArgParseError(RuntimeError):
+    pass
+
+class SMONDRuntimeError(RuntimeError):
+    pass
+
+#-------------------------------------------------------------------------------
+#
+# Functions
+#
+
+#--------------------
+#
+# warning formats
+#
+
+def smondwarn(message, category, filename, lineno, line=None):
+    return '%s:%s : %s : %s\n' % (filename, lineno, category.__name__, message)
+
+#--------------------
+#
+# check to see if an instance is already running
+#
+def already_running(pidfile):
+    myname=os.path.basename(sys.argv[0])
+    try:
+        if not os.path.isfile(pidfile):
+            return False
+        oldpid = re.findall('\D*(\d+).*', (file(pidfile, 'r').readline()))[0]
+        if not os.path.exists('/proc/%s' % oldpid):
+            return False
+        if myname not in file('/proc/%s/cmdline' % oldpid, 'r').readline():
+            return False
+        sys.stderr.write("%s already running as process %s\n" % (myname, oldpid))
+        return True
+    except Exception as inst:
+        raise SMONDRuntimeError("unable to validate pidfile %s: %s" %
+                                (pidfile, str(inst)))
+
+#--------------------
+#
+# normal exit
+#
+def exit_normally(signum=0, frame=None):
+    syslog.syslog(syslog.LOG_INFO, "exiting normally")
+    sys.stderr.write("%s : exiting normally\n" % sys.argv[0])
+    exit(0)
+
+#
+# Main
+#
+def main():
+    interval = 10
+    path = '/etc/smond.conf'
+    crit_action_path = None
+    thres_action_path = None
+    config = ConfigParser.ConfigParser()
+    if os.path.isfile(path):
+        config.read(path)
+        if config.has_option("DEFAULT", "interval"):
+            interval = int(config.get("DEFAULT", "interval"))
+        if config.has_option("DEFAULT", "crit_action_path"):
+            crit_action_path = config.get("DEFAULT", "crit_action_path")
+        if config.has_option("DEFAULT", "thres_action_path"):
+            thres_action_path = config.get("DEFAULT", "thres_action_path")
+
+    parser = argparse.ArgumentParser(description="Monitor sensors data in a loop")
+    parser.add_argument('-i', '--interval', type = int,
+                        help ="Update Interval in secs (default is %d secs)" %interval)
+    args = parser.parse_args()
+    if args.interval:
+        interval = args.interval
+
+    pidfile = "/var/run/smond.pid"
+    if already_running(pidfile):
+        sys.exit()
+    else:
+        file(pidfile, 'w').write(str(os.getpid()))
+
+    plat = os.popen('platform-detect -m').read().strip()
+    revision = os.popen('platform-detect -r').read().strip()
+    syslog.syslog(syslog.LOG_INFO, "Monitoring HW Sensors")
+    p = cumulus.platformdb.lookup(plat, revision)
+    units = []
+    for unit in p.sensors.units:
+        cp = unit
+        if os.path.exists(cp.status_path):
+            shutil.rmtree(cp.status_path, ignore_errors=True)
+        if p.cpld is not None:
+            cp.update_cpld_path(p.cpld.path)
+        if cp.attrs['type'] == 'temp':
+            cp.update_crit_action_path(crit_action_path)
+            cp.update_thres_action_path(thres_action_path)
+        units.append(cp)
+    while True:
+        for unit in units:
+            unit.run_state()
+            if unit.attrs['state'] != unit.attrs['prev_state']:
+                msg = '%s' %unit.attrs['name']
+                if unit.attrs['name'] != unit.attrs['description']:
+                    msg += '(%s)' %unit.attrs['description']
+                msg += ': state changed from %s to %s' \
+                           %(unit.attrs['prev_state'], unit.attrs['state'])
+                syslog.syslog(syslog.LOG_WARNING, msg)
+            if unit.attrs['msg'] is not None and \
+                   unit.attrs['msg'] != unit.attrs['prev_msg']:
+                syslog.syslog(syslog.LOG_WARNING, unit.attrs['msg'])
+        time.sleep(interval)
+    return 0
+
+
+#--------------------
+#
+# execution check
+#
+if __name__ == "__main__":
+    try:
+        signal.signal(signal.SIGTERM, exit_normally)
+        # Cause all warnings to always be triggered.
+        warnings.simplefilter("always")
+        warnings.formatwarning = smondwarn
+        syslog.openlog(": %s : " % sys.argv[0])
+        exit(main())
+    except SMONDRuntimeError, errstr:
+        syslog.syslog(syslog.LOG_ERR, "ERROR : %s" % str(errstr))
+        sys.stderr.write("%s : ERROR : %s\n" % (sys.argv[0], str(errstr)))
+        exit(1)
+    except KeyboardInterrupt:
+        exit_normally()
+    except Exception:
+        (exc_type, exc_value, exc_traceback) = sys.exc_info()
+        err = ''.join(traceback.format_exception(exc_type, exc_value, exc_traceback))
+        log = 'Unhandled Exception : %s' % err
+        syslog.syslog(syslog.LOG_ERR, log)
+        sys.stderr.write(log)

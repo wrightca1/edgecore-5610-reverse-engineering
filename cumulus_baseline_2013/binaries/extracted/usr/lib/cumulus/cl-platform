@@ -1,0 +1,65 @@
+#!/bin/sh
+
+# This program prints to stdout the canonical platform name in the
+# format <vendor>,<machine> without any newlines.
+
+# This program *must* work correctly in the following contexts:
+#
+# - from ONIE context
+# - from Cumulus Linux initramfs context (before we know the platform)
+# - from regular Cumulus Linux context
+
+model=
+
+# First check the device-tree.  This is the standard approach on
+# PowerPC platforms.
+if [ -r /proc/device-tree/model ] ; then
+    # This implies the device tree "model" must be in sync between
+    # ONIE and Cumulus Linux.
+    model=$(sed -e 's/ //' /proc/device-tree/model)
+else
+    # On x86 use the platform string from ONIE.
+    #
+    # In ONIE context use the output of "onie-sysinfo -p".
+    #
+    # In Cumulus Linux context the kernel command line variable
+    # "cl_platform" contains the ONIE platform string.  While running
+    # in ONIE context the Cumulus installer used the output of
+    # "onie-sysinfo -p" to set this variable.
+
+    # Parse kernel command line options
+    for x in $(cat /proc/cmdline); do
+        case "$x" in
+	    cl_platform=*)
+	        cl_platform=${x#cl_platform=}
+                break
+	        ;;
+        esac
+    done
+
+    if [ -z "$cl_platform" ] ; then
+        # In ONIE context
+        if [ -x /bin/onie-sysinfo ] ; then
+            # get cl_platform from ONIE
+	    cl_platform=$(onie-sysinfo -p)
+        else
+            echo "ERROR:  Unable to determine platform for ARCH: $(uname -m)" > /dev/stderr
+            exit 1
+        fi
+    fi
+    # cl_platform has the format: <arch>-<vendor>_<machine>-<revision>
+    # Keep the <vendor>_<machine> substring.
+    tmp_str=${cl_platform#*-}
+    tmp_str=${tmp_str%-*}
+    # <vendor> does not contain "_", but <machine> might.
+    vendor=${tmp_str%%_*}
+    machine=${tmp_str#*_}
+    model="${vendor},${machine}"
+fi
+
+echo -n "$model"
+
+# Local Variables:
+# mode: shell-script
+# eval: (sh-set-shell "/bin/sh" t nil)
+# End:

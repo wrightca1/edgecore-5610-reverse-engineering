@@ -1,0 +1,750 @@
+#! /usr/bin/python
+#--------------------------------------------------------------------------
+#
+# Copyright 2012 Cumulus Networks, inc  all rights reserved
+#
+#--------------------------------------------------------------------------
+try:
+	import sys
+	import os
+	import getopt
+	import subprocess
+	import imp
+	import cPickle as pickle
+	import syslog
+	import types
+	import traceback
+except ImportError, e:
+    raise ImportError (str(e) + "- required module not found")
+
+
+version = '1.0'
+
+usage_help="""
+Usage: cl-sfputil [--help] [-p|--port <port_name>] [-d|--dom] [-o|--oneline]
+		  [-v|--version]
+
+OPTIONS 
+	-h,--help		prints this usage
+	-p,--port <port_name>	prints sfp details for port_name
+	-d,--dom		Includes diagnostic monitor data in output if supported
+	-o,--oneline		prints oneline output for each port
+	-v,--version		prints version string
+
+"""
+
+
+csfputil = None
+sfp_dom_data_cache_dir = '/var/cache/cumulus/sfputil'
+sfp_dom_data_cache_file = sfp_dom_data_cache_dir + '/' + 'sfputil.dat'
+porttabfile = '/var/lib/cumulus/porttab'
+phytabfile = '/var/lib/cumulus/phytab'
+indent = '\t'
+
+def log_init():
+	syslog.openlog('sfputil')
+
+
+def log_syslog(logmsg):
+	syslog.syslog(syslog.LOG_INFO, logmsg)
+
+def inc_indent():
+	global indent
+	indent += '\t'
+
+def dec_indent():
+	global indent
+	indent = indent[:-1]
+
+def print_sfp_status(port, port_sfp_status):
+	if port_sfp_status == 1:
+		print '%s: ' %port + 'SFP detected'
+	else:
+		print '%s: ' %port + 'SFP not detected'
+
+# Returns,
+#	port_num if physical
+#	logical_port:port_num if logical port and is a ganged port
+#	logical_port if logical and not ganged
+#
+def get_port_name(logical_port, physical_port, ganged):
+	port_name = None
+
+	if logical_port == physical_port:
+		return logical_port
+	elif ganged == 1:
+		return logical_port + ':%d (ganged)' %physical_port
+	else:
+		return logical_port
+
+def conv_port_to_physical_port_list(port):
+	if port.startswith('swp'):
+		if csfputil.is_logical_port(port):
+			return csfputil.get_logical_to_physical(port)
+		else:
+			print 'Error: Invalid port ' + port
+			return None
+	else:
+		return [int(port)]
+
+def print_valid_values_for_port_cmdoption():
+	print 'Valid values for --port : ' + str(csfputil.logical)
+	print
+
+#============ Functions to get and print sfp data ======================
+
+
+# Get sfp port object
+def get_port_sfp_data(sfp_obj, port_num):
+	sfp_port_data = {}
+	
+	if sfp_obj == None:
+		print 'Error getting sfp data for port %d' %port_num
+		sfp_port_data[port_num] = None
+	else:
+		sfp_port_data[port_num] = sfp_obj.get_sfp_data(port_num)
+
+	return sfp_port_data
+
+
+# Returns sfp data for all ports
+def get_port_sfp_data_all(sfp_obj_all):
+	"""{1: {'interface': {'version': '1.0', 'data': {}},
+		'dom': {'version' : '1.0', 'data' : {}}},
+	   {2: {'interface': {'version': '1.0', 'data': {}},
+		'dom': {'version' : '1.0', 'data' : {}}}}}"""
+
+	port_sfp_data_all = {}
+	port_start = csfputil.port_start
+	port_end = csfputil.port_end
+
+	for p in range(port_start, port_end + 1):
+		port_sfp_data_all.update(get_port_sfp_data(sfp_obj_all.get(p),
+						p))
+
+	return port_sfp_data_all
+
+
+# recursively pretty print dictionary 
+def print_dict_pretty(indict):
+	for elem, elem_val in sorted(indict.iteritems()):
+		if type(elem_val) == types.DictType:
+			print indent, elem, ':'
+			inc_indent()
+			print_dict_pretty(elem_val)
+			dec_indent()
+		else:
+			print indent, elem, ':', elem_val
+
+# Print pretty sfp port data
+def print_port_sfp_data_pretty(port_sfp_data, port, dump_dom):
+	ganged = 0
+	i = 1
+
+	port_list = conv_port_to_physical_port_list(port)
+	if len(port_list) > 1:
+		ganged = 1
+
+	for p in port_list:
+		port_name = get_port_name(port, i, ganged)
+		sfp_data = port_sfp_data.get(p)
+		if sfp_data != None:
+			sfp_idata = sfp_data.get('interface')
+			idata = sfp_idata.get('data')
+			print_sfp_status(port_name, 1)
+			print_dict_pretty(idata)
+			if dump_dom == 1:
+				sfp_ddata = sfp_data.get('dom')
+				if sfp_ddata != None:
+					ddata = sfp_ddata.get('data')
+					print_dict_pretty(ddata)
+		else:
+			print_sfp_status(port_name, 0)
+		print
+		i += 1
+
+# Print pretty all sfp port data 
+def print_port_sfp_data_pretty_all(port_sfp_data, dump_dom):
+	for p in csfputil.logical:
+		print_port_sfp_data_pretty(port_sfp_data, p, dump_dom)
+
+
+# Recursively print dict elems into coma separated list
+def print_dict_comaseparated(indict, elem_blacklist, elemprefix, first):
+	iter = 0
+	for elem, elem_val in sorted(indict.iteritems()):
+		if elem in elem_blacklist:
+			continue
+		if type(elem_val) == types.DictType:
+			if iter != 0: 
+				print ',',
+			print_dict_comaseparated(elem_val, elem_blacklist,
+						 elem, first)
+		else:
+			elemname = elemprefix + elem
+			if first == 1:
+				prbuf = elemname + ':' + str(elem_val)
+				first = 0
+			else:
+				prbuf = ',' + elemname + ':' + str(elem_val)
+			sys.stdout.write(prbuf)
+		iter = iter + 1
+
+
+# Pretty print oneline all sfp data 
+def print_port_sfp_data_pretty_oneline(port_sfp_data,
+				       ifdata_blacklist,
+				       domdata_blacklist,
+				       port, dump_dom):
+	ganged = 0
+	i = 1
+
+	port_list = conv_port_to_physical_port_list(port)
+	if len(port_list) > 1:
+		ganged = 1
+
+	for p in port_list:
+		port_name = get_port_name(port, i, ganged)
+		sfp_data = port_sfp_data.get(p)
+		if sfp_data != None:
+			sfp_idata = sfp_data.get('interface')
+			idata = sfp_idata.get('data')
+			print 'port:' + port_name + ',',
+			print_dict_comaseparated(idata, ifdata_blacklist, '', 1)
+			if dump_dom == 1:
+				sfp_ddata = sfp_data.get('dom')
+				if sfp_ddata != None:
+					ddata = sfp_ddata.get('data')
+					if ddata != None:
+						print_dict_comaseparated(ddata,
+							domdata_blacklist, '',1)
+			print
+		#Only print detected sfp ports for oneline
+		#else:
+			#print_sfp_status(port_name, 0)
+		i += 1
+
+
+def print_port_sfp_data_pretty_oneline_all(port_sfp_data,
+					   ifdata_blacklist,
+					   domdata_blacklist,
+					   dump_dom):
+	for p in csfputil.logical:
+		print_port_sfp_data_pretty_oneline(port_sfp_data,
+						   ifdata_blacklist,
+						   domdata_blacklist,
+						   p, dump_dom)
+
+def get_port_sfp_object(port_num):
+	sfp_obj = {}
+	sfp_obj[port_num] = csfputil(int(port_num))
+
+	return sfp_obj
+
+# Return sfp objects for all ports
+def get_port_sfp_object_all():
+	port_sfp_object_all = {}
+	port_start = csfputil.port_start
+	port_end = csfputil.port_end
+
+	for p in range(port_start, port_end + 1):
+		port_sfp_object_all.update(get_port_sfp_object(p))
+
+	return port_sfp_object_all
+
+def print_raw_bytes(bytes):
+	hexstr = ''
+
+	for e in range(1, len(bytes)+1):
+		print bytes[e-1],
+		hexstr += bytes[e-1]
+		if e > 0 and (e % 8) == 0:
+			print ' ',
+		if e > 0 and (e % 16) == 0:
+			# XXX: Does not print some characters
+			# right, comment it to fix it later
+			#print binascii.unhexlify(hexstr),
+			hexstr = ''
+			print
+
+def print_port_sfp_data_raw(sfp_obj_all, port):
+	ganged = 0
+	i = 1
+
+	physical_port_list = conv_port_to_physical_port_list(port)
+	if len(physical_port_list) > 1:
+		ganged = 1
+
+	for p in physical_port_list:
+		port_name = get_port_name(port, i, ganged)
+		sfp_obj = sfp_obj_all.get(p)
+		if sfp_obj == None:
+			print ('Error: Unexpected error: sfp object for '
+				'port %d' %p + 'not found')
+			return
+		eeprom_if_raw = sfp_obj.get_interface_eeprom_bytes()
+		if eeprom_if_raw == None:
+			print_sfp_status(port_name, 0)
+		else:
+			print_sfp_status(port_name, 1)
+			print_raw_bytes(eeprom_if_raw)
+		print
+		i += 1
+
+def print_port_sfp_data_raw_all(sfp_obj_all):
+	for p in csfputil.logical:
+		print_port_sfp_data_raw(sfp_obj_all, p)
+
+#=========== Functions to check and report dom alarms ====================
+
+#Returns list of keys that are different in the two dictionaries
+def diff_dict(dict_a, dict_b):
+	keys_diff = []
+	for a_name, a_val in sorted(dict_a.iteritems()):
+		b_val = dict_b.get(a_name)
+		if b_val == None or a_val != b_val:
+			keys_diff.append(a_name)
+
+	for b_name, b_val in sorted(dict_b.iteritems()):
+		a_val = dict_a.get(b_name)
+		if a_val == None:
+			keys_diff.append(b_name)
+
+
+	return keys_diff
+
+
+# Logs alarms in syslog
+def sfp_dom_report_monitor_data_changes(port_num, old_if_data, old_monitor_data,
+					new_if_data, new_monitor_data):
+	# XXX: Only check power for now 
+	power_tolerance = 5
+
+	for mkey, mval in sorted(new_monitor_data.iteritems()):
+		if mkey == 'RXPower' or mkey == 'TXPower':
+			if mval == 'Unknown':
+				# The module isn't reporting power data, skip it.
+				return
+
+			try:
+				old_power = old_monitor_data.get(mkey)
+				new_powerf = float(mval[:-len('dBm')])
+				old_powerf = float(old_power[:-len('dBm')])
+
+				diff = abs(new_powerf - old_powerf)
+			except TypeError, e:
+				print ('Error during reporting monitor ' +
+				       'data changes ' + str(e))
+				return
+			except ValueError, e:
+				print ('Error during reporting monitor ' +
+				       'data changes ' + str(e))
+				return
+			except:
+				# This is a non critical error. Just return
+				return
+				
+			if diff > power_tolerance:
+				logmsg = ('link %d' %port_num +
+			  	  	  ' sfp (SerialNum: %s):'
+			  	  	  %old_if_data.get('VendorSN',
+					  'Unknown') + ' %s' %mkey +
+			  	  	  ' changed from %s '
+				  	  %old_power + ' to %s' %mval)
+				log_syslog(logmsg)
+
+
+
+# Logs alarms in syslog
+def sfp_dom_report_alarms(port_num, if_data, dom_alarm_data, keys_filter):
+
+	for alarm, alarm_status in sorted(dom_alarm_data.iteritems()):
+		if (keys_filter == None or
+			(keys_filter != None and (alarm in keys_filter))):
+			logmsg = ('link %d' %port_num +
+				  ' sfp (SerialNum: %s): '
+				  %if_data.get('VendorSN', 'Unknown') +
+				  '%s' %alarm)
+			if alarm_status == 1:
+				logmsg = logmsg + ' set'
+				log_syslog(logmsg)
+
+			if keys_filter != None:
+				if alarm_status == 0:
+					logmsg = logmsg + ' cleared'
+					log_syslog(logmsg)
+
+
+# Check and report alarms
+def sfp_dom_check_and_report_alarms(port_num, port_sfp_data_old,
+				    port_sfp_data_new):
+
+	# For now only look for only alarm and warning flag status
+	keys_to_check = [ 'AlarmFlagStatus', 'WarningFlagStatus' ]
+	report_new = 0
+	port_sfp_dom_old = None
+	port_sfp_if_old = None
+	port_sfp_dom_new = None
+	port_sfp_if_new = None
+	sub_keys_that_differ = []
+
+	if port_sfp_data_new != None:
+		port_sfp_if_new = port_sfp_data_new.get('interface')
+		port_sfp_dom_new = port_sfp_data_new.get('dom')
+	else:
+		return
+
+	if port_sfp_dom_new == None:	
+		return
+
+	if port_sfp_data_old != None:
+		port_sfp_if_old = port_sfp_data_old.get('interface')
+		port_sfp_dom_old = port_sfp_data_old.get('dom')
+
+	new_ddata = port_sfp_dom_new.get('data')
+	new_idata = port_sfp_if_new.get('data')
+
+	# Check if new data or difference between new and old needs
+	# reporting
+	if (port_sfp_dom_old == None and port_sfp_dom_new != None):
+		report_new = 1
+	elif port_sfp_dom_old != None and port_sfp_dom_new != None:
+		new_dom_ver = port_sfp_dom_new.get('version')
+		old_dom_ver = port_sfp_dom_old.get('version')
+
+		old_ddata = port_sfp_dom_old.get('data')
+		old_idata = port_sfp_if_old.get('data')
+
+		if old_idata.get('VendorSN') != new_idata.get('VendorSN'):
+			# If serial numbers between old and new diff, report new
+			report_new = 1
+		elif new_dom_ver != old_dom_ver:
+			# If versions between old and new differ, report
+			report_new = 1
+	else:
+		return
+
+	if report_new == 1:
+		# Report only new object
+		for k in keys_to_check:
+			if k in new_ddata.keys():
+				sfp_dom_report_alarms(port_num, new_idata,
+					new_ddata[k], None)
+
+	else:
+		# Report what changed between old and new
+		for k in keys_to_check:
+			if k in new_ddata.keys() and k in old_ddata.keys():
+				# Get keys that differ between the two
+				sub_keys_that_differ = diff_dict(new_ddata[k],
+							 	old_ddata[k])
+			
+			if len(sub_keys_that_differ) > 0:
+				if k in new_ddata.keys():
+					sfp_dom_report_alarms(port_num,
+						new_idata, new_ddata[k],
+						sub_keys_that_differ)
+
+		# Check if monitor data changed beyond tolerance
+		# XXX: This might be redundant as we already report alarm
+		# and warning reports
+		key = 'MonitorData'
+		if key in new_ddata.keys() and key in old_ddata.keys():
+			sfp_dom_report_monitor_data_changes(port_num,
+					new_idata, new_ddata[key], old_idata,
+					old_ddata[key])
+					
+
+
+# Reads and Returns dom data from /var/cache/sfputil/
+def get_saved_sfp_data():
+	sfp_ports_dom_data = None
+		
+	# Create sfputil dir if does not already exist
+	if not os.path.exists(sfp_dom_data_cache_dir):
+		try:
+			os.mkdir(sfp_dom_data_cache_dir)
+		except OSError, e:
+			print ('Error creating dir ' +
+				sfp_dom_data_cache_dir + ' ('  + str(e) + ')')
+			return -1
+
+	# if cache file exists
+	if os.path.exists(sfp_dom_data_cache_file):
+		# load dom data from cached file
+		try:
+			sfp_ports_dom_data = pickle.load(open(
+						sfp_dom_data_cache_file, "rb"))
+		except pickle.PickleError, e:
+			print 'Error unpicking dom data.'
+			traceback.print_exc(file=sys.stdout)
+
+	return sfp_ports_dom_data
+
+	
+# Checks dom data. Compares with cached dom file for any new alarms
+def sfp_dom_data_check(ports_sfp_data):
+
+	# get Old dom data from /var/cache/
+	ports_sfp_data_old = get_saved_sfp_data()
+
+	# iterate through new dom data for all ports
+	for port, port_sfp_data_new in sorted(
+		ports_sfp_data.iteritems()):
+		if port_sfp_data_new == None:
+			continue
+
+		port_sfp_data_old = None
+		if ports_sfp_data_old != None:
+			port_sfp_data_old = ports_sfp_data_old.get(port)
+
+		if port_sfp_data_old != None:
+			# XXX: We should probably not proceed if dom versions
+			# differ
+
+			# Check alarms in old and new data and report
+			sfp_dom_check_and_report_alarms(port,
+							port_sfp_data_old,
+							port_sfp_data_new)
+		else:
+			sfp_dom_check_and_report_alarms(port, None,
+							port_sfp_data_new)
+
+
+
+	# XXX: The above loop does not account for sfp's that were
+	# present in old data but dissappeared in new data. Only thing we
+	# could possibly do here is report faults were cleared on the old port.
+
+
+	# Dump new dom data into cached file
+	try:
+		pickle.dump(ports_sfp_data, open(sfp_dom_data_cache_file,
+			    "wb"))
+	except PickleError, e:
+		print 'Error pickling dom data ' + str(e)
+		return
+
+	print 'Saved new dom data to file ' + sfp_dom_data_cache_file
+				
+		
+#=========== Functions to load platform specific classes ====================
+
+# Returns platform vendor and model
+def get_platform():
+	try:
+		platform_detect = '/usr/bin/platform-detect'
+
+		ph = subprocess.Popen((platform_detect), stdout=subprocess.PIPE,
+				shell=False, stderr=subprocess.STDOUT)
+		cmdout = ph.communicate()[0]
+		ph.wait()
+	except OSError, e:
+		raise OSError("cannot detect platform")
+
+	return cmdout.rstrip('\n').split(',')
+
+
+
+# Loads platform specific sfputil module from source
+def load_platform_sfputil():
+	global csfputil
+	platform_root = '/usr/share/platform-config'
+	module_name = 'sfputil'
+
+
+	# Get platform details
+	[vendor, model] = get_platform()
+
+	#Load platform module from source
+	platform_sfputil_module_path = '/'.join([platform_root, vendor,
+						model, 'bin'])
+
+	try:
+		module = imp.load_source(module_name,
+				'/'.join([platform_sfputil_module_path,
+				module_name + '.py']))
+	except IOError, e:
+		print 'Error loading platform module ' + module_name + str(e)
+		return None
+
+	try:
+		csfputil = getattr(module, 'sfputil')
+	except AttributeError, e:
+		print 'Error finding sfputil class: ' + str(e)
+		return -1
+
+	return 0
+		
+
+#========== Main ===========================================================
+
+# main
+if __name__ == '__main__':		
+	port_sfp_data = {}
+	port = ''
+	all_ports = 1
+	pretty = 1
+	oneline = 0
+	dump_dom = 0
+	dom_check = 0
+	raw = 0
+	canned_data_file = ''
+	sfp_objects = {}
+	port_list = []
+	descr = "query sfp information for swp ports"
+
+	sys.stderr.write(
+'''Warning: cl-sfputil will be removed in a future release.  Use ethtool -m\n'''
+	)
+
+	if not os.geteuid() == 0:
+		print 'Error: Must be root to run this command'
+		exit(1)
+
+	if (len(sys.argv) > 1):
+		# Parse options
+		try:
+			options, remainder = getopt.getopt(sys.argv[1:],
+						'p:hdov',
+						['port=', 'dom', 'help',
+						'dom-check', 'porttab=', 'raw',
+						'canned-data=', 'oneline',
+						'version'])
+		except getopt.GetoptError, e:
+			print e
+			print usage_help
+			exit(1)
+
+		for opt, arg in options:
+    			if opt == '--port' or opt == '-p' :
+				try:
+					port = arg
+				except:
+					print usage_help
+					exit(1)
+				
+				all_ports = 0
+    			elif opt == '--help' or opt == '-h':
+				print usage_help
+				exit(1)
+    			elif opt == '--dom' or opt == '-d':
+				dump_dom = 1
+    			elif opt == '--dom-check':
+				dom_check = 1
+    			elif opt == '--porttab':
+				try:
+					porttabfile = arg
+				except:
+					print usage_help
+					exit(1)
+    			elif opt == '--canned-data':
+				try:
+					canned_data_file = arg
+				except:
+					print usage_help
+					exit(1)
+			elif opt == '--oneline' or opt == '-o':
+				oneline = 1
+			elif opt == '--raw':
+				raw = 1
+			elif opt == '--version' or opt == '-v':
+				print 'version : ' + version
+				exit(0)
+
+
+	# dom_check is mutually exclusive with all other options
+	if dom_check == 1 and port != '':
+		print '--dom-check and --port are mutually exclusive'
+		print usage_help
+		exit(1)
+
+	if dom_check == 1:
+		dump_dom = 1
+
+	# Init log 		
+	log_init()
+
+	# Load platform sfputil class
+	err = load_platform_sfputil()
+	if err != 0:
+		exit(1)
+
+	try:
+	    csfputil.read_phytab_mappings(phytabfile)
+	    csfputil.read_porttab_mappings(porttabfile)
+	    csfputil.read_port_mappings()
+	except Exception, e:
+		print 'error reading port info (%s)' %str(e)
+		exit(1)
+
+	if all_ports == 0:
+		if csfputil.is_valid_sfputil_port(port) == 0:
+			print 'Error: invalid port'
+			print
+			print_valid_values_for_port_cmdoption()
+			exit(1)
+
+	if all_ports == 0:
+		port_list = conv_port_to_physical_port_list(port)
+		if port_list == None:
+			exit(0)
+
+	# Get all sfp objects
+	if all_ports == 1:
+		sfp_objects = get_port_sfp_object_all()
+	else:
+		for p in port_list:
+			sfp_objects.update(get_port_sfp_object(p))
+
+	if raw == 1:
+		# Print raw and return
+		if all_ports == 1:
+			print_port_sfp_data_raw_all(sfp_objects)
+		else:
+			print_port_sfp_data_raw(sfp_objects, port)
+		exit(0)
+
+	if all_ports == 1:
+		port_sfp_data = get_port_sfp_data_all(sfp_objects)
+	else:
+		for p in port_list:
+			port_sfp_data.update(get_port_sfp_data(
+						sfp_objects.get(p), p))
+
+	# If dom check, Just check dom and return.
+	if dom_check == 1:
+		# For testing purposes, if canned data available use it
+		if canned_data_file != '':
+			if not os.path.exists(canned_data_file):
+				print ('Error: Cant find file ' +
+					canned_data_file)
+				exit(1)
+			port_sfp_data = pickle.load(open(canned_data_file,
+							"rb"))
+		sfp_dom_data_check(port_sfp_data)
+		exit(0)
+
+	# Print all sfp data
+	if oneline == 1:
+		ifdata_out_blacklist = ['EncodingCodes',
+					'ExtIdentOfTypeOfTransceiver',
+					'NominalSignallingRate(UnitsOf100Mbd)']
+		domdata_out_blacklist = ['AwThresholds', 'StatusControl']
+
+		if all_ports == 1:
+			print_port_sfp_data_pretty_oneline_all(port_sfp_data,
+							ifdata_out_blacklist,
+							domdata_out_blacklist,
+							dump_dom)
+		else:
+			print_port_sfp_data_pretty_oneline(port_sfp_data,
+							ifdata_out_blacklist,
+							domdata_out_blacklist,
+							port, dump_dom)
+	elif pretty == 1:
+		if all_ports == 1:
+			print_port_sfp_data_pretty_all(port_sfp_data, dump_dom)
+		else:
+			print_port_sfp_data_pretty(port_sfp_data, port,
+						   dump_dom)

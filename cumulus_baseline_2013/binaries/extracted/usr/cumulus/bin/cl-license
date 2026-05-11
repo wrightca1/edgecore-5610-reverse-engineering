@@ -1,0 +1,114 @@
+#! /bin/bash
+#-------------------------------------------------------------------------------
+#
+# Copyright 2013 Cumulus Networks, Inc.  All rights reserved
+#
+
+URL_RE='^http://.*/.*'
+
+#Legacy symlink
+if echo "$0" | grep -q "cl-license-install$"; then
+    exec cl-license -i $*
+fi
+
+LIC_DIR="/etc/cumulus"
+PERSIST_LIC_DIR="/mnt/persist/etc/cumulus"
+
+#Print current license, if any.
+if [ -z "$1" ]; then
+    if [ ! -f "$LIC_DIR/.license.txt" ]; then
+        echo "No license installed!" >&2
+        exit 20
+    fi
+    cat "$LIC_DIR/.license.txt"
+    exit 0
+fi
+
+#Must be root beyond this point
+if (( EUID != 0 )); then
+   echo "You must have root privileges to run this command." 1>&2
+   exit 100
+fi
+
+#Delete license
+if [ x"$1" == "x-d" ]; then
+    rm -f "$LIC_DIR/.license.txt"
+    rm -f "$PERSIST_LIC_DIR/.license.txt"
+
+    echo License file uninstalled.
+    exit 0
+fi
+
+function usage {
+    echo "Usage: $0 (-i (license_file | URL) | -d)" >&2
+    echo "    -i  Install a license, via stdin, file, or URL." >&2
+    echo "    -d  Delete the current installed license." >&2
+    echo >&2
+    echo " cl-license prints, installs or deletes a license on this switch." >&2
+}
+
+if [ x"$1" != 'x-i' ]; then
+    usage
+    exit 100
+fi
+shift
+if [ ! -f "$1" ]; then
+    if [ -n "$1" ]; then
+        if ! echo "$1" | grep -q "$URL_RE"; then
+            usage
+            echo "file $1 not found or not readable." >&2
+            exit 100
+        fi
+    fi
+fi
+
+function clean_tmp {
+    rm $1
+}
+
+if [ -z "$1" ]; then
+    LIC_FILE=`mktemp lic.XXXXXX`
+    trap "clean_tmp $LIC_FILE" EXIT
+    echo "Paste license text here, then hit ctrl-d" >&2
+    cat >$LIC_FILE
+else
+    if echo "$1" | grep -q "$URL_RE"; then
+        LIC_FILE=`mktemp lic.XXXXXX`
+        trap "clean_tmp $LIC_FILE" EXIT
+        if ! wget "$1" -O $LIC_FILE; then
+            echo "Couldn't download $1 via HTTP!" >&2
+            exit 10
+        fi
+    else
+        LIC_FILE="$1"
+    fi
+fi
+
+/usr/sbin/switchd -lic "$LIC_FILE"
+SWITCHD_RETCODE=$?
+if [ $SWITCHD_RETCODE -eq 99 ]; then
+    more /usr/share/cumulus/EULA.txt
+    echo "I (on behalf of the entity who will be using the software) accept"
+    read -p "and agree to the EULA  (yes/no): "
+    if [ "$REPLY" != "yes" -a "$REPLY" != "y" ]; then
+        echo EULA not agreed to, aborting. >&2
+        exit 2
+    fi
+elif [ $SWITCHD_RETCODE -ne 0 ]; then
+    echo '******************************' >&2
+    echo ERROR: License file not valid. >&2
+    echo ERROR: No license installed. >&2
+    echo '******************************' >&2
+    exit 1
+fi
+
+mkdir -p "$LIC_DIR"
+cp "$LIC_FILE" "$LIC_DIR/.license.txt"
+chmod 644 "$LIC_DIR/.license.txt"
+
+mkdir -p "$PERSIST_LIC_DIR"
+cp "$LIC_FILE" "$PERSIST_LIC_DIR/.license.txt"
+chmod 644 "$PERSIST_LIC_DIR/.license.txt"
+
+echo License file installed.
+echo Reboot to enable functionality.

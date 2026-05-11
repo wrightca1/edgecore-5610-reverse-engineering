@@ -1,0 +1,697 @@
+#!/usr/bin/python
+
+##
+## Copyright 2012 Cumulus Networks, Inc.
+## All rights reserved.
+##
+
+"""
+Check the current running ucode version vs. the latest available versions
+
+"""
+
+#-------------------------------------------------------------------------------
+#
+# Imports
+#
+
+import sys
+import os
+import re
+import time
+import getopt
+import ConfigParser
+import syslog
+import subprocess
+import bcmshell
+
+#-------------------------------------------------------------------------------
+#
+# Global Constants
+#
+
+const_ucode_dir  = "/usr/share/cumulus/phy_ucode"
+const_cache_dir  = "/var/cache/cumulus/phy_ucode"
+const_cache_file = const_cache_dir + "/config"
+const_ood_file   = const_cache_dir + "/needs_update"
+
+# socket timeout used for all bcmshell objects
+bcmshell_timeout = 60
+
+#-------------------------------------------------------------------------------
+#
+# Global Variables
+#
+
+debug_on = False
+
+options = """
+OPTIONS
+
+        -u, --update
+
+                When the microcode is out of date, force the update
+                procedure, even if auto_update=False in the config
+                file.
+
+                Note: If the running microcode version is equal to the
+                desired version no update takes place.
+
+        -f, --force
+
+                Force update of micro-code, even when the running
+                microcode is equal to the desired version.
+
+        -d, --debug
+
+                Print more verbose debug information.
+
+        -h, --help
+
+                Print this help message.
+
+        -m, --man_page
+
+                More detailed description of how this utility operates.
+
+FILES
+
+        /var/cache/cumulus/phy_ucode/config
+        /usr/share/cumulus/phy_ucode/*.bin
+"""
+
+man_page = """
+SYNOPSYS
+        phy-update [ options ]
+
+DESCRIPTION
+
+        phy-update programs PHY microcode into the SPI-ROMs
+        attached to the PHYs, parameterized by a config file.  During
+        boot-up the microcode is downloaded by the SDK to the PHY as
+        part of the initialization sequence.
+
+        phy-update utilizes a configuration file that resides in
+        /var/cache/cumulus/phy_ucode/config.  This file serves as both a
+        configuration file for user settings and a cache of which
+        microcode versions are currently installed.
+
+        phy-update looks in /usr/share/cumulus/phy_ucode for the available
+        PHY microcode binary files.  The contents of this directory
+        look like:
+
+        BCM84740-ver-D102.bin
+        BCM84754-ver-D102.bin
+        BCM8754-ver-0411.bin
+
+        The first part of the file name indicates the PHY part and the
+        later portion is the microcode version number.  It is possible
+        to have multiple versions of microcode for the same PHY part.
+        By default the 'largest' version is choosen, but a particular
+        version can be specified in the configuration file (see
+        below).
+
+        An example configuration files looks like:
+
+        [Control]
+        auto_update = true
+        num_ports = 48
+
+        [CurrentUcodeVer]
+        port01 = 0411
+        port02 = 0411
+        port03 = 0411
+        port04 = 0411
+        ...
+
+        [PhyType]
+        port01 = BCM8754
+        port02 = BCM8754
+        port03 = BCM8754
+        port04 = BCM8754
+        ...
+
+        [OverrideUcodeVer]
+        BCM8754 = 0311
+
+        Note:  The parameter names are case insensitive.
+
+        Breaking down the config file as Section.Option we have:
+
+        Control.auto_update:
+
+          If this is set to true then phy-update will automatically
+          update the PHY microcode if it determines a PHY is out of
+          date.
+
+          The default config file has this value set to true.
+
+          If set to false it will skip the update.  In order to update
+          the microcode in this case the user must pass the --update
+          option.
+
+        Control.num_ports:
+
+          The number of ports on the board as determined by a system
+          inventory.  End users should not touch this value.
+
+        OverrideUcodeVer.<PHY_TYPE>:
+
+          These values specify a particular microcode version to use
+          for a particular PHY type.  If this value is missing (the
+          default) the latest microcode version is used.
+
+          The example above specifies that microcode version 0311
+          should be used for PHY type BCM8754, instead of the latest
+          version.
+
+        CurrentUcodeVer.portXX:
+
+          A cached value of the currently running microcode for the
+          port.  End users should not touch the values in this
+          section.
+
+        PhyType.portXX:
+
+          A cached value of the detected PHY part type as determined
+          by a system inventory.  End users should not touch the
+          values in this section.
+
+""" + options + """
+AUTHOR
+
+        Curt Brune <curt@cumulusnetworks.com>
+"""
+
+#-------------------------------------------------------------------------------
+#
+# Functions
+#
+
+def usage():
+    """Print the command usage syntax."""
+    print "usage: %s [ options ]" % sys.argv[0]
+    print options
+
+def debug_en(b):
+    """Enables/Disables debug() messages."""
+    global debug_on
+    debug_on = b
+
+def debug(msg):
+    """Print debug message to stdout if enabled."""
+    if debug_on:
+        print msg
+
+def log_msg(msg):
+    """Print message to stdout and syslog.LOG_NOTICE."""
+    print msg
+    syslog.syslog(syslog.LOG_NOTICE, msg)
+
+def log_err(msg):
+    """Print message to stderr and syslog.LOG_ERR."""
+    sys.stderr.write( "ERROR: " + msg + "\n")
+    syslog.syslog(syslog.LOG_ERR, "ERROR: " + msg)
+
+def get_cmd_output(args):
+    """Run command specified by args and return command output lines."""
+    try:
+        p = subprocess.Popen( args,
+                              stdout=subprocess.PIPE,
+                              stderr=subprocess.STDOUT)
+        txt = p.communicate()[0]
+    except OSError as err:
+        log_err("Issue running %s: %s" % (str(args), err))
+        exit(-1)
+
+    if p.returncode != 0:
+        log_err("Command returned failure, running %s" % str(args))
+        exit(-1)
+
+    return txt.splitlines()
+
+def switchd_running():
+    """Check if switchd is running or not."""
+
+    args = ["/etc/init.d/switchd", "status"]
+    try:
+        p = subprocess.Popen( args,
+                              stdout=subprocess.PIPE,
+                              stderr=subprocess.STDOUT)
+        txt = p.communicate()[0]
+    except OSError as err:
+        log_err("Issue running %s: %s" % (str(args), err))
+        exit(-1)
+
+    return p.returncode == 0
+
+def get_desired_ucode(config):
+    """Return desired microcode version.
+
+    This function returns the desired ucode as a dictionary of (PHY
+    type, version), where the 'key' is the PHY type, like 'BCM84740'.
+    The version is either the 'latest' version available or the
+    override value specified in the config file.
+
+    First the available versions are determined and then that list is
+    pruned for the latest vs. override values.
+
+    From the example directory listing below the contents of
+    available_ucode would look like:
+
+    available_ucode['BCM84740'] = ['D102', 'B102']
+    available_ucode['BCM84754'] = ['D102', 'A102']
+    available_ucode['BCM8754']  = ['4011', '2011']
+
+    The "latest" version is always at the front of the list.
+    """
+
+    available_ucode = {}
+
+    # read available ucode versions
+    ucode_args = ["ls", "-lr", const_ucode_dir]
+    output = get_cmd_output(ucode_args)
+
+    # output looks like this:
+    #
+    # total 51
+    # -rw-r--r-- 1 root root 32768 Jul 27 21:36 BCM84740-ver-D102.bin
+    # -rw-r--r-- 1 root root 32768 Jul 27 21:36 BCM84740-ver-B102.bin
+    # -rw-r--r-- 1 root root 32768 Jul 27 21:36 BCM84754-ver-D102.bin
+    # -rw-r--r-- 1 root root 32768 Jul 27 21:36 BCM84754-ver-A102.bin
+    # -rw-r--r-- 1 root root 16384 Jul 27 21:36 BCM8754-ver-4011.bin
+    # -rw-r--r-- 1 root root 16384 Jul 27 21:36 BCM8754-ver-2011.bin
+
+    # Note: If multiple versions of the same ucode are present we want
+    # the one with the "largest" version number first.  The "ls -lr"
+    # will give us the greatest version number first.
+
+    prog = re.compile(".*(BCM.*)-ver-(.*)\.bin")
+    for line in output:
+        result = prog.match(line)
+        if result is not None:
+            debug("found available PHY ucode: %s, version: %s" %
+                  (result.group(1), result.group(2)))
+            if not result.group(1) in available_ucode:
+                available_ucode[result.group(1)] = []
+            available_ucode[result.group(1)].append(result.group(2).lower())
+
+    if not available_ucode:
+        log_err("Unable to parse ls -lr %s output" % (ucode_dir))
+        exit(-1)
+
+    desired_ucode = {}
+    for phy_type in available_ucode.keys():
+        try:
+            desired_ver = config.get('OverrideUcodeVer', phy_type)
+        except ConfigParser.NoOptionError:
+            desired_ver = "latest"
+        if desired_ver == "latest":
+            desired_ucode[phy_type] = available_ucode[phy_type][0]
+        elif desired_ver in available_ucode[phy_type]:
+            desired_ucode[phy_type] = desired_ver
+        else:
+            log_err("Desired ucode ver %s does not exist for PHY type: %s." %
+                    (desired_ver, phy_type))
+            log_err("Please check the config file: %s." % (const_cache_file))
+            log_err("Please check the ucode binary directory: %s." %
+                    (const_ucode_dir))
+            exit(-1)
+        debug("Desired ucode version for PHY type: %s, %s" %
+              (phy_type, desired_ucode[phy_type]))
+
+    return desired_ucode
+
+def get_phy_inventory():
+    """Get the hardwares's list of ports and PHY types."""
+    phys = []
+
+    b = bcmshell.bcmshell(timeout=bcmshell_timeout)
+    txt = b.run("phy info")
+    output = txt.splitlines()
+
+    # output looks like this:
+    #
+    # Phy mapping dump:
+    #       port   id0   id1  addr iaddr                    name    timeout
+    #   xe0(  1)   362  5fa1     5    89                 BCM8754     250000
+    #   xe1(  2)   362  5fa1     4    89                 BCM8754     250000
+
+    prog = re.compile(".*\( *(\d+)\).*(BCM[0-9]+) ")
+    for line in output:
+        result = prog.match(line)
+        if result is not None:
+            debug("found port: %s, part: %s" %
+                  (result.group(1), result.group(2)))
+            phys.append( [ int(result.group(1)), result.group(2)] )
+
+    if len(phys) == 0:
+        log_err("Unable to parse /usr/lib/cumulus/bcmcmd 'phy info' output")
+        exit(-1)
+
+    # Programming the ucode is more reliable when done in reverse port
+    # order.
+    phys.reverse()
+    return phys
+
+def phy_reg_read( b, port, addr):
+    """Read a PHY MDIO register."""
+    txt = b.run("phy %s %s %s" % (str(port), addr, "1"))
+    output = txt.splitlines()
+
+    # output looks like this:
+    #
+    # root@cumulus:~# /usr/lib/cumulus/bcmcmd phy 1 0xca1a 1
+    # Port xe0 (PHY addr 0x05) DevAd 1(DEV_PMA_PMD) Reg 0xca1a: 0x0411
+
+    val = ""
+    prog = re.compile(".*Reg 0x.*: 0x(.*)$")
+    for line in output:
+        debug("result line: " + line)
+        result = prog.match(line)
+        if result is None:
+            log_err("Unable to parse mii reg read output: " + line)
+            exit(-1)
+        else:
+            debug("found val: %s" % result.group(1))
+            val = result.group(1).lower()
+            break
+
+    return val
+
+def phy_reg_write( b, port, addr, val):
+    """Write a PHY MDIO register."""
+    txt = b.run("phy %s %s 1 %s" % (port, addr, val))
+
+def get_version( port, phy_type):
+    """Get the hardware's currently running ucode version and checksum OK."""
+    if phy_type == "BCM8754":
+        ver_reg = "0xCA1A"
+    elif (phy_type == "BCM84754") or (phy_type == "BCM84740"):
+        ver_reg = "0xCE00"
+
+    b = bcmshell.bcmshell(keepopen=True, timeout=bcmshell_timeout)
+    version = phy_reg_read( b, port, ver_reg)
+
+    # verify checksum of running code
+    valid_csum = True
+    if phy_type == "BCM84740":
+        # loop over all lanes
+        for lane in range(4):
+            phy_reg_write( b, port, "0xc702", str(lane))
+            csum_val = phy_reg_read( b, port, "0xCA1C")
+            if csum_val != "600d":
+                # it's bad
+                valid_csum = False
+                debug("Port %s, lane %d: Bad csum found %s" %
+                      (port, lane, csum_val))
+    else:
+        csum_val = phy_reg_read( b, port, "0xCA1C")
+        if csum_val != "600d":
+            # it's bad
+            valid_csum = False
+            debug("Port %s: Bad csum found %s" % (port, csum_val))
+
+    b.close()
+
+    return version, valid_csum
+
+def update_ucode( bcm, port, phy_type, version):
+    """Update PHY's SPI-ROM with specified ucode version."""
+    ucode_file = "%s-ver-%s.bin" % (phy_type, version.upper())
+    log_msg("Port %02d updating micro-code with %s" % (port, ucode_file))
+    full_path = const_ucode_dir + "/" + ucode_file
+    if not os.path.exists(full_path):
+        log_err("Unable to find ucode binary: %s" % full_path)
+        exit(-1)
+
+    # reset PHY before programming
+    phy_reg_write( bcm, port, "0x0", "0xa040")
+    time.sleep(0.2)
+
+    # ports are zero based for firmware command
+    cmd = "phy firmware xe%d set=%s -y" % (int(port)-1, full_path)
+    debug("Running /usr/lib/cumulus/bcmcmd: %s" % cmd)
+    txt = bcm.run(cmd)
+    output = txt.splitlines()
+
+    # output looks like this:
+    #
+    # Firmware updating in progress. Data length: 16384
+    # Please wait ....
+    # Successfully Done!!!
+
+    prog = re.compile("^(Successfully Done)")
+    success = False
+    for line in output:
+        result = prog.match(line)
+        if result is not None:
+            success = True
+
+    return success, output
+
+def phy_update(config, cli_update, force):
+    """Update the PHY ucode depending on availablity and config file"""
+
+    auto_update = config.getboolean('Control', 'auto_update')
+    if not (auto_update or cli_update or force):
+        log_msg("Updates needed, but auto_update is disabled.")
+        log_msg("Re-run with --update to force the update.")
+        log_msg("Alternatively set auto_update=true in the config file.")
+        return 0
+
+    desired_ucode = get_desired_ucode(config)
+    phys = get_phy_inventory()
+
+    config.set('Control', 'num_ports', len(phys))
+
+    # Determine if an update is really needed, which means do we
+    # really need to start/stop switchd.
+    update_list = []
+    for (port, phy_type) in phys:
+        current_version, valid_csum = get_version( port, phy_type)
+        desired_version = desired_ucode[phy_type]
+        config.set('PhyType', "port%02d" % port, phy_type)
+        config.set('CurrentUcodeVer', "port%02d" % port, current_version)
+        if force:
+            debug("Forcing update for port %s" % (port))
+            update_list.append( [ port, phy_type, desired_version])
+        elif (current_version != desired_version):
+            debug("Port %s current-version %s != to desired_version %s"
+                  % (port, current_version, desired_version))
+            update_list.append( [ port, phy_type, desired_version])
+        elif not valid_csum:
+            debug("Checksum for port %s bad.  Forcing update" % (port))
+            update_list.append( [ port, phy_type, desired_version])
+        else:
+            debug("Port %s is up-to-date, Skipping..." % port)
+
+    rc = 0
+
+    if len(update_list) > 0:
+        log_msg("Re-starting switchd in offline mode ...")
+
+        monit_running = False
+        if os.path.exists("/var/run/monit.pid"):
+            monit_running = True
+
+        if monit_running:
+            # stop monit which also tries to use /usr/lib/cumulus/bcmcmd
+            start_stop_args = ["/etc/init.d/monit", "stop"]
+            output = get_cmd_output( start_stop_args)
+            time.sleep(1)
+
+        # stop switchd
+        start_stop_args = ["/etc/init.d/switchd", "stop"]
+        output = get_cmd_output( start_stop_args)
+        time.sleep(2)
+        # start switchd in diag mode
+        switchd_args = ["/etc/init.d/switchd", "start-offline"]
+        output = get_cmd_output( switchd_args)
+
+        # Programming the microcode does not work reliably going in
+        # ascending or descending port order.
+        #
+        # Our first attempt is in descending port order.
+        #
+        # Any failed ports are next tried in ascending port order.
+        #
+        # Any failed ports from that attempt are tried in descending
+        # port order.
+        #
+        # Go back and forth until the number of retry attempts is
+        # exhausted.
+
+        bcm = bcmshell.bcmshell(keepopen=True, timeout=bcmshell_timeout)
+
+        retry = update_list
+        retry.reverse()
+        err_msg = []
+        for attempt in range(5):
+            next_retry = []
+            err_msg = []
+            # process ports in opposite direction
+            retry.reverse()
+            for (port, phy_type, desired_version) in retry:
+                success, output = update_ucode( bcm, port,
+                                                phy_type, desired_version)
+                if success:
+                    config.set('CurrentUcodeVer', "port%02d" % port,
+                               desired_version)
+                else:
+                    debug("port%02d failed update, output: %s" % (port, output))
+                    next_retry.append( [port, phy_type, desired_version])
+                    err_msg.append( [port, output])
+            retry = next_retry
+            if len(retry) == 0:
+                # all done
+                break
+
+        if len(retry) > 0:
+            log_err("Problems updating microcode on all the ports:")
+            for (port, msg) in err_msg:
+                rc += 1
+                log_err("port%02d problem: %s" % (port, msg))
+
+        # reset all the PHYs
+        for (port, phy_type) in phys:
+            phy_reg_write( bcm, port, "0x0", "0xa040")
+
+        # wait after reset
+        time.sleep(1)
+
+        bcm.close()
+
+        # stop switchd in diag mode
+        log_msg("Re-starting switchd in normal mode...")
+        start_stop_args = ["/etc/init.d/switchd", "stop"]
+        output = get_cmd_output( start_stop_args)
+        time.sleep(2)
+        # re-start regular switchd
+        start_stop_args = ["/etc/init.d/switchd", "start"]
+        output = get_cmd_output( start_stop_args)
+
+        if monit_running:
+            # re-start monit
+            start_stop_args = ["/etc/init.d/monit", "start"]
+            output = get_cmd_output( start_stop_args)
+
+    return rc
+
+class MyDict(dict):
+    """Provide version of dict with sorted keys()."""
+    def items(self):
+        item_list = dict.items(self)
+        item_list.sort()
+        return item_list
+
+#-------------------------------------------------------------------------------
+#
+# Main
+#
+def main(config):
+
+    start_time = time.time()
+
+    try:
+        short_args = "hdumf"
+        long_args  = ["help", "debug", "update", "man_page", "force"]
+        opts, args = getopt.getopt(sys.argv[1:], short_args, long_args)
+    except getopt.GetoptError, err:
+        # print help information and exit:
+        print str(err) # will print something like "option -a not recognized"
+        usage()
+        return 2
+
+    update = False
+    force = False
+    for o, a in opts:
+        if o in ("-h", "--help"):
+            usage()
+            return 0
+        elif o in ("-d", "--debug"):
+            debug_en(True)
+        elif o in ("-m", "--man_page"):
+            print man_page
+            return 0
+        elif o in ("-u", "--update"):
+            update = True
+        elif o in ("-f", "--force"):
+            force = True
+        else:
+            assert False, "unhandled option"
+
+    out_of_date = False
+
+    config = ConfigParser.ConfigParser({}, MyDict)
+
+    if not os.path.exists(const_cache_dir):
+        os.makedirs(const_cache_dir)
+
+    if not os.path.exists(const_cache_file):
+        # Create default config
+        log_msg("Fresh install.  Creating " + const_cache_file)
+        config.add_section('Control')
+        config.set('Control', 'auto_update', 'true')
+        config.add_section('OverrideUcodeVer')
+        config.add_section('CurrentUcodeVer')
+        config.add_section('PhyType')
+        out_of_date = True
+    else:
+        config.read(const_cache_file)
+        desired_ucode = get_desired_ucode(config)
+        num_ports = config.getint('Control', 'num_ports')
+        for p in range(num_ports):
+            phy_type  = config.get('PhyType', "port%02d" % (p + 1))
+            ucode_ver = config.get('CurrentUcodeVer', "port%02d" % (p + 1))
+            if ucode_ver != desired_ucode[phy_type]:
+                debug("Port %02d requires micro-code update" % (p + 1))
+                out_of_date = True
+
+    rc = 0
+
+    if force or out_of_date:
+        log_msg("PHY micro-code needs update.")
+        if not switchd_running():
+            log_err("switchd is not running.  Exiting...")
+            return 1
+        rc = phy_update(config, update, force)
+        if rc == 0:
+            end_time = time.time()
+            log_msg("SUCCESS: PHY microcode updates complete in %.2f seconds." %
+                    (end_time - start_time))
+        else:
+            log_err("Problems updating PHY microcode.")
+    else:
+        log_msg("cl-phy-ucode: All PHY microcode is up to date.")
+
+    with open(const_cache_file, 'wb') as configfile:
+        config.write(configfile)
+
+    return rc
+
+#--------------------
+#
+# execution check
+#
+if __name__ == '__main__':
+
+    config = None
+    try:
+        syslog.openlog(": %s : " % sys.argv[0],
+                       syslog.LOG_PID, syslog.LOG_SYSLOG)
+        exit(main(config))
+
+    except OSError as err:
+        log_err("%s : ERROR : %s\n" % (sys.argv[0], str(err)))
+        exit(-1)
+
+    except ValueError as err:
+        log_err("%s : ERROR : %s\n" % (sys.argv[0], str(err)))
+        exit(-1)
+
+    except KeyboardInterrupt:
+        if config != None:
+            # save config file with whatever progress we have
+            with open(const_cache_file, 'wb') as configfile:
+                config.write(configfile)

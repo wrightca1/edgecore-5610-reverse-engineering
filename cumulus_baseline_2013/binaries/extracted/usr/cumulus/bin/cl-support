@@ -1,0 +1,196 @@
+#!/bin/bash
+#
+# Copyright 2013, Cumulus Networks Inc.
+#
+
+MODULES_ENABLED=()
+MODULES_DISABLED=()
+
+if [ `whoami` != root ];
+then
+    echo "$0 must be run as root (or in sudo)" >&2
+    exit 10
+fi
+
+help_modules() {
+	for module in ${MODULES[*]};
+	do
+		echo "$module"
+		submodule_arr=${module}[@]
+		for submodule in ${!submodule_arr};
+		do
+			echo "$module.$submodule"
+		done
+	done
+	exit 1
+}
+
+help() {
+    echo "Usage: cl-support [-h] [-s] [-t] [-v] [reason]..."
+    echo ""
+    echo "Args:"
+    echo "[reason]: Optional reason to give for invoking cl-support."
+    echo "          Saved into tarball's cmdline.args file."
+    echo "Options:"
+    echo "-h: Print this usage statement"
+    echo "-s: Security sensitive collection"
+    echo "-t: User filename tag"
+    echo "-v: Verbose"
+    echo "-e MODULES: Enable modules. Comma separated module list (run with -e help for module names)"
+    echo "-d MODULES: Disable modules. Comma separated module list (run with -d help for module names)"
+    exit 0
+}
+
+check_module_list() {
+    module_list=($*)
+
+    for m in ${module_list[*]};
+    do
+        is_valid_module $m
+        if [ $? -eq 0 ]; then
+           echo "Invalid module $m. run with -e help"
+           help
+        fi
+    done
+}
+
+. /usr/share/cumulus/support/functions
+
+SECURE=0
+VERBOSE=0
+SKIP_BCMCMD=0
+USER_TAG=""
+
+SUPPORTDIR=/var/support
+LOCK_FILE=$SUPPORTDIR/.cl_support.lock
+exec 9>$LOCK_FILE
+if ! flock -e -n 9 ; then
+	echo "another instance is running, exiting"
+	exit 1
+fi
+
+while getopts ":hve:d:st:" Option
+do
+  case $Option in
+    h)
+      help
+      ;;
+    e)
+      [ "$OPTARG" == "help" ] && help_modules
+      MODULES_ENABLED=($(echo $OPTARG | cut -d "," -f1- --output-delimiter=" " 2>/dev/null))
+      if [ ${#MODULES_ENABLED[@]} -eq 0 ]; then
+         echo "invalid module list $OPTARG"
+         help
+      fi
+      check_module_list "${MODULES_ENABLED[@]}"
+      ;;
+    d)
+      [ "$OPTARG" == "help" ] && help_modules
+      MODULES_DISABLED=($(echo $OPTARG | cut -d "," -f1- --output-delimiter=" " 2>/dev/null))
+      if [ ${#MODULES_DISABLED[@]} -eq 0 ]; then
+         echo "invalid module list $OPTARG"
+         help
+      fi
+      check_module_list "${MODULES_DISABLED[@]}"
+      ;;
+    s)
+      SECURE=1
+      ;;
+    t)
+      USER_TAG=$OPTARG
+      USER_TAG="${USER_TAG%"${USER_TAG##*[![:space:]]}"}"
+      USER_TAG=${USER_TAG// /-}
+      ;;
+    v)
+      VERBOSE=1
+      ;;
+    *)
+      echo "invalid option"
+      help
+  esac
+done
+shift $(($OPTIND - 1))
+
+BASE=cl_support_`date +%Y%m%d_%H%M%S`
+BASETAR=$BASE.tar.xz
+OFFSET=${#BASETAR}
+NAME_MAX=$(getconf NAME_MAX $SUPPORTDIR)
+NAME_MAX=$(($NAME_MAX - $OFFSET - 1))
+HOSTNAME=${USER_TAG}_${HOSTNAME}
+HOSTNAME=${HOSTNAME//[^a-zA-Z0-9\-\.\_]/}
+HOSTNAME=${HOSTNAME:0:$NAME_MAX}
+BASE=cl_support_${HOSTNAME}_`date +%Y%m%d_%H%M%S`
+TARFILE=$SUPPORTDIR/$BASE.tar.xz
+TARDIR=$SUPPORTDIR/$BASE
+LOGDIR=$SUPPORTDIR/$BASE/support
+COREDIR=$SUPPORTDIR/$BASE/core
+ARGS="$*"
+TAR_ROOT_DIRS=""
+
+
+renice +5 -p $$ >> /dev/null
+ionice -c 2 -n 5 -p $$ >> /dev/null
+
+mkdir -p $TARDIR 2>/dev/stderr
+mkdir -p $LOGDIR 2>/dev/stderr
+
+cp /usr/cumulus/bin/cl-support $TARDIR
+if [ -n "$ARGS" ]; then
+   echo "$ARGS" > $TARDIR/cmdline.args
+fi
+
+# pick up all core files
+mkdir -p $COREDIR
+mv -f $SUPPORTDIR/core/*.core $COREDIR/ 2> /dev/null
+
+# Run through all modules and grab info
+for module in ${MODULES[*]};
+do
+	is_module_enabled $module
+	[ $? -eq 1 ] && {
+		test ${VERBOSE} -eq 1 && echo "module ${module}: enabled"
+		func_${module}
+	} || { test ${VERBOSE} -eq 1 && echo "module ${module}: disabled"; }
+
+	submodule_arr=${module}[@]
+	for submodule in ${!submodule_arr}; do
+		is_module_enabled "$module.$submodule"
+		[ $? -ne 1 ] && {
+			test ${VERBOSE} -eq 1 && echo "module ${module}.${submodule}: disabled"
+			continue
+		}
+
+		# Call sub module
+		test ${VERBOSE} -eq 1 && echo "module ${module}.${submodule}: enabled"
+		func_${module}.${submodule}
+	done
+done
+
+is_module_enabled "system.config"
+[ $? -eq 1 ] && TAR_ROOT_DIRS=$TAR_ROOT_DIRS" etc"
+
+is_module_enabled "system.logs"
+[ $? -eq 1 ] && TAR_ROOT_DIRS=$TAR_ROOT_DIRS" var/log"
+
+if [ -n "TAR_ROOT_DIRS" ]; then
+   TAR_ROOT_DIRS=" -C / "$TAR_ROOT_DIRS
+fi
+
+[ $VERBOSE -eq 1 ] && echo "Creating $TARFILE ..."
+
+[ $SECURE -eq 0 ] && tar JScf $TARFILE --warning=no-file-changed --mode=+r -C $SUPPORTDIR $BASE \
+    --transform "s,^etc,$BASE/etc," --transform "s,^var/log,$BASE/var/log," \
+    --exclude='etc/nologin' --exclude='etc/alternatives' --exclude='*/etc/passwd*' \
+    --exclude='*/etc/shadow*' --exclude='*/etc/group*' --exclude='*/etc/gshadow*' \
+    --exclude='*/etc/ssh*' $TAR_ROOT_DIRS
+
+[ $SECURE -eq 1 ] && tar JScf $TARFILE --warning=no-file-changed --mode=+r -C $SUPPORTDIR $BASE \
+    --transform "s,^etc,$BASE/etc," --transform "s,^var/log,$BASE/var/log," \
+    --exclude='etc/nologin' --exclude='etc/alternatives' --exclude='etc/passwd*' \
+    --exclude='etc/shadow*' --exclude='etc/group*' --exclude='etc/gshadow*' \
+    --exclude='etc/ssh*' --exclude='etc/pam*' --exclude='etc/security*' \
+    --exclude='etc/sudoers*' --exclude='etc/ssl*' --exclude='etc/host*' $TAR_ROOT_DIRS
+
+rm -rf $TARDIR
+
+echo Please send $TARFILE to Cumulus support.

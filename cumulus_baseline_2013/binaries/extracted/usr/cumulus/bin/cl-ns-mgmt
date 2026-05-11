@@ -1,0 +1,1015 @@
+#!/usr/bin/python
+
+# This python program will:
+# - name the default namespace 'default'
+# - create a 'mgmt' namespace for the eth interface(s)
+# - move eth0, eth1, etc into the mgmt namespace
+# - create a NAMESPACE env variable
+# - use the NAMESPACE env variable as part of the bash prompt
+# - create aliases so the user can easily move between namespaces
+#
+# To use this program run the following:
+#  /usr/cumulus/bin/cl-mgmt-ns --setup
+#
+# In addition to creating the mgmt namespace and moving the eth
+# interfaces to that namespace, this will start ssh in the mgmt namespace.
+# This will also edit /etc/rc.local so that eth interfaces are moved to
+# the mgmt namespace when the box boots.
+#
+
+import subprocess
+import argparse
+import sys
+import os
+import re
+import logging
+from shutil import copy, rmtree
+from time import sleep
+
+PS1_new = "PS1='${debian_chroot:+($debian_chroot)}\u@\h:$NAMESPACE:\w:\$ '"
+PS1_default = "PS1='\u@\h\$ '"
+
+# Return the 644, 755, etc string that represents the permissions for a file
+def get_chmod_setting(perms_me, perms_group, perms_everyone):
+    result = []
+
+    for x in (perms_me, perms_group, perms_everyone):
+        if x == '---':
+            result.append(0)
+        elif x == '--x':
+            result.append(1)
+        elif x == '-w-':
+            result.append(2)
+        elif x == '-wx':
+            result.append(3)
+        elif x == 'r--':
+            result.append(4)
+        elif x == 'r-x':
+            result.append(5)
+        elif x == 'rw-':
+            result.append(6)
+        elif x == 'rwx':
+            result.append(7)
+        else:
+            assert False, "Invalid Permissions: %s" % x
+
+    return ''.join(map(str,result))
+
+# Replace filename with tmp_filename
+def replace_file(tmp_filename, filename, remove_tmp_filename, dst_namespace=None):
+
+    # Remember the permissions, owner and group of filename so we can set them
+    # back to what they were when we started. 'ls -l' looks like:
+    #
+    # -rw-r--r-- 1 cumulus cumulus 1556 Apr  8 17:42 .bashrc
+    #
+    if os.path.isfile(filename):
+
+        if dst_namespace:
+            output = subprocess.check_output(['ip', 'netns', 'exec', dst_namespace, 'ls', '-l', filename])
+        else:
+            output = subprocess.check_output(['ls', '-l', filename])
+
+        result = re.search('^.(...)(...)(...) \d+ (\w+) (\w+) \d+', output)
+        if not result:
+            assert False, "ERROR: We could not parse the owner/group out of:\n%s\n" % output
+
+        perms_me = result.group(1)
+        perms_group = result.group(2)
+        perms_everyone= result.group(3)
+        owner = result.group(4)
+        group = result.group(5)
+
+    # If the target file does not exist then assume 644 cumulus/cumulus
+    else:
+        perms_me = 'rw-'
+        perms_group = 'r--'
+        perms_everyone= 'r--'
+        owner = 'cumulus'
+        group = 'cumulus'
+
+    if dst_namespace:
+        subprocess.call(['ip', 'netns', 'exec', dst_namespace, 'cp', tmp_filename, filename])
+
+        if remove_tmp_filename:
+            subprocess.call(['ip', 'netns', 'exec', dst_namespace, 'rm', tmp_filename])
+
+        # Restore the permissions, owner and group
+        chmod_setting = get_chmod_setting(perms_me, perms_group, perms_everyone)
+        subprocess.call(['ip', 'netns', 'exec', dst_namespace, 'chmod', chmod_setting, filename])
+        subprocess.call(['ip', 'netns', 'exec', dst_namespace, 'chown', owner, filename])
+        subprocess.call(['ip', 'netns', 'exec', dst_namespace, 'chgrp', group, filename])
+
+    else:
+        copy(tmp_filename, filename)
+
+        if remove_tmp_filename:
+            os.remove(tmp_filename)
+
+        # Restore the permissions, owner and group
+        chmod_setting = get_chmod_setting(perms_me, perms_group, perms_everyone)
+        subprocess.call(['chmod', chmod_setting, filename])
+        subprocess.call(['chown', owner, filename])
+        subprocess.call(['chgrp', group, filename])
+
+# Return True if process 'name' is running
+def process_running(name):
+
+    # www-data  1878  1663  0 13:49 ?        00:00:00 /usr/sbin/apache2 -k start
+    output = subprocess.check_output(['ps', '-ef'])
+    for line in output.split('\n'):
+        result = re.search('.* \d\d:\d\d:\d\d (.*)', line)
+        if result:
+            if name in result.group(1):
+                return True
+
+    return False
+
+# See if the 'mgmt' and 'data' net namespaces exist
+def netns_exists():
+    mgmt_netns_exist = False
+    data_netns_exist = False
+    output = subprocess.check_output(['ip', 'netns', 'list'])
+    for line in output.split('\n'):
+        if line == data_netns:
+            data_netns_exist = True
+        elif line == mgmt_netns:
+            mgmt_netns_exist = True
+
+    return (mgmt_netns_exist, data_netns_exist)
+
+# Return a list of existing namespaces
+def netns_list():
+    namespaces = []
+
+    output = subprocess.check_output(['ip', 'netns', 'list'])
+    for line in output.split('\n'):
+        if line:
+            namespaces.append(line)
+
+    return namespaces
+
+# We want to kill the "sshd:" processes but not the "/usr/sbin/sshd" processes
+# root@cel-red-01:~# ps -ef | grep sshd
+# root      2226     1  0 14:16 ?        00:00:00 /usr/sbin/sshd
+# root      2568  2226  0 14:16 ?        00:00:00 sshd: root@pts/0
+# root      2692  2636  0 14:17 pts/0    00:00:00 grep sshd
+# root@cel-red-01:~#
+def close_all_ssh_sessions():
+    output = subprocess.check_output(['ps', '-ef'])
+    sshd_pids = []
+    for line in output.split('\n'):
+        result = re.search('^\w+\s+(\d+) .* \d\d:\d\d:\d\d sshd:', line)
+        if result:
+            sshd_pids.append(result.group(1))
+
+    if sshd_pids:
+        args_for_call = ['kill',]
+        for x in sshd_pids:
+            args_for_call.append(x)
+        subprocess.call(args_for_call)
+
+# We get a list of these users by grepping /etc/passwd for lines that
+# include "home" and "bash". That will catch lines like the following:
+#
+# cumulus:x:1000:1000::/home/cumulus:/bin/bash
+#
+def get_users():
+    users = []
+    output = subprocess.check_output(['grep', 'home.*bash', '/etc/passwd'])
+    for line in output.split('\n'):
+
+        # Extract the users home directory from the /etc/passwd line
+        # cumulus:x:1000:1000::/home/cumulus:/bin/bash
+        result = re.search(':\/home\/(\w+):', output)
+        if result:
+            users.append(result.group(1))
+    users.append('root')
+    return sorted(set(users))
+
+def patch_ssh_init(reverse=False):
+    # Checking that ssh is the right version might be useful
+    if reverse:
+        patchproc = subprocess.Popen(["patch", "-NRb", "/etc/init.d/ssh"], stdin=subprocess.PIPE)
+    else:
+        patchproc = subprocess.Popen(["patch", "-Nb", "/etc/init.d/ssh"], stdin=subprocess.PIPE)
+
+    patchproc.communicate(
+"""
+12a13,14
+> NAMESPACE=`cat /proc/self/mounts | grep 'sys sysfs' | cut -f1 -d' '`
+> PIDFILE=/var/run/sshd-${NAMESPACE}.pid
+28c30,32
+<     SSHD_OPTS="$SSHD_OPTS $2"
+---
+>     SSHD_OPTS="$SSHD_OPTS $2 -o PidFile=$PIDFILE"
+> else
+>     SSHD_OPTS="$SSHD_OPTS -o PidFile=$PIDFILE"
+83c87
+< 	if start-stop-daemon --start --quiet --oknodo --pidfile /var/run/sshd.pid --exec /usr/sbin/sshd -- $SSHD_OPTS; then
+---
+> 	if start-stop-daemon --start --quiet --oknodo --pidfile "$PIDFILE" --exec /usr/sbin/sshd -- $SSHD_OPTS; then
+91c95
+< 	if start-stop-daemon --stop --quiet --oknodo --pidfile /var/run/sshd.pid; then
+---
+> 	if start-stop-daemon --stop --quiet --oknodo --pidfile "$PIDFILE"; then
+102c106
+< 	if start-stop-daemon --stop --signal 1 --quiet --oknodo --pidfile /var/run/sshd.pid --exec /usr/sbin/sshd; then
+---
+> 	if start-stop-daemon --stop --signal 1 --quiet --oknodo --pidfile "$PIDFILE" --exec /usr/sbin/sshd; then
+113c117
+< 	start-stop-daemon --stop --quiet --oknodo --retry 30 --pidfile /var/run/sshd.pid
+---
+> 	start-stop-daemon --stop --quiet --oknodo --retry 30 --pidfile "$PIDFILE"
+116c120
+< 	if start-stop-daemon --start --quiet --oknodo --pidfile /var/run/sshd.pid --exec /usr/sbin/sshd -- $SSHD_OPTS; then
+---
+> 	if start-stop-daemon --start --quiet --oknodo --pidfile "$PIDFILE" --exec /usr/sbin/sshd -- $SSHD_OPTS; then
+128c132
+< 	start-stop-daemon --stop --quiet --retry 30 --pidfile /var/run/sshd.pid || RET="$?"
+---
+> 	start-stop-daemon --stop --quiet --retry 30 --pidfile "$PIDFILE" || RET="$?"
+134c138
+< 		if start-stop-daemon --start --quiet --oknodo --pidfile /var/run/sshd.pid --exec /usr/sbin/sshd -- $SSHD_OPTS; then
+---
+> 		if start-stop-daemon --start --quiet --oknodo --pidfile "$PIDFILE" --exec /usr/sbin/sshd -- $SSHD_OPTS; then
+154c158
+< 	status_of_proc -p /var/run/sshd.pid /usr/sbin/sshd sshd && exit 0 || exit $?
+---
+> 	status_of_proc -p "$PIDFILE" /usr/sbin/sshd sshd && exit 0 || exit $?
+"""
+        )
+
+# Create a veth and NAT so snmpwalks on mgmt can see the swp interfaces
+def create_snmp_nat():
+
+    # veth IP addresses used for snmp
+    veth0_ip = '169.254.0.1/16'
+    veth1_ip = '169.254.0.2/16'
+
+    subprocess.call(['ip', 'netns', 'exec', data_netns, 'ip', 'link', 'add', 'veth0', 'type', 'veth', 'peer', 'name', 'veth1'])
+    subprocess.call(['ip', 'netns', 'exec', data_netns, 'ip', 'link', 'set', 'veth1', 'netns', mgmt_netns])
+    subprocess.call(['ip', 'netns', 'exec', data_netns, 'ifconfig', 'veth0', veth0_ip, 'up'])
+    subprocess.call(['ip', 'netns', 'exec', mgmt_netns, 'ifconfig', 'veth1', veth1_ip, 'up'])
+    subprocess.call(['ip', 'netns', 'exec', mgmt_netns, 'iptables', '-t', 'nat', '-A', 'PREROUTING', '-i', 'eth0', '-p', 'udp', '--dport', '161', '-j', 'DNAT', '--to', '%s:161' % veth0_ip[:-3]])
+    subprocess.call(['ip', 'netns', 'exec', mgmt_netns, 'iptables', '-t', 'nat', '-A', 'POSTROUTING', '-o', 'veth1', '-j', 'MASQUERADE'])
+
+    # Add snmpd to the list of data services
+    rc_local = '/etc/rc.local'
+    tmp_rc_local = '/tmp/rc.local'
+    fh = open(rc_local, 'r')
+    fh_tmp = open(tmp_rc_local, 'w')
+    for line in fh.readlines():
+        line = line.rstrip()
+
+        # /usr/cumulus/bin/cl-ns-mgmt --setup --no-patch-ssh --ns mgmt  --mgmt-services ssh --data-services ssh,lldpd
+        m = re.search('(cl-ns-mgmt.* --data-services) (\S+)(.*)', line)
+
+        if m:
+            pre = m.group(1)
+            data_services = m.group(2)
+            post = m.group(3)
+
+            if 'snmpd' in data_services:
+                logger.info('--data-services already includes snmpd')
+                new_line = line
+            else:
+                logger.info('--data-services needs snmpd...adding it')
+                new_line = '%s %s,snmpd %s' % (pre, data_services, post)
+            fh_tmp.write(new_line + '\n')
+
+        # This shouldn't happen but on the off chance that the cl-ns-mgmt line
+        # does not have a --data-services section add it with snmpd as the only option
+        elif line.startswith('cl-ns-mgmt'):
+            new_line = line + ' --data-services snmpd'
+            fh_tmp.write(new_line + '\n')
+            logger.warning("cl-ns-mgmt does not have a --data-services section, replacing '%s' with '%s'" % (line, new_line))
+
+        # None cl-ns-mgmt line in /etc/rc.local...leave it as is
+        else:
+            fh_tmp.write(line + '\n')
+
+    fh.close()
+    fh_tmp.close()
+    replace_file(tmp_rc_local, rc_local, False)
+
+
+def undo_rc_local(undo_one_more_time):
+    # Removing the cl-ns-mgmt line from /etc/rc.local
+    rc_local = '/etc/rc.local'
+    fh = open(rc_local, 'r')
+    rc_local_contents = fh.readlines()
+    fh.close()
+
+    modify_rc_local = False
+    tmp_rc_local = '/tmp/rc.local'
+    fh = open(tmp_rc_local, 'w')
+    for line in rc_local_contents:
+
+        # If this line contains cl-ns-mgmt then don't write it to the tmp file
+        # and set modify_rc_local to True
+        if 'cl-ns-mgmt' in line:
+            line = line.rstrip()
+            logger.info("Removing '%s' from /etc/rc.local" % line)
+            modify_rc_local = True
+        else:
+            fh.write(line)
+
+    if undo_one_more_time:
+        logger.info("Scheduling '/usr/cumulus/bin/cl-ns-mgmt --undo' to run on startup via /etc/rc.local")
+        fh.write('/usr/cumulus/bin/cl-ns-mgmt --undo\n')
+        modify_rc_local = True
+    fh.close()
+
+    if modify_rc_local:
+        logger.info('Updating /etc/rc.local')
+        replace_file(tmp_rc_local, rc_local, False)
+
+
+# Reverse all changes made by cl-ns-mgmt
+def undo_cl_ns_mgmt():
+
+    current_namespaces = netns_list()
+    (mgmt_netns_exist, data_netns_exist) = netns_exists()
+
+    if not mgmt_netns_exist:
+        possible_mgmt_namespaces = []
+
+        for x in current_namespaces:
+            if x != 'default':
+                possible_mgmt_namespaces.append(x)
+
+        if possible_mgmt_namespaces:
+            msg = '\nWe cannot --undo the management namespace "%s", it does not\n' % mgmt_netns +\
+                  'exist but there are other namespaces that could be the management\n' +\
+                  'namespace.  Do any of the following look familiar?\n'
+            msg += '\n'.join(possible_mgmt_namespaces)
+            msg += '\nIf so run cl-ns-mgmt again with "--undo --ns X" where X is the \n' +\
+                   'name of the management namespace\n'
+            logger.error(msg)
+            sys.stderr.write(msg)
+            sys.exit(1)
+
+
+    # If the user ran with --mnt-persist then remove what was written to /mnt/persist
+    mnt_persist_to_remove = ('/mnt/persist/etc/rc.local', '/mnt/persist/etc/init.d/ssh')
+    for x in mnt_persist_to_remove:
+        if os.path.isfile(x):
+            logger.info('rm %s' % x)
+            os.remove(x)
+
+    if os.path.isdir('/mnt/persist/etc/netns'):
+        logger.info('rm -rf /mnt/persist/etc/netns')
+        rmtree('/mnt/persist/etc/netns')
+
+
+    if os.path.isfile(cl_namespace_sh):
+        logger.info('Removing %s' % cl_namespace_sh)
+        os.remove(cl_namespace_sh)
+
+    if os.path.isfile('/etc/netns/%s/network/interfaces' % mgmt_netns):
+
+        logger.info('Combine the two /etc/network/interfaces files into one')
+
+        # Remove all loopback references from the mgmt namespace file.
+        # We do this so we don't end up with duplicate loopbacks when we
+        # combine the two files.
+        all_but_lo = []
+        fh = open('/etc/netns/%s/network/interfaces' % mgmt_netns, 'r')
+        for line in fh.readlines():
+            line = line.rstrip()
+            result_loopback1 = re.search('loopback', line)
+            result_loopback2 = re.search('auto lo', line)
+            result_loopback3 = re.search('iface lo', line)
+
+            if result_loopback1 or result_loopback2 or result_loopback3:
+                continue
+
+            all_but_lo.append(line)
+
+        with open('/tmp/mgmt_etc_network_interfaces', 'w') as f:
+            f.write('\n'.join(all_but_lo))
+
+        # Copy the default interfaces file to /tmp
+        subprocess.call(['ip', 'netns', 'exec', data_netns, 'cp', '/etc/network/interfaces', '/tmp/default_etc_network_interfaces'])
+
+        # Now combine the two files
+        filenames = ['/tmp/mgmt_etc_network_interfaces',
+                     '/tmp/default_etc_network_interfaces']
+        merged_etc_network_interfaces = '/tmp/merged_etc_network_interfaces'
+        outfile = open(merged_etc_network_interfaces, 'w')
+        for fname in filenames:
+            infile = open(fname, 'r')
+            outfile.write(infile.read())
+            infile.close()
+        outfile.close()
+
+        logger.info('Restore /etc/network/interfaces')
+        replace_file(merged_etc_network_interfaces, '/etc/network/interfaces', False, data_netns)
+
+    # Get a list of all services we started in the mgmt namespace.
+    # grep /etc/rc.local for "cl-ns-mgmt" and parse the --mgmt-services list
+    mgmt_services = []
+    fh = open('/etc/rc.local', 'r')
+    for line in fh.readlines():
+        result = re.search('cl-ns-mgmt.*--mgmt-services (\S+)', line)
+        if result:
+            mgmt_services = result.group(1).split(',')
+            break
+    fh.close()
+
+    # Stop any services that we started in the mgmt namespace.
+    for x in mgmt_services:
+        logger.info('Stopping the %s service in %s' % (x, mgmt_netns))
+        subprocess.call(['ip', 'netns', 'exec', mgmt_netns, 'service', x, 'stop'])
+
+    # Remove the NAT rules we created for snmpd.
+    # Note that we do not remove the entire PREROUTING and POSTROUTING chains
+    # because the user may have added other rules on their own.
+    if mgmt_netns_exist:
+        veth0_ip = '169.254.0.1/16'
+        subprocess.call(['ip', 'netns', 'exec', mgmt_netns, 'iptables', '-t', 'nat', '-D', 'PREROUTING', '-i', 'eth0', '-p', 'udp', '--dport', '161', '-j', 'DNAT', '--to', '%s:161' % veth0_ip[:-3]])
+        subprocess.call(['ip', 'netns', 'exec', mgmt_netns, 'iptables', '-t', 'nat', '-D', 'POSTROUTING', '-o', 'veth1', '-j', 'MASQUERADE'])
+
+    # Move eth0 and eth1 out of mgmt
+    if mgmt_netns_exist:
+        try:
+            output = subprocess.check_output(['ip', 'netns', 'exec', mgmt_netns, 'ip', 'addr', 'show'])
+        except:
+            output = ''
+
+        for line in output.split('\n'):
+            result = re.search('^\d+: (eth\d+):', line)
+            if result:
+                int_name = result.group(1)
+
+                # ip netns exec mgmt ip link set eth0 netns default
+                logger.info("Moving %s out of '%s' and into '%s'" % (int_name, mgmt_netns, data_netns))
+                subprocess.call(['ip', 'netns', 'exec', mgmt_netns, 'ip', 'link', 'set', int_name, 'netns', data_netns])
+
+    # Patch the ssh file
+    if not no_patch_ssh:
+        patch_ssh_init(True)
+
+    # Take all of the services that we started in the mgmt namespace and
+    # restart them in the data namespace
+    for x in mgmt_services:
+        logger.info('Restarting the %s service in %s' % (x, data_netns))
+        try:
+            subprocess.call(['ip', 'netns', 'exec', data_netns, 'service', x, 'restart'])
+        except Exception as e:
+            logger.error('Failed to restart %s in %s due to "%s"' % (x, data_netns, str(e)))
+
+    # Removing namespaces will sometimes fail due to "Resource busy" so wrap these in a try
+    if mgmt_netns_exist:
+        logger.info('Removing %s namespace' % mgmt_netns)
+
+        try:
+            subprocess.call(['ip', 'netns', 'delete', mgmt_netns])
+        except Exception as e:
+            logger.error('Failed to remove %s namespace due to "%s"' % (mgmt_netns, str(e)))
+
+    if data_netns_exist:
+        logger.info('Removing %s namespace' % data_netns)
+
+        try:
+            subprocess.call(['ip', 'netns', 'delete', data_netns])
+        except Exception as e:
+            logger.error('Failed to remove %s namespace due to "%s"' % (data_netns, str(e)))
+
+    undo_one_more_time = False
+    if os.path.isfile('/var/run/netns/default'):
+        logger.info('Removing the soft link to /proc/1/ns/net')
+        try:
+            os.remove('/var/run/netns/default')
+        except Exception as e:
+            undo_one_more_time = True
+            logger.info('Run --undo at next reboot due to /var/run/netns/default')
+
+    if os.path.isdir('/etc/netns/'):
+        logger.info('Removing all /etc/netns directories')
+        try:
+            rmtree('/etc/netns/')
+        except Exception as e:
+            undo_one_more_time = True
+            logger.info('Run --undo at next reboot due to /etc/netns/')
+
+    # Bounce the ethX interfaces since they changed namespaces
+    logger.info('ifreload -a')
+    subprocess.call(['ifreload', '-a'])
+
+    # Reverse the changes we made to .bashrc
+    for user in get_users():
+
+        if user == 'root':
+            bashrc = "/root/.bashrc"
+        else:
+            bashrc = "/home/%s/.bashrc" % user
+
+        fh_tmp = open('/tmp/.bashrc', 'w')
+        fh_read = open(bashrc, 'r')
+
+        for line in fh_read:
+            line = line.rstrip()
+
+            if line == PS1_new:
+                fh_tmp.write(PS1_default + '\n')
+
+            elif line.lstrip().startswith('PS1=') and 'NAMESPACE' in line:
+                result = re.search('(\s*)PS1=(.*):\$NAMESPACE:(.*)', line)
+                if result:
+                    fh_tmp.write(result.group(1) + 'PS1=' + result.group(2) + result.group(3) + '\n')
+                    logger.info('Removing $NAMESPACE from bash prompt')
+                else:
+                    fh_tmp.write(line + '\n')
+                    logger.error('undo could not parse PS1 out of %s' % line)
+
+            else:
+                fh_tmp.write(line + '\n')
+        fh_tmp.close()
+        fh_read.close()
+        replace_file('/tmp/.bashrc', bashrc, False)
+
+    undo_rc_local(undo_one_more_time)
+
+    # This must be the last thing we do
+    close_all_ssh_sessions()
+
+if __name__ == '__main__':
+
+    # You can name the eth and swp namespaces whatever you like
+    parser = argparse.ArgumentParser(description="Setup management namespace (aka mgmt VRF)")
+    parser.add_argument('--ns', type=str, help='Title of the namespace for management ports', default='mgmt')
+    parser.add_argument('--mgmt-services', type=str, help='Services to start in the management namespace')
+    parser.add_argument('--data-services', type=str, help='Services to start in the data namespace')
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument('--setup', action='store_true', help='Create the management namespace (VRF)', default=False)
+    group.add_argument('--undo', action='store_true', help='Reverse all changes made by cl-ns-mgmt', default=False)
+    group.add_argument('--snmp-nat', action='store_true', help='Configure IP NAT rules for snmpd', default=False)
+    group.add_argument('--mnt-persist', action='store_true', help='Prepare management namespace for image upgrade', default=False)
+    parser.add_argument('--no-patch-ssh', action='store_true', help=argparse.SUPPRESS, default=False)
+    args = parser.parse_args()
+
+    euid = os.geteuid()
+    if euid != 0:
+        sys.stderr.write('ERROR: You must be root to run this script\n')
+        sys.exit(1)
+
+    mgmt_netns = args.ns
+    data_netns = "default"
+
+    if args.mgmt_services:
+        mgmt_services = args.mgmt_services.split(',')
+    else:
+        mgmt_services = []
+
+    if args.data_services:
+        data_services = args.data_services.split(',')
+    else:
+        data_services = []
+
+    no_patch_ssh = args.no_patch_ssh
+    cl_namespace_sh = '/etc/profile.d/cl_namespace.sh'
+
+    logfile = '/var/log/cl-ns-mgmt.log'
+    logging.basicConfig(filename=logfile,
+                        level=logging.DEBUG,
+                        format='%(asctime)s %(levelname)5s: %(message)s')
+    logger = logging.getLogger(__name__)
+    logger.info(' '.join(sys.argv))
+    sys.stderr.write("\nSee %s for logs\n" % logfile)
+
+    # It would create a lot of confusion if the user named the mgmt namespace 'data' or 'default'
+    if mgmt_netns == 'data' or mgmt_netns == 'default':
+        msg = 'ERROR: The management namespace cannot be named "data" or "default"'
+        logger.error(msg)
+        sys.stderr.write(msg + '\n')
+        sys.exit(1)
+
+    if 'ssh' not in mgmt_services:
+        mgmt_services.append('ssh')
+
+    if 'ssh' not in data_services:
+        data_services.append('ssh')
+
+    # We need to restart lldpd because on reboot, lldpd starts before rc.local
+    # is invoked to setup mgmt NS. Since eth0 is the one that resolves the
+    # hostname, without restarting lldpd after mgmt NS is created, lldpd will
+    # spit out something inane like "cumulus" as the system name.
+    if 'lldpd' not in data_services:
+        data_services.append('lldpd')
+
+    if process_running('snmpd') and 'snmpd' not in data_services:
+        data_services.append('snmpd')
+
+    if args.undo:
+
+        if 'NAMESPACE' in os.environ and os.environ['NAMESPACE'] != 'default':
+            sys.stderr.write('ERROR: When using --undo you must be in the default namespace\n')
+            sys.exit(1)
+
+        undo_cl_ns_mgmt()
+        sys.exit(0)
+
+    elif args.snmp_nat:
+        create_snmp_nat()
+
+    elif args.mnt_persist:
+
+        if 'NAMESPACE' not in os.environ:
+            sys.stderr.write('ERROR: The NAMESPACE environment variable does not exist, there is no namespace to --mnt-persist\n')
+            sys.exit(1)
+
+        if os.environ['NAMESPACE'] != 'default':
+            sys.stderr.write('ERROR: When using --mnt-persist you must be in the default namespace\n')
+            sys.exit(1)
+
+        # /etc/rc.local
+        if not os.path.isdir('/mnt/persist/etc'):
+            logger.info('mkdir -p /mnt/persist/etc')
+            subprocess.call(['mkdir', '-p', '/mnt/persist/etc'])
+
+        logger.info('cp /etc/rc.local /mnt/persist/etc/rc.local')
+        subprocess.call(['cp', '/etc/rc.local', '/mnt/persist/etc/rc.local'])
+
+        # /etc/init.d/ssh
+        if not os.path.isdir('/mnt/persist/etc/init.d'):
+            logger.info('mkdir -p /mnt/persist/etc/init.d')
+            subprocess.call(['mkdir', '-p', '/mnt/persist/etc/init.d'])
+
+        logger.info('cp /etc/init.d/ssh /mnt/persist/etc/init.d/ssh')
+        subprocess.call(['cp', '/etc/init.d/ssh', '/mnt/persist/etc/init.d/ssh'])
+
+        # /etc/netns/
+        if not os.path.isdir('/mnt/persist/etc/netns'):
+            logger.info('mkdir -p /mnt/persist/etc/netns')
+            subprocess.call(['mkdir', '-p', '/mnt/persist/etc/netns'])
+
+        for namespace in os.listdir('/etc/netns/'):
+            from_directory = '/etc/netns/%s' % namespace
+            to_directory = '/mnt/persist/etc/netns/%s' % namespace
+            logger.info('cp -r %s %s' % (from_directory, to_directory))
+            subprocess.call(['cp', '-r', from_directory, to_directory])
+
+    elif args.setup:
+
+        # Barf if the user already ran --setup
+        current_namespaces = netns_list()
+        if current_namespaces:
+            msg = "ERROR: cl-ns-mgmt --setup already ran and "\
+                  "created namespaces '%s'.  You must first run "\
+                  "cl-ns-mgmt --undo to remove these namespaces" %\
+                  ', '.join(current_namespaces)
+            sys.stderr.write('\n%s\n' % msg)
+            logger.error(msg)
+            sys.exit(1)
+
+        # This should never happen but we should check to be safe
+        if not os.path.isfile('/etc/network/interfaces'):
+            msg = 'ERROR: /etc/network/interfaces does not exist'
+            sys.stderr.write('\n%s\n' % msg)
+            logger.error(msg)
+            sys.exit(1)
+
+        # Create the mgmt and data namespaces.  If we fail to create either then
+        # exit with an error.
+        (mgmt_netns_exist, data_netns_exist) = netns_exists()
+
+        if not mgmt_netns_exist:
+            subprocess.call(['ip', 'netns', 'add', mgmt_netns])
+
+        if not data_netns_exist:
+            subprocess.call(['ln', '-s', '/proc/1/ns/net', '/var/run/netns/%s' % data_netns])
+
+        (mgmt_netns_exist, data_netns_exist) = netns_exists()
+        if not mgmt_netns_exist:
+            msg = 'ERROR: Could not create the %s netns' % mgmt_netns
+            sys.stderr.write('\n%s\n' % msg)
+            logger.error(msg)
+            sys.exit(1)
+
+        if not data_netns_exist:
+            msg = 'ERROR: Could not create the %s netns' % data_netns
+            sys.stderr.write('\n%s\n' % msg)
+            logger.error(msg)
+            sys.exit(1)
+
+        # Setup per-namespace /etc/ssh/
+        if 'ssh' in mgmt_services and 'ssh' in data_services:
+            # Setup per-namespace /etc/ssh/
+            for ns in (mgmt_netns, data_netns):
+                if not os.path.isdir('/etc/netns/%s/ssh/' % ns):
+                    logger.info("'/etc/netns/%s/ssh/' does not exist...creating" % ns)
+                    subprocess.call(['mkdir', '-p', '/etc/netns/%s/ssh/' % ns])
+
+                    # copy files
+                    for x in ('moduli', 'ssh_config', 'ssh_host_dsa_key',
+                              'ssh_host_dsa_key.pub', 'ssh_host_ecdsa_key',
+                              'ssh_host_ecdsa_key.pub', 'ssh_host_rsa_key',
+                              'ssh_host_rsa_key.pub', 'sshd_config'):
+                        from_filename = "/etc/ssh/%s" % (x)
+                        to_filename = "/etc/netns/%s/ssh/%s" % (ns, x)
+                        if os.path.isfile(from_filename) and not os.path.isfile(to_filename):
+                            subprocess.call(['cp', from_filename, to_filename])
+
+        # Setup per-namespace /etc/network/interfaces
+        if not os.path.isdir('/etc/netns/%s/network/' % mgmt_netns):
+            logger.info("'/etc/netns/%s/network/' does not exist...creating" % mgmt_netns)
+            subprocess.call(['mkdir', '-p', '/etc/netns/%s/network/' % mgmt_netns])
+
+            # copy files
+            for x in ('run',):
+                from_filename = "/etc/network/%s" % (x)
+                to_filename = "/etc/netns/%s/network/%s" % (mgmt_netns, x)
+                if os.path.isfile(from_filename) and not os.path.isfile(to_filename):
+                    logger.info('cp %s %s' % (from_filename, to_filename))
+                    subprocess.call(['cp', from_filename, to_filename])
+
+            # copy directories
+            for x in ('if-down.d', 'if-post-down.d', 'if-post-up.d', 'if-pre-down.d',
+                      'if-pre-up.d', 'if-up.d', 'ifupdown2', 'interfaces.d'):
+                from_dirname = "/etc/network/%s" % (x)
+                to_dirname = "/etc/netns/%s/network/%s" % (mgmt_netns, x)
+                if os.path.isdir(from_dirname) and not os.path.isdir(to_dirname):
+                    logger.info('cp -r %s %s' % (from_dirname, to_dirname))
+                    subprocess.call(['cp', '-r', from_dirname, to_dirname])
+
+            # /etc/network/interfaces is a special case
+            # - copy /etc/network/interfaces to /etc/netns/mgmt/network/interfaces
+            # - edit /etc/network/interfaces so that it no longer contains the eth0 config
+            # - edit /etc/netns/mgmt/network/interfaces so that it no longer contains swp interfaces
+            default_eth_file = """
+# The primary network interface
+auto eth0
+iface eth0 inet dhcp
+#auto eth1
+#iface eth1 inet dhcp
+
+# Include any platform-specific interface configuration
+source /etc/network/interfaces.d/*.if
+
+"""
+            eth_tmp_file = '/tmp/%s.interfaces' % mgmt_netns
+            swp_tmp_file = '/tmp/%s.interfaces' % data_netns
+
+            fh_eth_tmp = open(eth_tmp_file, 'w')
+            fh_swp_tmp = open(swp_tmp_file, 'w')
+
+            fh = open('/etc/network/interfaces', 'r')
+            etc_network_interfaces_str = ''
+            for line in fh:
+                etc_network_interfaces_str += line
+            logger.info('Original /etc/network/interfaces\n\n%s\n' % etc_network_interfaces_str)
+            fh.close()
+
+            fh_eth_tmp.write('# The loopback network interface\n')
+            fh_eth_tmp.write('auto lo\n')
+            fh_eth_tmp.write('iface lo inet loopback\n')
+            fh_eth_tmp.write('\n')
+            fh_eth_tmp.write('# The primary network interface\n')
+
+            fh = open('/etc/network/interfaces', 'r')
+            state = 'MAIN'
+            found_eth_interface = False
+            for line in fh:
+                result_ethX = re.search(' eth\d+', line)
+                result_indented = re.search('^\s', line)
+                result_commented = re.search('^#', line)
+                result_blank_line = re.search('^\s*$', line)
+
+                # Do not change states on a blank line, an indented line or a commented lni
+                if result_blank_line or result_indented or result_commented:
+                    pass
+
+                # If the line contains eth0, eth1, etc then we are in the part of the
+                # file dealing with the mgmt interfaces
+                elif result_ethX:
+                    state = 'MANAGEMENT'
+                    found_eth_interface = True
+
+                # The line is not indented and does not contain eth0 so we are back
+                # to the MAIN config in the file
+                else:
+                    state = 'MAIN'
+
+                if state == 'MAIN':
+                    fh_swp_tmp.write(line)
+                elif state == 'MANAGEMENT':
+                    fh_eth_tmp.write(line)
+                else:
+                    assert False, "Invalid state: %s" % state
+
+            fh_eth_tmp.close()
+            fh_swp_tmp.close()
+            fh.close()
+
+            if not found_eth_interface:
+                msg = 'ERROR: We did not find any eth interfaces in /etc/network/interfaces...will use default eth0 dhcp config'
+                sys.stderr.write('\n%s\n' % msg)
+                logger.error(msg)
+
+                for line in default_eth_file.split('\n'):
+                    fh_eth_tmp.write()
+
+            replace_file(swp_tmp_file, '/etc/network/interfaces', False)
+            replace_file(eth_tmp_file, '/etc/netns/%s/network/interfaces' % mgmt_netns, False)
+
+        # Setup per-namespace /var setup
+        if not os.path.isdir('/var/netns/%s/' % mgmt_netns):
+            logger.info("'/var/netns/%s/' does not exist...creating" % mgmt_netns)
+            subprocess.call(['mkdir', '-p', '/var/netns/%s/' % mgmt_netns])
+            subprocess.call(['mkdir', '-p', '/var/netns/default/'])
+            subprocess.call(['mkdir', '-p', '/var/netns/%s/run' % mgmt_netns])
+            subprocess.call(['mkdir', '-p', '/var/netns/default/run'])
+            subprocess.call(['mkdir', '-p', '/var/netns/%s/tmp' % mgmt_netns])
+            subprocess.call(['mkdir', '-p', '/var/netns/default/tmp'])
+            subprocess.call(['mkdir', '-p', '/var/netns/%s/run/network' % mgmt_netns])
+            subprocess.call(['mkdir', '-p', '/var/netns/default/run/network'])
+            subprocess.call(['mkdir', '-p', '/var/netns/%s/run/netns' % mgmt_netns])
+            subprocess.call(['mkdir', '-p', '/var/netns/default/run/netns'])
+            subprocess.call(['touch', '/var/netns/%s/run/sshd.pid' % mgmt_netns])
+
+            # Mount the appropriate settings
+            subprocess.call(['mount', '-B', '/var/run/netns/%s' % mgmt_netns,
+                             '/var/netns/%s/run/netns/%s' % (mgmt_netns, mgmt_netns)])
+            subprocess.call(['ln', '-s', '/proc/self/1/ns/net', '/var/netns/%s/run/netns/default' % mgmt_netns])
+
+        # Stop specified services
+        for x in mgmt_services:
+            logger.info("Stopping %s in %s" % (x, mgmt_netns))
+            subprocess.call(['ip', 'netns', 'exec', mgmt_netns, 'service', x, 'stop'])
+
+        for y in data_services:
+            logger.info("Stopping %s in %s" % (y, data_netns))
+            subprocess.call(['ip', 'netns', 'exec', data_netns, 'service', y, 'stop'])
+
+        # Assign ethX interfaces to the mgmt netns
+        output = subprocess.check_output(['ip', 'addr', 'show'])
+        for line in output.split('\n'):
+            result = re.search('^\d+: (eth\d+):', line)
+            if result:
+                int_name = result.group(1)
+                logger.info("Moving %s to the '%s' netns" % (int_name, mgmt_netns))
+                subprocess.call(['ip', 'link', 'set', int_name, 'netns', mgmt_netns])
+
+                # Bounce the interface
+                try:
+                    subprocess.call(['ip', 'netns', 'exec', mgmt_netns, 'ifdown', int_name])
+                except:
+                    logger.error('%s ifdown failed' % int_name)
+
+                try:
+                    subprocess.call(['ip', 'netns', 'exec', mgmt_netns, 'ifup', int_name])
+                except:
+                    logger.error('%s ifdown failed' % int_name)
+
+        # Bring up the loopback interface in the mgmt namespace
+        subprocess.call(['ip', 'netns', 'exec', mgmt_netns, 'ifdown', 'lo'])
+        subprocess.call(['ip', 'netns', 'exec', mgmt_netns, 'ifup', 'lo'])
+
+        # Create a veth and NAT so snmpwalks on mgmt can see the swp interfaces
+        if 'snmpd' in data_services:
+            create_snmp_nat()
+
+        auto_login_to_default = """
+
+    # If the user SSHes to the mgmt namespace exec them into the default namespace
+    if [ -n "$SSH_CONNECTION" ]; then
+        sysfs=`cat /proc/self/mounts | grep 'sys sysfs' | cut -f1 -d' '`
+        if [ $sysfs == "%s" ]; then
+            sudo ip netns exec default su - $USER
+        fi
+    fi
+
+    """ % mgmt_netns
+
+        # We want to store the name of the current namespace in the NAMESPACE
+        # environment variable. We'll use this to include the namespace as part of the
+        # bash prompt.  All shell scripts in /etc/profile.d/ are automatically executed
+        # when the user logs in.  Create a cl_namespace.sh script that creates the
+        # NAMESPACE environment variable.
+        #
+        # The following is a nice reference on namespaces:
+        # http://www.opencloudblog.com/?p=116
+        #
+        if not os.path.isfile(cl_namespace_sh):
+            fh = open(cl_namespace_sh, 'w')
+            fh.write("# Store the name of the current namespace as NAMESPACE\n")
+            fh.write("export NAMESPACE=`cat /proc/self/mounts | grep \"\/sys \" | awk '{ print $1 }'`\n")
+            fh.write("\n# Set a fancy prompt that includes the namespace\n")
+            fh.write(PS1_new)
+            fh.write("\n# Aliases for changing namespaces\n")
+            fh.write("alias %s-ns-set='sudo ip netns exec %s su - $USER'\n" % (data_netns, data_netns))
+            fh.write("alias %s-ns-set='sudo ip netns exec %s su - $USER'\n" % (mgmt_netns, mgmt_netns))
+            fh.write("alias %s-ns='sudo ip netns exec %s'\n" % (data_netns, data_netns))
+            fh.write("alias %s-ns='sudo ip netns exec %s'\n" % (mgmt_netns, mgmt_netns))
+            fh.write("alias apt-get='sudo ip netns exec %s apt-get'\n" % mgmt_netns)
+
+            if 'ntp' in mgmt_services:
+                fh.write("alias ntpq='sudo ip netns exec %s ntpq'\n" % mgmt_netns)
+
+            fh.write(auto_login_to_default)
+            fh.close()
+
+        # We need to edit .bashrc files to set PS1 to include the namespace as
+        # part of the bash prompt.
+        for user in get_users():
+
+            if user == 'root':
+                bashrc = "/root/.bashrc"
+            else:
+                bashrc = "/home/%s/.bashrc" % user
+
+            # See if the user's .bashrc file already uses NAMESPACE in PS1
+            try:
+                output = subprocess.check_output(['grep', 'PS1.*NAMESPACE', bashrc])
+                add_NAMESPACE = False
+                logger.info("%s: PS1 prompt will NOT be modified" % user)
+            except:
+                add_NAMESPACE = True
+                logger.info("%s: PS1 prompt will be modified" % user)
+
+            # If we do not need to add the PS1 line then our work for this user is done
+            if not add_NAMESPACE:
+                continue
+
+            fh_tmp = open('/tmp/.bashrc', 'w')
+            fh_read = open(bashrc, 'r')
+            line_number = 0
+
+            for line in fh_read:
+                line = line.rstrip()
+                line_number += 1
+
+                # If the user still has the default PS1 prompt just replace it with
+                # one that includes NAMESPACE as part of the prompt.
+                if line == PS1_default:
+                    fh_tmp.write("PS1='${debian_chroot:+($debian_chroot)}\u@\h:$NAMESPACE:\w:\$ '\n")
+
+                # If the user has a custom bash prompt add [$NAMESPACE] to the end
+                elif line.lstrip().startswith('PS1='):
+                    result = re.search("(\s*)PS1=(.*)(\\\\[\$\#]\s*.)$", line)
+
+                    if result:
+                        leading_ws = result.group(1)
+                        pre = result.group(2)
+                        post = result.group(3)
+
+                        if pre.endswith('\\'):
+                            pre = pre[:-1]
+
+                        fh_tmp.write(leading_ws + 'PS1=' + pre + ':$NAMESPACE:' + post + '\n')
+                        logger.info('%s: line %d, Adding $NAMESPACE to bash prompt' % (user, line_number))
+
+                    else:
+                        fh_tmp.write(line + '\n')
+                        logger.error('%s: line %d, setup could not parse PS1 out of %s' % (user, line_number, line))
+
+                else:
+                    fh_tmp.write(line + '\n')
+
+            fh_tmp.close()
+            fh_read.close()
+            replace_file('/tmp/.bashrc', bashrc, False)
+
+        if not no_patch_ssh:
+            patch_ssh_init()
+
+        # Start specified services
+        for x in mgmt_services:
+            logger.info("Starting %s in %s" % (x, mgmt_netns))
+            subprocess.call(['ip', 'netns', 'exec', mgmt_netns, 'service', x, 'start'])
+
+        for y in data_services:
+            logger.info("Starting %s in %s" % (y, data_netns))
+            subprocess.call(['ip', 'netns', 'exec', data_netns, 'service', y, 'start'])
+
+        # If it is not already there, add a line to /etc/rc.local that will call
+        # this script when the box boots
+        try:
+            output = subprocess.check_output(['grep', 'cl-ns-mgmt', '/etc/rc.local'])
+        except:
+            command = '/usr/cumulus/bin/cl-ns-mgmt --setup --no-patch-ssh --ns %s ' % (mgmt_netns)
+            if mgmt_services:
+                command += ' --mgmt-services ' + ','.join(mgmt_services)
+            if data_services:
+                command += ' --data-services ' + ','.join(data_services)
+            command += '\n'
+
+            fh = open('/etc/rc.local', 'r')
+            content = fh.readlines()
+            fh.close()
+
+            last_line = content[-1]
+            if last_line.startswith('exit'):
+                content.insert(-1, command)
+            else:
+                content.append(command)
+
+            fh = open('/etc/rc.local', 'w')
+            content = ''.join(content)
+            fh.write(content)
+            fh.close()
+
+        # This must be the last thing we do
+        close_all_ssh_sessions()

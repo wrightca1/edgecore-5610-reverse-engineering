@@ -1,0 +1,30 @@
+#!/bin/sh
+
+################################################################################
+#
+# Copyright 2014 Cumulus Networks Inc.
+# All rights reserved
+#
+################################################################################
+
+# udev helper script that creates /dev/ entries based on the device
+# name and the device major number found in /proc/devices.
+
+# It is expected that the matching udev rule set the following
+# environment variables:
+#
+#   DEVICE_NAME   -- device name, used to search /proc/devices
+#   DEVICE_TYPE   -- device type 'c' or 'b'
+#   DEVICE_MINOR  -- device minor number
+
+( [ -n "$DEVICE_NAME" ] && [ -n "$DEVICE_TYPE" ] && [ -n "$DEVICE_MINOR" ] ) || exit 0
+
+# Find device in /proc/devices
+while read major device ; do
+    if [ "$DEVICE_NAME" = "$device" ] ; then
+        rm -f /dev/$DEVICE_NAME
+        mknod /dev/$DEVICE_NAME $DEVICE_TYPE $major $DEVICE_MINOR
+        break
+    fi
+done < /proc/devices
+

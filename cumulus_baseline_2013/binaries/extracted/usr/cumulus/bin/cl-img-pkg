@@ -1,0 +1,85 @@
+#!/bin/sh
+
+##
+## Copyright 2012, Cumulus Networks Inc.
+##
+## Install Cumulus image into specified image slot.
+##
+
+help_brief="[-d] [-e] [-c] <image file>"
+help_summary="This command performs various operations on an image file."
+help_args=$(cat <<EOF
+-d
+        Dump image information to stdout.  Display the image meta-data
+        information.  This is the default if no operation is specified.
+
+-e
+	Extract image files.  The files within the image archive are
+	extracted to the current directory.
+
+-c
+	Verify the image checksum and the checksums of the constituent
+	files.
+EOF
+)
+help_body=$(cat <<EOF
+SEE ALSO
+        cl-img-install, cl-img-select
+
+EOF
+)
+
+. /usr/share/cumulus/img/functions
+cl_check_env
+
+op=info
+cl_add_arg "dec"
+while getopts "${cl_args}" a ; do
+    case $a in
+        d)
+            # "dump" info
+            op=info
+            ;;
+        e)
+            op=extract
+            ;;
+        c)
+            # verify "checksum"
+            op=verify
+            ;;
+    esac
+done
+
+cl_get_args "$@"
+shift $cl_arg_shift
+
+cli_image=$1
+if [ -z $cli_image ] ; then
+    log_failure_msg "No image file specified."
+    cl_usage_short
+    exit 1
+fi
+image_file=$(realpath $cli_image)
+
+[ "$verbose" = "y" ] && export verbose=y
+
+if [ "$op" = "info" ] ; then
+    sh $image_file info || {
+        log_failure_msg "Problems dumping the image info."
+        exit 1
+    }
+elif [ "$op" = "verify" ] ; then
+    sh $image_file verify || {
+        log_failure_msg "Problems verifying the image files."
+        exit 1
+    }
+    log_success_msg "Image integrity checks OK."
+elif [ "$op" = "extract" ] ; then
+    sh $image_file extract $(pwd) || {
+        log_failure_msg "Problems extracting the image files."
+        exit 1
+    }
+    log_success_msg "Image files extracted OK."
+fi
+
+exit 0

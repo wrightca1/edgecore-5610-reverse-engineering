@@ -1,0 +1,100 @@
+#!/bin/sh
+
+##
+## Copyright 2012, Cumulus Networks Inc.
+##
+## Clear the specified overlay directory.  Requires a reboot to take
+## effect.
+##
+
+help_brief="[-f] [-n] <image number>"
+help_summary="This command marks the image configuration for re-initialization."
+help_args=$(cat <<EOF
+-f
+        Force the operation.  Assumes "yes" to any questions the
+        script might ask.
+
+-n
+        Dry run.  Show what would happen, but do not actually change
+        anything.
+EOF
+)
+help_body=$(cat <<EOF
+The image slot number is specified as either "1" or "2".
+
+A reboot with the specified image is required to complete the
+re-initialization.
+
+During re-initialization all user files in the image configuration
+will be removed.
+
+SEE ALSO
+        cl-img-install, cl-img-select
+
+EOF
+)
+
+. /usr/share/cumulus/img/functions
+cl_check_env root-priv
+
+if [ "$active" = "nfs" ] ; then
+    cmd_name=$(basename $0)
+    log_failure_msg "$cmd_name is not available during NFS boot."
+    exit 1
+fi
+
+export dry_run=n
+force=n
+cl_add_arg "fn"
+while getopts "${cl_args}" a ; do
+    case $a in
+        f)
+            force=y
+            ;;
+        n)
+            dry_run=y
+            _log_msg "Dry run:  No files will be updated.\n"
+            ;;
+    esac
+done
+
+cl_get_args "$@"
+shift $cl_arg_shift
+
+image=$1
+cl_check_image $image
+
+if [ "$retval" != "0" ] ; then
+    cl_usage_short
+    exit 1
+fi
+
+log_pre=
+if [ "$dry_run" = "y" ] ; then
+    log_pre="Dry run: "
+fi
+
+if [ -d "/mnt/root-rw/config$image/lib/modules" ]; then
+    if [ "$force" != "y" ] ; then
+        cmd_name=$(basename $0)
+        log_failure_msg "$cmd_name is not supported on apt-get upgraded kernels without force option."
+        log_failure_msg "Your system could go into an unstable state if force option is used."
+        exit 1
+    fi
+fi
+
+if [ "$force" != "y" ] ; then
+    printf "${log_pre}WARNING:\n"
+    printf "${log_pre}WARNING: Preparing to re-initialize overlay configuration\n"
+    printf "${log_pre}WARNING: for image slot $image.\n"
+    printf "${log_pre}WARNING: All your changes to this slot will be erased.\n"
+    printf "${log_pre}WARNING:\n"
+    cl_prompt_yes_no "Are you sure" || exit 0
+fi
+
+if [ "$dry_run" = "n" ] ; then
+    cl_clear_overlay $image
+    [ "$retval" = "0" ] && log_success_msg "Overlay configuration $image will be re-initialized during the next reboot."
+else
+    printf "${log_pre}Operation complete.\n"
+fi

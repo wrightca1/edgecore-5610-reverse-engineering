@@ -1,0 +1,149 @@
+#!/usr/bin/python
+#
+# datapath-config --
+#
+#
+#
+#
+#
+#
+#
+
+import sys
+import argparse
+from argparse import RawTextHelpFormatter
+import os
+import re
+import time
+import logging
+import logging.handlers
+import traceback
+
+# initialize the global logger
+global logger
+logger = logging.getLogger('datapath-config')
+fmt = logging.Formatter(fmt='%(name)s %(levelname)s: %(message)s')
+handler = logging.handlers.SysLogHandler('/dev/log')
+handler.setFormatter(fmt)
+logger.setLevel(logging.INFO)
+logger.addHandler(handler)
+
+# ----------------------------------------------------------
+#
+#                         m a i n
+#
+# ----------------------------------------------------------
+
+def main(argv) :
+
+    if (os.geteuid() != 0) :
+        logger.error('You need to have root privileges to run this script.')
+        return
+
+    # useful pathnames
+    script_dir          = '/usr/lib/cumulus/'
+    usr_config_dir      = '/etc/cumulus/'
+    bcm_dir             = '/etc/bcm.d/'
+    bcm_config_dir      = '/etc/bcm.d/datapath/'
+
+    # backend-specific file prefixes
+    port_file_prefix     = bcm_dir + 'rc.ports'
+    register_file_prefix = '/var/lib/cumulus/rc.datapath'
+
+    # input file names
+    backend_map     = bcm_dir + 'backend_map'
+    port_map_file   = bcm_dir + 'config.bcm'
+    linux_port_map_file = '/var/lib/cumulus/porttab'
+    traffic_file    = usr_config_dir + 'datapath/traffic.conf'
+    datapath_file   = bcm_config_dir + 'datapath.conf'
+    forwarding_file = bcm_config_dir + 'rc.forwarding'
+    hw_desc_file    = bcm_config_dir + 'hw_desc'
+
+    descr  = "datapath-config is the datapath configuration manager.\n"
+    descr += "It will invoke datapath-update to generate the \n"
+    descr += "/etc/cumulus/rc.datapath_<n> file(s), one for each backend on the platform.\n"
+    arg_parser = argparse.ArgumentParser(description=descr, formatter_class=RawTextHelpFormatter)    
+
+    # parse the command line argumetns
+    cmdline_args = arg_parser.parse_args()
+
+    register_file = register_file_prefix
+    if not os.path.isfile(datapath_file) :
+        # don't try to build a register file for this platform
+        logger.info('Skipping rc.datapath generation: no datapath.conf found in %s' % bcm_config_dir)
+        return
+    if not os.path.isfile(backend_map) :
+        logger.error('Error: no backend map found in %s' % bcm_dir)
+        return
+
+    # read in the backend index list
+    backend_map_re = re.compile('backend (?P<idx>\d+)')
+    backend_list = []
+    f = open(backend_map)
+    for line in f:
+        m = backend_map_re.match(line)
+        if m :
+            backend_list.append(m.group('idx'))
+
+    # set the traffic configurationfile
+    if not os.path.isfile(traffic_file) :
+        logger.error('Error: traffic configure file %s not found' % traffic_file)
+        return
+
+    # verify the input files exist
+    if not os.path.isfile(hw_desc_file) :
+        logger.error('Error: hardware description file %s not found' % hw_desc_file)
+        return
+    if not os.path.isfile(forwarding_file) :
+        logger.error('Error: forwarding file %s not found' % forwarding_file)
+        return
+
+    for backend_idx in backend_list :
+        port_file = port_file_prefix + '_%s' % backend_idx
+        if not os.path.isfile(port_file) :
+            logger.error('Error: port file %s not found' % (port_file))
+            return
+
+    # look for the port map file
+    for backend_idx in backend_list :
+        if not os.path.isfile(port_map_file) :
+            logger.error('Error: port map file %s not found' % port_map_file)
+            return
+
+    # look for the linux port map file
+    if not os.path.isfile(linux_port_map_file) :
+        print "Error: linux port map file %s not found" % linux_port_map_file
+        return
+
+    # generate the register file for each backend
+    for backend_idx in backend_list :
+        backend_register_file = register_file_prefix + '_%s' % backend_idx
+        logger.info('generating configuration file %s' % backend_register_file)
+        if os.path.isfile(backend_register_file) :
+            # remove the existing file
+            command_str = "rm %s" % backend_register_file
+            os.system(command_str)
+        command_str = script_dir + 'datapath-update'
+        command_str += " -p %s" % port_file
+        command_str += " -m %s" % port_map_file
+        command_str += " -l %s" % linux_port_map_file
+        command_str += " -c %s" % hw_desc_file
+        command_str += " -t %s" % traffic_file
+        command_str += " -d %s" % datapath_file
+        command_str += " -f %s" % forwarding_file
+        command_str += " -o %s" % backend_register_file
+        os.system(command_str)
+
+        # verify the register file
+        if not os.path.isfile(backend_register_file) :
+            logger.error('Error: backend register file %s not found' % backend_register_file)
+            return
+
+# ----------------------------------------------------------
+#
+#                         e n t r y
+#
+# ----------------------------------------------------------
+
+if __name__ == "__main__":
+    main(sys.argv[1:])

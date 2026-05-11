@@ -1,0 +1,578 @@
+#!/usr/bin/env python
+# Copyright 2012 Cumulus Networks, LLC
+#
+
+'''
+Compare kernel neighbor/route tables with HW neighbor/route tables.
+Also compare HW tables for consistency.  Print any comparison differences
+to stdout.  Exit(1) if any differences detected.
+
+Both IPv4 and IPv6 entries are considered.
+
+Kernel tables:
+
+	ip -o neigh                       // IPv4/6 neighbor table
+	ip -o route show table all        // IPv4/6 route table
+
+HW tables:
+
+	IPv4              IPv6
+        ----              ----
+        l3 l3table        l3 ip6host      // host tables
+        l3 defip          l3 ip6route     // route tables
+        l3 multipath      l3 multipath    // multipath table
+        l3 egress         l3 egress       // egress table
+        l3 intf           l3 intf         // INTF table
+
+HW tables are extracted with /usr/lib/cumulus/bcmcmd.  There is no sync between switchd
+and /usr/lib/cumulus/bcmcmd cmds, nor the kernel, so script should be run on a quiet system.
+'''
+
+import os
+import sys
+import getopt
+import re
+import bcmshell
+from ipaddr import IPNetwork
+from subprocess import Popen, PIPE, STDOUT
+
+def usage():
+    print "usage: %s [OPTIONS]" % sys.argv[0]
+    print
+    print "OPTIONS:"
+    print " -v  Verbose"
+    print " -V  Very Verbose"
+    sys.exit(1)
+
+if os.getuid():
+    print "Sorry, need to run with admin privs"
+    sys.exit(1)
+
+try:
+    opts, args = getopt.getopt(sys.argv[1:], "vV")
+except getopt.GetoptError, err:
+    print str(err)
+    usage()
+
+verbose = very_verbose = False
+
+for o, a in opts:
+    if o == "-v":
+        verbose = True
+    elif o == "-V":
+        very_verbose = True
+
+#
+# The Knights who say Ni!
+#
+# The various tables from kernel/HW are collected into dictionaries
+# with these mappings:
+#
+
+ifaces = {}      # iface       -> (ifindex, mac)
+kneighs = {}     # prefix,iface-> (iface, mac)
+kneigh_macs = {} # mac         -> [iface, ...]
+kroutes = {}     # prefix/len  -> [(iface, mac), ...]
+hosts = {}       # prefix      -> egress_ndx
+intfs = {}       # intf        -> mac
+egresses = {}    # egress_ndx  -> (intf, mac)
+multipaths = {}  # mp_ndx      -> [egress_ndx, egress_ndx, ...]
+defips = {}      # prefix/len  -> egress_ndx | mp_ndx
+ip6routes = {}   # prefix/len  -> egress_ndx | mp_ndx
+hroutes = {}     # prefix/len  -> [(intf, mac), ...]
+
+#
+# per RFC 5952, convert full IPv6 address to text representation
+#
+#  e.g.
+#       2001:0db8::0001 should be rendered as 2001:db8::1
+#       2001:db8:0:0:0:0:2:1 should be rendered to 2001:db8::2:1
+#       2001:db8:0000:1:1:1:1:1 should be rendered as 2001:db8:0:1:1:1:1:1
+#       2001:db8:0:0:1:0:0:1 should be rendered as 2001:db8::1:0:0:1
+#
+
+def rfc5952(dest):
+
+    # step 1: Suppress the leading zeros in each 16-bit field
+
+    dest = (":" + dest).replace(":0", ":").replace(":0", ":").replace(":0", ":")
+
+    # step 2: Shorten as much as possible
+
+    if dest.count(":0:0:0:0:0:0:0:0"):
+        dest = dest.replace(":0:0:0:0:0:0:0:0", "::", 1)
+    elif dest.count(":0:0:0:0:0:0:0"):
+        dest = dest.replace(":0:0:0:0:0:0:0", "::", 1)
+    elif dest.count(":0:0:0:0:0:0:"):
+        dest = dest.replace(":0:0:0:0:0:0:", "::", 1)
+    elif dest.count(":0:0:0:0:0:"):
+        dest = dest.replace(":0:0:0:0:0:", "::", 1)
+    elif dest.count(":0:0:0:0:"):
+        dest = dest.replace(":0:0:0:0:", "::", 1)
+    elif dest.count(":0:0:0:"):
+        dest = dest.replace(":0:0:0:", "::", 1)
+    elif dest.count(":0:0:"):
+        dest = dest.replace(":0:0:", "::", 1)
+    elif dest.count(":0:0/"):
+        dest = dest.replace(":0:0/", "::/", 1)
+
+    dest = dest.replace("::0", "::", 1)
+
+    dest = dest[1:]
+
+    return dest
+
+#
+# build interface to ether mac addr dict
+#
+
+ipaddr = re.compile("""
+ (\d+):\s+                                # ifindex
+ ([^ ]+):                                 # iface
+ .*link/(loopback|ether)                  # cruft
+ \s([^ ]+)                                # mac addr
+""", re.VERBOSE)
+
+for line in Popen(["/sbin/ip", "-o", "addr"], shell=False, stdout=PIPE).stdout:
+
+    parsed = ipaddr.findall(line)
+    if not parsed:
+        continue
+
+    ifindex, iface, cruft, mac = parsed[0]
+    ifaces[iface] = (int(ifindex), mac)
+
+#
+# build kernel neighbor and mac dict
+#
+
+neigh = re.compile("""
+ ([^ ]+)                                     # prefix
+ \sdev                                       # 'dev'
+ \s([^ ]+)                                   # iface
+ \slladdr                                    # 'lladdr'
+ \s([^ ]+)                                   # mac addr
+""", re.VERBOSE)
+
+for line in Popen(["/sbin/ip", "-o", "neigh"], shell=False, stdout=PIPE).stdout:
+
+    parsed = neigh.findall(line)
+    if not parsed:
+        continue
+
+    prefix, iface, mac = parsed[0]
+    kneighs[(prefix, iface)] = (iface, mac)
+
+    kneigh_macs.setdefault(mac, []).append(iface)
+
+#
+# build kernel route dict
+#
+
+kroute = re.compile("(^default |^local |^broadcast |^)([^ ]+)")
+
+for line in Popen(["/sbin/ip", "-o", "route", "show", "table", "all"], \
+    shell=False, stdout=PIPE).stdout:
+
+    begin, prefix = kroute.findall(line)[0]
+
+    if begin == "default ":
+        prefix = "0.0.0.0/0"
+        iface = re.findall('dev (\w+)', line)[0]
+        kroutes.setdefault(prefix, []).append((iface, None))
+        continue
+    elif begin == "local " or begin == "broadcast ":
+        if IPNetwork(prefix).is_loopback:
+            continue
+    elif begin is "":
+        if prefix == "unreachable" or prefix == "none":
+            continue
+    else:
+        continue
+
+    if prefix.count("/") == 0:       # missing prefix length
+        if prefix.count(".") > 0:    # IPv4
+            prefix += "/32"
+        else:                        # IPv6
+            prefix += "/128"
+
+    vias = re.findall("via ([^ ]+) ", line)
+    devs = re.findall("dev ([^ ]+)", line)
+
+    # add nexthop paths to route
+    for iface, via in zip(devs, vias):
+        if iface == "lo":
+            kroutes.setdefault(prefix, []).append((iface, None))
+        elif (via,iface) in kneighs:
+            neigh_iface, neigh_mac = kneighs[(via, iface)]
+            if iface == neigh_iface:
+                kroutes.setdefault(prefix, []).append((iface, neigh_mac))
+
+    # add directly connected path
+    if devs and not vias:
+        iface = devs[0]
+        kroutes.setdefault(prefix, []).append((iface, None))
+
+bs = bcmshell.bcmshell(keepopen = True, timeout = 180)
+
+#
+# build HW intf table from "l3 intf show"
+#
+
+l3intf = re.compile("""
+ \d+\s+                                   # Unit
+ (\d+)\s+                                 # Intf
+ \d+\s+                                   # VRF
+ \d+\s+                                   # Group
+ \d+\s+                                   # VLAN
+ ([^ ]+)\s+                               # Source Mac
+ \d+\s+                                   # MTU
+""", re.VERBOSE)
+
+for line in bs.run("l3 intf show").splitlines():
+
+    parsed = l3intf.findall(line)
+    if not parsed:
+        continue
+
+    intf, mac = parsed[0]
+    intfs[int(intf)] = mac
+
+#
+# build HW host table from "l3 l3table show" and "l3 ip6host show"
+#
+
+host = re.compile("""
+ \d+\s+                                   # Entry
+ \d+\s+                                   # VRF
+ ([^ ]+)\s+                               # prefix
+ [^ ]+\s+                                 # Mac Address
+ (\d+)                                    # INTF
+""", re.VERBOSE)
+
+for line in bs.run("l3 l3table show").splitlines():
+
+    parsed = host.findall(line)
+    if not parsed:
+        continue
+
+    prefix, ndx = parsed[0]
+    assert(prefix not in hosts)
+    hosts[prefix] = ndx
+
+for line in bs.run("l3 ip6host show").splitlines():
+
+    parsed = host.findall(line)
+    if not parsed:
+        continue
+
+    prefix, ndx = parsed[0]
+    prefix = rfc5952(prefix)
+    assert(prefix not in hosts)
+    hosts[prefix] = ndx
+
+#
+# build HW egress dict from "l3 egress show"
+#
+
+egress = re.compile("""
+ (\d+)\s+                                 # Entry
+ ([^ ]+)                                  # Mac addr
+ \s+\d+\s+                                # Vlan
+ (\d+)                                    # INTF
+""", re.VERBOSE)
+
+for line in bs.run("l3 egress show").splitlines():
+
+    parsed = egress.findall(line)
+    if not parsed:
+        continue
+
+    egress_ndx, mac, intf = parsed[0]
+    assert(egress_ndx not in egresses)
+    egresses[egress_ndx] = (int(intf), mac)
+
+#
+# build HW multipath dict from "l3 multipath show"
+#
+
+multipath = re.compile("Multipath Egress Object (\d+)")
+ref_count = re.compile("Reference count: (\d+)")
+interfaces = re.compile("(\d+)")
+
+mp_ndx = None
+
+for line in bs.run("l3 multipath show").splitlines():
+
+    mparsed = multipath.findall(line)
+    iparsed = interfaces.findall(line)
+    rparsed = ref_count.findall(line)
+
+    if mparsed:
+        mp_ndx = mparsed[0]
+    elif rparsed:
+        pass
+    elif iparsed:
+        multipaths.setdefault(mp_ndx, []).extend(iparsed)
+
+#
+# build HW IPv4 defip dict from "l3 defip show"
+#
+
+route = re.compile("""
+ \d+\s+                                    # '#'
+ \d+\s+                                    # VRF
+ ([^ ]+)\s+                                # Net addr prefix/len
+ [^ ]+\s+                                  # Next Hop Mac addr
+ (\d+)                                     # INTF
+""", re.VERBOSE)
+
+for line in bs.run("l3 defip show").splitlines():
+
+    parsed = route.findall(line)
+    if not parsed:
+        continue
+
+    dest, ndx = parsed[0]
+    assert(dest not in defips)
+    defips[dest] = ndx
+
+#
+# build HW IPv6 route dict from "l3 ip6route show"
+#
+
+for line in bs.run("l3 ip6route show").splitlines():
+
+    parsed = route.findall(line)
+    if not parsed:
+        continue
+
+    dest, ndx = parsed[0]
+    dest = rfc5952(dest)
+    assert(dest not in ip6routes)
+    ip6routes[dest] = ndx
+
+bs.close()
+
+#
+# Combine IPv4 and IPv6 routes
+#
+
+routes = dict(defips.items() + ip6routes.items())
+
+#
+# Build HW route dict
+#
+
+for dest, ndx in routes.items():
+    if ndx in egresses:
+        intf, mac = egresses[ndx]
+        hroutes[dest] = [(intf, mac)]
+    elif ndx in multipaths:
+        for n in multipaths[ndx]:
+            if n in egresses:
+                intf, mac = egresses[n]
+                hroutes.setdefault(dest, []).append((intf, mac))
+
+if very_verbose:
+    print "interfaces"
+    print "----------"
+    for iface in sorted(ifaces.iterkeys()):
+        print "%r: %r" % (iface, ifaces[iface])
+    print
+    
+    print "kernel neighbors"
+    print "----------------"
+    for prefix in sorted(kneighs.iterkeys()):
+        print "%r: %r" % (prefix, kneighs[prefix])
+    print
+    
+    print "kernel neighbor macs"
+    print "--------------------"
+    for mac in sorted(kneigh_macs.iterkeys()):
+        print "%r: %r" % (mac, kneigh_macs[mac])
+    print
+    
+    print "kernel routes"
+    print "-------------"
+    for dest in sorted(kroutes.iterkeys()):
+        print "%r: %r" % (dest, kroutes[dest])
+    print
+    
+    print "HW intfs"
+    print "--------"
+    for intf in sorted(intfs.iterkeys()):
+        print "%r: %r" % (intf, intfs[intf])
+    print
+    
+    print "HW hosts"
+    print "--------"
+    for prefix in sorted(hosts.iterkeys()):
+        print "%r: %r" % (prefix, hosts[prefix])
+    print
+    
+    print "HW egress"
+    print "---------"
+    for egress_ndx in sorted(egresses.iterkeys()):
+        print "%r: %r" % (egress_ndx, egresses[egress_ndx])
+    print
+    
+    print "HW multipaths"
+    print "-------------"
+    for mp_ndx in sorted(multipaths.iterkeys()):
+        print "%r: %r" % (mp_ndx, multipaths[mp_ndx])
+    print
+    
+    print "HW defip"
+    print "--------"
+    for dest in sorted(defips.iterkeys()):
+        print "%r: %r" % (dest, defips[dest])
+    print
+    
+    print "HW ip6route"
+    print "-----------"
+    for dest in sorted(ip6routes.iterkeys()):
+        print "%r: %r" % (dest, ip6routes[dest])
+    print
+    
+    print "HW routes"
+    print "---------"
+    for dest in sorted(hroutes.iterkeys()):
+        print "%r: %r" % (dest, hroutes[dest])
+    print
+
+#
+# Build a bunch of sets for quick s - t comparisons
+#
+
+hosts_ndxs = set(hosts.itervalues())
+routes_ndxs = set(routes.itervalues())
+egress_ndxs = set(egresses.iterkeys())
+mp_ndxs = set(multipaths.iterkeys())
+mp_egress_ndxs = set([n for v in multipaths.itervalues() for n in v])
+all_ndxs = egress_ndxs.union(mp_ndxs)
+
+kneigh_prefixes = set()
+for keytuple in kneighs.iterkeys():
+    kneigh_prefixes.add(keytuple[0])
+hosts_prefixes = set(hosts.iterkeys())
+routes_prefixes = set(routes.iterkeys())
+kernel_prefixes = set(kroutes.iterkeys())
+hroutes_prefixes = set(hroutes.iterkeys())
+
+kernel_mac = set(kneigh_macs.iterkeys())
+egress_mac = set([mac for intf, mac in egresses.itervalues()])
+
+#
+# Exception lists.  There are items we want to exclude in some test.
+#
+
+egress_exceptions = set(["100000"])			# blackhole
+adjacency_exceptions = set(["00:00:00:00:00:00"])	# "send to SW" adjacency
+ip4route_exceptions = set(["0.0.0.0/0"])                # default route
+ip6route_exceptions = set([":/0"])                      # default route
+
+#print "hosts_ndxs", hosts_ndxs
+#print "routes_ndxs", routes_ndxs
+#print "egress_ndxs", egress_ndxs
+#print "mp_ndxs", mp_ndxs
+#print "mp_egress_ndxs", mp_egress_ndxs
+#print "all_ndxs", all_ndxs
+
+#print "kneigh_prefixes", kneigh_prefixes
+#print "hosts_prefixes", hosts_prefixes
+#print "routes_prefixes", routes_prefixes
+#print "kernel_prefixes", kernel_prefixes
+#print "hroutes_prefixes", hroutes_prefixes
+
+#print "kernel_mac", kernel_mac
+#print "egress_mac", egress_mac
+
+#
+# Find differences between set s and set t.  If there are differences,
+# print msg followed by the differences.  An excecption set can be
+# used to rule out known differences.
+#
+# Return (1<<b) is there are differences; 0 otherwise
+#
+
+def s_diff_t(b, s, t, exceptions, msg):
+    diffs = sorted(s.difference(t).difference(exceptions))
+    if diffs:
+        print "%s:" % msg
+        for i, diff in enumerate(diffs):
+            if i > 2 and not (verbose or very_verbose):
+                print "   more..."
+                break
+            print "  ", diff
+    return (1 << b) if diffs else 0
+
+#
+# Assume all tests PASS
+#
+
+fail = 0
+
+#
+# Compare HW tables for consitency
+#
+
+fail |= s_diff_t(0, mp_egress_ndxs, egress_ndxs, set(), \
+    "multipath table has index(es) not found in egress table")
+fail |= s_diff_t(1, egress_ndxs, hosts_ndxs | routes_ndxs,
+    egress_exceptions | mp_egress_ndxs, \
+    "egress table has index(es) not found in host/defip/ip6route tables")
+fail |= s_diff_t(2, mp_ndxs, routes_ndxs, set(), \
+    "multipath table has index(es) not found in defip/ip6route tables")
+fail |= s_diff_t(3, routes_ndxs, all_ndxs, set(), \
+    "defip/ip6route tables have index(es) not found in egress or multipath tables")
+fail |= s_diff_t(4, hosts_ndxs, egress_ndxs, set(), \
+    "host tables have index(es) not found in egress table")
+fail |= s_diff_t(5, routes_prefixes, hroutes_prefixes, ip4route_exceptions, \
+    "defip/ip6route tables have prefix(es) not found in hroutes")
+
+#
+# Compare HW tables with SW tables for consitency
+#
+
+fail |= s_diff_t(6, routes_prefixes, kernel_prefixes, ip6route_exceptions, \
+    "defip/ip6route tables have prefix(es) not found in kernel routes")
+fail |= s_diff_t(7, kernel_prefixes, routes_prefixes, set(), \
+    "kernel routes has prefix(es) not found in defip/ip6route tables")
+fail |= s_diff_t(8, egress_mac, kernel_mac, adjacency_exceptions, \
+    "egress table has mac not found in kernel neighbors")
+fail |= s_diff_t(9, hosts_prefixes, kneigh_prefixes, set(), \
+    "host table has prefix(es) not found in kernel neigh table")
+fail |= s_diff_t(10, kneigh_prefixes, hosts_prefixes, set(), \
+    "kernel kneigh table has prefix(es) not found in host table")
+
+#
+# Now dig into routes looking for diffs
+#
+
+# Check if we're doing ecmp in HW routes
+
+nhs_lens = [len(nhs) for nhs in hroutes.itervalues()]
+ave_len = sum(nhs_lens) / float(len(nhs_lens))
+doing_ecmp = ave_len > 1.0
+
+for dest, hnhs in hroutes.items():
+    if dest in kroutes:
+        knhs = kroutes[dest]
+        knhs = [mac if mac else "00:00:00:00:00:00" for iface, mac in knhs]
+        hnhs = [mac for intf, mac in hnhs]
+
+        # HW has limited space for ecmp routes.  If it looks like we're
+        # doing ecmp in HW, and this HW route is single but the matching
+        # kernel route is ecmp, assume the HW ecmp table is full and
+        # this ecmp kernel route was reduces to a single HW route.
+
+        if doing_ecmp and len(hnhs) == 1 and len(knhs) > 1 and hnhs[0] in knhs:
+            knhs = hnhs
+
+        fail |= s_diff_t(11, set(hnhs), set(knhs), set(), \
+          "route '%s' has next hop in HW not found in kernel" % dest)
+        fail |= s_diff_t(12, set(knhs), set(hnhs), set(), \
+          "route '%s' has next hop in kernel not found in HW" % dest)
+
+sys.exit(fail)

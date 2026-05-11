@@ -1,0 +1,397 @@
+#!/bin/sh
+
+##
+## Copyright 2012, Cumulus Networks Inc.
+##
+## Select the active image.  Requires a reboot to take effect.
+##
+
+help_brief="[-d] [-s] [-f] [-r] [-i] [-u] [-c] [-n] [image number]"
+help_summary="This command selects the active image to use during the next reboot."
+help_args=$(cat <<EOF
+-d
+        Display the contents of the image slots, indicating the active
+        image slot.  This is the default if no arguments are specified.
+
+-s
+        Swap the primary and alternative images.  In other words if the
+        current primary image is 1 then select 2 as primary and vice
+        versa.
+
+-f 
+        Force the operation.  Assumes "yes" to any questions the
+        script might ask.
+
+-r
+        Rescue Boot -- At the next reboot load the rescue image for
+        debug purposes.
+
+-i
+        Install Boot -- At the next reboot run the system provisioner.
+        This installs a new operating system.
+
+-u
+        Uninstall Boot -- At the next reboot uninstall the operating
+        system and restart the system provisioner.
+
+-p
+        Update Boot -- At the next reboot attempt to find and run a
+        boot loader update.  This installs a new boot loader.
+
+-c
+        Cancel pending reboot operation -- Use this to cancel a
+        pending resue boot, install boot, uninstall boot or update boot.
+
+-n
+        Dry run.  Show what would happen, but do not actually modify
+        anything.
+
+EOF
+)
+help_body=$(cat <<EOF
+The image number is specified as either 1 or 2.
+
+A reboot is required to activate the selected image.
+
+The state of the requested image slot must be valid in order to select
+it.  I.e. a successful image install to the requested image slot must
+have happened previously.
+
+Display Image Slots Example Output:
+
+  cumulus@switch:~$ sudo cl-img-select 
+             slot 1 (alt    ): 1.0.0-732e06c-20130118-NB
+   active => slot 2 (primary): 1.0.0-4ab4664-20130118-NB
+
+The "active" indicator identifies which slot is currently running.
+
+The "primary" indicator identifies which slot will be used for the
+next boot.
+
+Most of the time "active" and "primary" point to the same slot.  When
+you switch from one slot to the other, however, they will be different
+until you reboot.
+
+For example here's the output after running with the "-s" option:
+
+  cumulus@switch:~$ sudo cl-img-select -s
+  Success: Primary image slot set to 1.
+  Reboot required to take effect.
+  cumulus@switch:~$ sudo cl-img-select 
+             slot 1 (primary): 1.0.0-732e06c-20130118-NB
+   active => slot 2 (alt    ): 1.0.0-4ab4664-20130118-NB
+
+The output shows that the currently running image is "slot 2", but
+"slot 1" will be used for the next boot.
+
+After rebooting into image slot 1 the image display output shows slot 1
+is both "active" and "primary":
+
+  cumulus@switch:~$ sudo cl-img-select 
+   active => slot 1 (primary): 1.0.0-732e06c-20130118-NB
+             slot 2 (alt    ): 1.0.0-4ab4664-20130118-NB
+
+RESCUE BOOT:
+
+Reboot the system and load the rescue image.  Using the rescue image
+you can attempt system repair operations, while running from a simple
+initramfs.
+
+INSTALL:
+
+*WARNING* -- The install command (-i) is destructive and will destroy
+all of your data and the operating system.  Back up your data before
+using.
+
+This command reboots the system and (re)starts the system provisioning
+process.  As a result a new operating system is installed.
+
+UNINSTALL:
+
+*WARNING* -- The uninstall command (-u) is destructive and will remove
+all of your data and the operating system.  Back up your data before
+using.
+
+This command reboots the system and runs the uninstaller.  The
+uninstaller wipes all user data from the NOR flash and other mass
+storage devices.
+
+UPDATE:
+
+*WARNING* -- The update command (-p) will update the boot loader.  Only
+do this if you know what you are doing.
+
+This command reboots the system and runs the boot loader updater.  The
+updater attempts to download a new boot loader from the network and
+install it.  The operating system is not affected by this operation.
+
+SEE ALSO
+        cl-img-install
+
+EOF
+)
+
+. /usr/share/cumulus/img/functions
+cl_check_env root-priv
+
+swap_image=
+display_slot=n
+uninstall=n
+rescue=n
+force=n
+install=n
+update=n
+cancel=n
+dry_run=n
+log_pre=
+cl_add_arg "dsfriucnp"
+while getopts "${cl_args}" a ; do
+    case $a in
+        d)
+            # Display the active image slot.
+            display_slot=y
+            ;;
+        s)
+            # Use the alternate image slot.
+            swap_image=$alt_image
+            ;;
+        f)
+            force=y
+            ;;
+        r)
+            # Rescue image boot.
+            rescue=y
+            ;;
+        i)
+            install=y
+            ;;
+        u)
+            # Uninstall the operating system.
+            uninstall=y
+            ;;
+        p)
+            # update the boot loader.
+            update=y
+            ;;
+        c)
+            cancel=y
+            ;;
+        n)
+            dry_run=y
+            log_pre="Dry run: "
+            printf "${log_pre}No changes will be made.\n"
+            ;;
+    esac
+done
+
+cl_get_args "$@"
+shift $cl_arg_shift
+
+cli_image=$1
+
+display_slot_info()
+{
+    act1=
+    act2=
+    pri1=
+    pri2=
+
+    if [ "$active" = "nfs" ] ; then
+        _log_msg "You are currently NFS booted.\n"
+        nfs_ver=$(grep DISTRIB_RELEASE /etc/lsb-release | awk -F= '{print $2}')
+        printf "%9s NFS             : %s\n" "active =>" "$nfs_ver"
+    elif [ "$active" = "1" ] ; then
+        act1="active =>"
+    else
+        act2="active =>"
+    fi
+
+    if [ "$primary_image" = "1" ] ; then
+        pri1="primary"
+        pri2="alt"
+    else
+        pri1="alt"
+        pri2="primary"
+    fi
+
+    ver1=$(cl_slot_version_get 1)
+    ver2=$(cl_slot_version_get 2)
+    printf "%9s slot 1 (%-7s): %s\n" "$act1" "$pri1" "$ver1"
+    printf "%9s slot 2 (%-7s): %s\n" "$act2" "$pri2" "$ver2"
+
+    reboot_cmd=$(cl_reboot_cmd_get)
+    if [ -n "$reboot_cmd" ] ; then
+        case "$reboot_cmd" in
+            install)
+                text="System Install"
+                ;;
+            uninstall)
+                text="System Uninstall"
+                ;;
+            rescue)
+                text="System Rescue"
+                ;;
+            update)
+                text="Boot Loader Update"
+                ;;
+            embed)
+                text="Boot Loader Embed"
+                ;;
+            *)
+                text="Unknown $reboot_cmd"
+        esac
+        printf "\n** $text reboot command set for next boot **\n"
+    fi
+
+}
+
+if [ "$cancel" = "y" ] ; then
+    reboot_cmd=$(cl_reboot_cmd_get)
+    if [ -n "$reboot_cmd" ] ; then
+        log_begin_msg "Cancelling pending $reboot_cmd at next reboot"
+        cl_reboot_cmd_set
+        log_end_msg
+    else
+        log_failure_msg "No pending reboot operations."
+        exit 1
+    fi
+    exit 0
+fi
+
+if [ "$uninstall" = "y" ] ; then
+    if [ "$force" != "y" ] ; then
+        printf "WARNING:\n"
+        printf "WARNING: Operating System uninstall requested.\n"
+        printf "WARNING: This will wipe out all system data.\n"
+        printf "WARNING:\n"
+        cl_prompt_yes_no "Are you sure" || exit 0
+    fi
+    log_begin_msg "${log_pre}Enabling uninstall at next reboot"
+    cl_reboot_cmd_set "uninstall"
+    log_end_msg
+    if [ "$dry_run" != "y" ] ; then
+        _log_msg "Reboot required to take effect.\n"
+    fi
+    exit 0
+fi
+
+if [ "$install" = "y" ] ; then
+    if [ "$force" != "y" ] ; then
+        printf "WARNING:\n"
+        printf "WARNING: Operating System install requested.\n"
+        printf "WARNING: This will wipe out all system data.\n"
+        printf "WARNING:\n"
+        cl_prompt_yes_no "Are you sure" || exit 0
+    fi
+    log_begin_msg "${log_pre}Enabling install at next reboot"
+    cl_reboot_cmd_set "install"
+    log_end_msg
+    if [ "$dry_run" != "y" ] ; then
+        _log_msg "Reboot required to take effect.\n"
+    fi
+    exit 0
+fi
+
+if [ "$rescue" = "y" ] ; then
+    if [ "$force" != "y" ] ; then
+        printf "WARNING:\n"
+        printf "WARNING: Rescue boot requested.\n"
+        printf "WARNING:\n"
+        cl_prompt_yes_no "Are you sure" || exit 0
+    fi
+    log_begin_msg "${log_pre}Enabling rescue at next reboot"
+    cl_reboot_cmd_set "rescue"
+    log_end_msg
+    if [ "$dry_run" != "y" ] ; then
+        _log_msg "Reboot required to take effect.\n"
+    fi
+    exit 0
+fi
+
+if [ "$update" = "y" ] ; then
+    if [ "$force" != "y" ] ; then
+        printf "WARNING:\n"
+        printf "WARNING: Update Boot Loader requested.\n"
+        printf "WARNING:\n"
+        cl_prompt_yes_no "Are you sure" || exit 0
+    fi
+    log_begin_msg "${log_pre}Enabling boot loader update at next reboot"
+    cl_reboot_cmd_set "update"
+    log_end_msg
+    if [ "$dry_run" != "y" ] ; then
+        _log_msg "Reboot required to take effect.\n"
+    fi
+    exit 0
+fi
+
+if [ -z "$cli_image" ] && [ -z "$swap_image" ] ; then
+    # default to this if no other args
+    display_slot=y
+fi
+if [ "$display_slot" = "y" ] ; then
+    display_slot_info
+    exit 0
+fi
+
+if [ -n "$cli_image" ] && [ -n "$swap_image" ] ; then
+    log_failure_msg "Either use the -s option or specify an image number, but not both."
+    cl_usage_short
+    exit 1
+fi
+if [ -n "$cli_image" ] ; then
+    image=$cli_image
+fi
+if [ -n "$swap_image" ] ; then
+    image=$swap_image
+fi
+
+cl_check_image $image
+
+if [ "$retval" != "0" ] ; then
+    cl_usage_short
+    exit 1
+fi
+
+# check selected image slot state.  It must be zero "OK" to proceed.
+slot_state=$(cl_slot_state_get $image)
+switch_ok=y
+case $slot_state in
+    0)
+        # OK.  Allow the switch
+        ;;
+    1)
+        log_failure_msg "Slot $image: A previous installation attempt was unexpectedly interrupted."
+        switch_ok=n
+        ;;
+    2)
+        log_failure_msg "Slot $image: A previous installation attempt failed."
+        switch_ok=n
+        ;;
+    3)
+        log_warning_msg "Slot $image: Looks like old style image slot.  Make the switch anyway."
+        switch_ok=y
+        ;;
+    *)
+        switch_ok=n
+        
+esac
+
+[ "$switch_ok" = "y" ] || {
+    log_failure_msg "The requested image slot $image is not ready."
+    log_failure_msg "Please install a valid image using cl-img-install."
+    exit 1
+}
+
+# set u-boot cl.active environment variable
+if [ "$dry_run" != "y" ] ; then
+    cl_active_set "$image"
+    [ "$retval" = "0" ] && {
+        log_success_msg "Primary image slot set to $image."
+        # re-run cl_check_env since it has changed from when we started.
+        cl_check_env root-priv
+        display_slot_info
+        _log_msg "Reboot required to take effect.\n"
+    }
+else
+    printf "${log_pre}Skipping image selection.\n"
+fi

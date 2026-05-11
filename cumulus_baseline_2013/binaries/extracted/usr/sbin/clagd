@@ -1,0 +1,2359 @@
+#! /usr/bin/python
+
+#-------------------------------------------------------------------------------
+#
+# Copyright 2014 Cumulus Networks, inc  all rights reserved
+#
+#-------------------------------------------------------------------------------
+
+#
+#   Import the necessary modules
+#
+try:
+    import argparse
+    import bcmshell
+    import clag.cmdsrv
+    import clag.fdbsync
+    import clag.lacpsync
+    import clag.mdbsync
+    import clag.vlansync
+    import copy
+    import daemon
+    import fcntl
+    import glob
+    import lockfile
+    import os
+    import Queue
+    import re
+    import select
+    import signal
+    import socket
+    import struct
+    import subprocess
+    import sys
+    import syslog
+    import threading
+    import time
+    import traceback
+    import xml.etree.ElementTree as ET
+except ImportError, e:
+    raise ImportError (str(e) + "- required module not found")
+
+#
+#   Define constants
+#
+_InterfacePath          = "/sys/class/net/"
+_VLANPath               = "/proc/net/vlan/"
+_BondPath               = "/proc/net/bonding/"
+_PortTabFile            = "/var/lib/cumulus/porttab"
+_SwitchdReadyFile       = "/var/run/switchd.ready"
+
+#
+#   Global Variables
+#
+# Except for the initialization routine these are read-only.
+Log                     = None
+Parser                  = None
+Daemon                  = None
+Intf                    = None
+Bcm                     = None
+Cmd                     = None
+
+LacpSync                = None
+DataSyncs               = []
+
+#
+#   Events for waking up threads
+#
+peerRecvEvent           = threading.Event()
+newLacpDataEvent        = threading.Event()
+stopEvent               = threading.Event()
+
+#
+#   Misc - These are miscellaneous global variables. It is possible that these
+#   should be protected by a threading lock, but they are not.
+#
+serverSock              = None
+clientSock              = None
+sendGoodbye             = False
+keep_going              = True
+peerSendQueue           = Queue.Queue()
+
+
+#-------------------------------------------------------------------------------
+#
+#   Threads - The clagd daemon is implemented with six threads, each handling
+#   a specfic task. Communication between the threads is handled using events
+#   and the global data structures, above. The threads are:
+#
+#   CollectSysInfo - Periodically runs, getting current infromation on this  
+#   system, like LACP partner MACs and dynamically learned MACs.  Signals the
+#   PeerSend thread after reading data by setting the peerSendEvent.  When   
+#   the LACP information changes the FindDualConnectedIfs thread is signaled 
+#   by setting the newLacpDataEvent.                                         
+#
+#   PeerSend - Waits for the CollectSysInfo thread to retrieve data, opens a    
+#   socket to the peer, sends our information to the peer, and closes the       
+#   socket.                                                                     
+#
+#   PeerRecv - Periodically attempts to create a socket with the peer to allow  
+#   the peer to connect with us. Once successful, waits for the peer to open
+#   a connection. Reads data from that connection, decodes the data, and closes
+#   that connection. Then signals the PeerTimeout thread to let it know that
+#   the peer is still alive, and if the data changed from the last time we
+#   received it from the peer, signals the FindDualConnectedIfs thread or 
+#   UpdateMacsFromPeer thread.
+#
+#   PeerTimeout - Waits for a peerRecvEvent from the PeerRecv thread or times
+#   out waiting for that event. If the event is received, but we had previously
+#   timed out (peer has just become alive) then change the sysMac of all bonds
+#   to the common value. If we timed out, and had previously not timed out,
+#   undo everything and act like a standalone switch.
+#
+#   FindDualConnectedIfs - Waits for a newLacpDataEvent from either the PeerRecv 
+#   or CollectSysInfo threads. Compares the partner MAC addresses we collected
+#   from our bonds to those received from our peer. Any new matches place the
+#   bond in the dual-connected state. Any former matches that are no longer
+#   matching, take the bond out of the dual connected state.
+#
+#   UpdateMacsFromPeer - Waits for a newMacDataEvent from the PeerRecv thread.
+#   Compare the MACs we've learned to the MACs the peer has learned and add or
+#   remove MACs from our bonds to keep in sync with the peer's dynamically
+#   learned MAC addresses.
+#
+#-------------------------------------------------------------------------------
+
+def CollectSysInfo():
+    '''
+    This function operates as an independent thread of the script. It retrieves
+    information about the system which is used by CLAG and possibly sent to
+    the peer switch. There are two types of information collected:
+        1. The 802.3ad partner MAC addresses of each bond -> ourLacpDB
+        2. The dynamically learned MAC addresses of dual connected bonds -> ourMacDB
+    '''
+    Log.log_debug(Log._LOG_DEBUG_COLLECT_SYS, "Beginning execution of the thread CollectSysInfo")
+    while keep_going:
+        # Collect all of the local switch's information
+        for sync in DataSyncs:
+            sync.CollectLocalInfo()
+
+        # Send this information to our peer
+        xmlStr = MakeXmlMessage()
+        peerSendQueue.put(xmlStr)
+
+        # Indicate that we are alive
+        Daemon.TouchAliveFile()
+
+        Log.log_debug(Log._LOG_DEBUG_COLLECT_SYS, "Waiting %d seconds before continuing execution of the thread CollectSysInfo" % (Parser.getCurrLacpPoll(),))
+        stopEvent.wait(Parser.getCurrLacpPoll())
+        Log.log_debug(Log._LOG_DEBUG_COLLECT_SYS, "Executing the thread CollectSysInfo")
+
+    Log.log_debug(Log._LOG_DEBUG_COLLECT_SYS, "Finished execution of the thread CollectSysInfo")
+
+
+def PeerSend():
+    '''
+    This function is an independent thread of the script. It opens a socket to
+    the peer and sends the LACP data retrieved by the CollectSysInfo thread 
+    to the peer, formatted in XML. The socket is then closed and the thread goes
+    to sleep waiting for more data from the CollectSysInfo thread.
+    '''
+    global clientSock
+    Log.log_debug(Log._LOG_DEBUG_INFORM_PEER, "Beginning execution of the thread PeerSend")
+
+    clientSock = None
+    while keep_going and not sendGoodbye:
+
+        # Get the next message to send to the peer
+        Log.log_debug(Log._LOG_DEBUG_INFORM_PEER, "Waiting for an event before continuing execution of the thread PeerSend")
+        queueEmpty = False
+        try:
+            sendStr = peerSendQueue.get(True, Parser.getPeriodicRun())
+        except Queue.Empty:
+            queueEmpty = True
+        Log.log_debug(Log._LOG_DEBUG_INFORM_PEER, "Executing the thread PeerSend.")
+
+        # Create a socket to the peer switch if necessary
+        if not queueEmpty and keep_going and clientSock is None:
+            for (family, socktype, proto, canonname, sockaddr) in \
+                socket.getaddrinfo(Parser.args.peerIp, Parser.args.peerPort, socket.AF_UNSPEC,
+                                   socket.SOCK_STREAM, 0, socket.AI_PASSIVE):
+
+                try:
+                    clientSock = socket.socket(family, socktype, proto)
+                except socket.error as msg:
+                    clientSock = None
+                    Log.log_debug(Log._LOG_DEBUG_INFORM_PEER, "Unable to create socket for %s:%d" % (Parser.args.peerIp, Parser.args.peerPort))
+                    continue
+                # Attempt to connect to the peer
+                try:
+                    clientSock.setsockopt(socket.SOL_SOCKET, 25, Parser.args.peerIf)
+                    clientSock.settimeout(Parser.args.peerConnect)
+                    clientSock.connect(sockaddr)
+                    clientSock.settimeout(Parser.getPeriodicRun())
+                    clientSock.setsockopt(socket.SOL_SOCKET, socket.SO_SNDBUF, 65536)
+                except socket.error as msg:
+                    if clientSock:
+                        clientSock.close()
+                        clientSock = None
+                    Log.log_debug(Log._LOG_DEBUG_INFORM_PEER, "Unable to connect socket to %s:%d %s" % (Parser.args.peerIp, Parser.args.peerPort, msg))
+                    continue
+
+                Log.log_debug(Log._LOG_DEBUG_INFORM_PEER, "Opened a socket to the peer switch")
+                break
+
+        while not queueEmpty and clientSock is not None and sendStr is not None:
+            # Format the data in XML
+            Log.log_debug(Log._LOG_DEBUG_INFORM_PEER, "Sending data to peer: %s" % (sendStr[:100],))
+
+            # Send the data to the peer
+            sendStr += chr(0)
+            while sendStr:
+                try:
+                    numSent = clientSock.send(sendStr)
+                except:
+                    Log.log_debug(Log._LOG_DEBUG_INFORM_PEER, "There was an error sending data to the peer switch.")
+                    numSent = 0
+                if numSent == 0:
+                    numSent = len(sendStr)
+                    if clientSock:
+                        clientSock.close()
+                        clientSock = None
+                    Log.log_debug(Log._LOG_DEBUG_INFORM_PEER, "Error sending data to peer, connection broken.")
+                sendStr = sendStr[numSent:]
+
+            try:    
+                sendStr = peerSendQueue.get(True, 0.001)
+            except Queue.Empty:
+                queueEmpty = True
+
+    Log.log_debug(Log._LOG_DEBUG_INFORM_PEER, "Finished execution of the thread PeerSend")
+
+
+def PeerRecv():
+    '''
+    This function is an independent thread of the script. It creates a socket,
+    serverSock, and accepts connections on that socket. It receives the information
+    send through those connections and signals the PeerTimeout thread to let it
+    know that the peer is alive. If the information we receive has changed, it 
+    signals the LacpDualConnectedIfs thread.
+    '''
+    global serverSock
+
+    Log.log_debug(Log._LOG_DEBUG_RECV_PEER, "Beginning execution of the thread PeerRecv")
+
+    myPeerXmlStr = {}
+    while keep_going:
+        # If we don't have a socket accepting connections from the peer, create one.
+        if serverSock is None:
+            peerIp = Intf.GetIpAddress(Parser.args.peerIf)
+            Log.log_debug(Log._LOG_DEBUG_RECV_PEER, "The IP address of the %s interface is %s." % (Parser.args.peerIf, peerIp))
+
+            for (family, socktype, proto, canonname, sockaddr) in \
+                socket.getaddrinfo(peerIp, Parser.args.peerPort, socket.AF_UNSPEC,
+                                   socket.SOCK_STREAM, 0, socket.AI_PASSIVE):
+
+                try:
+                    serverSock = socket.socket(family, socktype, proto)
+                except socket.error as msg:
+                    serverSock = None
+                    Log.log_debug(Log._LOG_DEBUG_RECV_PEER, "Unable to create socket for %s:%d" % (peerIp, Parser.args.peerPort))
+                    continue
+
+                try:
+                    serverSock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+                    serverSock.bind(sockaddr)
+                    serverSock.listen(5)
+                except socket.error as msg:
+                    serverSock.close()
+                    serverSock = None
+                    Log.log_debug(Log._LOG_DEBUG_RECV_PEER, "Unable to bind socket to %s:%d (%s) %s" % (peerIp, Parser.args.peerPort, sockaddr, msg))
+                    continue
+
+                Log.log_debug(Log._LOG_DEBUG_RECV_PEER, "Server socket to %s:%d was created" % (peerIp, Parser.args.peerPort))
+                break
+
+        if serverSock is not None:
+            inputs  = [ serverSock ]
+            while inputs and keep_going and serverSock:
+
+                # Wait until there is a socket to read or an error
+                Log.log_debug(Log._LOG_DEBUG_RECV_PEER, "Waiting for something to happen")
+                (readable, writable, exceptional) = select.select(inputs, [], inputs, Parser.args.peerConnect)
+
+                # An error occured on a socket, gracefully shut it down
+                for errSock in exceptional:
+                    Log.log_debug(Log._LOG_DEBUG_RECV_PEER, "Closing a socket because of an error")
+                    inputs.remove(errSock)
+                    errSock.close()
+                    if errSock in readable:
+                        readable.remove(errSock)
+                    if errSock in myPeerXmlStr:
+                        del myPeerXmlStr[errSock]
+                        if Intf.isPeerAlive():
+                            PeerIsNotActive()
+                    if errSock is serverSock:
+                        Log.log_debug(Log._LOG_DEBUG_RECV_PEER, "   The socket was the server socket")
+                        serverSock = None
+
+                if keep_going:
+                    for readSock in readable:
+                        if readSock is serverSock:
+                            # Accept a new socket connection
+                            Log.log_debug(Log._LOG_DEBUG_RECV_PEER, "Accepting a new peer connection")
+                            (newSock, clientAddr) = readSock.accept()
+                            # Add the new socket to our list, and clear its receive data buffer
+                            inputs.append(newSock)
+                            myPeerXmlStr[newSock] = ""
+                        else:
+                            # Read data from this socket
+                            Log.log_debug(Log._LOG_DEBUG_RECV_PEER, "Reading data from the peer")
+                            try:
+                                myPeerData = readSock.recv(2048)
+                            except:
+                                myPeerData = 0
+                            if myPeerData:
+                                # Add the data read to this socket's receive buffer
+                                myPeerXmlStr[readSock] += myPeerData
+                                while chr(0) in myPeerXmlStr[readSock]:
+                                    inEnd = myPeerXmlStr[readSock].find(chr(0))
+                                    inCmd = myPeerXmlStr[readSock][:inEnd]
+                                    myPeerXmlStr[readSock] = myPeerXmlStr[readSock][inEnd+1:]
+                                    Log.log_debug(Log._LOG_DEBUG_RECV_PEER, "PeerData: %s" % (inCmd[:100],))
+                                    ParseXmlMessage(inCmd)
+                                    peerRecvEvent.set()
+                            else:
+                                # If no data was available, the socket has been closed, end of message.
+                                Log.log_debug(Log._LOG_DEBUG_RECV_PEER, "Closing a socket because there's nothing to read")
+                                inputs.remove(readSock)
+                                readSock.close()
+                                myPeerXmlStr.pop(readSock, None)
+                                if Intf.isPeerAlive():
+                                    PeerIsNotActive()
+
+            if keep_going and not serverSock:
+                for inputSock in inputs:
+                    myPeerXmlStr.pop(inputSock, None)
+                    inputSock.close()
+
+        if keep_going:
+            Log.log_debug(Log._LOG_DEBUG_RECV_PEER, "Waiting %d seconds before continuing execution of the thread PeerRecv" % (Parser.args.peerConnect,))
+            stopEvent.wait(Parser.args.peerConnect)
+            Log.log_debug(Log._LOG_DEBUG_RECV_PEER, "Executing the thread PeerRecv.")
+
+    Log.log_debug(Log._LOG_DEBUG_RECV_PEER, "Finished execution of the thread PeerRecv")
+
+
+def PeerTimeout():
+    '''
+    This function is an independent thread of the script. It makes sure that
+    the peer switch is also running the clagd daemon. Every time data is 
+    received from the peer we restart a timeout. If the timeout expires, then
+    the peer is assumed to be no longer running the clagd daemon.
+    '''
+    Log.log_debug(Log._LOG_DEBUG_PEER_TIMEOUT, "Beginning execution of the thread PeerTimeout")
+
+    # Initially, all bonds have unique system IDs
+    Intf.SetAllClagBondsSysMac("00:00:00:00:00:00", [Parser.args.peerIf])
+    while keep_going:
+        # If the user supplied a timeout, use it
+        currTimeout = Parser.getPeerTimeout()
+        if not currTimeout:
+            currTimeout = Parser.getCurrLacpPoll() * 6
+
+        # Wait for data from the peer, or a timeout
+        Log.log_debug(Log._LOG_DEBUG_PEER_TIMEOUT, "Waiting for an event before continuing execution of the thread PeerTimeout")
+        newPeerAlive = peerRecvEvent.wait(currTimeout) and keep_going
+        Log.log_debug(Log._LOG_DEBUG_PEER_TIMEOUT, "Executing the thread PeerTimeout.")
+
+        # Has the peer just become alive?
+        if newPeerAlive:
+            peerRecvEvent.clear()
+            if not Intf.isPeerAlive():
+                Log.log("The peer switch is active.")
+                Cmd.CmdGetAllOutput("add clag-state = up")
+                Intf.SetAllClagBondsSysMac(Parser.args.sysMac, [Parser.args.peerIf])
+                Intf.SetPeerAlive(True)
+        else:
+            # Has the peer just gone silent?
+            if Intf.isPeerAlive():
+                PeerIsNotActive()
+
+    Log.log_debug(Log._LOG_DEBUG_PEER_TIMEOUT, "Finished execution of the thread PeerTimeout")
+
+
+def PeerLinkChange():
+    '''
+    This function is an independent thread of the script. It checks the state
+    of the interface(s) to the peer switch. If the interface(s) to the peer
+    switch go down, then the peer switch is marked as no longer active.
+    '''
+    Log.log_debug(Log._LOG_DEBUG_PEER_LINK, "Beginning execution of the thread PeerLinkChange")
+    prevPeerIfDown = True;
+
+    while keep_going:
+
+        # Determine if the interfaces to the peer are down
+        peerIfDown = Intf.GetOperState(Parser.args.peerIf) != "up"
+        if Intf.isSubIfName(Parser.args.peerIf):
+            peerIfDown |= Intf.GetOperState(Intf.GetMasterOfSubIf(Parser.args.peerIf)) != "up"
+        peerIfs = Intf.GetLogicalMastersOfSubIf(Parser.args.peerIf)
+        for peerIf in peerIfs:
+            peerIfDown |= Intf.GetOperState(peerIf) != "up"
+
+        # Has the peer link just gone down?
+        if not prevPeerIfDown and peerIfDown:
+            PeerIsNotActive()
+        # Has the peer link just come up?
+        if prevPeerIfDown and not peerIfDown:
+            ConfigurePeerLearning(True)
+            peerLink = Parser.args.peerIf
+            if Intf.isSubIfName(peerLink):
+                peerLink = peerIfs[0]
+            Cmd.CmdGetAllOutput("add peer-link = %s" % (peerLink,))
+
+        prevPeerIfDown = peerIfDown
+
+        Log.log_debug(Log._LOG_DEBUG_PEER_LINK, "Waiting %d seconds before continuing execution of the thread PeerLinkChange" % (Parser.getPeerLinkPoll(),))
+        stopEvent.wait(Parser.getPeerLinkPoll())
+        Log.log_debug(Log._LOG_DEBUG_PEER_LINK, "Executing the thread PeerLinkChange.")
+
+    Log.log_debug(Log._LOG_DEBUG_PEER_LINK, "Finished execution of the thread PeerLinkChange")
+
+
+#-------------------------------------------------------------------------------
+#
+#   Thread Support Routines - These functions are called by the above threads.
+#
+#-------------------------------------------------------------------------------
+
+#-------------------------------------------------------------------------------
+#
+#   clagdata XML format - The messages sent between peers use XML to encode the
+#   data. This provides a convienient and extensible way to transfer data
+#   between peers. There are many libraries available which can encode and
+#   parse XML-formatted data. The XML format used is shown by this example:
+#
+#       <clag_data version="0.1.0">
+#         <clagid uniqueId="44:38:39:00:11:16" priority=32768 role=Primary />
+#         <update_interval units="seconds">4</update_interval>
+#         <mgmt_if ipaddr="10.0.1.5" />
+#         <i8023ad system_id="00:00:00:01:01:01">
+#           <bond ad_partner_mac="00:02:00:00:00:09" name="bond4" portId="8.003">
+#             <mac vlan="101">00:02:00:00:00:09</mac>
+#             <multicast vlan="100" dev="br0">234.10.10.10</multicast>
+#             <vlan id="101" name="bond4.101" />
+#             <vlan id="102" name="bond4.102" />
+#             <vlan id="103" name="bond4.103" />
+#           </bond>
+#           <bond ad_partner_mac="00:02:00:00:00:0b" name="bond5" portId="8.005" />
+#           <bond ad_partner_mac="00:02:00:00:00:24" name="bond0" portId="8.009" />
+#           <bond ad_partner_mac="00:02:00:00:00:03" name="bond1" portId="8.001">
+#             <mac vlan="101">00:02:00:00:00:03</mac>
+#             <vlan id="101" name="bond1.101"/>
+#           </bond>
+#           <bond ad_partner_mac="00:02:00:00:00:05" name="bond2" portId="8.004" />
+#             <vlan id="101" name="bond2.101" />
+#           <bond ad_partner_mac="00:02:00:00:00:07" name="bond3" portId="None" />
+#           <neighbor ipaddr="10.1.0.4" dev="br100" mac="00:02:00:00:00:08" flag="reachable" bond="bond4" vlan="100" />
+#           <neighbor ipaddr="10.1.0.12" dev="br10" mac="00:02:00:00:00:28" flag="stale" bond="bond3" vlan=None />
+#         </i8023ad>
+#       </clag_data>
+#
+#   The root element tag is "clag_data" and the required "version" attribute
+#   defines the format of the child elements. Different major versions indicate 
+#   entirely different formats. New minor versions indicate additions of data
+#   while retaining all previous data. New sub-versions indicate cosmeic changes
+#   which don't affect the data itself.
+#
+#   The sender of the XML data indicates how frequently it sends the data with
+#   the update_interval element. Receivers can use this to know how long before
+#   it should expect to wait before receiving the next data from the sender.
+#
+#   IEEE 802.3ad (LAG) information is contained as children of the i8023ad 
+#   element. The system_id attribute contains the ad_sys_mac_addr that the
+#   sender has assigned to all of its bonds.
+#
+#   The "bond" elements contain a "name" attribute which is the ifname of
+#   the bond on the sender's system. It also contains the ad_partner_mac
+#   which is the MAC address of the partner of the bond (used by the receiver 
+#   to determine if the bond is dual connected).
+#
+#   Bonds which are dual connected may have "mac" sub elements, which are the
+#   MAC addresses which have been dynamically learned on the interface. If the
+#   bond has vlan sub-interfaces, then a vlan attribute will include the VLAN
+#   ID associated with the mac addres.
+#
+#   Bonds can also have "vlan" sub elements, which are the VLANs configured
+#   on that bond. 
+#
+#-------------------------------------------------------------------------------
+
+def PrintElement(node, level):
+    Log.log_debug(Log._LOG_DEBUG_COLLECT_SYS, "%s%s: %s: %s" % (" " * (level*3), node.tag, node.text, str(node.attrib)))
+    for child in node.findall('*'):
+        PrintElement(child, level+1)
+
+def MakeXmlMessage():
+    '''
+    This function uses this switch's LACP information and clagd state and 
+    formulates an XML message which will be sent to the peer.
+    '''
+    clagDataAttr = {'version' : Parser._ClagDataVersion}
+    if sendGoodbye:
+        clagDataAttr['goodbye'] = 'yes'
+    root = ET.Element("clag_data", clagDataAttr)
+    ET.SubElement(root, "clagid", {"priority" : str(Parser.clagId[0]), "uniqueId" : Parser.clagId[1], "role" : Parser.clagRole})
+    ET.SubElement(root, "update_interval", {"units" : "seconds"}).text = str(Parser.getCfgLacpPoll())
+    mgmtIp = Intf.GetIpAddress(Parser.args.peerIf)
+    if mgmtIp is not None:
+        ET.SubElement(root, "mgmt_if", {"ipaddr" : Intf.GetIpAddress(Parser.args.peerIf)})
+    ET.SubElement(root, "i8023ad", {"system_id" : Parser.args.sysMac})
+    if Intf.isPeerAlive():
+        for sync in DataSyncs:
+            sync.EncodeXmlInfo(root)
+    #PrintElement(root, 0)
+    return(ET.tostring(root))
+
+
+def ParseXmlMessage(xmlStr):
+    '''
+    This function takes XML received from the peer and parses it.
+    '''
+    # If we're in the process of quitting, don't do any processing
+    if sendGoodbye:
+        return
+
+    # Convert the XML string into an ElementTree element
+    try:
+        root = ET.fromstring(xmlStr)
+    except ET.ParseError as e:
+        Log.log_error("The data received from the peer is not in a valid format:\n%s" % (xmlStr,))
+        return
+
+    # Is the root element named properly?
+    if root is None or root.tag != "clag_data":
+        Log.log_error("The data received from the peer is not in a valid format:\n%s" % (xmlStr,))
+        Daemon.SignalAllThreadsToStop()
+        return
+
+    # Is there a version attribute with the root element?
+    verStr = root.get("version")
+    if verStr is None:
+        Log.log_error("The data received from the peer does not include a version:\n%s" % (xmlStr,))
+        Daemon.SignalAllThreadsToStop()
+        return
+
+    # Is the version something we understand?
+    (peerMajVer, peerMinVer, peerSubVer) = verStr.split(".")
+    (myMajVer,   myMinVer,   mySubVer)   = Parser._ClagDataVersion.split(".")
+    if int(peerMajVer) > int(myMajVer):
+        Log.log_error("The peer is running a version I do not understand. My version: %s, Peer version: %s" % (Parser._ClagDataVersion, verStr))
+        Daemon.SignalAllThreadsToStop()
+        return
+
+    # Is there a goodbye attribute with the root element?
+    byeStr = root.get("goodbye")
+    if byeStr == 'yes': 
+        if Parser.clagRole != Parser._ROLE_PRIMARY:
+            Parser.clagRole = Parser._ROLE_PRIMARY
+            Log.log("Role is now primary")
+            Cmd.CmdGetAllOutput("add clag-role = %s" % (str(Parser.clagRole),))
+            Intf.SetAllBondsLacpFallback(True, [Parser.args.peerIf])
+        return
+
+    clagIdNode = root.find('clagid')
+    if clagIdNode is not None:
+        Parser.peerId[0] = int(clagIdNode.get('priority'))
+        Parser.peerId[1] = clagIdNode.get('uniqueId')
+        Parser.peerRole = clagIdNode.get('role')
+        if Parser.clagId[0] < Parser.peerId[0] or (Parser.clagId[0] == Parser.peerId[0] and Parser.clagId[1] < Parser.peerId[1]):
+            if Parser.clagRole != Parser._ROLE_PRIMARY:
+                Parser.clagRole = Parser._ROLE_PRIMARY
+                Log.log("Role is now primary")
+                Cmd.CmdGetAllOutput("add clag-role = %s" % (str(Parser.clagRole),))
+                Intf.SetAllBondsLacpFallback(True, [Parser.args.peerIf])
+        else:
+            if Parser.clagRole != Parser._ROLE_SECONDARY:
+                Parser.clagRole = Parser._ROLE_SECONDARY
+                Log.log("Role is now secondary")
+                Cmd.CmdGetAllOutput("add clag-role = %s" % (str(Parser.clagRole),))
+                Intf.SetAllBondsLacpFallback(False, [Parser.args.peerIf])
+
+    # Was a transmit interval supplied?
+    interval = root.find('update_interval')
+    if interval is not None:
+        # If a units attribute was supplied it must be "seconds"
+        units = interval.get('units')
+        if units is not None and units != 'seconds':
+            Log.log_warn("The units for the update_interval: %s, are not recognized. Skipping the interval" % (units,))
+        else:
+            # Get the peer's send rate. XXX: This checking can be tightened up.
+            Parser.setPeerRate(int(interval.text))
+
+    # Was a mgmt IP address supplied?
+    mgmt_if = root.find('mgmt_if')
+    if mgmt_if is not None:
+        # Get the IP address
+        peerIpAddr = mgmt_if.get('ipaddr')
+        if peerIpAddr is not None and peerIpAddr != Parser.args.peerIp:
+            Log.log_error("The peer's IP address supplied when starting clagd (%s) is not the IP address the peer is using (%s)" % (Parser.args.peerIp, peerIpAddr))
+            Log.log_error("Restart clagd with the correct peerIp address (%s)" % (peerIpAddr,))
+            Daemon.SignalAllThreadsToStop()
+            return
+
+    # Go through all of the i8023ad elements
+    i8023ad = root.find('i8023ad')
+    if i8023ad is not None:
+        # Is the peer's sysMac the same as ours?
+        sysId = i8023ad.get('system_id')
+        if sysId is None or sysId != Parser.args.sysMac:
+            Log.log_error("The system ID of the peer does not match our system ID. Peer = %s, Our = %s" % ("None" if not sysId else sysId, Parser.args.sysMac))
+            Daemon.SignalAllThreadsToStop()
+            return
+
+    # Let each of the data syncs process their portion of the XML
+    for sync in DataSyncs:
+        sync.DecodeXmlInfo(root)
+
+    return
+
+
+def ConfigurePeerLearning(enable):
+    masterVlanMap = Intf.GetMasterIfVlanMap()
+    peerMasters = Intf.GetLogicalMastersOfSubIf(Parser.args.peerIf)
+    if not peerMasters:
+        peerMasters = [Parser.args.peerIf]
+    allPeerIfs = list(peerMasters)
+    for peerMaster in peerMasters:
+        allPeerIfs += masterVlanMap.get(peerMaster, {}).values()
+
+    DEVNULL = open(os.devnull, 'wb')
+    for peerIfName in allPeerIfs:
+        cmd = [ "/bin/bridge", "link", "set", "dev", peerIfName, "learnfilter", "on" if enable else "off" ]
+        subprocess.call(cmd, stdout=DEVNULL, stderr=DEVNULL)
+        cmd = [ "/bin/bridge", "link", "set", "dev", peerIfName, "learning", "off" if enable else "on" ]
+        subprocess.call(cmd, stdout=DEVNULL, stderr=DEVNULL)
+
+
+def PeerIsNotActive():
+    Log.log("The peer switch is no longer active.")
+    Cmd.CmdGetAllOutput("add clag-state = down")
+
+    global clientSock
+    if clientSock:
+        clientSock.close()
+        clientSock = None
+
+    global serverSock
+    if serverSock:
+        myServerSock = serverSock
+        serverSock = None
+        myServerSock.shutdown(socket.SHUT_RDWR)
+        myServerSock.close()
+
+    if Parser.clagRole != Parser._ROLE_PRIMARY:
+        Intf.SetAllClagBondsSysMac("00:00:00:00:00:00", [Parser.args.peerIf])
+
+    for sync in DataSyncs:
+        sync.ClearPeerInfo()
+
+    Parser.setPeerRate(None)
+    Intf.SetPeerAlive(False)
+
+
+def signal_handler(signum, frame):
+    if signum == signal.SIGHUP:
+        reopen()
+    elif signum == signal.SIGTERM:
+        do_exit(0)
+
+
+def reopen():
+    if Log:
+        if Log.getLogfile() not in ["syslog", "stdout"]:
+            try:
+                Log.handle = open(Log.getLogfile(), 'a')
+                Log.log("Continuing logging after SIGHUP (possibly due to log rotation)")
+            except IOError:
+                Log.handle = None
+                Log.log_handler = Log.log_handler_nothing
+
+
+def do_exit(status = 0):
+    '''
+    Clean up and exit.
+    '''
+    global Cmd
+    global sendGoodbye
+
+    # If the peer is alive, send a goodbye message
+    if Intf and Intf.isPeerAlive():
+        root = ET.Element("clag_data", {'version' : Parser._ClagDataVersion, 'goodbye' : 'yes'})
+        xmlStr = ET.tostring(root)
+        # Flush the send queue
+        queueEmpty = False
+        while not queueEmpty:
+            try:
+                peerSendQueue.get_nowait()
+            except Queue.Empty:
+                queueEmpty = True
+        sendGoodbye = True
+        # Since the peer will now be primary, change our role to secondary
+        if Parser and Parser.clagRole != Parser._ROLE_SECONDARY:
+            Parser.clagRole = Parser._ROLE_SECONDARY
+            if Log:
+                Log.log("Role is now secondary")
+            if Cmd:
+                Cmd.CmdGetAllOutput("add clag-role = %s" % (str(Parser.clagRole),))
+            Intf.SetAllBondsLacpFallback(False, [Parser.args.peerIf])
+        # Send the goodbye message and wait for a short time so it can go out
+        peerSendQueue.put(xmlStr)
+        time.sleep(0.5)
+
+    if Intf and Parser:
+        ConfigurePeerLearning(False)
+        Intf.SetAllBondsLacpFallback(True, [Parser.args.peerIf])
+
+    if Daemon:
+        Daemon.SignalAllThreadsToStop()
+    for thread in Threads:
+        if Threads[thread][1]:
+            Threads[thread][1].join()
+
+    for sync in DataSyncs:
+        sync.JoinThreads()
+        del sync
+
+    if Cmd:
+        Cmd.JoinThreads()
+    del Cmd
+
+    if Daemon:
+        if Daemon.started and Daemon.pid_file:
+            os.unlink(Daemon.pid_file)
+            Daemon.lock.release()
+    if Log:
+        if status == 0:
+            Log.log("clean exit")
+        else:
+            Log.log_error("exit with status %d" % status)
+    sys.exit(status)
+
+
+
+#-------------------------------------------------------------------------------
+#
+#   This dictionary contains the threads which we run. The key is the name of
+#   the thread and the value is an array. The first elemenet is the address of
+#   the function which implements the thread, and the second is the thread
+#   object for this thread (filled in when the thread is created).
+#
+#-------------------------------------------------------------------------------
+
+def CollectSysInfoT():
+    try:
+        CollectSysInfo()
+    except:
+        Daemon.DumpTraceback()
+
+def PeerSendT():
+    try:
+        PeerSend()
+    except:
+        Daemon.DumpTraceback()
+
+def PeerRecvT():
+    try:
+        PeerRecv()
+    except:
+        Daemon.DumpTraceback()
+
+def PeerTimeoutT():
+    try:
+        PeerTimeout()
+    except:
+        Daemon.DumpTraceback()
+
+def PeerLinkChangeT():
+    try:
+        PeerLinkChange()
+    except:
+        Daemon.DumpTraceback()
+
+
+Threads = {
+    "CollectSysInfo"       : [CollectSysInfoT,      None],
+    "PeerSendThread"       : [PeerSendT,            None],
+    "PeerRecvThread"       : [PeerRecvT,            None],
+    "PeerTimeout"          : [PeerTimeoutT,         None],
+    "PeerLinkChange"       : [PeerLinkChangeT,      None],
+}
+
+
+#-------------------------------------------------------------------------------
+#
+#   Error handling
+#
+#-------------------------------------------------------------------------------
+
+class ClagdError(RuntimeError):
+    '''
+    Standard exception for all our runtime errors.
+    The only argument is a string.
+    '''
+    pass
+
+class ArgumentParsingError(Exception):
+    '''
+    Exception for argparse errors.
+    '''
+    pass
+
+
+#-------------------------------------------------------------------------------
+#
+#   Daemon handling code
+#
+#-------------------------------------------------------------------------------
+
+class ClagDaemon:
+    '''
+    Process management for a daemon.
+    An instance should be created as early as possible.
+    '''
+
+    def __init__(self, name = None):
+        '''
+        name is the program name (defaulting to basename(argv[0]))
+        '''
+        if name is None:
+            name = os.path.basename(sys.argv[0])
+        self.name = name
+        self.tick = 0
+        self.lock = None
+        self.pid_file = None
+        self.started = False
+
+    def start(self):
+        '''
+        Start running.
+        Check for other instances of this program and create pid file.
+        This should be called after early initialization (like
+        argument parsing), before any serious work.
+        '''
+        self.pid_file = "/var/run/%s.pid" % self.name
+        try:
+            self.write_pidfile()
+        except Exception as e:
+            raise ClagdError("Unable to write to PID file - %s." % (str(e),))
+            do_exit(4)
+        self.started = True
+
+    def write_pidfile(self):
+        pidfile = os.path.abspath(self.pid_file)
+        self.lock = lockfile.FileLock(pidfile)
+        try:
+            self.lock.acquire(0)
+        except:
+            raise ClagdError("Unable to lock pid file: %s already running" % \
+                             self.name)
+        pid = str(os.getpid())
+        try:
+            # Mode is append so we don't truncate until we get lock
+            f = open(pidfile, 'w')
+        except:
+            self.lock.release()
+            raise ClagdError("Cannot open pid file %s" % pidfile)
+        f.write("{0}\n".format(pid))
+        f.flush()
+        self.pidfd = f
+
+    def DumpTraceback(self):
+        (exc_type, exc_value, exc_traceback) = sys.exc_info()
+        err = "".join(traceback.format_exception(exc_type, exc_value,
+                                                 exc_traceback))
+        if Log:
+            Log.log_error("unhandled exception:")
+            for line in err.split('\n'):
+                Log.log_error("    %s" % (line,))
+        else:
+            print "unhandled exception:"
+            for line in err.split('\n'):
+                print "    %s" % (line,)
+        self.SignalAllThreadsToStop()
+
+    def TouchAliveFile(self):
+        aliveFile = "/var/run/%s.alive" % (self.name,)
+        try:
+            with open(aliveFile, 'a'):
+                os.utime(aliveFile, None)
+        except:
+            pass
+
+    def SignalAllThreadsToStop(self):
+        '''
+        This function wakes up all threads which are waiting on a signal so that
+        they can realize that they should stop execution.
+        '''
+        global keep_going
+        global serverSock
+        keep_going = False
+        if serverSock is not None:
+            myServerSock = serverSock
+            serverSock = None
+            myServerSock.shutdown(socket.SHUT_RDWR)
+        for sync in DataSyncs:
+            sync.ClearPeerInfo()
+            sync.SignalThreads()
+        if Cmd is not None:
+            Cmd.SignalThreads()
+
+        try:
+            peerSendQueue.put_nowait(None)
+        except Queue.Full:
+            pass
+        peerRecvEvent.set()
+        stopEvent.set()
+
+
+#-------------------------------------------------------------------------------
+#
+#   Log handling code
+#
+#-------------------------------------------------------------------------------
+
+class Logger:
+
+    _LOG_DEBUG_HOST_EVENTS  = 0x00000001
+    _LOG_DEBUG_DAEMON       = 0x00000002
+    _LOG_DEBUG_COLLECT_SYS  = 0x00000004
+    _LOG_DEBUG_INFORM_PEER  = 0x00000008
+    _LOG_DEBUG_RECV_PEER    = 0x00000010
+    _LOG_DEBUG_PEER_TIMEOUT = 0x00000020
+    _LOG_DEBUG_LACP_SYNC    = 0x00000040
+    _LOG_DEBUG_PARSER       = 0x00000080
+    _LOG_DEBUG_BCM          = 0x00000100
+    _LOG_DEBUG_DUAL_HOME    = 0x00000200
+    _LOG_DEBUG_FDB_SYNC     = 0x00000400
+    _LOG_DEBUG_CMD_SERVER   = 0x00000800
+    _LOG_DEBUG_PEER_LINK    = 0x00001000
+    _LOG_DEBUG_MDB_SYNC     = 0x00002000
+
+    #
+    #   Default logging values
+    #
+    default_quiet           = False
+    default_debug           = 0
+    default_verbose         = False
+    default_log             = "syslog"
+
+    def __init__(self):
+        self.syslog_priority_map = { "crit"  : syslog.LOG_CRIT,
+                                     "error" : syslog.LOG_ERR,
+                                     "info"  : syslog.LOG_INFO,
+                                     "warn"  : syslog.LOG_WARNING,
+                                     "debug" : syslog.LOG_DEBUG }
+        self.stdout_priority_map = { "crit"  : "error",
+                                     "error" : "error",
+                                     "info"  : " ",
+                                     "warn"  : "warning",
+                                     "debug" : "debug" }
+        self.setQuiet(Logger.default_quiet)
+        self.setDebug(Logger.default_debug)
+        self.setVerbose(Logger.default_verbose)
+        self.handle = None
+        self.logfile = None
+        self.log_handler = self.log_handler_nothing
+        self.setLogfile(Logger.default_log)
+
+    def setDebug(self, debug):
+        self.debug = debug
+
+    def setQuiet(self, quiet):
+        self.quiet = quiet
+
+    def setVerbose(self, verbose):
+        self.verbose = verbose
+
+    def setLogfile(self, logfile):
+        if self.logfile != logfile:
+            self.logfile = logfile
+            if self.handle:
+                if self.handle != sys.stdout:
+                    self.handle.close()
+                self.handle = None
+                self.log_handler = self.log_handler_nothing
+            if self.logfile == "syslog":
+                try:
+                    syslog.openlog("clagd", syslog.LOG_CONS | syslog.LOG_PID,
+                                   syslog.LOG_DAEMON)
+                    self.log_handler = self.log_handler_syslog
+                except Exception, err:
+                    self.log_handler = self.log_handler_nothing
+            elif self.logfile == "stdout":
+                self.handle = sys.stdout
+                self.log_handler = self.log_handler_file
+            else:
+                try:
+                    self.handle = open(self.logfile, 'a')
+                    self.log_handler = self.log_handler_file
+                except IOError:
+                    self.handle = None
+                    self.log_handler = self.log_handler_nothing
+
+    def getDebug(self):
+        return self.debug
+
+    def getQuiet(self):
+        return self.quiet
+
+    def getVerbose(self):
+        return self.verbose
+
+    def getLogfile(self):
+        return self.logfile
+
+    def log_handler_nothing(self, priority, buf):
+        pass
+
+    def log_handler_file(self, priority, buf):
+        p = self.stdout_priority_map.get(priority, " ")
+        if p != " ":
+            p = ' ' + p + ': '
+        t = ""
+        if priority == "debug":
+            t = " [" + threading.current_thread().name + "] "
+        try:
+            self.handle.write(time.ctime() + t + p + buf + "\n")
+            self.handle.flush()
+        except IOError:
+            pass
+
+    def log_handler_syslog(self, priority, buf):
+        t = ""
+        if priority == "debug":
+            t = "[" + threading.current_thread().name + "] "
+        try:
+            syslog.syslog(self.syslog_priority_map.get(priority, syslog.LOG_INFO), t + buf)
+        except Exception, err:
+            pass
+
+    def log_msg_begin(self, *args, **kwargs):
+        if self.quiet == False:
+            self.log_handler('', ''.join(args))
+
+    def log_msg_end(self, ret):
+        if self.quiet == False:
+            if ret == 0:
+                self.log_handler('', 'done.')
+            else:
+                self.log_handler('', 'failed.')
+
+    def log(self, *args, **kwargs):
+        if self.quiet == False:
+            self.log_handler("info", ''.join(args))
+
+    def log_debug(self, debugBit, *args, **kwargs):
+        if self.debug & debugBit:
+            self.log_handler("debug", ''.join(args))
+
+    def log_verbose(self, *args, **kargs):
+        if self.verbose == True:
+            self.log_handler("", ''.join(args))
+
+    def log_error(self, *args, **kwargs):
+        self.log_handler("error", ''.join(args))
+
+    def log_warn(self, *args, **kwargs):
+        self.log_handler("warn", ''.join(args))
+
+    def log_crit(self, *args, **kwargs):
+        self.log_handler("crit", ''.join(args))
+
+    def log_cmderr(self, cmd, cmdout):
+        self.log_error('error: cmd \'%s\'' %cmd +
+                       ' failed with the following error:\n' +
+                       '(' + cmdout.rstrip('\n') + ')')
+
+
+#-------------------------------------------------------------------------------
+#
+#   Command line parsing code
+#
+#-------------------------------------------------------------------------------
+
+class ThrowingArgumentParser(argparse.ArgumentParser):
+    def error(self, message):
+        raise ArgumentParsingError(message)
+
+class ClagParser:
+
+    #
+    #   CLAG Version information
+    #
+    _ClagVersion            = "1.0.0"
+    _ClagDataVersion        = "1.0.0"
+    _ClagCmdVersion         = "1.0.0"
+
+    _ROLE_SECONDARY         = "secondary"
+    _ROLE_PRIMARY           = "primary"
+
+    _CLAG_ID_MAX            = 65535
+    #
+    #   Default command line parameter values
+    #
+    default_lacp_poll       = 2
+    default_peer_connect    = 1
+    default_cmd_connect     = 1
+    default_link_poll       = 1
+    default_daemon          = False
+    default_vm              = False
+    default_peer_port       = 5342
+    default_peer_timeout    = None
+    default_role            = _ROLE_SECONDARY
+    default_priority        = 32768
+    default_switchd_timeout = 120
+    default_periodic_run    = 4
+    default_force_dynamic   = False
+
+    # bond to clag-id association
+    # {
+    #     "bond1" : 100,
+    #     "bond2" : 2
+    # }
+    clagBondDB              = {}
+
+    # clag-id to bond association
+    # {
+    #     100 : "bond1",
+    #     2 : "bond2"
+    # }
+    bondClagIdDB            = {}
+
+    def __init__(self):
+        '''
+        Create the parser
+        '''
+        self.parser = ThrowingArgumentParser(description="CLAG daemon, version %s" % (ClagParser._ClagVersion,))
+        self.parser.add_argument("--lacpPoll", "-o", type=int, default=ClagParser.default_lacp_poll, 
+                                 metavar="SECONDS",
+                                 help="Seconds between obtaining local LACP information")
+        self.parser.add_argument("--peerConnect", "-r", type=int, default=ClagParser.default_peer_connect,
+                                 metavar="SECONDS",
+                                 help="Seconds between trying to connect to peer.")
+        self.parser.add_argument("--cmdConnect", "-c", type=int, default=ClagParser.default_cmd_connect,
+                                 metavar="SECONDS",
+                                 help="Seconds between waiting for command connections.")
+        self.parser.add_argument("--peerLinkPoll", type=int, default=ClagParser.default_link_poll,
+                                 metavar="SECONDS",
+                                 help="Seconds between checking if peer link is up.")
+        self.parser.add_argument("--switchdReadyTimeout", type=int, default=ClagParser.default_switchd_timeout,
+                                 metavar="SECONDS",
+                                 help="Seconds clagd waits for switchd to be ready.")
+        self.parser.add_argument("--priority", "-i", type=int, default=ClagParser.default_priority,
+                                 help="The priority of this instance compared to the peer.")
+        self.parser.add_argument("--periodicRun", type=int, default=ClagParser.default_periodic_run, 
+                                 metavar="SECONDS",
+                                 help="Seconds between running periodic processes.")
+        self.parser.add_argument("--forceDynamic", "-f", action="store_true", 
+                                 default=ClagParser.default_force_dynamic, 
+                                 help=argparse.SUPPRESS)
+
+        self.parser.add_argument("--daemon", "-d", action="store_true", default=ClagParser.default_daemon,
+                                 help="Run as a daemon.")
+        self.parser.add_argument("--quiet", "-q", action="store_true", default=Logger.default_quiet,
+                                 help="Don't log anything.")
+        self.parser.add_argument("--debug", type=self.intBase, default=Logger.default_debug,
+                                 metavar="DEBUG_CODE",
+                                 help="Debugging output mask.")
+        self.parser.add_argument("--verbose", "-v", action="store_true", default=Logger.default_verbose,
+                                 help="Log with verbosity.")
+        self.parser.add_argument("--log", "-l", type=self.logDest, default=Logger.default_log,
+                                 help="Log output to stdout, syslog, or a file")
+        self.parser.add_argument("--vm", "-m", action="store_true", default=ClagParser.default_vm,
+                                 help="Enable debugging on a virtual machine")
+        self.parser.add_argument("--peerPort", "-p", type=int, default=ClagParser.default_peer_port,
+                                 help="TCP/IP port used by peer to communicate topology info.")
+        self.parser.add_argument("--peerTimeout", "-t", type=int, default=ClagParser.default_peer_timeout,
+                                 help="Seconds before peer information is discarded.")
+        self.parser.add_argument("peerIp", 
+                                 help="Unique IP address or DNS name of peer")
+        self.parser.add_argument("peerIf", type=self.isIfNameWithIp,
+                                 help="Name of the interface connected to peer")
+        self.parser.add_argument("sysMac", type=self.isMacAddr,
+                                 help="The system ID shared with the peer (xx:xx:xx:xx:xx:xx)")
+        #
+        #   LACP Rate - The rate at which the peer will send information to us. Before
+        #   we receive the first message from the peer, we don't know his rate and so
+        #   this value will be None. After each message is received from the peer the
+        #   included rate, in seconds, is saved here. If we lose communication to the
+        #   peer, the value goes back to None.
+        #
+        self.peerLacpRateLock   = threading.Lock()
+        self.peerLacpRate       = None
+
+        self.currLacpPoll       = ClagParser.default_lacp_poll
+        #                                 [0] Priority,             [1] UniqueId,     
+        self.clagId             = [ ClagParser.default_priority, "00:00:00:00:00:00" ]
+        self.peerId             = [ ClagParser.default_priority, "00:00:00:00:00:00" ]
+        self.clagRole           = ClagParser.default_role
+        self.peerRole           = None
+
+    def intBase(self, intStr):
+        '''
+        Allow an integer to be specified with standard base representations:
+        37 = decimal, 0x25 = hex, 045 = octal, 0b100101 = binary
+        '''
+        try:
+            intVal = int(intStr,0)
+        except:
+            msg = "%s is not a valid integer" % (intStr,)
+            raise argparse.ArgumentTypeError(msg)
+        return intVal
+
+    def logDest(self, logDest):
+        '''
+        The log file can be the constant 'syslog', 'stdout', or the name of a file.
+        '''
+        if logDest not in ['syslog', 'stdout']:
+            if os.path.isfile(logDest):
+                if not os.access(logDest, os.W_OK):
+                    msg = "%s is not a file that can be opened for writing" % (logDest,)
+                    raise argparse.ArgumentTypeError(msg)
+            else:
+                if not os.access(os.path.dirname(os.path.realpath(logDest)), os.W_OK):
+                    msg = "%s is not a file/directory that can be opened for writing" % (logDest,)
+                    raise argparse.ArgumentTypeError(msg)
+
+        return logDest
+
+    def isIfNameWithIp(self, ifName):
+        '''
+        Determine if the agrument passed in is the name of an interface. Used 
+        for argparse type checking.
+        '''
+        if not Intf.isIfName(ifName):
+            msg = "%s is not the name of an interface" % (ifName,)
+            raise argparse.ArgumentTypeError(msg)
+        if not Intf.GetIpAddress(ifName):
+            msg = "%s does not have an IP address assigned to it." % (ifName,)
+            raise argparse.ArgumentTypeError(msg)
+        return ifName
+
+    def GetBondClagId(self, bond):
+        return self.clagBondDB[bond] if bond in self.clagBondDB else 0
+
+    def isClagBond(self, bond):
+        clag_enable = 0
+        clag_enable_file = _InterfacePath + bond + "/bonding/clag_enable"
+        if os.path.isfile(clag_enable_file):
+            try:
+                with open(clag_enable_file) as f:
+                    clag_enable = int(f.readline().strip())
+            except IOError:
+                pass
+        return clag_enable
+
+    def isValidClagId(self, clagId):
+        return 0 <= clagId <= Parser._CLAG_ID_MAX
+        
+    def delClagBond(self, bond):
+        if bond in self.clagBondDB:
+            clagId = self.clagBondDB[bond]
+            if clagId in self.bondClagIdDB:
+                del self.bondClagIdDB[clagId]
+            del self.clagBondDB[bond]
+
+    def setBondClagId(self, bond, clagId):
+        Log.log_debug(Log._LOG_DEBUG_PARSER, "Set %s clag_id %d" % (bond, clagId))
+        msg = ""
+
+        if clagId == 0:
+            self.delClagBond(bond)
+            return msg
+
+        if not self.isClagBond(bond):
+            return "ERROR %s is not the name of a clag bond" % (bond)
+
+        if not self.isValidClagId(clagId):
+            return "ERROR %s is not in the clag id range of <0-%d>." % (clagId, Parser._CLAG_ID_MAX)
+
+        # duplicate config
+        if bond in self.clagBondDB and clagId == self.clagBondDB[bond]:
+            return msg
+
+        # check if the clagId is being used by a different bond
+        if clagId in self.bondClagIdDB:
+            return "ERROR %d is already in use for bond %s" % (clagId, self.bondClagIdDB[clagId])
+
+        #remove old clag id if any
+        self.delClagBond(bond)
+
+        self.clagBondDB[bond] = clagId
+        self.bondClagIdDB[clagId] = bond
+        return  msg
+
+    def dropStaleClagBonds(self):
+        '''
+        If a bond doesn't exist anymore or if it is not a clag bond anymore
+        we drop the bond <=> clagId association
+        '''
+        staleBonds = [bond for bond in self.clagBondDB if not self.isClagBond(bond)]
+        for bond in staleBonds:
+            Log.log_debug(Log._LOG_DEBUG_PARSER, "Drop stale %s" % (bond))
+            self.delClagBond(bond)
+
+    def isMacAddr(self, macAddr):
+        '''
+        Determine if the agrument passed in is a valid mac address, of the form
+        xx:xx:xx:xx:xx:xx, where x is a hexidecimal digit.
+        '''
+        macAddr = macAddr.lower()
+        if not re.match("([0-9a-f]{2}:){5}[0-9a-f]{2}$", macAddr):
+            msg = "%s is not a valid mac address (xx:xx:xx:xx:xx:xx)" % (macAddr,)
+            raise argparse.ArgumentTypeError(msg)
+        return macAddr
+
+    def ParseCmdLine(self):
+        '''
+        Parse the command line parameters
+        '''
+        try:
+            self.args, unknown = self.parser.parse_known_args()
+        except ArgumentParsingError as e:
+            Log.log_error("There was an error in the command line parameters.")
+            Log.log_error(str(e))
+            Log.log_error("exit with status -1")
+            sys.exit(-1)
+
+        for arg in unknown:
+            Log.log_warn("The command line argument '%s' is unrecognized and will be ignored." % (arg,))
+
+    def getCfgLacpPoll(self):
+        return self.args.lacpPoll
+
+    def getCurrLacpPoll(self):
+        return self.currLacpPoll
+
+    def setPeerRate(self, rate):
+        self.peerLacpRateLock.acquire()
+        self.peerLacpRate = rate
+        self.currLacpPoll = max(self.peerLacpRate, self.args.lacpPoll)
+        self.peerLacpRateLock.release()
+
+    def getPeerTimeout(self):
+        return self.args.peerTimeout
+
+    def setPeerTimeout(self, timeout):
+        self.args.peerTimeout = timeout
+
+    def getPeerLinkPoll(self):
+        return self.args.peerLinkPoll
+
+    def setPeerLinkPoll(self, timeout):
+        self.args.peerLinkPoll = timeout
+
+    def getPeriodicRun(self):
+        return self.args.periodicRun
+
+    def setPeriodicRun(self, timeout):
+        self.args.periodicRun = timeout
+
+    def DumpParameters(self):
+        '''
+        Print out all of the command line parameter values to the debug log.
+        '''
+        Log.log_debug(Log._LOG_DEBUG_PARSER, "The parameters are:")
+        Log.log_debug(Log._LOG_DEBUG_PARSER, "    lacpPoll = %d" % (self.args.lacpPoll,))
+        Log.log_debug(Log._LOG_DEBUG_PARSER, "    peerConnect = %d" % (self.args.peerConnect,))
+        Log.log_debug(Log._LOG_DEBUG_PARSER, "    cmdConnect = %d" % (self.args.cmdConnect,))
+        Log.log_debug(Log._LOG_DEBUG_PARSER, "    peerLinkPoll = %d" % (self.args.peerLinkPoll,))
+        Log.log_debug(Log._LOG_DEBUG_PARSER, "    switchdReadyTimeout = %d" % (self.args.switchdReadyTimeout,))
+        Log.log_debug(Log._LOG_DEBUG_PARSER, "    periodicRun = %d" % (self.args.periodicRun,))
+        Log.log_debug(Log._LOG_DEBUG_PARSER, "    priority = %d" % (self.args.priority,))
+        Log.log_debug(Log._LOG_DEBUG_PARSER, "    quiet = %s" % (self.args.quiet,))
+        Log.log_debug(Log._LOG_DEBUG_PARSER, "    debug = 0x%X" % (self.args.debug,))
+        Log.log_debug(Log._LOG_DEBUG_PARSER, "    verbose = %s" % (self.args.verbose,))
+        Log.log_debug(Log._LOG_DEBUG_PARSER, "    log = %s" % (self.args.log,))
+        Log.log_debug(Log._LOG_DEBUG_PARSER, "    vm = %s" % (self.args.vm,))
+        Log.log_debug(Log._LOG_DEBUG_PARSER, "    peerPort = %d" % (self.args.peerPort,))
+        Log.log_debug(Log._LOG_DEBUG_PARSER, "    peerTimeout = %s" % (self.args.peerTimeout,))
+        Log.log_debug(Log._LOG_DEBUG_PARSER, "    peerIp = %s" % (self.args.peerIp,))
+        Log.log_debug(Log._LOG_DEBUG_PARSER, "    peerIf = %s" % (self.args.peerIf,))
+        Log.log_debug(Log._LOG_DEBUG_PARSER, "    sysMac = %s" % (self.args.sysMac,))
+        Log.log_debug(Log._LOG_DEBUG_PARSER, "    forceDynamic = %s" % (self.args.forceDynamic,))
+
+
+#-------------------------------------------------------------------------------
+#
+#   Linux interface utility routines
+#
+#-------------------------------------------------------------------------------
+
+class IntfSupport:
+
+    def __init__(self):
+        #
+        #   Dual Connected Interfaces - This is a dictionary which contains our  
+        #   interface names of the current dual connected bonds as the keys and the
+        #   peer switch's corresponding interface names as the values:
+        #   {
+        #       "bond1" : "bond4",
+        #       "bond3" : "bond3"
+        #   }
+        #
+        self.dualIfsLock = threading.Lock()
+        self.dualIfs     = {}
+        self.peerAlive   = False
+
+    #
+    #   Bridge interface routines
+    #
+    def isBridgeName(self, bridgeName):
+        '''
+        Determine if the agrument passed in is the name of a bridge.
+        '''
+        return os.path.isdir(_InterfacePath + str(bridgeName) + "/bridge")
+
+    def isBridgeMember(self, bridgeMemberName):
+        '''
+        Determines if the specified interface is a member of a bridge.
+        '''
+        return os.path.isdir(_InterfacePath + str(bridgeMemberName) + "/brport")
+
+    def GetBridgeOfMember(self, bridgeMemberName):
+        '''
+        Returns the name of the bridge of which the specified interface is a member.
+        '''
+        try:
+            bridgeName = os.path.basename(os.readlink(_InterfacePath + str(bridgeMemberName) + "/brport/bridge"))
+        except:
+            bridgeName = None
+        return bridgeName
+
+    def GetMembersOfBridge(self, bridgeName):
+        '''
+        Returns a list of interfaces which are members of the specified bridge.
+        '''
+        if not self.isBridgeName(bridgeName):
+            return []
+        return os.listdir(_InterfacePath + bridgeName + "/brif")
+
+    def GetAllBridges(self):
+        '''
+        Returns a list of all bridges in the system
+        '''
+        bridgeNames = []
+        brPaths = glob.glob(_InterfacePath + "*/bridge")
+        for brPath in brPaths:
+            bridgeName = brPath.split("/")[-2]
+            bridgeNames.append(bridgeName)
+        return bridgeNames
+
+    def GetBridgeAgeingTime(self, bridgeName):
+        '''
+        Returns the number of seconds after which MAC addresses will be aged
+        '''
+        age = None
+        age_file = _InterfacePath + str(bridgeName) + "/bridge/ageing_time"
+        if bridgeName is not None and os.path.isfile(age_file):
+            try:
+                with open(age_file) as f:
+                    age = f.readline().strip()
+                    age = int(age) / 100
+            except IOError:
+                age = None
+        return age
+
+    def GetBridgeMemInterval(self, bridgeName):
+        '''
+        Returns the multicast group membership interval for a bridge.
+        '''
+        age = None
+        age_file = _InterfacePath + str(bridgeName) + "/bridge/multicast_membership_interval"
+        if bridgeName is not None and os.path.isfile(age_file):
+            try:
+                with open(age_file) as f:
+                    age = f.readline().strip()
+                    age = int(age) / 100
+            except IOError:
+                age = None
+        return age
+
+    def GetBridgeQuerierInterval(self, bridgeName):
+        '''
+        Returns the multicast querier interval for a bridge.
+        '''
+        age = None
+        age_file = _InterfacePath + str(bridgeName) + "/bridge/multicast_querier_interval"
+        if bridgeName is not None and os.path.isfile(age_file):
+            try:
+                with open(age_file) as f:
+                    age = f.readline().strip()
+                    age = int(age) / 100
+            except IOError:
+                age = None
+        return age
+
+    def GetCistPortId(self, intf):
+        '''
+        Returns the single instance spanning tree portId for the interface
+        supplied. If single instance spanning tree is not enabled, or if the
+        interface is not included in the spanning tree, None is returned.
+        '''
+        portId = None
+        cistEnabled = True
+        bridgeRe = '^(\S+) CIST info'
+        if os.path.isfile("/proc/sys/net/bridge/bridge-stp-user-space-single"):
+            cistEnabled = False
+            bridgeRe = 'BRIDGE: (\S+), '
+            try:
+                for line in open("/proc/sys/net/bridge/bridge-stp-user-space-single"):
+                    cistEnabled = "0" not in line
+            except IOError:
+                cistEnabled = False
+        if cistEnabled:
+            try:
+                showBridgeStr = subprocess.check_output(["/sbin/mstpctl", "showbridge"])
+            except subprocess.CalledProcessError as e:
+                showBridgeStr = e.output
+            match = re.search(bridgeRe, showBridgeStr)
+            if match:
+                brMemSet = set(self.GetMembersOfBridge(match.group(1)))
+                intfSet = set([intf])
+                intfSet = intfSet | set(self.GetSubIfsOfMaster(intf))
+                if self.isSubIfName(intf):
+                    intfSet = intfSet | set([self.GetMasterOfSubIf(intf)])
+                brIntfSet = brMemSet & intfSet
+                if len(brIntfSet):
+                    brIntf = brIntfSet.pop()
+                    try:
+                        portId = subprocess.check_output(["/sbin/mstpctl", "showportdetail", match.group(1), brIntf, "port-id"]).strip()
+                    except subprocess.CalledProcessError as e:
+                        portId = None
+        return portId
+
+
+    #
+    #   VLAN Subinterface utility routines
+    #
+    def isSubIfName(self, subInterfaceName):
+        '''
+        Determine if the argument passed in is the name of a VLAN subinterface.
+        '''
+        return os.path.isfile(_VLANPath + subInterfaceName)
+
+    def GetMasterOfSubIf(self, subInterfaceName):
+        '''
+        Returns the name of the interface which is the "master" of the given
+        VLAN subinterface
+        '''
+        masterIf = None
+        if self.isSubIfName(subInterfaceName):
+            try:
+                for line in open(_VLANPath + subInterfaceName):
+                    lineParts = line.strip().split()
+                    if len(lineParts) > 1 and lineParts[0] == "Device:":
+                        masterIf = lineParts[1]
+                        break
+            except IOError:
+                pass
+        return masterIf
+
+    def GetLogicalMastersOfSubIf(self, subInterfaceName):
+        '''
+        Returns the name of the interface which is the "master" of the given
+        VLAN subinterface. If the VLAN subinterface is from a bridge, then
+        the bridge members with the same VLAN membership are returned.
+        '''
+        masterIfs = []
+        directMaster = self.GetMasterOfSubIf(subInterfaceName)
+        if directMaster:
+            masterIfs = [directMaster]
+            if self.isBridgeName(directMaster):
+                vlanId = self.GetVlanIdOfSubIf(subInterfaceName)
+                brifs = set(self.GetMembersOfBridge(directMaster))
+                vlanifs = set(self.GetMembersOfVlan(vlanId))
+                masterIfs = [i for i in brifs & vlanifs]
+        return masterIfs
+
+    def GetVlanIdOfSubIf(self, subInterfaceName):
+        '''
+        Returns the VLAN ID of the VLAN subinterface
+        '''
+        vlanId = None
+        if self.isSubIfName(subInterfaceName):
+            try:
+                for line in open(_VLANPath + subInterfaceName):
+                    lineParts = line.strip().split()
+                    if len(lineParts) > 2 and lineParts[1] == "VID:":
+                        vlanId = int(lineParts[2])
+                        break
+            except IOError:
+                pass
+        return vlanId
+
+    def GetSubIfsOfMaster(self, masterIf):
+        '''
+        Returns a list of VLAN sub-interfaces of the supplied interface
+        '''
+        subIfs = []
+        try:
+            for line in open(_VLANPath + "config"):
+                lineParts = line.strip().split("|")
+                if len(lineParts) > 2 and lineParts[2].strip() == masterIf:
+                    subIfs.append(lineParts[0].strip())
+        except IOError:
+            subIfs = []
+        return subIfs
+
+    def GetSubIfsVlanMap(self):
+        '''
+        Returns a dictionary which allows mapping of VLAN sub-interface name
+        (the key) to the raw interface name and VLAN ID (the data, a tuple).
+        '''
+        vlanMap = {}
+        try:
+            for line in open(_VLANPath + "config"):
+                lineParts = line.strip().split("|")
+                if len(lineParts) == 3:
+                    vlanMap[lineParts[0].strip()] = ( lineParts[2].strip(), int(lineParts[1].strip()) )
+        except IOError:
+            vlanMap = {}
+        return vlanMap
+
+    def GetMasterIfVlanMap(self):
+        '''
+        Returns a dictionary which allows mapping of a master interface name
+        (the key) to a dictionary of VLAN sub-interfaces on that interface (the
+        data). That dictionary contains VLAN IDs (the key) and VLAN sub-interface
+        names (the data).
+        '''
+        vlanMap = {}
+        try:
+            for line in open(_VLANPath + "config"):
+                lineParts = line.strip().split("|")
+                if len(lineParts) == 3:
+                    masterIf = lineParts[2].strip()
+                    if masterIf not in vlanMap:
+                        vlanMap[masterIf] = {} 
+                    vlanMap[masterIf][int(lineParts[1].strip())] = lineParts[0].strip()
+        except IOError:
+            vlanMap = {}
+        return vlanMap
+
+    def GetIfVlanMap(self, intf):
+        '''
+        Returns a list of 128 32-bit integers which are bitmaps of the VLANs 
+        enabled on an interface, or the empty list [] if the new bridge driver
+        is not being used.
+        '''
+        vlanMapList = []
+        vlanMapFileName = _InterfacePath + intf + "/brport/vlans"
+        try:
+            for line in open(vlanMapFileName):
+                vlanMapList.append(int(line.strip(),0))
+        except IOError:
+            vlanMapList = []
+        return vlanMapList
+
+    def GetMembersOfVlan(self, vlanId):
+        '''
+        Returns a list of interface names which are members of the specified
+        VLAN ID.
+        '''
+        try:
+            bridgeStr = subprocess.check_output(["/bin/bridge", "vlan", "show", "vlan", "%d" % (vlanId,)])
+        except subprocess.CalledProcessError as e:
+            bridgeStr = ""
+        ifs = [intf for line in bridgeStr.splitlines()[1:] for intf in line.strip().split()]
+        return ifs
+
+
+    #
+    #   Bond utility routines
+    #
+    def isBondName(self, bondName):
+        '''
+        Determine if the argument passed in is the name of a bond
+        '''
+        return os.path.isdir(_InterfacePath + bondName + "/bonding")
+
+    def isBondMember(self, bondMemberName):
+        '''
+        Determines if the specified interface is a member of a bond.
+        '''
+        return os.path.islink(_InterfacePath + bondMemberName + "/master")
+
+    def GetBondOfMember(self, bondMemberName):
+        '''
+        Returns the name of the bond of which the specified interface is a member.
+        '''
+        try:
+            bondName = os.path.basename(os.readlink(_InterfacePath + bondMemberName + "/master"))
+        except:
+            bondName = None
+        return bondName
+
+    def GetMembersOfBond(self, bondName):
+        '''
+        Returns a list of the interfaces which are members fo the specified bond.
+        '''
+        bondMembers = []
+        if self.isBondName(bondName):
+            try:
+                for line in open(_InterfacePath + bondName + "/bonding/slaves"):
+                    bondMembers.extend(line.strip().split())
+            except IOError:
+                bondMembers = []
+        return bondMembers
+
+    def GetBondMode(self, bondName):
+        '''
+        Returns a tuple which is the mode of a bond. The first member is the
+        string representation of the mode and the second member is integer
+        mode value.
+        '''
+        bondMode = ("", -1)
+        if self.isBondName(bondName):
+            try:
+                for line in open(_InterfacePath + bondName + "/bonding/mode"):
+                    (modeStr, modeInt) = line.strip().split()
+                    bondMode = (modeStr, int(modeInt))
+            except IOError:
+                bondMode = ("", -1)
+        return bondMode
+
+    def GetIntfBondNames(self, intfName):
+        '''
+        Given the name of an interface, returns the name of the bond on that
+        interface, or [] if there is no bond. If the interface is a bond,
+        then simply return that name. If the interface is a bond member then
+        return the interface's "master". And if the interface is a VLAN sub-
+        interface of a bond, then return the master of the subinterface. And
+        if the interface is a VLAN sub-interface of a bridge, then return all
+        bonds in the bridge which are part of the same VLAN.
+        '''
+        bondNames = []
+        if self.isBondName(intfName):
+            bondNames = [intfName]
+        elif self.isBondMember(intfName):
+            bondNames = [self.GetBondOfMember(intfName)]
+        elif self.isSubIfName(intfName) and self.isBondName(self.GetMasterOfSubIf(intfName)):
+            bondNames = [self.GetMasterOfSubIf(intfName)]
+        elif self.isSubIfName(intfName) and self.isBridgeName(self.GetMasterOfSubIf(intfName)):
+            vlanId = self.GetVlanIdOfSubIf(intfName)
+            brName = self.GetMasterOfSubIf(intfName)
+            brifs = set(self.GetMembersOfBridge(brName))
+            vlanifs = set(self.GetMembersOfVlan(vlanId))
+            bondNames = [i for i in brifs & vlanifs if self.isBondName(i)]
+        return bondNames
+
+    def GetAllBonds(self, excludeIfs=[]):
+        bonds = []
+        try:
+            for line in open(_InterfacePath + "bonding_masters"):
+                bonds.extend(line.strip().split())
+        except IOError:
+            bonds = []
+
+        excludeBonds = []
+        for excludeIf in excludeIfs:
+            excludeBonds = self.GetIntfBondNames(excludeIf)
+            for excludeBond in excludeBonds:
+                bonds.remove(excludeBond)
+        return bonds
+
+    def GetAllClagBonds(self, excludeIfs=[]):
+        bonds = self.GetAllBonds(excludeIfs)
+        clagBonds = [bond for bond in bonds if Parser.GetBondClagId(bond) or Parser.args.forceDynamic]
+        return clagBonds
+
+    def SetBondsSysMac(self, sys_mac, bonds, excludeIfs=[]):
+        for bond in bonds:
+            if bond not in excludeIfs:
+                sys_mac_file = _InterfacePath + bond + "/bonding/ad_sys_mac_addr"
+                if os.path.isfile(sys_mac_file) and os.access(sys_mac_file, os.W_OK) and self.GetBondMode(bond)[1] == 4:
+                    try:
+                        with open(sys_mac_file, "w") as f:
+                            f.write(sys_mac)
+                    except IOError:
+                        pass
+
+    def SetAllClagBondsSysMac(self, sys_mac, excludeIfs=[]):
+        bonds = self.GetAllClagBonds(excludeIfs)
+        self.SetBondsSysMac(sys_mac, bonds, excludeIfs)
+
+    def GetBondSysMac(self, bond):
+        sysMac = None
+        sys_mac_file = _InterfacePath + bond + "/bonding/ad_sys_mac_addr"
+        if os.path.isfile(sys_mac_file):
+            try:
+                with open(sys_mac_file) as f:
+                    sysMac = f.readline().strip()
+            except IOError:
+                sysMac = None
+        return sysMac
+
+    def SetBondsLacpFallback(self, enable, bonds, excludeIfs=[]):
+        new_enable = "%d" % (enable,)
+        for bond in bonds:
+            if bond not in excludeIfs:
+                fallback_file = _InterfacePath + bond + "/bonding/lacp_bypass_active"
+                if os.path.isfile(fallback_file) and os.access(fallback_file, os.W_OK) and self.GetBondMode(bond)[1] == 4:
+                    try:
+                        with open(fallback_file, "r+") as f:
+                            cur_enable = f.readline().strip()
+                            if cur_enable != new_enable:
+                                f.write(new_enable)
+                    except IOError:
+                        pass
+
+    def SetAllBondsLacpFallback(self, enable, excludeIfs=[]):
+        bonds = self.GetAllBonds(excludeIfs)
+        self.SetBondsLacpFallback(enable, bonds, excludeIfs)
+
+    def GetBondPartnerMac(self, bond):
+        partnerMac = None
+        partner_mac_file = _InterfacePath + bond + "/bonding/ad_partner_mac"
+        if os.path.isfile(partner_mac_file):
+            try:
+                with open(partner_mac_file) as f:
+                    partnerMac = f.readline().strip()
+            except IOError:
+                partnerMac = None
+        return partnerMac
+
+
+    #
+    #   Dual Connected Interfaces - Sort of specific to CLAG
+    #
+    def GetDualIfs(self):
+        self.dualIfsLock.acquire()
+        dualIfs = copy.deepcopy(self.dualIfs)
+        self.dualIfsLock.release()
+        return dualIfs
+
+    def SetDualIfs(self, dualIfs):
+        self.dualIfsLock.acquire()
+        self.dualIfs = copy.deepcopy(dualIfs)
+        self.dualIfsLock.release()
+
+    def isDualIf(self, intf):
+        self.dualIfsLock.acquire()
+        isDual = intf in self.dualIfs
+        self.dualIfsLock.release()
+        return isDual
+
+    def SetPeerAlive(self, alive):
+        self.peerAlive = alive
+
+    def isPeerAlive(self):
+        return self.peerAlive
+
+
+    #
+    #   Other interface utility routines
+    #
+    def isPortName(self, portName):
+        '''
+        Determine if the argument passed in is the name is a "base" interface
+        (not a bond, VLAN subinterface, nor bridge)
+        '''
+        return ( os.path.isdir(_InterfacePath + portName) and  
+                 not self.isBondName(portName) and
+                 not self.isSubIfName(portName) and 
+                 not self.isBridgeName(portName) )
+
+    def isIfName(self, ifName):
+        '''
+        Determine if the argument passed in is the name of an interface
+        '''
+        return os.path.isdir(_InterfacePath + ifName)
+
+    def GetIpAddress(self, ifName):
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        ifreq = struct.pack('16sH14s', ifName, socket.AF_INET, '\x00'*14)
+        try:
+            res = fcntl.ioctl(s.fileno(), 0x8915, ifreq)
+        except:
+            return None
+        ip = struct.unpack('16sH2x4s8x', res)[2]
+        return socket.inet_ntoa(ip)
+
+    def GetBaseInterfaces(self, ifName):
+        '''
+        Given an interface, returns an unordered set of "base" interfaces which
+        are controlled by that interface. A "base" interface is one which does
+        not control other (lower) interfaces. Specifically:
+           1. For bridges this means the "base" interface(s) of all bridge 
+              member interface(s).
+           2. For bonds, this means the "base" interface(s) of all enslaved
+              interface(s).
+           3. For VLAN sub-interfaces, this means the "base" interface(s) of
+              the interface from which the VLAN was created.
+           4. All other interfaces are base interfaces.
+        '''
+        if self.isBridgeName(ifName):
+            baseIfs = set()
+            for bintf in self.GetMembersOfBridge(ifName):
+                baseIfs |= self.GetBaseInterfaces(bintf)
+            return baseIfs
+        elif self.isBondName(ifName):
+            baseIfs = set()
+            for bintf in self.GetMembersOfBond(ifName):
+                baseIfs |= self.GetBaseInterfaces(bintf)
+            return baseIfs
+        elif self.isSubIfName(ifName):
+            baseIfs = set()
+            for bintf in self.GetLogicalMastersOfSubIf(ifName):
+                baseIfs |= self.GetBaseInterfaces(bintf)
+            return baseIfs
+        else:
+            return {ifName}
+
+    def GetIfMac(self, ifName):
+        '''
+        Given an interface name, return the MAC address of that interface.
+        '''
+        if self.isIfName(ifName):
+            if os.path.isfile(_InterfacePath + ifName + "/address"):
+                try:
+                    for line in open(_InterfacePath + ifName + "/address"):
+                        return line.strip()
+                except IOError:
+                    pass
+        return None
+
+    def GetOperState(self, ifName):
+        '''
+        Given an interface name, return the operational state
+        '''
+        if self.isIfName(ifName):
+            if os.path.isfile(_InterfacePath + ifName + "/operstate"):
+                try:
+                    for line in open(_InterfacePath + ifName + "/operstate"):
+                        return line.strip()
+                except IOError:
+                    pass
+        return "unknown"
+
+
+#-------------------------------------------------------------------------------
+#
+#   Broadcom switching ASIC interface routines
+#
+#-------------------------------------------------------------------------------
+
+# firebolt3: 56538, Triumph2: 56634, Triumph3: 56644
+_gig_chips = ['56538', '56634', '56644']
+
+# Egress block mask tables are different on the 1G platforms. 
+# BcmOneGigEgressMask is for programming these tables. BcmDefEgressMask is used
+# on all other chips (Td, T+, T2 etc).
+class BcmOneGigEgressMask:
+    def __init__(self, Bcm):
+        self.Bcm = Bcm
+        self.peerLinkTrunkId = -1
+        self.curEgrMask = 0
+
+    def getBondMemberTrunkId(self, mbr):
+        '''
+        Gets the BCM trunk id using a bond slave name
+        '''
+        trunkInfoStr = self.Bcm.run("trunk show", restart=True, verbose=False)
+        pat = re.compile('trunk (?P<trunkId>\d+): \(front panel,.*?' + mbr)
+        obj = pat.search(trunkInfoStr)
+        return int(obj.group('trunkId')) if obj else -1
+
+    def getAllTrunkIds(self):
+        '''
+        Gets all BCM trunk ids
+        '''
+        trunkInfoStr = self.Bcm.run("trunk show")
+        pat = re.compile('trunk (?P<trunkId>\d+): \(front panel,')
+        trunks = pat.findall(trunkInfoStr)
+        Log.log_debug(Log._LOG_DEBUG_BCM, "all trunks:")
+        for trunk in trunks:
+            Log.log_debug(Log._LOG_DEBUG_BCM, "%s" % trunk)
+        trunks = list(map(int, trunks))
+        return trunks
+
+    def getPeerLinkTrunkId(self):
+        '''
+        Gets the BCM trunk id associated with the peer bond
+        '''
+        peerLinkTrunkId = -1
+        for basePeerIf in Intf.GetBaseInterfaces(Parser.args.peerIf):
+            peerBcmName = self.Bcm.nameMap.get(basePeerIf)
+            if peerBcmName:
+                peerLinkTrunkId = self.getBondMemberTrunkId(peerBcmName)
+                if peerLinkTrunkId != -1:
+                    break
+        return peerLinkTrunkId
+
+    def setTrunkEgressMask(self, trunkId, egrMask):
+        if trunkId != -1:
+            self.Bcm.run("mod port_trunk_egress %d 1 trunk_egress_mask=0x%x" % (trunkId, egrMask))
+            Log.log_debug(Log._LOG_DEBUG_BCM, 
+                "Wrote 0x%x to EGR_MASK for trunk %d" % (egrMask, trunkId))
+
+    def setPeerEgressMask(self, egrMask):
+        '''
+        Sets the egress port block mask for the peer link
+        '''
+        # set the local cache to the right value even if hw is not ready.
+        # refreshPeerLinkInfo will take care of the hw setting later
+        self.curEgrMask = egrMask
+
+        if self.peerLinkTrunkId == -1:
+            self.peerLinkTrunkId = self.getPeerLinkTrunkId()
+            if self.peerLinkTrunkId != -1:
+                Log.log_debug(Log._LOG_DEBUG_BCM, "set peer link trunk %d" % self.peerLinkTrunkId)
+            
+        self.setTrunkEgressMask(self.peerLinkTrunkId, egrMask)
+
+    def getBcmEgrMask(self, trunkId):
+        '''
+        Reads the egress mask from BCM
+        '''
+        egrMaskStr = self.Bcm.run('dump port_trunk_egress %d' % trunkId, restart=True, verbose=False)
+        pat=re.compile('TRUNK_EGRESS_MASK=(?P<egrMask>\S+),\S+')
+        obj=pat.search(egrMaskStr)
+        return int(obj.group('egrMask'), 16) if obj else -1
+
+    def refreshPeerLinkInfo(self, newEgrMask):
+        '''
+        Checks if the trunkId or the egrMask has fallen out of sync (between
+        clagd and bcm) and resyncs if needed 
+        '''
+        # Handle changes to the CLAG bonds' members
+        if self.curEgrMask != newEgrMask:
+            self.setPeerEgressMask(newEgrMask)
+
+        # Handle changes to the peer bond members
+        if self.peerLinkTrunkId == -1 and not self.curEgrMask:
+            return
+
+        trunkId = self.getPeerLinkTrunkId()
+        if trunkId != self.peerLinkTrunkId:
+            Log.log_debug(Log._LOG_DEBUG_BCM, "peer link trunk change from %d to %d" % (self.peerLinkTrunkId, trunkId))
+            self.setTrunkEgressMask(self.peerLinkTrunkId, 0)
+            self.peerLinkTrunkId = trunkId
+            self.setTrunkEgressMask(self.peerLinkTrunkId, self.curEgrMask)
+        elif self.peerLinkTrunkId != -1:
+            # Even if the trunkid is the same the egress-mask could have 
+            # cleared by the sdk (typically happens on trunk delete).
+            bcmEgrMask = self.getBcmEgrMask(self.peerLinkTrunkId)
+            if bcmEgrMask != -1 and bcmEgrMask != self.curEgrMask:
+                Log.log_debug(Log._LOG_DEBUG_BCM, "peer trunk %d egrMask 0x%x out of sync with hw 0x%x" % (self.peerLinkTrunkId, self.curEgrMask, bcmEgrMask))
+                self.setTrunkEgressMask(self.peerLinkTrunkId, self.curEgrMask)
+
+    def flushPeerLinkInfo(self):
+        '''
+        Clears local cache. This will trigger a remap of the BCM trunk id
+        on the next attempt to set the egress mask. 
+        '''
+        Log.log_debug(Log._LOG_DEBUG_BCM, 
+                "Flush peer link egrMask 0x%x for port %d" % (self.curEgrMask, self.peerLinkTrunkId))
+        self.peerLinkTrunkId = -1
+        self.curEgrMask = 0
+
+    def clearAllEgressMask(self):
+        '''
+        Clears the BCM egrMask for active trunks
+        '''
+        trunkIds = self.getAllTrunkIds()
+        for trunkId in trunkIds:
+            self.setTrunkEgressMask(trunkId, 0)
+        
+class BcmDefEgressMask:
+    def __init__(self, Bcm):
+        self.Bcm = Bcm
+        self.peerLinkBaseIfs = set()
+        self.curEgrMask = 0
+
+    def setPeerBaseIfEgressMask(self, basePeerIf, egrMask):
+        peerBcmName = self.Bcm.nameMap.get(basePeerIf)
+        peerBcmPort = self.Bcm.portMap.get(peerBcmName)
+
+        if not peerBcmPort or peerBcmPort == 0:
+            return
+
+        # Prevent or allow forwarding from the peer interface to the dualIfs
+        self.Bcm.run("modify EGR_MASK %d 1 EGRESS_MASK=0x%x" % (peerBcmPort, egrMask))
+        Log.log_debug(Log._LOG_DEBUG_BCM, 
+            "Wrote 0x%x to EGR_MASK for port %s" % (egrMask, basePeerIf))
+
+    def setPeerEgressMask(self, egrMask):
+        # Setup the cache for later use (see refreshPeerLinkInfo)
+        self.curEgrMask = egrMask
+    
+        # This api shouldn't need to change the set of baseIfs (doing that
+        # can leave old baseIfs with a stale egress block mask). We update it in
+        # the specific case when the peer link somes up (first slave is added)
+        # and is just an optimization to reduce the window of no-block-mask.
+        if not self.peerLinkBaseIfs:
+            self.peerLinkBaseIfs = Intf.GetBaseInterfaces(Parser.args.peerIf)
+
+        # For each swp port of the peer interface
+        for basePeerIf in self.peerLinkBaseIfs:
+            self.setPeerBaseIfEgressMask(basePeerIf, egrMask)
+
+    def refreshPeerLinkInfo(self, newEgrMask):
+        # Handle changes to the CLAG bonds' members
+        if self.curEgrMask != newEgrMask:
+            self.setPeerEgressMask(newEgrMask)
+
+        # Handle changes to the peer bond members
+        newBaseIfs = Intf.GetBaseInterfaces(Parser.args.peerIf)
+        addBaseIfs = newBaseIfs - self.peerLinkBaseIfs
+        delBaseIfs = self.peerLinkBaseIfs - newBaseIfs
+        for baseIf in addBaseIfs:
+            self.setPeerBaseIfEgressMask(baseIf, self.curEgrMask)
+            self.peerLinkBaseIfs.add(baseIf)
+        for baseIf in delBaseIfs:
+            self.setPeerBaseIfEgressMask(baseIf, 0)
+            self.peerLinkBaseIfs.remove(baseIf)
+
+
+    def flushPeerLinkInfo(self):
+        pass
+
+    def clearAllEgressMask(self):
+        pass
+
+class BcmSupport(bcmshell.bcmshell):
+
+    def __init__(self, initial=True):
+        super(BcmSupport, self).__init__()
+
+        self.nameMap = {}
+        self.portMap = {}
+
+        # Make sure switchd is up and able to service bcm commands
+        endTime = time.time() + Parser.args.switchdReadyTimeout
+        while (not os.path.isfile(_SwitchdReadyFile)) and time.time() < endTime:
+            time.sleep(1)
+
+        if not os.path.isfile(_SwitchdReadyFile):
+            Log.log_error("Unable to connect with switchd. Is switchd running?")
+            if initial:
+                do_exit(-1)
+            else:
+                Daemon.SignalAllThreadsToStop()
+                return
+
+        # Create a map between Linux port names (swp2) and Broadcom port names (xe3)
+        try:
+            for line in open(_PortTabFile):
+                portTabFields = line.strip().split(None, 3)
+                if len(portTabFields) == 4 and '#' not in portTabFields[0]:
+                    self.nameMap[portTabFields[0]] = portTabFields[1]
+        except IOError:
+            self.nameMap = {}
+
+        Log.log_debug(Log._LOG_DEBUG_BCM, "%15s   %15s" % ("Linux Name", "BCM Name"))
+        for name in self.nameMap:
+            Log.log_debug(Log._LOG_DEBUG_BCM, "%15s   %15s" % (name, self.nameMap[name]))
+
+        # Create a map between Broadcom port names (xe2) and port numbers (17)
+        phyInfoStr = self.run("phy info", restart=False)
+        for phyInfoLine in phyInfoStr.splitlines():
+            phyInfoFields = re.split('\(\s*|\)\s*', phyInfoLine)
+            if len(phyInfoFields) == 3:
+                self.portMap[phyInfoFields[0].strip()] = int(phyInfoFields[1].strip())
+
+        Log.log_debug(Log._LOG_DEBUG_BCM, "%15s   %15s" % ("BCM Name", "Port Num"))
+        for name in self.portMap:
+            Log.log_debug(Log._LOG_DEBUG_BCM, "%15s   %15s" % (name, self.portMap[name]))
+
+        # Init chip specific egress mask parameters
+        unitStr = self.run('show unit')
+        pat = re.compile('Unit \d+ chip BCM(?P<chipId>\d+)')
+        obj = pat.match(unitStr);
+        self.chipId = obj.group('chipId') if obj else 'def'
+
+        if self.chipId in _gig_chips:
+            Log.log_debug(Log._LOG_DEBUG_BCM, "1G chip id %s" % self.chipId)
+            self.em = BcmOneGigEgressMask(self)
+        else:
+            Log.log_debug(Log._LOG_DEBUG_BCM, "non-1G chip")
+            self.em = BcmDefEgressMask(self)
+
+        # Initialize egress mask - this is to take care of cases where clagd
+        # did not exit gracefully
+        self.em.clearAllEgressMask()
+
+    def run(self, cmd, restart=True, verbose=True):
+        try:
+            if verbose:
+                Log.log_debug(Log._LOG_DEBUG_BCM, "Executing BCM command: %s" % (cmd,))
+            return super(BcmSupport, self).run(cmd)
+        except:
+            Log.log_error("BcmSupport has errored")
+
+            if restart:
+                Log.log_error("Re-establishing connection to switchd.")
+                self.__init__(initial=False)
+
+                if not keep_going:
+                    return "0"
+
+                Log.log_error("Re-programming chip")
+                if LacpSync is not None:
+                    LacpSync.SetOurLacpDB({})
+
+                Log.log_debug(Log._LOG_DEBUG_BCM, "Re-Executing BCM command: %s" % (cmd,))
+                return self.run(cmd, restart=False)
+            else:
+                Daemon.SignalAllThreadsToStop()
+                return "0"
+
+
+#-------------------------------------------------------------------------------
+#
+#   The init code
+#
+#-------------------------------------------------------------------------------
+
+def ClagInit():
+    # Create a log for our output
+    global Log
+    Log = Logger()
+
+    Log.log("Beginning execution of clagd version %s" % (ClagParser._ClagVersion,))
+    Log.log("Invoked with: " + " ".join(sys.argv))
+
+    # Create the daemon
+    global Daemon
+    Daemon = ClagDaemon()
+
+    # Interface utility routines
+    global Intf
+    Intf = IntfSupport()
+
+    # Parse the command line parameters
+    global Parser
+    Parser = ClagParser()
+    Parser.ParseCmdLine()
+    Parser.DumpParameters()
+
+    # Make sure script is invoked with root privledges
+    if os.getuid() != 0:
+        Log.log_error("You must be root to run this command.")
+        print "You must be root to run this command."
+        sys.exit(-1)
+
+
+#-------------------------------------------------------------------------------
+#
+#   The main runtime code
+#
+#-------------------------------------------------------------------------------
+
+def ClagRun():
+    Daemon.start()
+
+    # Perform operations based on the command line parameter settings
+    Log.log("Role is now %s" % (Parser.clagRole,))
+    Log.setQuiet(Parser.args.quiet)
+    Log.setDebug(Parser.args.debug)
+    Log.setVerbose(Parser.args.verbose)
+    Log.setLogfile(Parser.args.log)
+    Parser.clagId[0] = Parser.args.priority
+    Parser.clagId[1] = Intf.GetIfMac(Parser.args.peerIf)
+    Parser.currLacpPoll = Parser.getCfgLacpPoll()
+    Intf.SetAllBondsLacpFallback(Parser.clagRole == ClagParser._ROLE_PRIMARY, [Parser.args.peerIf])
+    ConfigurePeerLearning(True)
+
+    # Broadcom ASIC Interface
+    if not Parser.args.vm:
+        global Bcm
+        Bcm = BcmSupport()
+
+    global Cmd
+    global LacpSync
+    FdbSync  = clag.fdbsync.fdbsync(Daemon, Intf, Parser, Log, peerSendQueue)
+    MdbSync  = clag.mdbsync.mdbsync(Daemon, Intf, Parser, Log)
+    VlanSync = clag.vlansync.vlansync(Intf, Parser, Log)
+    LacpSync = clag.lacpsync.lacpsync(Daemon, Intf, Parser, Log, Bcm)
+    Cmd      = clag.cmdsrv.cmdsrv(Daemon, Intf, Parser, Log, LacpSync, FdbSync, MdbSync, VlanSync)
+    LacpSync.Cmd = Cmd
+
+    global DataSyncs
+    DataSyncs = [LacpSync, FdbSync, MdbSync, VlanSync]
+    LacpSync.DataSyncs = DataSyncs
+
+    # Create the threads which do the work
+    global Threads
+    for threadName in Threads:
+        Threads[threadName][1] = threading.Thread(None, Threads[threadName][0], threadName)
+        Threads[threadName][1].daemon = True
+
+    # Start the threads
+    for threadName in Threads:
+        Threads[threadName][1].start()
+
+    # Take the day off
+    while not stopEvent.wait(60*60*24):
+        pass
+
+
+#-------------------------------------------------------------------------------
+#
+#   Main program entry point
+#
+#-------------------------------------------------------------------------------
+
+def main():
+    status = 0
+    try:
+        ClagRun()
+        status = 1
+    except RuntimeError, e:
+        if Log:
+            Log.log_error(str(e))
+        else:
+            print str(e)
+        status = 2
+    except KeyboardInterrupt:
+        pass
+    except Exception:
+        (exc_type, exc_value, exc_traceback) = sys.exc_info()
+        err = "".join(traceback.format_exception(exc_type, exc_value,
+                                                 exc_traceback))
+        if "release unlocked lock" not in err:
+           if Log:
+               Log.log_error("unhandled exception: %s" % (err,))
+           else:
+               print "unhandled exception: %s" % (err,)
+           status = 3
+    do_exit(status)
+
+
+#-------------------------------------------------------------------------------
+#
+#   Are we being executed or imported?
+#
+#-------------------------------------------------------------------------------
+
+if __name__ == '__main__':
+
+    ClagInit()
+
+    if Parser.args.daemon:
+        context = daemon.DaemonContext()
+        context.signal_map = {
+            signal.SIGHUP:  signal_handler,
+            signal.SIGTERM: signal_handler
+        }
+        context.open()
+        with context:
+            main()
+    else:
+        signal.signal(signal.SIGHUP, signal_handler)
+        signal.signal(signal.SIGTERM, signal_handler)
+        main()
+

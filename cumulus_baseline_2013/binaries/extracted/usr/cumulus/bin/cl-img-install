@@ -1,0 +1,310 @@
+#!/bin/sh
+
+##
+## Copyright 2012, Cumulus Networks Inc.
+##
+## Install Cumulus image into specified image slot.
+##
+
+help_brief="[-f] [-n] [-e] [-s] [-u] [-i image number] <image path>"
+help_summary="This command installs an image file into an image slot."
+help_args=$(cat <<EOF
+-i
+	[Optional] - Image slot number, either 1 or 2.  If not
+	specified the image is installed into the inactive image slot.
+
+-e
+	Install persistent environment variables.  By default environment
+	variables are not installed.
+
+-f 
+        Force the operation.  Assumes "yes" to any questions the
+        script might ask.
+
+-n
+        Dry run.  Show what would happen, but do not actually install
+        anything.
+
+-s
+        Select.  Select the installed image to run on reboot.
+
+-u
+        (Experimental) Upgrade, as opposed to install new. (Default: install new)
+        This will enable -s automatically.
+EOF
+)
+help_body=$(cat <<EOF
+The image path can take the following forms:
+
+  local file path (absolute or relative path OK)
+  http://server/path/...
+  https://server/path/...
+  scp://user@server/path/...
+  ftp://server/path/... [anonymous only]
+
+SEE ALSO
+        cl-img-select, cl-img-clear-overlay, cl-img-pkg
+
+EOF
+)
+
+. /usr/share/cumulus/img/functions
+cl_check_env root-priv
+
+url=
+force=n
+export dry_run=n
+env=n
+select_img=n
+cl_add_arg "enfsui:"
+while getopts "${cl_args}" a ; do
+    case $a in
+        i)
+            image=$OPTARG
+            ;;
+        f)
+            force=y
+            ;;
+        e)
+            env=y
+            ;;
+        n)
+            dry_run=y
+            _log_msg "Dry run.  No files will be updated.\n"
+            ;;
+        s)
+            select_img=y
+            ;;
+        u)
+            upgrade=y
+            select_img=y
+            _log_msg "Upgrade enables -s option automatically.\n"
+            ;;
+    esac
+done
+
+cl_get_args "$@"
+shift $cl_arg_shift
+
+url=$1
+
+if [ -z "$image" ] ; then
+    if [ "$active" = "nfs" ] ; then
+        # Install into alternate image slot.
+        image=$alt_image
+    else
+        # Install into inactive image slot.
+        image=$inactive
+    fi
+    _log_msg "Defaulting to image slot $image for install.\n"
+fi
+
+cl_check_image $image
+
+if [ "$retval" != "0" ] ; then
+    cl_usage_short
+    exit 1
+fi
+
+# Sanitize the requested image slot
+if [ "$active" = "$image" ] ; then
+    log_failure_msg "Unable to update active image $image."
+    _log_msg "Only the inactive image is available for update.\n"
+    _log_msg "Currently the inactive image is $inactive.\n"
+    exit 1
+fi
+
+if [ -z "$url" ] ; then
+    log_failure_msg "No image path specified"
+    cl_usage_short
+    exit 1
+fi
+
+cur_wd=$(pwd)
+tmp_dir=$(mktemp -d)
+mount -t tmpfs tmpfs $tmp_dir
+clean_up()
+{
+    cd $cur_wd
+    umount $tmp_dir
+    /bin/rm -rf $tmp_dir
+    exit $1
+}
+
+# Sanitize the file URL
+url_type=${url%%:*}
+url_path=${url##*://}
+
+if [ "$url_type" = "$url" ] && [ "$url_path" = "$url" ] ; then
+    # url is for a local file.  could be absolute or relative
+    if [ -r "$url" ] ; then
+        url=$(realpath $url)
+    else
+        log_failure_msg "$url is not a valid local file image path."
+        clean_up 1
+    fi
+fi
+
+cd $tmp_dir
+
+install_file=
+case $url_type in
+    http | ftp)
+        install_file=$(basename $url_path)
+        if [ "$verbose" != "y" ] ; then
+            wget_flags="-q"
+        fi
+        cl_run "wget $wget_flags $url" || {
+            log_failure_msg "Could not download image file $url."
+            clean_up 1
+        }
+        log_success_msg "download complete."
+        ;;
+    https)
+        install_file=$(basename $url_path)
+        if [ "$verbose" != "y" ] ; then
+            wget_flags="-q"
+        fi
+        cl_run "wget --no-check-certificate $wget_flags $url" || {
+            log_failure_msg "Could not download image file $url."
+            clean_up 1
+        }
+        log_success_msg "download complete."
+        ;;
+    tftp)
+        log_failure_msg "TFTP download is not supported."
+        _log_msg "Use http or scp download instead.\n"
+        clean_up 1
+        ;;
+    scp)
+        server=${url_path%%/*}
+        # split on the /, but don't forget to put it back
+        path=/${url_path#*/}
+        install_file=$(basename $path)
+        if [ "$verbose" = "y" ] ; then
+            scp_flags="-v"
+        fi
+        cl_run "scp $scp_flags ${server}:$path $install_file" || {
+            log_failure_msg "Could not download image file $url."
+            clean_up 1
+        }
+        log_success_msg "scp download complete."
+        ;;
+    *)
+        # assume it's a local path file
+        if [ -r "$url" ] ; then
+            cp "$url" .
+            install_file=$(basename "$url")
+            if [ -r "${url}.sha1" ] ; then
+                cp "${url}.sha1" .
+            fi
+        else
+            log_failure_msg "$url is not a valid local file image path."
+            clean_up 1
+        fi
+        if [ "$verbose" = "y" ] ; then
+            _log_msg "Using image file $install_file.\n"
+        fi
+        ;;
+esac
+
+[ "$verbose" = "y" ] && export verbose=y
+
+# check for old style image, which was an ar archive.
+dd if=$install_file bs=16 count=1 2>&1 | hexdump -C | grep -q '<arch>' && {
+    log_failure_msg "Old image format is not supported."
+    clean_up 1
+}
+
+log_pre=
+if [ "$dry_run" = "y" ] ; then
+    log_pre="Dry run: "
+fi
+
+_log_msg "${log_pre}Dumping image info from $install_file ...\n"
+sh $install_file info || {
+    log_failure_msg "Dumping image info failed."
+    log_failure_msg "Problems validating image file $url."
+    clean_up 1
+}
+_log_msg "${log_pre}\n"
+
+if [ "$upgrade" = "y" ] ; then
+    ARCH=$(uname -m)
+    if [ "$ARCH" != "ppc" ]; then
+        _log_msg "Upgrade not supported on ${ARCH}.\n"
+        clean_up 1 
+    fi
+    avail_disk_space=$(df -k / | tail -n 1 | awk '{print $4}')
+    slot_takes_space=$(du -ks /mnt/root-rw/config${active}| awk '{print $1}')
+    should_leave=$(( avail_disk_space * 5 / 100 )) #leave 5%
+    diff=$(( avail_disk_space - slot_takes_space ))
+    if [ $diff -lt $should_leave ]; then
+       _log_msg "Not enough disk space.\n"
+       _log_msg "Clean up to leave at least 5%% of total disk space.\n"
+       clean_up 1
+    fi
+    _log_msg "#######################################################\n"
+    _log_msg "# Warning!!! This is an experimental feature.         #\n"
+    _log_msg "# It may result in an unexpected behaviour.           #\n"
+    _log_msg "#######################################################\n"
+    cl_prompt_yes_no "${log_pre}Upgrade?" || clean_up 1
+
+    cur_ver=$(cl_slot_version_get $active)
+    cur_ver="$(echo $cur_ver | awk -F- '{print $1$3}')"
+    new_ver=$(sh $install_file info | grep OS-Release | awk '{print $2}')
+    new_ver="$(echo $new_ver | awk -F- '{print $1$3}')"
+    if [ "$cur_ver" \> "$new_ver" ]; then
+        _log_msg "${log_pre}Can not downgrade."
+        _log_msg "${log_pre}Currnet version: ${cur_ver}; new version: ${new_ver}"
+        cl_prompt_yes_no "${log_pre}Should I continue new install" || clean_up 1
+    else
+        if [ "$dry_run" = "n" ] ; then
+            cl_trap_ctrl_c
+            cl_run "fw_setenv -f cl.img_upgrade 1"
+            cl_enable_ctrl_c
+        fi
+    fi
+fi
+
+_log_msg "${log_pre}Current image slot setup:\n"
+cl-img-select
+_log_msg "${log_pre}\n"
+
+_log_msg "${log_pre}About to update image slot $image using:\n$url\n"
+[ "$force" = "y" ] || cl_prompt_yes_no "${log_pre}Are you sure" || clean_up 0
+
+cl_trap_ctrl_c
+sh $install_file install $image || {
+    log_failure_msg "Image installation failed."
+    log_failure_msg "Problems installing image file $url."
+    clean_up 1
+}
+
+if [ "$dry_run" = "n" ] ; then
+    # Invalidate associated overlay read/write file system.
+    cl_clear_overlay $image post-install
+fi
+
+log_success_msg "${log_pre}$url loaded into image slot $image.\n"
+
+if [ "$env" = "y" ] ; then
+    _log_msg "${log_pre}About to update persistent environment variables using:\n$url\n"
+    [ "$force" = "y" ] || cl_prompt_yes_no "${log_pre}Are you sure" || clean_up 0
+    sh $install_file env || {
+        log_failure_msg "Environment variable installation failed."
+        log_failure_msg "Problems installing environment variables using image file $url."
+        clean_up 1
+    }
+fi
+
+if [ "$dry_run" = "n" ] && [ "$select_img" = "y" ]; then
+    # Select the installed image for the next reboot
+    if [ "$force" = "y" ]; then
+	cl-img-select -f $image
+    else
+	cl-img-select $image
+    fi
+fi
+
+clean_up 0

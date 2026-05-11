@@ -1,0 +1,305 @@
+Warning: Permanently added '10.1.1.212' (ECDSA) to the list of known hosts.
+[sudo] password for cumulus: === switchd binary ===
+-rwxr-xr-x 1 root root 31677516 Jan  9  2015 /usr/sbin/switchd
+/usr/sbin/switchd: ELF 32-bit MSB executable, PowerPC or cisco 4500, version 1 (SYSV), dynamically linked (uses shared libs), for GNU/Linux 2.6.26, with unknown capability 0x41000000 = 0x13676e75, with unknown capability 0x10000 = 0xb0401, stripped
+
+=== BCM SDK shared libraries ===
+total 344
+drwxr-xr-x 2 root root    345 Jan  9  2015 .
+drwxr-xr-x 1 root root   4096 Jan  9  2015 ..
+-rwxr-xr-x 1 root root  12439 Jan  9  2015 autoprovision
+-rwxr-xr-x 1 root root   1249 Nov 26  2014 bcmcmd
+-rwxr-xr-x 1 root root   7926 Nov 26  2014 brctl.cl
+-rwxr-xr-x 1 root root   1941 Nov 26  2014 cl-platform
+-rwxr-xr-x 1 root root   5061 Nov 26  2014 datapath-config
+-rwxr-xr-x 1 root root 219359 Dec 24  2014 datapath-update
+-rwxr-xr-x 1 root root   9880 Jan  9  2015 iorw
+-rwxr-xr-x 1 1008 3000  34740 Jan  9  2015 ledasm
+-rwxr-xr-x 1 root root  22099 Nov 26  2014 phy-update
+-rwxr-xr-x 1 root root   1379 Nov 26  2014 portsamp
+-rwxr-xr-x 1 root root   5108 Jan  6  2015 start-stop-daemon.cl
+-rwxr-xr-x 1 root root   2429 Nov 26  2014 start-stop-monitor
+-rwxr-xr-x 1 root root   4815 Nov 26  2014 sysled-mgmt
+-rwxr-xr-x 1 root root     57 Nov 26  2014 tail.cl
+-rwxr-xr-x 1 root root    940 Nov 26  2014 udev-module
+-rwxr-xr-x 1 root root   8010 Dec 12  2014 update-ports
+-rwxr-xr-x 1 root root   6247 Jan  9  2015 ztp-usb
+
+=== BCM chip config files ===
+/etc/bcm.d/datapath/datapath.conf
+/mnt/root-ro/usr/lib/python2.7/dist-packages/cumulus/__chip_config/bcm/datapath.conf
+/mnt/root-rw/config1/etc/bcm.d/datapath/datapath.conf
+/usr/lib/python2.7/dist-packages/cumulus/__chip_config/bcm/datapath.conf
+/etc/bcm.d/datapath/rc.forwarding
+/mnt/root-ro/usr/lib/python2.7/dist-packages/cumulus/__chip_config/bcm/Apollo/rc.forwarding
+/mnt/root-ro/usr/lib/python2.7/dist-packages/cumulus/__chip_config/bcm/Trident/rc.forwarding
+/mnt/root-ro/usr/lib/python2.7/dist-packages/cumulus/__chip_config/bcm/TridentTwo/rc.forwarding
+/mnt/root-ro/usr/lib/python2.7/dist-packages/cumulus/__chip_config/bcm/Triumph/rc.forwarding
+/mnt/root-rw/config1/etc/bcm.d/datapath/rc.forwarding
+/usr/lib/python2.7/dist-packages/cumulus/__chip_config/bcm/Apollo/rc.forwarding
+/usr/lib/python2.7/dist-packages/cumulus/__chip_config/bcm/Trident/rc.forwarding
+/usr/lib/python2.7/dist-packages/cumulus/__chip_config/bcm/TridentTwo/rc.forwarding
+/usr/lib/python2.7/dist-packages/cumulus/__chip_config/bcm/Triumph/rc.forwarding
+/etc/bcm.d/datapath/hw_desc
+/mnt/root-ro/usr/lib/python2.7/dist-packages/cumulus/__chip_config/bcm/Trident/hw_desc
+/mnt/root-ro/usr/lib/python2.7/dist-packages/cumulus/__chip_config/bcm/TridentTwo/hw_desc
+/mnt/root-ro/usr/share/platform-config/cumulus/cumulus_p2020_trident2/etc/bcm.d/hw_desc
+/mnt/root-rw/config1/etc/bcm.d/datapath/hw_desc
+/usr/lib/python2.7/dist-packages/cumulus/__chip_config/bcm/Trident/hw_desc
+/usr/lib/python2.7/dist-packages/cumulus/__chip_config/bcm/TridentTwo/hw_desc
+/usr/share/platform-config/cumulus/cumulus_p2020_trident2/etc/bcm.d/hw_desc
+/mnt/root-ro/usr/lib/python2.7/dist-packages/cumulus/__chip_config/bcm/Apollo/sdk.bcm
+/mnt/root-ro/usr/lib/python2.7/dist-packages/cumulus/__chip_config/bcm/Trident/sdk.bcm
+/mnt/root-ro/usr/lib/python2.7/dist-packages/cumulus/__chip_config/bcm/TridentTwo/sdk.bcm
+/mnt/root-ro/usr/lib/python2.7/dist-packages/cumulus/__chip_config/bcm/Triumph/sdk.bcm
+/usr/lib/python2.7/dist-packages/cumulus/__chip_config/bcm/Apollo/sdk.bcm
+/usr/lib/python2.7/dist-packages/cumulus/__chip_config/bcm/Trident/sdk.bcm
+/usr/lib/python2.7/dist-packages/cumulus/__chip_config/bcm/TridentTwo/sdk.bcm
+/usr/lib/python2.7/dist-packages/cumulus/__chip_config/bcm/Triumph/sdk.bcm
+
+=== PHY firmware blobs ===
+/mnt/root-ro/usr/share/cumulus/phy_ucode/BCM84740-ver-D102.bin
+/mnt/root-ro/usr/share/cumulus/phy_ucode/BCM84754-ver-D102.bin
+/mnt/root-ro/usr/share/cumulus/phy_ucode/BCM8754-ver-0411.bin
+/usr/share/cumulus/phy_ucode/BCM84740-ver-D102.bin
+/usr/share/cumulus/phy_ucode/BCM84754-ver-D102.bin
+/usr/share/cumulus/phy_ucode/BCM8754-ver-0411.bin
+/etc/default/phy_ucode_update
+/etc/init.d/phy_ucode_update
+/mnt/root-ro/etc/init.d/phy_ucode_update
+/mnt/root-ro/usr/share/platform-config/accton/as4600_54t/etc/default/phy_ucode_update
+/mnt/root-ro/usr/share/platform-config/accton/as5610_52x/etc/default/phy_ucode_update
+/mnt/root-ro/usr/share/platform-config/accton/as5712_54x/etc/default/phy_ucode_update
+/mnt/root-ro/usr/share/platform-config/accton/as6700_32x/etc/default/phy_ucode_update
+/mnt/root-ro/usr/share/platform-config/accton/as6701_32x/etc/default/phy_ucode_update
+/mnt/root-ro/usr/share/platform-config/accton/es5652bt1/etc/default/phy_ucode_update
+/mnt/root-ro/usr/share/platform-config/cel/kennisis/etc/default/phy_ucode_update
+/mnt/root-ro/usr/share/platform-config/cel/redstone/etc/default/phy_ucode_update
+/mnt/root-ro/usr/share/platform-config/cel/redstone_xp/etc/default/phy_ucode_update
+/mnt/root-ro/usr/share/platform-config/cel/smallstone/etc/default/phy_ucode_update
+/mnt/root-ro/usr/share/platform-config/cel/smallstone_xp/etc/default/phy_ucode_update
+/mnt/root-ro/usr/share/platform-config/dell/s4000_c2338/etc/default/phy_ucode_update
+/mnt/root-ro/usr/share/platform-config/dell/s6000_s1220/etc/default/phy_ucode_update
+/mnt/root-ro/usr/share/platform-config/dni/c7448n/etc/bcm.d/phy_leds
+/mnt/root-ro/usr/share/platform-config/dni/c7448n/etc/default/phy_ucode_update
+/mnt/root-ro/usr/share/platform-config/dni/et-6448r/etc/default/phy_ucode_update
+/mnt/root-ro/usr/share/platform-config/mlx/sx1400_i73612/etc/default/phy_ucode_update
+/mnt/root-ro/usr/share/platform-config/quanta/lb9/etc/default/phy_ucode_update
+/mnt/root-ro/usr/share/platform-config/quanta/ly2r/etc/default/phy_ucode_update
+/mnt/root-ro/usr/share/platform-config/quanta/ly6_p2020/etc/default/phy_ucode_update
+/mnt/root-ro/usr/share/platform-config/quanta/ly6_rangeley/etc/default/phy_ucode_update
+/mnt/root-ro/usr/share/platform-config/quanta/ly8_rangeley/etc/default/phy_ucode_update
+/mnt/root-ro/usr/share/platform-config/quanta/ly9_rangeley/etc/default/phy_ucode_update
+/mnt/root-rw/config1/etc/default/phy_ucode_update
+/proc/device-tree/soc@ff700000/usb@22000/phy_type
+/usr/share/platform-config/accton/as4600_54t/etc/default/phy_ucode_update
+/usr/share/platform-config/accton/as5610_52x/etc/default/phy_ucode_update
+/usr/share/platform-config/accton/as5712_54x/etc/default/phy_ucode_update
+/usr/share/platform-config/accton/as6700_32x/etc/default/phy_ucode_update
+/usr/share/platform-config/accton/as6701_32x/etc/default/phy_ucode_update
+/usr/share/platform-config/accton/es5652bt1/etc/default/phy_ucode_update
+/usr/share/platform-config/cel/kennisis/etc/default/phy_ucode_update
+/usr/share/platform-config/cel/redstone/etc/default/phy_ucode_update
+/usr/share/platform-config/cel/redstone_xp/etc/default/phy_ucode_update
+/usr/share/platform-config/cel/smallstone/etc/default/phy_ucode_update
+/usr/share/platform-config/cel/smallstone_xp/etc/default/phy_ucode_update
+/usr/share/platform-config/dell/s4000_c2338/etc/default/phy_ucode_update
+/usr/share/platform-config/dell/s6000_s1220/etc/default/phy_ucode_update
+/usr/share/platform-config/dni/c7448n/etc/bcm.d/phy_leds
+/usr/share/platform-config/dni/c7448n/etc/default/phy_ucode_update
+/usr/share/platform-config/dni/et-6448r/etc/default/phy_ucode_update
+/usr/share/platform-config/mlx/sx1400_i73612/etc/default/phy_ucode_update
+/usr/share/platform-config/quanta/lb9/etc/default/phy_ucode_update
+/usr/share/platform-config/quanta/ly2r/etc/default/phy_ucode_update
+/usr/share/platform-config/quanta/ly6_p2020/etc/default/phy_ucode_update
+/usr/share/platform-config/quanta/ly6_rangeley/etc/default/phy_ucode_update
+/usr/share/platform-config/quanta/ly8_rangeley/etc/default/phy_ucode_update
+/usr/share/platform-config/quanta/ly9_rangeley/etc/default/phy_ucode_update
+/etc/default/phy_ucode_update
+/etc/init.d/phy_ucode_update
+/etc/rcS.d/S15phy_ucode_update
+/etc/bcm.d/config.d/10phy-ucode.bcm
+/mnt/root-ro/etc/init.d/phy_ucode_update
+/mnt/root-ro/etc/rcS.d/S15phy_ucode_update
+/mnt/root-ro/usr/share/cumulus/phy_ucode
+/mnt/root-ro/usr/share/platform-config/accton/as4600_54t/etc/default/phy_ucode_update
+/mnt/root-ro/usr/share/platform-config/accton/as5610_52x/etc/default/phy_ucode_update
+/mnt/root-ro/usr/share/platform-config/accton/as5712_54x/etc/default/phy_ucode_update
+/mnt/root-ro/usr/share/platform-config/accton/as6700_32x/etc/default/phy_ucode_update
+/mnt/root-ro/usr/share/platform-config/accton/as6701_32x/etc/default/phy_ucode_update
+/mnt/root-ro/usr/share/platform-config/accton/es5652bt1/etc/default/phy_ucode_update
+/mnt/root-ro/usr/share/platform-config/cel/kennisis/etc/default/phy_ucode_update
+/mnt/root-ro/usr/share/platform-config/cel/redstone/etc/default/phy_ucode_update
+/mnt/root-ro/usr/share/platform-config/cel/redstone_xp/etc/default/phy_ucode_update
+/mnt/root-ro/usr/share/platform-config/cel/smallstone/etc/default/phy_ucode_update
+/mnt/root-ro/usr/share/platform-config/cel/smallstone_xp/etc/default/phy_ucode_update
+/mnt/root-ro/usr/share/platform-config/dell/s4000_c2338/etc/default/phy_ucode_update
+/mnt/root-ro/usr/share/platform-config/dell/s6000_s1220/etc/default/phy_ucode_update
+/mnt/root-ro/usr/share/platform-config/dni/c7448n/etc/default/phy_ucode_update
+/mnt/root-ro/usr/share/platform-config/dni/et-6448r/etc/default/phy_ucode_update
+/mnt/root-ro/usr/share/platform-config/mlx/sx1400_i73612/etc/default/phy_ucode_update
+/mnt/root-ro/usr/share/platform-config/quanta/lb9/etc/default/phy_ucode_update
+/mnt/root-ro/usr/share/platform-config/quanta/ly2r/etc/default/phy_ucode_update
+/mnt/root-ro/usr/share/platform-config/quanta/ly6_p2020/etc/default/phy_ucode_update
+/mnt/root-ro/usr/share/platform-config/quanta/ly6_rangeley/etc/default/phy_ucode_update
+/mnt/root-ro/usr/share/platform-config/quanta/ly8_rangeley/etc/default/phy_ucode_update
+/mnt/root-ro/usr/share/platform-config/quanta/ly9_rangeley/etc/default/phy_ucode_update
+/mnt/root-rw/config1/etc/bcm.d/config.d/10phy-ucode.bcm
+/mnt/root-rw/config1/etc/default/phy_ucode_update
+/usr/share/cumulus/phy_ucode
+/usr/share/platform-config/accton/as4600_54t/etc/default/phy_ucode_update
+/usr/share/platform-config/accton/as5610_52x/etc/default/phy_ucode_update
+/usr/share/platform-config/accton/as5712_54x/etc/default/phy_ucode_update
+/usr/share/platform-config/accton/as6700_32x/etc/default/phy_ucode_update
+/usr/share/platform-config/accton/as6701_32x/etc/default/phy_ucode_update
+/usr/share/platform-config/accton/es5652bt1/etc/default/phy_ucode_update
+/usr/share/platform-config/cel/kennisis/etc/default/phy_ucode_update
+/usr/share/platform-config/cel/redstone/etc/default/phy_ucode_update
+/usr/share/platform-config/cel/redstone_xp/etc/default/phy_ucode_update
+/usr/share/platform-config/cel/smallstone/etc/default/phy_ucode_update
+/usr/share/platform-config/cel/smallstone_xp/etc/default/phy_ucode_update
+/usr/share/platform-config/dell/s4000_c2338/etc/default/phy_ucode_update
+/usr/share/platform-config/dell/s6000_s1220/etc/default/phy_ucode_update
+/usr/share/platform-config/dni/c7448n/etc/default/phy_ucode_update
+/usr/share/platform-config/dni/et-6448r/etc/default/phy_ucode_update
+/usr/share/platform-config/mlx/sx1400_i73612/etc/default/phy_ucode_update
+/usr/share/platform-config/quanta/lb9/etc/default/phy_ucode_update
+/usr/share/platform-config/quanta/ly2r/etc/default/phy_ucode_update
+/usr/share/platform-config/quanta/ly6_p2020/etc/default/phy_ucode_update
+/usr/share/platform-config/quanta/ly6_rangeley/etc/default/phy_ucode_update
+/usr/share/platform-config/quanta/ly8_rangeley/etc/default/phy_ucode_update
+/usr/share/platform-config/quanta/ly9_rangeley/etc/default/phy_ucode_update
+/mnt/root-ro/usr/share/cumulus/phy_ucode/BCM84740-ver-D102.bin
+/usr/share/cumulus/phy_ucode/BCM84740-ver-D102.bin
+
+=== BDE kernel module ===
+/dev/linux-user-bde
+/lib/modules/3.2.60-1+deb7u1+cl2.5/extra/linux-bde-i2c.ko
+/lib/modules/3.2.60-1+deb7u1+cl2.5/extra/linux-bde-tmon.ko
+/lib/modules/3.2.60-1+deb7u1+cl2.5/extra/linux-kernel-bde.ko
+/lib/modules/3.2.60-1+deb7u1+cl2.5/extra/linux-user-bde.ko
+/mnt/root-ro/dev/linux-user-bde
+/mnt/root-ro/lib/modules/3.2.60-1+deb7u1+cl2.5/extra/linux-bde-i2c.ko
+/mnt/root-ro/lib/modules/3.2.60-1+deb7u1+cl2.5/extra/linux-bde-tmon.ko
+/mnt/root-ro/lib/modules/3.2.60-1+deb7u1+cl2.5/extra/linux-kernel-bde.ko
+/mnt/root-ro/lib/modules/3.2.60-1+deb7u1+cl2.5/extra/linux-user-bde.ko
+
+=== related tools binaries ===
+-rwxr-xr-x 1 root root  92161 Jan  9  2015 /usr/sbin/clagd
+-rwxr-xr-x 1 root root 146512 Jan  9  2015 /usr/sbin/lldpd
+-rwxr-xr-x 1 root root 1249 Nov 26  2014 /usr/lib/cumulus/bcmcmd
+Warning: Permanently added '10.1.1.212' (ECDSA) to the list of known hosts.
+[sudo] password for cumulus: === switchd binary and shared libs ===
+-rwxr-xr-x 1 root root 31677516 Jan  9  2015 /usr/sbin/switchd
+/usr/sbin/switchd: ELF 32-bit MSB executable, PowerPC or cisco 4500, version 1 (SYSV), dynamically linked (uses shared libs), for GNU/Linux 2.6.26, with unknown capability 0x41000000 = 0x13676e75, with unknown capability 0x10000 = 0xb0401, stripped
+	linux-vdso32.so.1 =>  (0x00100000)
+	libnl-3.so.200 => /lib/libnl-3.so.200 (0x0ffc4000)
+	libnl-route-3.so.200 => /usr/lib/libnl-route-3.so.200 (0x0ff5a000)
+	libnl-genl-3.so.200 => /lib/libnl-genl-3.so.200 (0x0ff35000)
+	libnet.so.1 => /usr/lib/libnet.so.1 (0x0fefe000)
+	libfuse.so.2 => /lib/powerpc-linux-gnu/libfuse.so.2 (0x0feaa000)
+	librt.so.1 => /lib/powerpc-linux-gnu/librt.so.1 (0x0fe81000)
+	libdl.so.2 => /lib/powerpc-linux-gnu/libdl.so.2 (0x0fe5d000)
+	libpthread.so.0 => /lib/powerpc-linux-gnu/libpthread.so.0 (0x0fe22000)
+	libm.so.6 => /lib/powerpc-linux-gnu/libm.so.6 (0x0fd54000)
+	libc.so.6 => /lib/powerpc-linux-gnu/libc.so.6 (0x0fbba000)
+	/lib/ld.so.1 (0x2022b000)
+
+=== /etc/bcm.d/ directory ===
+total 68
+drwxr-xr-x 4 root root 4096 May 10  2026 .
+drwxr-xr-x 1 root root 4096 Jun  1 12:00 ..
+-rw-r--r-- 1 root root   29 May 10  2026 backend_map
+-rw-r--r-- 1 root root 6054 Jun  1 12:00 config.bcm
+drwxr-xr-x 2 root root 4096 May 10  2026 config.d
+drwxr-xr-x 2 root root 4096 May 10  2026 datapath
+-rw-r--r-- 1 root root 5104 Jun  1 12:00 led0.asm
+-rw-r--r-- 1 root root  784 Jun  1 12:00 led0.hex
+-rw-r--r-- 1 root root 5223 Jun  1 12:00 led1.asm
+-rw-r--r-- 1 root root  784 Jun  1 12:00 led1.hex
+-rw-r--r-- 1 root root  240 Jun  1 12:00 rc.led
+-rw-r--r-- 1 root root  103 Jun  1 12:00 rc.phy
+-rw-r--r-- 1 root root  178 Jun  1 12:00 rc.ports_0
+-rw-r--r-- 1 root root 1522 May 10  2026 rc.soc
+/etc/bcm.d/config.d/:
+total 24
+drwxr-xr-x 2 root root 4096 May 10  2026 .
+drwxr-xr-x 4 root root 4096 May 10  2026 ..
+-rw-r--r-- 1 root root   43 May 10  2026 01config.bcm
+-rw-r--r-- 1 root root 1747 Jun  1 12:00 02sdk.bcm
+-rw-r--r-- 1 root root  158 Jun  1 12:00 10phy-ucode.bcm
+-rw-r--r-- 1 root root 4004 Jun  1 12:00 11ports.bcm
+-rw-r--r-- 1 root root    0 Jun  1 12:00 12portwd.bcm
+
+/etc/bcm.d/datapath/:
+total 24
+drwxr-xr-x 2 root root 4096 May 10  2026 .
+drwxr-xr-x 4 root root 4096 May 10  2026 ..
+-rw-r--r-- 1 root root 4553 Jun  1 12:00 datapath.conf
+-rw-r--r-- 1 root root  340 Jun  1 12:00 hw_desc
+-rw-r--r-- 1 root root 3839 Jun  1 12:00 rc.forwarding
+
+=== BCM auto-generated chip config files ===
+-rw-r--r-- 1 root root 18276 Jun  1 12:00 /var/lib/cumulus/rc.datapath_0
+total 40
+drwxr-xr-x 2 root root  4096 Jun  1 12:00 .
+drwxr-xr-x 1 root root  4096 May 10  2026 ..
+-rw-r--r-- 1 root root   134 Jun  1 12:00 phytab
+-rw-r--r-- 1 root root   900 Jun  1 12:00 porttab
+-rw-r--r-- 1 root root 18276 Jun  1 12:00 rc.datapath_0
+-rw-r--r-- 1 root root  3566 Jun  1 12:00 sfptab
+
+=== all PHY ucode files ===
+total 84
+drwxr-xr-x 2 root root   101 Jan  9  2015 .
+drwxr-xr-x 1 root root  4096 May 10  2026 ..
+-rw-r--r-- 1 root root 32768 Jan  9  2015 BCM84740-ver-D102.bin
+-rw-r--r-- 1 root root 32768 Jan  9  2015 BCM84754-ver-D102.bin
+-rw-r--r-- 1 root root 16384 Jan  9  2015 BCM8754-ver-0411.bin
+
+=== what loads the ucode ===
+#! /bin/sh
+### BEGIN INIT INFO
+# Provides:          phy_ucode_update
+# Required-Start:    $all
+# Required-Stop:
+# X-Start-Before:
+# Default-Start:     S
+# Default-Stop:
+# Short-Description: PHY micro-code update
+# Description:       Cumulus Networks PHY micro-code update
+### END INIT INFO
+
+# Author: Curt Brune <curt@cumulusnetworks.com>
+#
+# Please remove the "Author" lines above and replace them
+# with your own name if you copy and modify this script.
+
+# PATH should only include /usr/* if it runs after the mountnfs.sh script
+PATH=/bin:/usr/bin:/sbin:/usr/sbin:/usr/local/bin:/usr/local/sbin:/usr/cumulus/bin
+DESC="Cumulus Networks PHY micro-code update"
+NAME=phy_ucode_update
+SCRIPTNAME=/etc/init.d/$NAME
+PHY_UPDATE_ENABLE=yes
+
+# Read configuration variable file if it is present
+[ -r /etc/default/$NAME ] && . /etc/default/$NAME
+if [ "$PHY_UPDATE_ENABLE" != "yes" ] ; then
+    exit 0
+fi
+
+case "$1" in
+  start)
+        echo "$DESC"
+        /usr/lib/cumulus/phy-update $PHY_UPDATE_ARGS
+	;;
+  *)
+	echo "Usage: $SCRIPTNAME start" >&2
+	exit 3
+	;;
+esac
+
+:
+
+bash: -c: line 20: syntax error near unexpected token `('
+bash: -c: line 20: `echo === bcm.d config (rc.soc and friends from running tree) ==='

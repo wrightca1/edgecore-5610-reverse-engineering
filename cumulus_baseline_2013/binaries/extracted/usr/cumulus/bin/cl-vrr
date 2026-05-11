@@ -1,0 +1,447 @@
+#!/bin/bash
+
+##
+## Copyright 2014, Cumulus Networks Inc.
+##
+## Configure Virtual Router Redundancy (VRR)
+##
+
+#-------------------------------------------------------------------------------
+#
+#   Global Variables
+#
+#-------------------------------------------------------------------------------
+
+# Script version and executable name
+VRR_SCRIPT_VERSION="2.5.0a"
+base=$(/usr/bin/basename $0)
+
+# Script flags
+help="n"
+verbose="n"
+skipchecks="n"
+remove="n"
+quiet="n"
+cl_args="hvsrq"
+
+# Programs this script uses
+IP="/sbin/ip"
+EGREP="/bin/egrep"
+AWK="/usr/bin/awk"
+CAT="/bin/cat"
+TR="/usr/bin/tr"
+BRIDGE="/bin/bridge"
+
+# Paths to interesting files/directories
+INTERFACE_PATH="/sys/class/net"
+
+
+#-------------------------------------------------------------------------------
+#
+#   Functions
+#
+#-------------------------------------------------------------------------------
+
+#   Message logging functions
+_log_msg()
+{
+    if [ "$quiet" = "y" ]; then return; fi
+    printf "$@"
+}
+
+log_success_msg()
+{
+    _log_msg "Success: $@\n"
+}
+
+log_failure_msg()
+{
+    _log_msg "Failure: $@\n"
+}
+
+log_warning_msg()
+{
+    _log_msg "Warning: $@\n"
+}
+
+log_begin_msg()
+{
+    _log_msg "$@..."
+}
+
+log_end_msg()
+{
+    _log_msg "done.\n"
+}
+
+vrr_usage()
+{
+    help_message=$(${CAT} <<EOF
+    NAME
+        ${base} - Configure a bridge for VRR operation
+
+    VERSION
+        ${VRR_SCRIPT_VERSION}
+
+    SYNOPSIS
+        ${base} [-hvsq] <bridge> <peer> <vmac> <vip>
+        ${base} -r [-hvsq] <bridge> <peer> <vmac> <vip>
+
+    DESCRIPTION
+        ${base} is used to configure a bridge for Virtual Router Redundancy, or 
+        VRR, operation. This command operates on a bridge interface, supplied
+        by the <bridge> parameter which must exist prior to running this command.
+        The bridge is modified by adding a macvlan device to the bridge with
+        the virtual IP and virtual MAC address.
+
+    OPTIONS
+        -h      Help. Displays this message
+
+        -v      Verbose. Displays more output
+
+        -s      Skip checks. Disables checks of version, parameters, etc.
+
+        -q      Quiet. Do not display any output.
+
+        -r      Remove. Removes the VRR configuration from a bridge.
+
+        <bridge> The name of the bridge interface on which the VRR configuration
+                should be applied. This must be an existing bridge interface.
+
+        <peer>  One of the interfaces within the bridge which is the link
+                to the peer VRR bridge. This interface is commonly a bond.
+
+        <vmac>  The virtual MAC address which is shared between all VRR 
+                bridges. It is recommended that this be taken from the 
+                MAC address block allocated for VRRP: 00:00:5e:00:01:xx, or
+                the Cumulus reserved MAC block: 44:38:39:ff:xx:xx, in order
+                avoid duplicating MAC addresses.
+
+        <vip>   The IP address of the virtual router. This is the IP address
+                which connected devices will use as their default gateway. The
+                address must include the subnet length: nnn.nnn.nnn.nnn/nn
+
+EOF
+)
+    _log_msg "${help_message}\n"
+}
+
+# Check to make sure that this script is being run with root priviledges
+root_check()
+{
+    ID=$(/usr/bin/id -u)
+    [ ${ID} -eq 0 ] || {
+        log_warning_msg "${base}:  You must have root privileges to run this command."
+        exit 1
+    }
+
+    return 0
+}
+
+# Check to make sure that the tools we'll use are available
+tool_check()
+{
+    TOOLS="${IP} ${EGREP} ${AWK} ${CAT} ${TR} ${BRIDGE}"
+    for TOOL in ${TOOLS}
+    do
+        [ -x ${TOOL} ] || {
+            log_warning_msg "${base}:  The required ${TOOL} program does not exist or can't be executed."
+            exit 1
+        }
+    done
+
+    return 0
+}
+
+# Check the Cumulus Linux version
+cl_version_check()
+{
+    REQ_MAJ=${1}
+    REQ_MIN=${2}
+    REQ_SUB=${3}
+    saved_quiet=${quiet}
+    quiet=${4}
+    CL_VERSION_FILE="/etc/lsb-release"
+    [ -r ${CL_VERSION_FILE} ] || {
+        log_warning_msg "${base}:  Cannot obtain the Cumulus Linux version from ${CL_VERSION_FILE}"
+        exit 1
+    }
+    CL_DISTRIB_ID=$(${EGREP} "DISTRIB_ID" ${CL_VERSION_FILE} | ${AWK} -F= '{print $2}' | ${TR} -d '"')
+    [ "${CL_DISTRIB_ID}" = "Cumulus Networks" ] || {
+        log_warning_msg "${base}:  This command must be run on a Cumulus Linux distribution"
+        exit 1
+    }
+    cl_maj=$(${EGREP} "DISTRIB_RELEASE" ${CL_VERSION_FILE} | ${AWK} -F= '{print $2}' | ${AWK} -F. '{print $1}') || {
+        log_warning_msg "${base}:  Cannot obtain the Cumulus Linux version from ${CL_VERSION_FILE}"
+        exit 1
+    }
+    cl_min=$(${EGREP} "DISTRIB_RELEASE" ${CL_VERSION_FILE} | ${AWK} -F= '{print $2}' | ${AWK} -F. '{print $2}') || {
+        log_warning_msg "${base}:  Cannot obtain the Cumulus Linux version from ${CL_VERSION_FILE}"
+        exit 1
+    }
+    cl_sub=$(${EGREP} "DISTRIB_RELEASE" ${CL_VERSION_FILE} | ${AWK} -F= '{print $2}' | ${AWK} -F. '{print $3}') || {
+        log_warning_msg "${base}:  Cannot obtain the Cumulus Linux version from ${CL_VERSION_FILE}"
+        exit 1
+    }
+    [ ${cl_maj} -gt ${REQ_MAJ} ] || [ ${cl_maj} -eq "0" ] || \
+      ( [ ${cl_maj} -eq ${REQ_MAJ} ] && \
+          ( [ ${cl_min} -gt ${REQ_MIN} ] || \
+              ( [ ${cl_min} -eq ${REQ_MIN} ] && \
+              ( [ "${cl_sub}" = "x" ] || [ ${cl_sub} -ge ${REQ_SUB} ] ) ) ) ) || {
+        log_warning_msg "${base}:  The program must be run on Cumulus Linux version ${REQ_MAJ}.${REQ_MIN}.${REQ_SUB}"
+        log_warning_msg "${base}:  or greater. Your Cumulus Linux version is ${cl_maj}.${cl_min}.${cl_sub}"
+        quiet=${saved_quiet}
+        return 1
+    }
+    quiet=${saved_quiet}
+    return 0
+}
+
+# Check the supplied parameters
+parameter_check()
+{
+    # There must be exactly four parameters
+    [ $# -eq 4 ] || {
+        vrr_usage
+        log_warning_msg "${base}:  Four parameters are required. You supplied $#."
+        exit 1
+    }
+
+    # The first parameter must be a bridge interface name
+    [ -d ${INTERFACE_PATH}/${1} ] && [ -d ${INTERFACE_PATH}/${1}/bridge ] || {
+        log_warning_msg "${base}:  The first parameter, ${1}, is not a bridge network interface"
+        exit 1
+    }
+
+    # The bridge must have VLAN filtering disabled
+    VLAN_FILTER=$(${CAT} ${INTERFACE_PATH}/${1}/bridge/vlan_filtering) || {
+        log_warning_msg "${base}:  The first parameter, ${1}, does not have a vlan_filtering node"
+        exit 1
+    }
+    [ "${VLAN_FILTER}" -ne "1" ] || {
+        log_warning_msg "${base}:  The bridge, ${1}, has vlan_filtering enabled. Do not use cl-vrr."
+        log_warning_msg "    Use the svi-router and svi-router-virtual keywords in /etc/network/interfaces."
+        exit 1
+    }
+    
+    # The second parameter must be an interface in that bridge
+    [ -d ${INTERFACE_PATH}/${1}/brif ] && [ -d ${INTERFACE_PATH}/${1}/brif/${2} ] || {
+        log_warning_msg "${base}:  The second parameter, ${2}, is not an interface in the ${1} bridge"
+        exit 1
+    }
+
+    # The third parameter must be a MAC address
+    echo ${3} | ${EGREP} "^([[:xdigit:]]{2}:){5}[[:xdigit:]]{2}$" > /dev/null 2>&1 || {
+        log_warning_msg "${base}:  The third parameter, ${3}, must be a MAC address of the form xx:xx:xx:xx:xx:xx"
+        exit 1
+    }
+
+    # The fourth parameter must be an IPv4 dotted decimal address
+    echo ${4} | ${EGREP} "^([[:digit:]]{1,3}\.){3}[[:digit:]]{1,3}/[[:digit:]]{1,2}$" > /dev/null 2>&1 || {
+        log_warning_msg "${base}:  The fourth parameter, ${4}, must be an IP address of the form ddd.ddd.ddd.ddd/dd"
+        exit 1
+    }
+    return 0
+}
+
+# Check if VRR is already configured on the bridge
+check_existing_config()
+{
+    # We can't know for certain if VRR is configured on a bridge, but we can 
+    # make an educated guess by checking that there is a macVlan on the bridge
+    # named <brname>-v0 with the VMAC.
+
+    # Does the macVlan device exist?
+    MAC_VLAN_VRR=${1:0:13}-v0
+    [ -d ${INTERFACE_PATH}/${MAC_VLAN_VRR} ] && [ -r ${INTERFACE_PATH}/${MAC_VLAN_VRR}/address ] || {
+        return
+    }
+
+    # Is the MAC of the macVlan equal to the VMAC?
+    MV_ADDR=$(${CAT} ${INTERFACE_PATH}/${MAC_VLAN_VRR}/address) > /dev/null 2>&1 
+    [ "${MV_ADDR}" = "${2}" ] && {
+        log_warning_msg "${base}:  It appears that VRR is already configured on bridge $1. The"
+        log_warning_msg "    configuration of $1 will not be modified. To override this"
+        log_warning_msg "    execute ${base} with the '-s' option."
+        exit 0
+    }
+}
+
+remove_macvlan()
+{
+    [ $verbose = "y" ] && _log_msg "${base}:  Entering remove_macvlan $1\n"
+    ${IP} link delete ${1} type macvlan > /dev/null 2>&1
+}
+
+add_macvlan()
+{
+    [ $verbose = "y" ] && _log_msg "${base}:  Entering add_macvlan $1 $2\n"
+    ${IP} link add link ${1} name ${2} type macvlan mode private || {
+        log_warning_msg "${base}:  Unable to add macvlan device ${2} to ${1}"
+        return 1
+    }
+    return 0
+}
+
+set_interface_mac()
+{
+    [ $verbose = "y" ] && _log_msg "${base}:  Entering set_interface_mac $1 $2\n"
+
+    # Get the current MAC address of the interface
+    OLD_MAC=$(${CAT} ${INTERFACE_PATH}/$1/address) || {
+        log_warning_msg "${base}:  Unable to get the hardware address of interface $1"
+        return 1
+    }
+
+    # Set the hardware address of the interface
+    ${IP} link set dev $1 address $2 || {
+        log_warning_msg "${base}:  Unable to set the hardware address of $1 to $2"
+        ${IP} link set dev $1 up > /dev/null 2>&1
+        return 1
+    }
+
+    return 0
+}
+
+remove_ip_address()
+{
+    [ $verbose = "y" ] && _log_msg "${base}:  Entering remove_ip_address $1 $2\n"
+    ${IP} addr del $2 dev $1 > /dev/null 2>&1
+}
+
+add_ip_address()
+{
+    [ $verbose = "y" ] && _log_msg "${base}:  Entering add_ip_address $1 $2\n"
+
+    # Add the IP address
+    ${IP} addr add $2 scope global dev $1 || {
+        log_warning_msg "${base}:  Unable to add IP address $2 to the $1 interface"
+        return 1
+    }
+    return 0
+}
+
+set_interface_state()
+{
+    # Set the state of the interface
+    ${IP} link set dev $1 $2 || {
+        log_warning_msg "${base}:  Unable to set interface $1 to $2"
+        return 1
+    }
+}
+
+remove_bridge_mac()
+{
+    [ $verbose = "y" ] && _log_msg "${base}:  Entering remove_bridge_mac $1 $2\n"
+    ${BRIDGE} fdb del $1 dev $2 self > /dev/null 2>&1
+}
+
+add_bridge_mac()
+{
+    [ $verbose = "y" ] && _log_msg "${base}:  Entering add_bridge_mac $1 $2\n"
+
+    # Add the MAC address
+    ${BRIDGE} fdb add $1 dev $2 self || {
+        log_warning_msg "${base}:  Unable to add MAC address $1 to the $2 bridge"
+        return 1
+    }
+    return 0
+}
+
+
+#-------------------------------------------------------------------------------
+#
+#   Script code - Execution of the script begins here
+#
+#-------------------------------------------------------------------------------
+
+# Parse command line options
+while getopts "${cl_args}" a ; do
+    case $a in
+        h)
+            # Print out a help message.
+            help="y"
+            ;;
+        v)
+            # Be verbose
+            verbose="y"
+            ;;
+        s)
+            # Skip all checks and just run
+            skipchecks="y"
+            ;;
+        r)
+            # Remove VRR configuration
+            remove="y"
+            ;;
+        q)
+            # Don't display anything
+            quiet="y"
+            ;;
+        \?)
+            # Unknown argument, print help
+            help="y"
+            ;;
+    esac
+done
+
+shift `/usr/bin/expr $OPTIND - 1`
+
+# Was help asked for?
+if [ "${help}" = "y" ] ; then
+    vrr_usage
+    exit 1
+fi
+
+if [ "${skipchecks}" != "y" ]
+then
+    root_check
+    tool_check
+    cl_version_check 2 5 0 ${quiet}
+    parameter_check $@
+    [ "${remove}" != "y" ] && check_existing_config $1 $3
+fi
+
+BRIDGE_IF_NAME=$1
+PEER_IF_NAME=$2
+VMAC=$3
+VIP=$4
+MAC_VLAN_VRR=${BRIDGE_IF_NAME:0:13}-v0
+
+# Are we removing the VRR configuration from a bridge?
+if [ "${remove}" = "y" ]
+then
+    remove_bridge_mac ${VMAC} ${BRIDGE_IF_NAME}
+    remove_macvlan ${MAC_VLAN_VRR}
+    exit 0
+fi
+
+# Add a macVlan device to the bridge
+add_macvlan ${BRIDGE_IF_NAME} ${MAC_VLAN_VRR} || {
+    exit 1
+}
+
+# Change the MAC address of the macVlan
+set_interface_mac ${MAC_VLAN_VRR} ${VMAC} || {
+    remove_macvlan ${MAC_VLAN_VRR}
+    exit 1
+}
+
+# Add the virtual IP address to the macVlan
+add_ip_address ${MAC_VLAN_VRR} ${VIP} || {
+    remove_macvlan ${MAC_VLAN_VRR}
+    exit 1
+}
+
+add_bridge_mac ${VMAC} ${BRIDGE_IF_NAME} || {
+    remove_macvlan ${MAC_VLAN_VRR}
+    exit 1
+}
+
+# Bring up the MAC VLAN
+set_interface_state ${MAC_VLAN_VRR} "up" || {
+    remove_bridge_mac ${VMAC} ${BRIDGE_IF_NAME}
+    remove_macvlan ${MAC_VLAN_VRR}
+    exit 1
+}
+

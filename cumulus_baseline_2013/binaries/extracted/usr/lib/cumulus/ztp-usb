@@ -1,0 +1,188 @@
+#!/usr/bin/python
+#
+# Copyright 2014 Cumulus Networks, Inc.
+#
+
+#
+# Loop to detect USB drive, if found - spawn ZTP autoprovision
+#
+
+import os
+import argparse
+import subprocess
+import time
+import logging
+import logging.handlers
+import hashlib
+import sys
+
+
+MOUNT_POINT = "/mnt/usb"
+DEVNULL = open(os.devnull, 'wb')
+NAME = 'ztp-usb'
+
+logger = logging.getLogger(NAME)
+
+
+def md5sum(path, block_size=32 * 128, hr=False):
+    """
+    c/o http://stackoverflow.com/questions/1131220
+    """
+    md5 = hashlib.md5()
+    with open(path, 'rb') as f:
+        for chunk in iter(lambda: f.read(block_size), b''):
+            md5.update(chunk)
+    if hr:
+        return md5.hexdigest()
+    return md5.digest()
+
+
+def detection_loop():
+    """
+    Summarize the initial found partitions as an md5 hash
+    """
+    PARTITIONS_HASH_INITIAL = md5sum('/proc/partitions', hr=True)
+    logger.debug('Initial hash value ' + PARTITIONS_HASH_INITIAL)
+
+    '''
+    Scan for removable disks on initial run, then loop to detect presence
+    '''
+    parse_partitions()
+
+    while True:
+        PARTITIONS_HASH_CURRENT = md5sum('/proc/partitions', hr=True)
+        logger.debug('Current hash value ' + PARTITIONS_HASH_CURRENT)
+
+        if PARTITIONS_HASH_CURRENT != PARTITIONS_HASH_INITIAL:
+            logger.debug('Hash change detected')
+            PARTITIONS_HASH_INITIAL = PARTITIONS_HASH_CURRENT
+            parse_partitions()
+        time.sleep(30)
+
+
+def parse_partitions():
+    """
+    lsblk gives us physical device, removable boolean & current mounted
+    location
+    """
+
+    logger.debug('Parsing partitions')
+    partitions = subprocess.check_output(
+        ['/bin/lsblk', '--noheadings', '--pairs', '--ascii', '--output',
+         'NAME,UUID,MOUNTPOINT,SIZE,RM,FSTYPE'])
+
+    for line in partitions.splitlines():
+        line = line.strip()
+        line_fields = line.split()
+
+        '''
+        Extract values from lsblk, simple string removal - no need for regex's
+        '''
+        blk_devname = line_fields[0].replace('NAME="', '/dev/').replace('"', '')
+        blk_mountpoint = str(line_fields[2]).replace('MOUNTPOINT="',
+                                                     '').replace('"', '')
+        blk_fstype = line_fields[5].replace('FSTYPE="', '').replace('"', '')
+
+        '''
+        Only find removable partitions with a UUID (avoids root device name)
+        '''
+        if not line or line.endswith('RM="0"') or 'UUID=""' in line:
+            continue
+        if len(blk_mountpoint) > 0:
+            logger.debug('Already mounted as ' + blk_mountpoint)
+            break
+        if "vfat" not in blk_fstype:
+            logger.debug('Unsupported partition type found ' + blk_fstype)
+            break
+        else:
+            mount_and_exec(blk_devname)
+
+
+def mount_and_exec(partition):
+    if os.path.isdir(MOUNT_POINT) is False:
+        logger.debug('Creating ' + MOUNT_POINT + ' mount directory')
+        os.makedirs(MOUNT_POINT, 600)
+
+    mount_status = subprocess.check_call(["/bin/mount", "-r", partition,
+                                          MOUNT_POINT])
+
+    if mount_status > 0:
+        logger.debug("Mount failed with exit code %d" % mount_status)
+    else:
+        platform = subprocess.check_output(['/usr/bin/platform-detect',
+                                            '--all'])
+        platform_fields = platform.replace(',', ' ').split()
+
+        vendor = platform_fields[0]
+        model = platform_fields[1]
+        revision = platform_fields[2]
+        arch = subprocess.check_output(['/bin/uname', '-p']).rstrip()
+
+        waterfall_parts = ['cumulus-ztp', '-', arch, '-', vendor, '_', model,
+                           '-r', revision]
+        waterfall_parts_len = len(waterfall_parts)
+        waterfall = [''.join(waterfall_parts[:i])
+                     for i in xrange(1, waterfall_parts_len+1, 2)]
+        waterfall = waterfall[::-1]
+
+        for filename in waterfall:
+            script = MOUNT_POINT + '/' + filename
+            logger.debug('Waterfall search for ' + script)
+            if os.path.isfile(script):
+                logger.debug('Found matching name, passing ' + script +
+                             ' to autoprovision wrapper')
+                logger.info('Found ' + script +
+                            ' script, passing to autoprovision')
+                process = subprocess.Popen(["/usr/lib/cumulus/autoprovision",
+                                            "--log", "syslog", "--file",
+                                            script], stdout=DEVNULL,
+                                           stderr=DEVNULL)
+                while process.wait() is not None:
+                    logger.debug("Script returned exit code " +
+                                 str(process.returncode))
+                    break
+                break
+
+
+def _daemonize(fn, pidfile):
+    import daemon
+    import daemon.pidlockfile
+
+    working_directory = os.path.dirname(pidfile)
+    pidfile = daemon.pidlockfile.PIDLockFile(pidfile)
+    dc = daemon.DaemonContext(working_directory=working_directory,
+                              pidfile=pidfile)
+    with dc:
+        return fn()
+
+
+def main():
+    var_run = '/var/run'
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-d", "--debug", help="Run in foreground debug mode",
+                        action="store_true", default=False)
+    parser.add_argument("-p", "--pidfile", help="PID file",
+                        default=os.path.join(var_run, NAME + '.pid'))
+    args = parser.parse_args()
+    if args.debug:
+        logger.setLevel(logging.DEBUG)
+        fmt = logging.Formatter(fmt='ztp-usb: %(asctime)-15s %(message)s')
+        loghandler = logging.StreamHandler()
+        loghandler.setLevel(logging.DEBUG)
+    else:
+        fmt = logging.Formatter(fmt='ztp-usb: %(message)s')
+        loghandler = logging.handlers.SysLogHandler(
+            facility=logging.handlers.SysLogHandler.LOG_DAEMON,
+            address='/dev/log')
+        logger.setLevel(logging.INFO)
+    loghandler.setFormatter(fmt)
+    logger.addHandler(loghandler)
+    daemonize = not args.debug
+    if daemonize:
+        return _daemonize(detection_loop, args.pidfile)
+    else:
+        return detection_loop()
+
+
+if __name__ == "__main__":
+    sys.exit(main())

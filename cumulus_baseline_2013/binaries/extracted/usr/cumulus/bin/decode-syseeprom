@@ -1,0 +1,295 @@
+#! /usr/bin/python
+# Copyright 2012 Cumulus Networks LLC, all rights reserved
+
+#############################################################################
+#
+# This is the main script that handles eeprom encoding and decoding
+#
+try:
+    import exceptions
+    import binascii
+    import time
+    import optparse
+    import warnings
+    import os
+    import subprocess
+    import sys
+    from array import array
+    import imp
+    import eeprom_dts
+except ImportError, e:
+    raise ImportError (str(e) + "- required module not found")
+
+
+platform_detect = '/usr/bin/platform-detect'
+platform_root = '/usr/share/platform-config'
+
+def main():
+
+    if not os.geteuid() == 0:
+        raise RuntimeError("must be root to run")
+
+    #
+    # determine the platform
+    #
+    try:
+        ph = subprocess.Popen((platform_detect), stdout=subprocess.PIPE,
+                              shell=False, stderr=subprocess.STDOUT)
+        cmdout = ph.communicate()[0]
+        ph.wait()
+    except OSError, e:
+        raise OSError("cannot detect platform")
+
+    [platform, model] = cmdout.rstrip('\n').split(',')
+    platform_path = '/'.join([platform_root, platform, model])
+
+    #
+    # discover the eeproms and the paths
+    # dictionary format: [target: class, content path, status path, read-only]
+    #
+    dict = discover_eeprom()
+    (opts, args) = get_cmdline_opts(dict, 'board')
+
+    if opts.target not in dict.keys():
+        errstr = "unknown target, should be one of %s" \
+                 %(', '.join(C for C in reversed(dict.keys())))
+        raise RuntimeError(errstr)
+
+    #
+    # load the target class file and instantiate the object
+    #
+    try:
+        m = imp.load_source('eeprom','/'.join([platform_path, 'bin/eeprom.py']))
+    except IOError:
+        raise IOError("cannot load module: " + '/'.join([platform_path, 'bin/eeprom.py']))
+
+    class_ = getattr(m, dict[opts.target][0])
+    t = class_(opts.target, dict[opts.target][1], dict[opts.target][2],
+               dict[opts.target][3])
+
+    #
+    # execute the command
+    #
+    run(t, opts, args)
+
+
+#-------------------------------------------------------------------------------
+#
+# discover eeprom paths etc.
+#
+def discover_eeprom():
+    # We have two methods for discovering eeproms.  The old style is to walk
+    # the device tree and sysfs attempting to match the .dts label property
+    # with a sysfs directory.  The new style is to have the kernel promote the
+    # .dts label property to a sysfs file for each eeprom.  The kernel also
+    # creates an eeprom_dev sysfs class to help enumerate all eeproms on a
+    # system.
+    #
+    # We try the new way first, and fall back to the old.
+    eeprom = discover_eeprom_new()
+    if eeprom is None or 'board' not in eeprom.keys():
+        eeprom = discover_eeprom_old()
+    return eeprom
+
+def discover_eeprom_new():
+    eeprom_dev = '/sys/class/eeprom_dev'
+    cpld_path = ''
+    eeprom = {}
+
+    # eeprom_dev doesn't exist, no kernel support or module not loaded
+    if not os.path.isdir(eeprom_dev):
+        return None
+
+    eeprom_dirs = os.listdir(eeprom_dev)
+    for eeprom_dir in eeprom_dirs:
+
+        label_path = os.path.join(eeprom_dev, eeprom_dir, 'label')
+        if not os.path.isfile(label_path):
+            continue
+
+        label = open(label_path, 'r').read().strip()
+
+        for e_type in ['psu', 'fan', 'board', 'cpu']:
+            if label.startswith(e_type):
+                eeprom_path = os.path.join(eeprom_dev, eeprom_dir, 'device', 'eeprom')
+                eeprom_key = label.split('_')[0]
+                eeprom_class = ''.join([ x for x in eeprom_key if not x.isdigit() ])
+                read_only = not os.access(eeprom_path, os.W_OK)
+                eeprom[eeprom_key] = (eeprom_class, eeprom_path, cpld_path, read_only)
+                break
+
+    return eeprom
+
+def discover_eeprom_old():
+
+    dts_root = '/proc/device-tree/'
+    sys_dev  = '/sys/devices/'
+    cpldpath = ''
+
+    #
+    # establish the cpld path, some devices such as hot pluggable
+    # power supply units' status can be checked from cpld
+    #
+    try:
+        ph = subprocess.Popen(['/bin/ls', '-R', dts_root],
+                              stdout=subprocess.PIPE,
+                              shell=False, stderr=subprocess.STDOUT)
+        cmdout = ph.communicate()[0]
+        ph.wait()
+    except OSError, e:
+        raise OSError("cpld not found in path")
+
+    lines = cmdout.splitlines()
+    for I in lines:
+        if not I.endswith(':') or 'cpld' not in I:
+            continue
+
+        I = I.rstrip(':\n\r')
+        (bus_node, cpld_node) = I.partition(dts_root)[2].split('/')
+        (bus, bus_addr) = bus_node.split('@')
+        bus_idx = cpld_node.split('@')[1].split(',')[0]
+
+        # read the address range from the parent node
+        offset = (int(bus_idx) * 5 + 3) * 4
+        F = open(dts_root + bus + '@' + bus_addr + '/ranges', "rb")
+        F.seek(offset)
+        o = F.read(4)
+        F.close()
+        cpld_addr = binascii.b2a_hex(o)
+        cpldpath = sys_dev + bus_addr + '.' + bus + '/' + cpld_addr + '.' + 'cpld'
+    #
+    # get the paths for accessing the eeprom content
+    #
+    dict = {}
+    eep_dict = eeprom_dts.get_dev_attr_from_dtb(['board', 'psu'])
+
+    for eep in eep_dict.keys():
+        # get the class
+        _class = eep.rsplit('/', 1)[1].partition('eeprom')[0].strip('_')
+
+        # read the label and get the instance name
+        label_path = '/'.join([eep, 'label'])
+        F = open(label_path, "rb")
+        instance = F.read().partition('_eeprom')[0]
+        F.close()
+
+        if _class == '':
+            _class = instance
+
+        eep_path = eeprom_dts.dev_attr_to_path(eep_dict[eep])
+        dict[instance] = (_class, eep_path, cpldpath, eep_dict[eep]['ro'])
+
+    return dict
+
+
+#-------------------------------------------------------------------------------
+#
+# sets global variable "optcfg"
+#
+def get_cmdline_opts(dict, default_dev):
+    target_str = ("select the target eeprom (" +
+                  ', '.join(C for C in reversed(dict.keys())) +
+		  ") for read or write operation, default is " +
+		  default_dev)
+    optcfg = optparse.OptionParser(usage="usage: %s [-a][-r][-s [args]][-t <target>][-e][-m]" % sys.argv[0])
+    optcfg.add_option("-a", dest="startmac", action="store_true", default=False,
+                      help="print the base mac address for switch interfaces")
+    optcfg.add_option("-r", dest="macrange", action="store_true", default=False,
+                      help="print the number of macs allocated for switch interfaces")
+    optcfg.add_option("-s", dest="set", action="store_true", default=False,
+                      help="set the eeprom content if the eeprom is writable. args "
+                           "can be supplied in command line in a comma separated "
+                           "list of the form '<field>=<value>, ...'.  ',' and '='"
+                           "are illegal characters in field names and values. Fields "
+                           "that are not specified will default to their current "
+                           "values.  If args are supplied in command line, they will "
+                           "be written without confirmation.  If args is empty, the "
+                           "values will be prompted interactively.")
+    optcfg.add_option("-t", dest="target", action="store", type="string",
+                      default=default_dev, help=target_str)
+    optcfg.add_option("-e","--serial", dest="serial", action="store_true",
+                      default=False, help="print device serial number")
+    optcfg.add_option("-m", dest="mgmtmac", action="store_true", default=False,
+                      help="print the base mac address for management interfaces")
+    return optcfg.parse_args()
+
+#-------------------------------------------------------------------------------
+#
+# Run
+#
+def run(target, opts, args):
+    status = target.check_status()
+    if status <> 'ok':
+        sys.stderr.write("Device is not ready: " + status + "\n")
+        exit(0)
+
+    e = target.read_eeprom()
+    if e is None :
+        return 0
+
+    if opts.startmac:
+        sa = target.switchaddrstr(e)
+        if sa <> None:
+            print sa
+    elif opts.mgmtmac:
+        mm = target.mgmtaddrstr(e)
+        if mm <> None:
+            print mm
+    elif opts.macrange:
+        sr = target.switchaddrrange(e)
+        if sr <> None:
+            print sr
+    elif opts.serial:
+        try:
+            serial = target.serial_number_str(e)
+        except NotImplemented, e:
+          print e
+        else:
+          print serial or "Undefined."
+    elif opts.set:
+        if target.is_read_only():
+            sys.stderr.write("Device eeprom cannot be modified\n")
+            exit(0)
+
+        new_e = target.set_eeprom(e, args)
+        yn = 'y'
+        if len(args) == 0:
+            print "\nPlease review eeprom content:\n"
+            target.decode_eeprom(new_e)
+            yn = raw_input("\nSave eeprom content? <y/n> ")
+
+        if yn in ['y', 'Y']:
+            target.write_eeprom(new_e)
+    else:
+        target.decode_eeprom(e)
+        (is_valid, valid_crc) = target.is_checksum_valid(e)
+        if is_valid:
+            print '(checksum valid)'
+        else:
+            print '(*** checksum invalid)'
+            # + ', should be 0x' + binascii.b2a_hex(array('I', [valid_crc])).upper() + ')'
+    return 0
+
+
+#
+# formats warnings
+#
+def mywarn(message, category, filename, lineno, line=None):
+    return '%s:%s : %s : %s\n' % (filename, lineno, category.__name__, message)
+
+#--------------------
+#
+# execution check
+#
+if __name__ == "__main__":
+    try:
+        warnings.simplefilter("always")
+        warnings.formatwarning = mywarn
+        exit(main())
+    except KeyboardInterrupt:
+        sys.stderr.write("\nInterrupted\n")
+        exit(1)
+    except (RuntimeError, OSError, IOError), errstr:
+        sys.stderr.write("%s : ERROR : %s\n" % (sys.argv[0], str(errstr)))
+        exit(1)
+

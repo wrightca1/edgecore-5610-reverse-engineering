@@ -1,0 +1,262 @@
+#! /usr/bin/env python
+# Copyright 2012 Cumulus Networks LLC, all rights reserved
+
+#####################################################################
+#
+# netstat -i is a great tool for summarizing network statistics;
+# however, it doesn't clear. This script saves away the
+# readings at a point in time and subtracts them from the current
+# readings to produce a delta. The readings are saved under the
+# "/tmp/cl-netstat-<uid>" directory under a filename that is the userid
+# by default. However, the user can choose to save a file with a tag
+# and use that tag in future invocations to reference those readings. 
+#
+#####################################################################
+
+# Assume that netstat -i output looks as follows. 
+# Kernel Interface table
+# Iface   MTU Met   RX-OK RX-ERR RX-DRP RX-OVR    TX-OK TX-ERR TX-DRP TX-OVR Flg
+# eth0       1500 0         0      0      0 0             0      0      0      0 BMU
+# lo        16436 0    246427      0      0 0        246427      0      0      0 LRU
+# wlan0      1500 0    311162      0      0 0        196776      0      0      0 BMRU
+
+import subprocess
+import getopt
+import sys
+import os.path
+import cPickle as pickle
+import re
+try:
+    from collections import OrderedDict
+except ImportError:
+    import ordereddict
+
+from collections import namedtuple
+
+NStats = namedtuple("NStats", "mtu, metric, rx_ok, rx_err, rx_drop, rx_ovr, tx_ok,\
+                    tx_err, tx_drop, tx_ovr, flags") 
+
+version = "1.0.1"
+netstat_print_format = "%s\t%5s   %1s    %8s %5s %5s %s    %10s %7s %6s %5s %4<s"
+print_format = "%s\t%5s %3s %12s %6s %6s %6s %12s %6s %6s %6s %6s"
+
+def usage():
+    print "usage: %s [-cdDlrtv]" % sys.argv[0]
+    print
+    print "OPTIONS:"
+    print " -c  Copy & clear stats"
+    print " -d  Delete saved stats, either the uid or the specified tag"
+    print " -D  Delete all saved stats"
+    print " -l  List saved tags"
+    print " -r  Raw stats (unmodified output of netstat)"
+    print " -t <tag name> Save stats with <tag name>"
+    print " -v  Print version and exit"
+    print "Examples:"
+    print "cl-netstat -c -t test"
+    print "cl-netstat -t test"
+    print "cl-netstat -d -t test"
+    print "cl-netstat"
+    print "cl-netstat -r"
+    print
+    print "string format used is %s"%(print_format)
+    print "cl-netstat version %s" % version
+    sys.exit(1)
+
+def cnstat_create_element(idx, netstats, procstats):
+    cntr = []
+    fields = [netstats[i] for i in [1, 2]] + \
+             [procstats[i] for i in [1, 2, 3, 4, 9, 10, 11, 12]] + \
+             [netstats[11]]
+    cntr = NStats._make(fields)
+    return dict({netstats[0]:cntr})
+
+def cnstat_print_header (netstat_lines):
+    print netstat_lines[0] # Kernel Interface table line
+    print print_format %("Iface", "MTU", "Met", "RX_OK", "RX_ERR",\
+                         "RX_DRP", "RX_OVR", "TX_OK", "TX_ERR",
+                         "TX_DRP", "TX_OVR", "Flg") 
+    print "---------------------------------------------------------------------------------------------"
+
+
+def cnstat_print(cnstat_dict):
+    for if_name, data in cnstat_dict.iteritems():
+                print print_format %(if_name, data.mtu,data.metric,
+                                     data.rx_ok, data.rx_err,
+                                     data.rx_drop, data.rx_ovr,  
+                                     data.tx_ok, data.tx_err,
+                                     data.tx_drop, data.tx_err,
+                                     data.flags)   
+
+def ns_diff(newstr, oldstr):
+    new, old = int(newstr), int(oldstr)
+    return str((new-old))
+
+def cnstat_diff_print(cnstat_new_dict, cnstat_old_dict):
+    for if_name, cntr in cnstat_new_dict.iteritems():
+        old_cntr = None
+        if if_name in cnstat_old_dict:
+            old_cntr = cnstat_old_dict.get(if_name)
+
+        if old_cntr != None:
+                print print_format %(if_name, cntr.mtu, cntr.metric,
+                                     ns_diff(cntr.rx_ok, old_cntr.rx_ok), 
+                                     ns_diff(cntr.rx_err, old_cntr.rx_err),
+                                     ns_diff(cntr.rx_drop, old_cntr.rx_drop),
+                                     ns_diff(cntr.rx_ovr, old_cntr.rx_ovr),
+                                     ns_diff(cntr.tx_ok, old_cntr.tx_ok),
+                                     ns_diff(cntr.tx_err, old_cntr.tx_err),
+                                     ns_diff(cntr.tx_drop, old_cntr.tx_drop),
+                                     ns_diff(cntr.tx_ovr, old_cntr.tx_ovr),
+                                     cntr.flags)
+        else:
+                print print_format %(if_name, cntr.mtu, cntr.metric,
+                                     cntr.rx_ok, cntr.rx_err, 
+                                     cntr.rx_drop, cntr.rx_ovr,
+                                     cntr.tx_ok, cntr.tx_err, 
+                                     cntr.tx_drop, cntr.tx_err,
+                                     cntr.flags) 
+    return
+
+if __name__ == "__main__":
+    try:
+        opts, args = getopt.getopt(sys.argv[1:], "cdDlrt:v")
+    except getopt.GetoptError, err:
+        print str(err)
+        usage()
+
+    save_fresh_stats = delete_saved_stats = delete_all_stats \
+                       = raw_stats = tag_stats = list_tags = False
+            
+    for o, a in opts:
+        if o == "-c":
+            save_fresh_stats = True
+        elif o == "-d":
+            delete_saved_stats = True
+        elif o == "-D":
+            delete_all_stats = True
+        elif o == "-l":
+            list_tags = True
+            print "Not Implemented. Work in progress"
+            sys.exit(0)
+        elif o == "-r":
+            raw_stats = True
+        elif o == "-t":
+            tag_stats = True
+            tag_name = a
+        elif o == "-v":
+            print "cl-netstat",version
+            sys.exit (0)
+
+    if tag_stats:
+        cnstat_file = str(os.getuid()) + "-" + tag_name
+    else:
+        cnstat_file = str(os.getuid())
+
+    cnstat_dir = "/tmp/cl-netstat-"+str(os.getuid())
+    cnstat_fqn_file = cnstat_dir + "/" + cnstat_file
+        
+    if delete_all_stats:
+        for file in os.listdir(cnstat_dir):
+            os.remove(cnstat_dir + "/" + file)
+        
+        try:
+            os.rmdir(cnstat_dir)
+            sys.exit(0)
+        except IOError as e:
+            print e.errno, e
+            sys.exit(e)
+            
+    if delete_saved_stats:
+        try:
+            os.remove(cnstat_fqn_file)
+        except IOError as e:
+            if e.errno != ENOENT:
+                print e.errno, e
+                sys.exit(1)
+        finally:
+            if os.listdir(cnstat_dir) == []:
+                os.rmdir(cnstat_dir)
+            sys.exit(0)
+
+    try:
+        netstat_out = subprocess.Popen((['/bin/netstat','-i']),
+                                       stdout=subprocess.PIPE,
+                                       shell=False).communicate()[0]
+    except EnvironmentError as e:
+        print e,e.errno
+        sys.exit(e.errno)
+        
+    netstat_lines = netstat_out.split("\n")
+
+    # Since netstat -i returns some stats as 32-bits, get full 64-bit
+    # stats from /prov/net/dev and display only the 64-bit stats.
+    try:
+        proc_out = subprocess.Popen((['/bin/cat','/proc/net/dev']),
+                                    stdout=subprocess.PIPE,
+                                    shell=False).communicate()[0]
+    except EnvironmentError as e:
+        print e,e.errno
+        sys.exit(e.errno)
+        
+    proc = {}
+    for line in proc_out.split("\n"):
+        parsed = re.findall("\s*([^ ]+):(.*)", line)
+        if not parsed:
+            continue
+        iface, stats = parsed[0]
+        proc[iface] = stats.split()
+
+    # At this point, either we'll create a file or open an existing one.
+    if not os.path.exists(cnstat_dir):
+        try:
+            os.makedirs(cnstat_dir)
+        except IOError as e:
+            print e.errno, e
+            sys.exit(1)
+
+    # Build a dictionary of the stats
+    try:
+        cnstat_dict = OrderedDict()
+    except NameError:
+        cnstat_dict = ordereddict.OrderedDict()
+
+    # We skip the first 2 lines since they contain no interface information
+    for i in range (2,len(netstat_lines)-1):
+        netstats = netstat_lines[i].split()
+        if ":" in netstats[0]:
+            continue    # skip aliased interfaces
+        procstats = proc.get(netstats[0])
+        cnstat_dict.update(cnstat_create_element(i, netstats, procstats))
+
+    # Now decide what information to display
+    if raw_stats:
+        cnstat_print_header(netstat_lines)
+        cnstat_print(cnstat_dict)
+        sys.exit(0)
+
+    if save_fresh_stats:
+        try:
+            pickle.dump(cnstat_dict, open(cnstat_fqn_file, 'w'))
+        except IOError as e:
+            sys.exit(e.errno)
+        else:
+            print "Cleared counters"
+            sys.exit(0)
+
+    try:
+        cnstat_cached_dict = OrderedDict()
+    except NameError:
+        cnstat_cached_dict = ordereddict.OrderedDict()
+
+    try:
+        cnstat_cached_dict = pickle.load(open(cnstat_fqn_file, 'r'))
+    except IOError as e:
+        cnstat_print_header(netstat_lines)
+        cnstat_print(cnstat_dict)
+        sys.exit(0)
+
+    cnstat_print_header(netstat_lines)
+    cnstat_diff_print(cnstat_dict, cnstat_cached_dict)
+
+    sys.exit(0)
+    

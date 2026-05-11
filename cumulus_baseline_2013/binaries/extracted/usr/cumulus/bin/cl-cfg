@@ -1,0 +1,483 @@
+#! /usr/bin/env python
+# Copyright 2013 Cumulus Networks Inc, all rights reserved
+
+#####################################################################
+#
+#####################################################################
+
+try :
+    import sys
+    import argparse
+    from argparse import RawTextHelpFormatter
+    import os
+    import re
+    from   subprocess           import Popen, PIPE
+except ImportError, e:
+    raise ImportError (str(e) + "- required module not found")
+
+# ----------------------------------------------------------
+#
+#               M o d u l e  C l a s s
+#
+# ----------------------------------------------------------
+class Module(object) :
+
+    def __init__ (self, file_path) :
+        self.file_path   = file_path
+
+# ----------------------------------------------------------
+#
+#          C o n f i g  M o d u l e  C l a s s
+#
+# ----------------------------------------------------------
+class ConfigModule(object) :
+
+    def __init__ (self, file_path) :
+        super(IntegerVariable,self).__init__(file_path)
+
+
+# ----------------------------------------------------------
+#
+#               V a r i a b l e  C l a s s
+#
+# ----------------------------------------------------------
+class Variable(object) :
+
+    def __init__ (self, file, description, type, default) :
+        self.file        = file
+        self.description = description
+        self.type        = type
+        self.default     = default
+
+# ----------------------------------------------------------
+#
+#          I n t e g e r  V a r i a b l e  C l a s s
+#
+# ----------------------------------------------------------
+class IntegerVariable(Variable) :
+
+    type_dict = {'uint8_t'  : [ 0, 8],
+                 'uint16_t' : [ 0,16],
+                 'uint32_t' : [ 0,32],
+                 'uint64_t' : [ 0,64],
+                 'int8_t'   : [ 4, 4],
+                 'int16_t'  : [ 8, 8],
+                 'int32_t'  : [16,16],
+                 'int64_t'  : [32,32]}
+
+    def __init__ (self, file, description, type, default, range) :
+        super(IntegerVariable,self).__init__(file,
+                                             description,
+                                             type,
+                                             default)
+        if not type in IntegerVariable.type_dict :
+            return None
+
+        if len(range) > 1 :
+            self.min = int(range[0])
+        if len(range) > 1 :
+            self.max = int(range[1])
+        self.type_min = -(1<<(IntegerVariable.type_dict[type][0]))
+        self.type_max =  (1<<(IntegerVariable.type_dict[type][1]))
+
+    def check_bounds (self, value_string) :
+        value = int(value_string)
+        if self.min and value < self.min :
+            print '%d is smaller than the minumum value %d' % (value, self.min)
+            return False
+        if value < self.type_min :
+            print '%d is too small for the type %d' % (value, self.type)
+            return False
+        if self.max and value > self.max :
+            print '%d is larger than the maximum value %d' % (value, self.max)
+            return False
+        if value > self.type_max :
+            print '%d is too large for the type %d' % (value, self.type)
+            return False
+
+        return True
+
+# ----------------------------------------------------------
+#
+#          E n u m  V a r i a b l e  C l a s s
+#
+# ----------------------------------------------------------
+class EnumVariable(Variable) :
+    def __init__ (self, file, description, type, default, value_list) :
+        super(EnumVariable,self).__init__(file,
+                                          description,
+                                          type,
+                                          default)
+        self.value_list = value_list
+
+    def check_bounds (self, value_string) :
+        value = value_string.strip()
+        for enum_value in self.value_list :
+            if value == enum_value :
+                return True
+        print '%s is not a member of the enumerated type' % value
+        return False
+
+# ----------------------------------------------------------
+#
+#         B o o l e a n  V a r i a b l e  C l a s s
+#
+# ----------------------------------------------------------
+class BooleanVariable(Variable) :
+    def __init__ (self,file, description, type, default) :
+        super(BooleanVariable,self).__init__(file,
+                                             description,
+                                             type,
+                                             default)
+
+    def check_bounds (self, value_string) :
+        value = value_string.strip()
+        if value == 'TRUE' or value == 'FALSE' :
+            return True
+        else :
+            print '%s is not TRUE or FALSE' % value
+            return False
+
+# ----------------------------------------------------------
+#
+#         T r i g g e r  V a r i a b l e  C l a s s
+#
+# ----------------------------------------------------------
+class TriggerVariable(Variable) :
+    def __init__ (self,file, description, type, default) :
+        super(TriggerVariable,self).__init__(file,
+                                             description,
+                                             type,
+                                             default)
+
+    def check_bounds (self, value_string) :
+        value = value_string.strip()
+        if value == '1' or value == '0' :
+            return True
+        else :
+            print '%s is not 1 or 0' % value
+            return False
+
+# ----------------------------------------------------------
+#
+#         S t r i n g  V a r i a b l e  C l a s s
+#
+# ----------------------------------------------------------
+class StringVariable(Variable) :
+    def __init__ (self, file, description, type, default) :
+        super(StringVariable,self).__init__(file,
+                                            description,
+                                            type,
+                                            default)
+
+    def check_bounds (self, value_string) :
+        return True
+
+# ----------------------------------------------------------
+#
+#            p r o c e s s __ v a r i a b l e s
+#
+# ----------------------------------------------------------
+def process_variables(root_path, cmd_dict, handler) :
+
+    for var in cmd_dict['target_name_list'] :
+        pair = var.split('=')
+        name = pair[0]
+        if 'write' in cmd_dict :
+            if len(pair) < 2 :
+                print 'Error: variable requires value'
+                next
+            else :
+                value_string = "%s\n" % pair[1]
+        else :
+            value_string = None
+
+        # walk the .meta file and invoke the handler to execute the command
+        arg_dict = {'root_path'   : root_path,
+                    'target_name' : name,
+                    'value'       : value_string,
+                    'cmd'         : cmd_dict}
+        process_meta_file(root_path, arg_dict, handler)
+
+# ----------------------------------------------------------
+#
+#                 r e a d __ f i l e
+#
+# ----------------------------------------------------------
+def read_file(file_path) :
+
+    # Read contents from the file as a single string
+    try :
+        with open(file_path, 'r') as file_handle :
+            try :
+                file_string = file_handle.read()
+            except :
+                print '%s read failed' % file_path
+                return None
+    except:
+        print '%s open failed' % file_path
+        return None
+
+    return file_string
+
+# ----------------------------------------------------------
+#
+#                w r i t e __ f i l e
+#
+# ----------------------------------------------------------
+def write_file(file_path, file_string) :
+
+    # write the file string back to the file
+    with open(file_path, 'w') as file_handle :
+        file_handle.write(file_string)
+
+# ----------------------------------------------------------
+#
+#             r e p o r t __ v a r i a b l e
+#
+# ----------------------------------------------------------
+def report_variable(arg_dict) :
+
+    variable = arg_dict['variable']
+    if variable == None :
+        return True
+
+    if not is_matching_variable(arg_dict) :
+        return True
+
+    if arg_dict['cmd']['no_value'] is False:
+        # open the sfs file and read out the value
+        variable_path = arg_dict['root_path'] + '/config/' + variable.file.replace('.','/')
+        value_line = read_file(variable_path)
+        if value_line == None:
+            print 'file read failed for file %s' % variable_path
+            return True
+        value = value_line.strip()
+    if arg_dict['cmd']['non_default'] is True :
+        if variable.default == value :
+            # don't display the variable
+            return True
+
+    if arg_dict['cmd']['value_only'] is True :
+        # display the value and bail
+        print '%s' % value
+        return True
+
+    # print the name
+    print '%s' % variable.file,
+    if arg_dict['cmd']['no_value'] is False :
+        print '= %s' % value,
+    if arg_dict['cmd']['description'] is True and arg_dict['cmd']['value_only'] is False :
+        print ": %s" % variable.description,
+    # append a newline
+    print ''
+
+    # target name could have wildcards: keep looking
+    return True
+
+# ----------------------------------------------------------
+#
+#                c r e a t e __ v a r i a b l e
+#
+# ----------------------------------------------------------
+def create_variable(line) :
+
+    line_elements = line.split('\t')
+    file_name     = line_elements[0]
+    description   = line_elements[1]
+    value_type    = line_elements[2].strip()
+    if len(line_elements) > 3 :
+        default_value = line_elements[3].strip()
+    else :
+        default_value = None
+
+    variable_path = file_name.split('/')
+    if variable_path[1] != 'config' :
+        return None
+    else :
+        file_name = ".".join(variable_path[2:])
+
+    if value_type == 'bool' :
+        return BooleanVariable(file_name, description, value_type, default_value)
+
+    if value_type == 'trigger' :
+        return TriggerVariable(file_name, description, value_type, default_value)
+
+    if value_type == 'char *' :
+        return StringVariable(file_name, description, value_type, default_value)
+
+    if value_type == 'enum' :
+        return EnumVariable(file_name, description, value_type, default_value, line_elements[4:])
+
+    var = IntegerVariable(file_name, description, value_type, default_value, line_elements[4:])
+    if var == None :
+        print 'value type %s not supported' % value_type
+    return var
+
+# ----------------------------------------------------------
+#
+#          i s __ m a t c h i n g __ v a r i a b l e
+#
+# ----------------------------------------------------------
+def is_matching_variable(arg_dict) :
+
+    name = arg_dict['target_name']
+
+    name_element  = name.partition('*')
+    file_name     = arg_dict['variable'].file
+    wildcard_flag = False
+    match_flag    = True
+    src_start_idx = 0
+    i = 0
+    while (i < len(name_element) and (name_element[i] != '')) :
+        if name_element[i] == '*' :
+            wildcard_flag = True
+        else :
+            if wildcard_flag == True :
+                # partition the remainder and start at the new first element
+                name_element = name_element[i].partition('*')
+                i = 0
+            start_idx = file_name.find(name_element[i], src_start_idx)
+            if start_idx == -1 :
+                match_flag = False
+                break
+            if wildcard_flag == False and src_start_idx != start_idx :
+                match_flag = False
+                break
+            wildcard_flag = False
+            src_start_idx = start_idx + len(name_element[i])
+
+        # move to the next element in the name
+        i += 1
+
+    return match_flag
+
+# ----------------------------------------------------------
+#
+#             w r i t e __ n e w __ v a l u e
+#
+# ----------------------------------------------------------
+def write_new_value(arg_dict) :
+
+    variable = arg_dict['variable']
+    if variable == None :
+        return True
+
+    if is_matching_variable(arg_dict) :
+        value_string = arg_dict['value']
+        legal_flag = variable.check_bounds(value_string)
+        if legal_flag == True:
+            variable_path = arg_dict['root_path'] + '/config/' + variable.file.replace('.','/')
+            write_file(variable_path, value_string)
+
+    # target variable could have wildcards, keep looking
+    return True
+
+# ----------------------------------------------------------
+#
+#             p r o c e s s __ m e t a __ f i l e
+#
+# ----------------------------------------------------------
+def process_meta_file(root_path, arg_dict, handler) :
+
+    # read each line from the .meta file
+    meta_file_path = root_path + '/.meta'
+    with open(meta_file_path, 'r') as file_handle :
+        for line in file_handle :
+            variable = create_variable(line)
+            if variable != None :
+                arg_dict['variable'] = variable
+                continue_flag = handler(arg_dict)
+                if not continue_flag :
+                    return
+    #except:
+    #   print '%s not found' % meta_file_path
+    #    return
+
+
+# ----------------------------------------------------------
+#
+#                         m a i n
+#
+# ----------------------------------------------------------
+def main(argv) :
+
+    root_path = "/cumulus/"
+
+    arg_parser = argparse.ArgumentParser(formatter_class=RawTextHelpFormatter,
+                                         usage='\n %(prog)s [options] daemon [variable[=value] ... ]')
+    arg_parser.add_argument('daemon',
+                            choices=['switchd'],
+                            help='access the variables of this daemon')
+
+    arg_parser.add_argument('variable',
+                            nargs='*',
+                            help='optional list of variable names, e.g. foo.bar.baz or foo.*',
+                            default=None)
+
+    arg_parser.add_argument('-a',
+                            '--all',
+                            action='store_true',
+                            help='display variable name and value')
+    arg_parser.add_argument('-N',
+                            '--names',
+                            action='store_true',
+                            help='display variable without the value')
+    arg_parser.add_argument('-n',
+                            '--values',
+                            action='store_true',
+                            help='display only the value')
+    arg_parser.add_argument('-d',
+                            '--descriptions',
+                            action='store_true',
+                            help='display variable description')
+    arg_parser.add_argument('-c',
+                            '--non-default',
+                            action='store_true',
+                            help='display all differences from the default config values')
+    arg_parser.add_argument('-w',
+                            '--write',
+                            action='store_true',
+                            help='enable writing a value to a variable')
+
+    # parse the command line arguments
+    cmdline_args = arg_parser.parse_args()
+
+    root_path = root_path + cmdline_args.daemon
+    cmd_dict  = {}
+    if cmdline_args.variable :
+        variables = cmdline_args.variable
+    else :
+        variables = '*'
+    cmd_dict['target_name_list'] = variables
+
+    # update configuration values
+    if cmdline_args.write == True :
+        if cmdline_args.variable :
+            cmd_dict['write']   = True
+            process_variables(root_path, cmd_dict, write_new_value)
+            return
+        else :
+            print '-w flag requires variables and values'
+            return
+
+    # report variable(s)
+    if cmdline_args.all == True \
+           or cmdline_args.names == True \
+           or cmdline_args.values == True \
+           or cmdline_args.descriptions == True \
+           or cmdline_args.non_default == True \
+           or cmdline_args.variable :
+        cmd_dict['no_value']    = (cmdline_args.names or cmdline_args.descriptions)
+        cmd_dict['value_only']  = cmdline_args.values
+        cmd_dict['description'] = cmdline_args.descriptions
+        cmd_dict['non_default'] = cmdline_args.non_default
+        process_variables(root_path, cmd_dict, report_variable)
+
+# ----------------------------------------------------------
+#
+#                         entry
+#
+# ----------------------------------------------------------
+if __name__ == "__main__":
+    main(sys.argv[1:])

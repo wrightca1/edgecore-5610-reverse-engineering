@@ -1,0 +1,122 @@
+#!/bin/sh
+#
+# start-stop-monitor - enables and disables monitoring of daemons with monit
+#
+# Copyright (C) 2014 Cumulus Networks
+#
+
+. /lib/init/vars.sh
+
+MONIT=/usr/bin/monit
+MONITRCD=/etc/monit/cumulus.d
+SS_DEBUG="no"
+
+ERROK=0
+ERRUSAGE=1
+ERRCFG=2
+ERRMONIT=3
+
+log_verbose() {
+	test "${SS_DEBUG}" = "yes" && echo "$(basename $0): $@"
+	return 0
+}
+
+shortusage() {
+	echo "Usage: $(basename $0) start|stop MONIT_CONFIG_FILE"
+	exit ${ERRUSAGE}
+}
+
+# monit_reload_config
+# if monit is running reload monit config
+monit_reload_config() {
+	local rc=0
+
+	log_verbose "monit_reload_config - checking monit service status"
+	invoke-rc.d --quiet monit status >/dev/null 2>&1 && {
+		log_verbose "monit_reload_config - reloading monit"
+		if test "$VERBOSE" != "no"; then
+			# the user wants all the output we can generate
+			echo ""
+			invoke-rc.d monit reload || rc=${ERRMONIT}
+		else
+			invoke-rc.d --quiet monit reload >/dev/null || rc=${ERRMONIT}
+		fi
+	}
+	return $rc
+}
+
+get_link_name() {
+	echo "${MONITRCD}/$(basename $1)"
+}
+
+do_start() {
+	local rcfile=$1
+	shift
+	local linkname="$(get_link_name ${rcfile})"
+
+	log_verbose "do_start - does '${MONITRCD}' exist"
+	test ! -e "${MONITRCD}" && { mkdir -p "${MONITRCD}"; }
+
+	test ! -d "${MONITRCD}" && {
+		echo "Error: '${MONITRCD}' is not a directory"
+		return ${ERRCFG}
+	}
+
+	log_verbose "do_start - does '${linkname}' exist"
+	test -e "${linkname}" && {
+		log_verbose "do_start - '${linkname}' exists"
+		return ${ERROK}
+	}
+
+	log_verbose "do_start - creating symlink"
+	ln -sf "${rcfile}" "${linkname}"
+	monit_reload_config
+	return $?
+}
+
+do_stop() {
+	local rcfile=$1
+	local linkname="$(get_link_name ${rcfile})"
+
+	log_verbose "do_stop - test if symlink exists"
+	test ! -e "${linkname}" && {
+		log_verbose "do_stop - symlink didn't exist ending"
+		return ${ERROK}
+	}
+
+	log_verbose "do_stop - symlink exists, removing"
+	rm -f "${linkname}"
+	monit_reload_config
+	return $?
+}
+
+
+test $# -ne 2 && { shortusage; }
+
+rc=${ERROK}
+cmd=$1
+shift
+monitrc=$1
+shift
+
+if test -z "${monitrc}" || test ! -f "${monitrc}"; then
+	shortusage
+fi
+
+# if monit package is not installed don't do anything
+installed=$(dpkg-query --show --showformat='${Status}\n' monit)
+test "${installed}" != "install ok installed" && exit ${ERROK}
+
+case "${cmd}" in
+	start)
+		log_verbose "running do_start"
+		do_start "${monitrc}"
+		rc=$?;;
+	stop)
+		log_verbose "running do_stop"
+		do_stop "${monitrc}"
+		rc=$?;;
+	*)
+		shortusage;;
+esac
+exit $rc

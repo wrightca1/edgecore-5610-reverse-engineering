@@ -1,0 +1,46 @@
+#! /bin/bash
+#-------------------------------------------------------------------------------
+#
+# Copyright 2012 Cumulus Networks, inc.  All rights reserved
+#
+
+SWITCHD_SOCKET="/var/run/switchd.socket"
+LOCK_FILE="/var/run/.bcmcmd.lock"
+LOCK_FILE_TIMEOUT=10
+
+exec 9>$LOCK_FILE
+if ! flock -e -w $LOCK_FILE_TIMEOUT 9 ; then
+   echo "Another instance of this program is already running"
+   exit 0
+fi
+
+if (test "x$1" = "x")
+then
+    echo "usage: $0 \"bcm diag shell command\"" >&2
+    echo "       issue a single command to the diag shell via switchd" >&2
+    exit 1
+elif [ ! -e $SWITCHD_SOCKET ]
+then
+    echo "$SWITCHD_SOCKET does not exist, is switchd running?" >&2
+    exit 1
+elif [ ! -r $SWITCHD_SOCKET ] || [ ! -w $SWITCHD_SOCKET ]
+then
+    echo "can not read/write $SWITCHD_SOCKET, are you with correct permissions?" >&2
+    exit 1
+else
+    RETRY=5
+    while [ 1 ];
+    do
+        echo "$@" | socat -t 20 -T 20 - UNIX-CLIENT:$SWITCHD_SOCKET,connect-timeout=20,rcvtimeo=20 2> /dev/null | head -n -1
+        [ ${PIPESTATUS[1]} -eq 0 ] && break
+
+        RETRY=$((RETRY - 1))
+        [ $RETRY -eq 0 ] && break
+
+        sleep 1
+    done
+    if [ $RETRY -eq 0 ]; then
+       echo "error opening connection to $SWITCHD_SOCKET" >&2
+       exit 1
+    fi
+fi

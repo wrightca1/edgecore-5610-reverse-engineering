@@ -1,0 +1,1435 @@
+#!/usr/bin/python
+# PYTHON_ARGCOMPLETE_OK
+#
+# Copyright 2013.  Cumulus Networks, Inc.
+# Author: Roopa Prabhu, roopa@cumulusnetworks.com
+#
+# cl-acltool --
+#    tool to install cumulus acl policy/rules into kernel and hw
+#
+try:
+	import argcomplete
+	import argparse
+	import os
+	import shutil
+	import subprocess
+	import sys
+	import syslog
+	import time
+	import glob
+	from cumulus.aclpolicy import *
+except ImportError, e:
+	raise ImportError (str(e) + "- required module not found")
+
+ctrl_base = "/cumulus/switchd"
+policy_dir_default='/etc/cumulus/acl/policy.d'
+policy_conf_name='policy.conf'
+policy_conf='/etc/cumulus/acl/' + policy_conf_name
+policy_files=[]
+env_vars={}
+scratchdir = '/tmp/.acl' + '.%d' %os.getpid() + '/'
+varcachedir='/var/cache/cumulus/acltool/'
+varrundir='/var/run/acl/'
+varrundir_lastgoodpolicyfiles=varrundir + 'lastgoodpolicyfiles'
+donefile=varcachedir + 'installed'
+config = {}
+acl_handlers = {}
+debug = False
+verbose = False
+quiet = False
+version='1.0'
+hw_sync=True
+hw_wait=0
+log_method=""
+log_handler=None
+
+syslog_priority_map = { "crit" : syslog.LOG_CRIT,
+			"error" : syslog.LOG_ERR,
+			"info" : syslog.LOG_INFO,
+			"warn" : syslog.LOG_WARNING,
+			"debug" : syslog.LOG_DEBUG }
+
+stdout_priority_map = { "crit" : "error",
+			"error" : "error",
+			"info" : "",
+			"warn" : "warning",
+			"debug" : "debug" }
+
+def log_handler_stdout(priority, buf):
+	p = stdout_priority_map.get(priority, "")
+	if p != "":
+		p = p + ': '
+	print p + buf
+	sys.stdout.flush()
+
+def log_handler_syslog(priority, buf):
+	syslog.syslog(syslog_priority_map.get(priority, syslog.LOG_INFO), buf)
+
+def log_msg_begin(*args, **kwargs):
+	if quiet == False:
+		log_handler('', ''.join(args))
+
+def log_msg_end(ret):
+	if quiet == False:
+		if ret == 0:
+			log_handler('', 'done.')
+		else:
+			log_handler('', 'failed.')
+
+def log(*args, **kwargs):
+	if quiet == False:
+		log_handler("info", ''.join(args))
+
+def log_debug(*args, **kwargs):
+	if debug == True:
+		log_handler("debug", ''.join(args))
+
+def log_verbose(*args, **kargs):
+	if verbose == True:
+		log_handler("", ''.join(args))
+
+def log_error(*args, **kwargs):
+	log_handler("error", ''.join(args))
+
+def log_warn(*args, **kwargs):
+	log_handler("warn", ''.join(args))
+
+def log_crit(*args, **kwargs):
+	log_handler("crit", ''.join(args))
+
+def log_cmderr(cmd, cmdout):
+	log_error('cmd \'%s\'' %cmd +
+		' failed with the following error:\n' +
+		'(' + cmdout.rstrip('\n') + ')')
+
+def log_parseerr(filename, line, lineno, errstr=None):
+    errmsg = '%s: %d: invalid line \'%s\'' %(filename, lineno, line)
+    if errstr:
+        errmsg += ' (%s)' %errstr
+    log_error(errmsg)
+
+def createdir(dirpath):
+	mode = 0755
+	try:
+		log_debug('Creating dir ..' + dirpath)
+		if not os.path.exists(dirpath):
+			os.makedirs(dirpath, mode)
+	except OSError, e:
+		log_error('mkdir failed : ' + str(e))
+		return -1
+
+	return 0
+
+def removedir(dirpath):
+	try:
+		log_debug('Removing dir ..' + dirpath)
+		#os.removedirs(dirpath)
+		shutil.rmtree(dirpath)
+	except OSError, e:
+		log_error('rmdir failed : ' + str(e))
+		return -1
+
+	return 0
+
+def remove_file(filepath):
+	try:
+		os.remove(filepath)
+	except OSError, e:
+		pass
+
+def cat_file(filepath):
+	print '-' * 80
+	cmd = 'cat -n ' + filepath
+	print cmd
+	os.system(cmd)
+	print '-' * 80
+	print '\n'
+
+def touch_file(filepath):
+	try:
+		log_verbose('touch file %s' %filepath)
+		f = open(filepath, 'w')
+		os.utime(filepath, None)
+		f.close()
+	except OSError, e:
+		log_error('Could not touch file ' + filepath +
+			'(' + str(e) + ')')
+		return -1
+
+	return 0
+
+def exec_command(cmd, quiet):
+	retval = 0
+	cmd_returncode = 0
+	cmdout = ''
+
+	try:
+		log_verbose('Executing ' + cmd)
+		ch = subprocess.Popen(cmd.split(),
+				stdout=subprocess.PIPE,
+				shell=False, stderr=subprocess.STDOUT)
+		cmdout = ch.communicate()[0]
+		cmd_returncode = ch.wait()
+		if cmd_returncode != 0:
+			retval = -1
+
+	except OSError, e:
+		cmdout = 'Could not execute ' + cmd + '(' + str(e) + ')'
+		retval = -1
+
+	return (retval, cmdout)
+
+def read_config_file(filename):
+	global config
+	fconf_lines = []
+
+	log_verbose('Reading config file %s' %filename)
+
+	try:
+		fconf = open(filename, 'r')
+		fconf_lines = fconf.readlines()
+	except Exception as e:
+		raise RuntimeError(str(e))
+
+	if len(fconf_lines) == 0:
+		return 0
+
+	for l in fconf_lines:
+		l = l.strip()
+		if len(l) == 0:
+			continue
+		if l[0] == '#':
+			continue;
+
+		if re.search('^.*=.*', l, 0) != None:
+			l = re.sub(r'\s+', '', l)
+			l = l.rstrip('\n')
+			key_val = string.split(l, '=', 1)
+			if len(key_val[0]) > 0 and len(key_val[1]) > 0:
+				config[key_val[0]] = key_val[1]
+
+	if len(config) > 0:
+		log_debug('Config file contents :')
+		log_debug(str(config))
+
+	return 0
+
+def hw_init():
+	global hw_wait
+
+	while True:
+		try:
+			with open(ctrl_base + "/ctrl/acl/stop_stats_sync", "w") as f:
+				return 0
+		except IOError:
+			if not hw_wait:
+				log_error("failed to connect to hw")
+				return -1
+			time.sleep(1)
+			hw_wait -= 1
+
+def hw_sync_start():
+	# note: hidden file
+	with open(ctrl_base + "/ctrl/acl/stop_stats_sync", "w") as f:
+		f.write("1")
+	return 0
+
+def hw_sync_cancel():
+	# note: hidden file
+	with open(ctrl_base + "/ctrl/acl/reset_stats_sync", "w") as f:
+		f.write("1")
+	return 0
+
+def hw_sync_commit():
+	# note: hidden file
+	with open(ctrl_base + "/ctrl/acl/resync", "r+") as f:
+		f.write("1")
+		f.seek(0)
+		ret = f.read().strip()
+		if ret and len(ret) > 1:
+			log_crit('hw sync failed (%s)' %ret)
+			return -1
+	return 0
+
+def hw_sync_end():
+	# nop
+	return 0
+
+def iptables_restore_all_tables(basefilename, type, extra_options, noflush):
+	""" Invoke iptables restore for all tables.
+	filename is the prefix for all filenames """
+
+	err = 0
+	for table in iptables.kernel_tables:
+		filename = basefilename + '.' + table
+		if os.path.exists(filename):
+			if type == aclRuleType.iptables:
+				cmd, ret, cmdout = iptables.restore(table,
+						filename, 0, extra_options, verbose)
+			elif type == aclRuleType.ip6tables:
+				cmd, ret, cmdout = ip6tables.restore(table,
+						filename, 0, extra_options, verbose)
+			if ret != 0:
+				log_cmderr(cmd, cmdout)
+				cat_file(filename)
+				err += 1
+
+	if err != 0:
+		return -1
+
+	return 0
+
+def ebtables_restore_all_tables(basefilename):
+	err = 0
+	for table in ebtables.kernel_tables:
+		filename = basefilename + '.' + table
+		if os.path.exists(filename):
+			cmd, ret, cmdout = ebtables.restore(table, filename,
+						'', verbose)
+			if ret != 0:
+				log_cmderr(cmd, cmdout)
+				cat_file(filename)
+				err += 1
+
+	if err != 0:
+		return -1
+
+	return 0
+
+def iptables_save_all_tables(basefilename, type, noflush):
+	err = 0
+	for table in iptables.kernel_tables:
+		ret = 0
+		filename = basefilename + '.' + table
+		if type == aclRuleType.iptables:
+			log_verbose('Calling iptables save for '
+					'table %s' %table)
+			cmd, ret, cmdout = iptables.save(table,
+						filename, '-c',
+						verbose)
+		elif type == aclRuleType.ip6tables:
+			log_verbose('Calling ip6tables save for '
+					'table %s' %table)
+			cmd, ret, cmdout = ip6tables.save(table,
+						filename, '-c',
+						verbose)
+		if ret != 0:
+			log_cmderr(cmd, cmdout)
+			err += 1
+
+	if err != 0:
+		return -1
+
+	return 0
+
+def ebtables_save_all_tables(basefilename):
+	err = 0
+	for table in ebtables.kernel_tables:
+		filename = basefilename + '.' + table
+		log_verbose('Calling ebtables save for '
+				'table %s' %table)
+		cmd, ret, cmdout = ebtables.save(table, filename, '',
+						verbose)
+		if ret != 0:
+			log_cmderr(cmd, cmdout)
+			err += 1
+
+	if err != 0:
+		return -1
+
+	return 0
+	
+def iptables_rollback_common(fw_policies, type, orig_rules_filename):
+	return iptables_restore_all_tables(orig_rules_filename, type, '-c', 0)
+
+def iptables_rollback(fw_policies, orig_rules_filename):
+	return iptables_rollback_common(fw_policies,
+			aclRuleType.iptables, orig_rules_filename)
+
+def ip6tables_rollback(fw_policies, orig_rules_filename):
+	return iptables_rollback_common(fw_policies,
+			aclRuleType.ip6tables, orig_rules_filename)
+
+
+def iptables_install_common(fw_policies, type, new_filename):
+	return iptables_restore_all_tables(new_filename, type, '-u', 0)
+
+def iptables_install(fw_policies, orig_restore_file, new_restore_file):
+	return iptables_install_common(fw_policies,
+			aclRuleType.iptables, new_restore_file)
+
+def ip6tables_install(fw_policies, orig_restore_file, new_restore_file):
+	return iptables_install_common(fw_policies,
+			aclRuleType.ip6tables, new_restore_file)
+
+def iptables_prepare_install_common(fw_policies, type,
+		orig_rules_filename, new_rules_filename):
+	rule_cnts = {}
+	rule_newfilenames = {}
+	rule_oldfilenames = {}
+	rule_bufs = {}
+	ret = 0
+
+	# Initialize
+	for table in iptables.kernel_tables:
+		rule_cnts[table] = 0
+		rule_newfilenames[table] = new_rules_filename + '.' + table
+		rule_oldfilenames[table] = orig_rules_filename + '.' + table
+		rule_bufs[table] = []
+
+	# Create restore files for each table
+	for fw_policy in fw_policies:
+		rules = fw_policy.get_rules()
+		if rules == None:
+			continue
+
+		rindex = 0
+		while rindex < len(rules):
+			r = rules[rindex]
+			table = r.get_table()
+			if table == None:
+				table = 'filter'
+
+			r_pair = None
+			if r.get_type() == type:
+				if r.has_sibling() != 0:
+					r_pair = rules[rindex + 1]
+
+				if rule_cnts[table] == 0:
+					rule_bufs[table].append('\n#policy: %s\n' %fw_policy.get_name())
+
+				rule_bufs[table].append('#\n#' +
+						'line: %d' %r.get_lineno() +
+						', rule: \'%s\'\n'
+						%r.get_rule_str())
+
+				if r_pair !=None:
+					rule_bufs[table].append('#' +
+					'(rule_pair) line: %d'
+						%r_pair.get_lineno() +
+						', rule: \'%s\'\n'
+						%r_pair.get_rule_str())
+
+				rule_strs = r.get_processed_rule_str_list()
+				if r_pair != None:
+					rule_pair_strs = r_pair.get_processed_rule_str_list()
+				else:
+					rule_pair_strs = None
+
+				for rstr_index in range(0, len(rule_strs)):
+					rule_str = rule_strs[rstr_index]
+					rule_bufs[table].append(rule_str + '\n')
+					rule_cnts[table] += 1
+
+					if rule_pair_strs != None:
+						rule_pair_str = rule_pair_strs[rstr_index]
+						rule_bufs[table].append(rule_pair_str + '\n')
+						rule_cnts[table] += 1
+
+				if r_pair != None:
+					rindex += 1
+
+			rindex += 1
+
+
+	for table in iptables.kernel_tables:
+		if rule_cnts[table] > 0:
+			if type == aclRuleType.iptables:
+				cmd, ret, cmdout = iptables.save(table,
+						rule_oldfilenames[table], '-c',
+						verbose)
+			else:
+				cmd, ret, cmdout = ip6tables.save(table,
+						rule_oldfilenames[table], '-c',
+						verbose)
+			if ret != 0:
+				break
+
+			try:
+				f = open(rule_newfilenames[table], 'w')
+			except IOError, e:
+				log_error('Could not open file %s '
+					%rule_newfilenames[table] +
+					'(%s)' + str(e))
+				ret = -1
+				break
+
+			f.write('*%s\n' %table)
+			f.writelines(rule_bufs[table])
+			f.write('COMMIT\n')
+			f.close()
+			log_debug('Created ' + rule_newfilenames[table])
+
+			if debug == True:
+				cat_file(rule_newfilenames[table])
+		else:
+			# No rules, we assume user wanted to not install
+			# any rules here, flush rules
+			if type == aclRuleType.iptables:
+				(cmd, fret, cmd_out) = iptables.flush(table, '',
+								verbose)
+			else:
+				(cmd, fret, cmd_out) = ip6tables.flush(table,
+								'', verbose)
+
+	if ret != 0:
+		# Delete all files
+		for table in iptables.kernel_tables:
+			remove(rule_oldfilenames[table])
+			remove(rule_newfilenames[table])
+		return -1
+
+	return 0
+
+def iptables_prepare_install(fw_policies, orig_rules_file,
+		new_rules_file):
+	return iptables_prepare_install_common(fw_policies,
+		aclRuleType.iptables, orig_rules_file,
+		new_rules_file)
+
+	
+def ip6tables_prepare_install(fw_policies, orig_rules_file,
+		new_rules_file):
+	return iptables_prepare_install_common(fw_policies,
+		aclRuleType.ip6tables, orig_rules_file,
+		new_rules_file)
+
+def ebtables_rollback(fw_policies, orig_rules_filename):
+	return ebtables_restore_all_tables(orig_rules_filename)
+
+def ebtables_install(fw_policies, orig_rules_filename,
+		new_rules_filename):
+	rule_cnts = {}
+	rule_newfilenames = {}
+	rule_oldfilenames = {}
+	rule_bufs = {}
+	ret = 0
+	err = 0
+
+
+	# Initialize
+	for table in ebtables.kernel_tables:
+		rule_cnts[table] = 0
+		rule_newfilenames[table] = new_rules_filename + '.' + table
+		rule_oldfilenames[table] = orig_rules_filename + '.' + table
+		rule_bufs[table] = []
+
+	# Create restore files for each table, store contents in rule_bufs
+	for fw_policy in fw_policies:
+		rules = fw_policy.get_rules()
+		if rules == None:
+			continue
+
+		for r in rules:
+			table = r.get_table()
+			if table == None:
+				table = 'filter'
+
+			if r.get_type() == aclRuleType.ebtables:
+				rule_strs = r.get_processed_rule_str_list()
+				for rule_str in rule_strs:
+					rule_bufs[table].append(rule_str + '\n')
+					rule_cnts[table] += 1
+
+	err = 0
+	for table in ebtables.kernel_tables:
+		if rule_cnts[table] > 0:
+			log_verbose('Installing ebtable rules for table %s'
+					%table)
+			cmd_prefix = ('/sbin/ebtables --atomic-file %s '
+						%rule_newfilenames[table])
+
+			#init the install file
+			cmd = cmd_prefix + '--atomic-init'
+			log_verbose('Initializing install file..')
+			(cmdret, cmdout) = exec_command(cmd, verbose)
+			if ret != 0:
+				log_cmderr(cmd, cmdout)
+				err += 1
+				break
+
+			for rbuf in rule_bufs[table]:
+				if re.search('^#', rbuf) == None:
+					cmd = cmd_prefix + rbuf
+					(cmdret, cmdout) = exec_command(cmd,
+								verbose)
+					if cmdret != 0:
+						log_cmderr(cmd, cmdout)
+						err += 1
+						remove_file(rule_newfilenames[table])
+						break
+			if err > 0:
+				break
+
+			log_verbose('Created ' + rule_newfilenames[table])
+			if debug == 1:
+				cat_file(rule_newfilenames[table])
+			cmd, cmdret, cmdout = ebtables.restore(table,
+						rule_newfilenames[table], '',
+						verbose)
+			if cmdret != 0:
+				log_cmderr(cmd, cmdout)
+				err += 1
+				break
+		else:
+			# If no rules for the table, just delete the saved file
+			remove_file(rule_oldfilenames[table])
+
+			# Also flush rules:
+			# XXX: This is because today, we want to support
+			# 'no rules in file' = 'no rules in kernel'
+			(cmd, fret, cmd_out) = ebtables.flush(table, '',
+							verbose)
+
+
+	if err > 0:
+		for t in ebtables.kernel_tables:
+			# Lets restore tables we had flushed
+			if os.path.exists(rule_oldfilenames[table]):
+				cmd, cmdret, cmdout = ebtables.restore(table,
+						rule_oldfilenames[table], '',
+						verbose)
+				if ret != 0:
+					log_cmderr(cmd, cmdout)
+
+			remove_file(rule_oldfilenames[table])
+			remove_file(rule_newfilenames[table])
+			if t == table:
+				break
+		return -1
+
+	return 0
+
+def ebtables_prepare_install(fw_policies, orig_rules_filename,
+		new_rules_filename):
+	return ebtables_save_all_tables(orig_rules_filename)
+
+def iptables_flush_prepare(basefilename):
+	return iptables_save_all_tables(basefilename, aclRuleType.iptables, 0)
+
+def ip6tables_flush_prepare(basefilename):
+	return iptables_save_all_tables(basefilename, aclRuleType.ip6tables, 0)
+
+def ebtables_flush_prepare(basefilename):
+	return ebtables_save_all_tables(basefilename)
+
+def iptables_flush():
+	err = 0
+	for table in iptables.kernel_tables:
+		log_verbose('Calling iptables flush for table ' + table)
+		(cmd, ret, cmd_out) = iptables.flush(table, '', verbose)
+		if ret != 0:
+			log_cmderr(cmd, cmd_out)
+			err += 1
+
+	if err > 0:
+		return -1
+
+	return 0
+
+def ip6tables_flush():
+	err = 0
+	for table in ip6tables.kernel_tables:
+		log_verbose('Calling ip6tables flush for table ' + table)
+		(cmd, ret, cmd_out) = ip6tables.flush(table, '', verbose)
+		if ret != 0:
+			log_cmderr(cmd, cmd_out)
+			err += 1
+
+	if err > 0:
+		return -1
+
+	return 0
+
+def ebtables_flush():
+	err = 0
+	for table in ebtables.kernel_tables:
+		log_verbose('Calling ebtables flush for table ' + table)
+		(cmd, ret, cmd_out) = ebtables.flush(table, '', verbose)
+		if ret != 0:
+			log_cmderr(cmd, cmd_out)
+			err += 1
+
+	if err > 0:
+		return -1
+
+	return 0
+
+def iptables_set_counters(counter_val):
+	err = 0
+	for table in iptables.kernel_tables:
+		if counter_val == 0:
+			log_verbose('Calling iptables zero counters for table '
+					+ table)
+			(cmd, ret, cmd_out) = iptables.zero_counters(table,
+							'', verbose)
+			if ret != 0:
+				log_cmderr(cmd, cmd_out)
+				err += 1
+
+	if err > 0:
+		return -1
+
+	return 0
+
+
+def ip6tables_set_counters(counter_val):
+	err = 0
+	for table in ip6tables.kernel_tables:
+		if counter_val == 0:
+			log_verbose('Calling ip6tables zero counters for table '
+					+ table)
+			(cmd, ret, cmd_out) = ip6tables.zero_counters(table,
+							'', verbose)
+			if ret != 0:
+				log_cmderr(cmd, cmd_out)
+				err += 1
+	if err > 0:
+		return -1
+
+	return 0
+
+def ebtables_set_counters(counter_val):
+	err = 0
+	for table in ebtables.kernel_tables:
+		if counter_val == 0:
+			log_verbose('Calling ebtables zero counters for table '
+					+ table)
+			(cmd, ret, cmd_out) = ebtables.zero_counters(table,
+							'', verbose)
+			if ret != 0:
+				log_cmderr(cmd, cmd_out)
+				err += 1
+	if err > 0:
+		return -1
+
+	return 0
+
+def iptables_list():
+	err = 0
+	for table in iptables.kernel_tables:
+		log('TABLE %s :' %table)
+		(cmd, ret, cmd_out) = iptables.list(table,
+					'-v', verbose)
+		if ret != 0:
+			log_cmderr(cmd, cmd_out)
+			err += 1
+		else:
+			print '\n\n'
+	if err > 0:
+		return -1
+
+	return 0
+
+def ip6tables_list():
+	err = 0
+	for table in ip6tables.kernel_tables:
+		log('TABLE %s :' %table)
+		(cmd, ret, cmd_out) = ip6tables.list(table,
+					'-v', verbose)
+		if ret != 0:
+			log_cmderr(cmd, cmd_out)
+			err += 1
+		else:
+			print '\n\n'
+	if err > 0:
+		return -1
+
+	return 0
+
+def ebtables_list():
+	err = 0
+	for table in ebtables.kernel_tables:
+		log('TABLE %s :' %table)
+		(cmd, ret, cmd_out) = ebtables.list(table,
+					'--Lc', verbose)
+		if ret != 0:
+			log_cmderr(cmd, cmd_out)
+			err += 1
+		else:
+			print '\n\n'
+	if err > 0:
+		return -1
+
+	return 0
+
+
+acl_handlers = {
+	aclRuleType.iptables :
+		{ 'prepare' : iptables_prepare_install,
+		  'install' : iptables_install,
+		  'rollback' : iptables_rollback,
+		  'orig_rules_file' : 'iptables.save',
+		  'new_rules_file' : 'iptables.restore',
+		  'flush' : iptables_flush,
+		  'flush_prepare' : iptables_flush_prepare,
+		  'flush_rollback' : iptables_rollback,
+		  'setcounter' : iptables_set_counters,
+		  'list' : iptables_list},
+	aclRuleType.ip6tables :
+		{ 'prepare' : ip6tables_prepare_install,
+		  'install' : ip6tables_install,
+		  'rollback' : ip6tables_rollback,
+		  'orig_rules_file' : 'ip6tables.save',
+		  'new_rules_file' : 'ip6tables.restore',
+		  'flush' : ip6tables_flush,
+		  'flush_prepare' : ip6tables_flush_prepare,
+		  'flush_rollback' : ip6tables_rollback,
+		  'setcounter' : ip6tables_set_counters,
+		  'list' : ip6tables_list},
+	aclRuleType.ebtables :
+		{ 'prepare' : ebtables_prepare_install,
+		  'install' : ebtables_install,
+		  'rollback' : ebtables_rollback,
+		  'orig_rules_file' : 'ebtables.save',
+		  'new_rules_file' : 'ebtables.restore',
+		  'flush' : ebtables_flush,
+		  'flush_prepare' : ebtables_flush_prepare,
+		  'flush_rollback' : ebtables_rollback,
+		  'setcounter' : ebtables_set_counters,
+		  'list' : ebtables_list},
+	}
+
+def run_handler(fw_policies, handler_name):
+	# Prepare rules for install
+	for type, handlers in sorted(acl_handlers.iteritems()):
+		hndlr = handlers.get(handler_name)
+		if hndlr != None:
+			log_debug('Running handler ' + handler_name +
+				+  ' through rules of type %s'
+				%aclRuleType.to_str(type))
+			ret = hndlr(fw_policies)
+			if ret != 0 :
+				return -1
+
+	return 0
+
+
+
+def install_policies(fw_policies):
+	ret = 0
+
+	# prepare for install
+	log_verbose('Running install prepare handlers ..')
+	for type, handlers in sorted(acl_handlers.iteritems()):
+		hndlr = handlers.get('prepare')
+		if hndlr != None:
+			log_debug('Running handler prepare ' +
+				'through rules of type %s'
+				%aclRuleType.to_str(type))
+			ret = hndlr(fw_policies,
+				scratchdir + handlers.get('orig_rules_file'),
+				scratchdir + handlers.get('new_rules_file'))
+			if ret != 0:
+				return ret
+
+
+	if hw_sync == True:
+		log_verbose('Sending hw sync start signal ...');
+		ret = hw_sync_start()
+		if ret != 0:
+			log('hw sync start notify returned err, aborting')
+			return -1
+
+	# install rules
+	rollback_all = 0
+	sync_cancel = 0
+	log_verbose('Running install handlers ..')
+	for type, handlers in sorted(acl_handlers.iteritems()):
+		hndlr = handlers.get('install')
+		if hndlr != None:
+			log_verbose('Running handler install ' +
+				'through rules of type %s'
+				%aclRuleType.to_str(type))
+			rules_file = scratchdir + handlers.get('new_rules_file')
+			ret = hndlr(fw_policies, 
+				scratchdir + handlers.get('orig_rules_file'),
+				scratchdir + handlers.get('new_rules_file'))
+			if ret != 0:
+				if os.path.exists(rules_file):
+					cat_file(rules_file)
+				sync_cancel = 1
+				break
+
+	if ret == 0 and hw_sync == True:
+		log_verbose('Sending hw sync signal ...');
+		ret = hw_sync_commit()
+		if ret != 0:
+			rollback_all = 1
+
+	if ret != 0:
+		if sync_cancel == 1 and hw_sync == True:
+			log_verbose('Sending hw sync cancel signal ..')
+			hw_sync_cancel()
+
+		log('Rolling back ..')
+		failed_type = type
+		for type, handlers in sorted(acl_handlers.iteritems()):
+
+			#roll back for all types < failed_type
+			# XX: Normally type >= failed_type is the right thing
+			# to do, except in the ebtables case, where we
+			# also do a flush. It does not harm so, also include
+			# restore for the type that failed
+			if rollback_all == 0 and type > failed_type:
+				break
+
+			hndlr = handlers.get('rollback')
+			if hndlr != None:
+				log_debug('Running handler rollback' +
+					' through rules of type %s'
+					%aclRuleType.to_str(type))
+				rollret = hndlr(fw_policies, scratchdir +
+					handlers.get('orig_rules_file'))
+				if rollret != 0:
+					log_warn('roll back handler for rule' +
+						' type ' + aclRuleType.to_str(
+							type) + ' failed')
+
+	if ret == 0 and hw_sync == True:
+		log_verbose('Sending hw sync end signal ...');
+		retend = hw_sync_end()
+		if retend != 0:
+			log_warn('hw sync end notify returned err')
+
+	return ret
+
+def flush_rules(rule_type_str):
+	ret = 0
+
+	rule_type = aclRuleType.from_str_short(rule_type_str)
+	if rule_type == -1 and rule_type_str != "all":
+		log_error('Invalid flush arg')
+		return -1
+
+	# prepare 
+	log_verbose('Running prepare handlers ..')
+	for type, handlers in sorted(acl_handlers.iteritems()):
+		if rule_type == type or rule_type_str == 'all':
+			hndlr = handlers.get('flush_prepare')
+			if hndlr != None:
+				log_verbose('Running handler prepare ' +
+					'through rules of type %s'
+					%aclRuleType.to_str(type))
+				ret = hndlr(scratchdir +
+					handlers.get('orig_rules_file'))
+				if ret != 0:
+					return ret
+
+
+	if hw_sync == True:
+		log_verbose('Sending hw sync start signal ...');
+		ret = hw_sync_start()
+		if ret != 0:
+			log('hw sync start notify returned err, aborting')
+			return -1
+
+	# flushing  rules
+	rollback_all = 0
+	sync_cancel = 0
+	log_verbose('Running flush handlers ..')
+	for type, handlers in sorted(acl_handlers.iteritems()):
+		if rule_type == type or rule_type_str == 'all':
+			hndlr = handlers.get('flush')
+			if hndlr != None:
+				log_verbose('Running handler flush ' +
+					'through rules of type %s'
+					%aclRuleType.to_str(type))
+				ret = hndlr()
+				if ret != 0:
+					sync_cancel = 1
+					break
+
+	if ret == 0 and hw_sync == True:
+		log_verbose('Sending hw sync signal ...');
+		ret = hw_sync_commit()
+		if ret != 0:
+			rollback_all = 1
+
+	if ret != 0:
+		if sync_cancel == 1 and hw_sync == True:
+			log_verbose('Sending hw sync cancel signal ..')
+			hw_sync_cancel()
+
+		log('Rolling back ..')
+		failed_type = type
+		for type, handlers in sorted(acl_handlers.iteritems()):
+			if rule_type == type or rule_type_str == 'all':
+
+				#roll back for all types < failed_type
+				# XX: Normally type >= failed_type is the
+				# right thing to do, except in the ebtables
+				# case, where we also do a flush. It does not
+				# harm so, also include restore for the type
+				# that failed
+				if rollback_all == 0 and type > failed_type:
+					break
+
+				hndlr = handlers.get('rollback')
+				if hndlr != None:
+					log_debug('Running handler rollback' +
+						' through rules of type %s'
+						%aclRuleType.to_str(type))
+					rollret = hndlr(None, scratchdir +
+						handlers.get('orig_rules_file'))
+					if rollret != 0:
+						log_warn('roll back handler '
+							+ 'for rule type ' +
+							aclRuleType.to_str(
+							type) + ' failed')
+
+	if ret == 0 and hw_sync == True:
+		log_verbose('Sending hw sync end signal ...');
+		retend = hw_sync_end()
+		if retend != 0:
+			log_warn('hw sync end notify returned err')
+
+	return ret
+
+
+def set_counters(rule_type_str, counter_val):
+	err = 0
+
+	rule_type = aclRuleType.from_str_short(rule_type_str)
+	if rule_type == -1 and rule_type_str != "all":
+		log_error('Invalid setcounters arg')
+		return -1
+
+	for type, handlers in sorted(acl_handlers.iteritems()):
+		if rule_type == type or rule_type_str == 'all':
+			setcounterfunc = handlers.get('setcounter')
+			if setcounterfunc != None:
+				log_verbose('Setting counters to zero for ' +
+					'rules of type %s'
+					%aclRuleType.to_str(type))
+				ret = setcounterfunc(counter_val)
+				if ret != 0:
+					err += 1
+	if err > 0:
+		return -1
+
+	return 0
+
+def list_rules(rule_type_str):
+	err = 0
+
+	rule_type = aclRuleType.from_str_short(rule_type_str)
+	if rule_type == -1 and rule_type_str != "all":
+		log_error('Invalid list rules arg')
+		return -1
+
+	for type, handlers in sorted(acl_handlers.iteritems()):
+		if rule_type == type or rule_type_str == 'all':
+			listfunc = handlers.get('list')
+			if listfunc != None:
+				msg = ('Listing rules of type %s:'
+						%aclRuleType.to_str(type))
+				print '-' * len(msg)
+				log(msg)
+				print '-' * len(msg)
+				ret = listfunc()
+				if ret != 0:
+					err += 1
+	if err > 0:
+		return -1
+
+	return 0
+
+def read_policy_file(fw_policy_file):
+	"""Calls acl module to read
+	   and parse rules in the rule file """
+	global env_vars
+
+	log('Reading rule file %s ...' %fw_policy_file)
+	fw_policy = aclPolicy(fw_policy_file, env_vars)
+	if not fw_policy:
+		return None
+	log('Processing rules in file %s ...' %fw_policy_file)
+	ret = fw_policy.process()
+	if ret:
+		log_verbose('Could not process rules in policy %s'
+				%fw_policy.get_name())
+		del(fw_policy)
+		return None
+	return fw_policy
+
+def get_policy_files_from_dir(policy_dir):
+	""" Calls read_acl_policy_file for all files
+	    under dir policy_dir """
+	global policy_files
+	err = 0
+
+	try:
+		r_dir = os.path.abspath(policy_dir)
+		if not r_dir.endswith("/"):
+			r_dir += "/"
+			policy_file_list = os.listdir(r_dir)
+	except Exception, e:
+		log_error('failed to read rules directory %s (%s)'
+					%(policy_dir, str(e)))
+		return None
+
+	for policy_file in sorted(policy_file_list):
+		# skip hidden files
+		if re.search('^\.|.*~$', os.path.basename(policy_file)):
+			continue
+		policy_files.append('%s/%s' %(policy_dir,policy_file))
+
+def get_policy_files_from_conf(policy_conffile):
+	global env_vars
+	global policy_files
+
+	try:
+		f = open(policy_conffile, 'r')
+		lines = f.readlines()
+		f.close()
+	except IOError, e:
+		log_warn('failed to open policy config file (%s)' %(str(e)))
+		pass
+		return
+
+	lineno = 1
+	for l in lines:
+		l = l.strip(' \t\n\r')
+		l = l.strip(' ')
+		if not l:
+			lineno += 1
+			continue
+		# if comment
+		if l[0] == '#':
+			lineno += 1
+			continue
+		# if env variable
+		m = re.match(r"(\w+)[\s]*=[\s]*(.*$)", l)
+		if m:
+			mlist = m.groups()
+			if mlist and len(mlist) == 2 and all(mlist):
+				env_vars[mlist[0]]=mlist[1]
+		elif l[:8] == 'include ':
+			# if include
+			try :
+				pfiles = sorted(glob.glob(l.split()[1]))
+				if cmdline_args.lastgood:
+					# replace path with lastgood files dir
+					lastgoodpfiles = ['%s/%s' %(varrundir_lastgoodpolicyfiles,
+										os.path.basename(p)) for p in pfiles]
+					policy_files.extend(lastgoodpfiles)
+				else:
+					policy_files.extend(pfiles)
+			except Exception, e:
+				log_parseerr(policy_conffile, l, lineno, errstr=str(e))
+				pass
+		else:
+			log_parseerr(policy_conffile, l, lineno)
+		lineno += 1
+
+def read_policy_files():
+	global policy_files
+	err = 0
+	fw_policies = []
+
+	for policy_file in policy_files:
+		# skip hidden files
+		if re.search('^\.|.*~$', os.path.basename(policy_file)):
+			continue
+		fw_policy = read_policy_file(policy_file)
+		if fw_policy:
+			fw_policies.append(fw_policy)
+		else:
+			if not cmdline_args.dry_run:
+				return None
+			# else, if we are only checking the file, 
+			# lets continue
+			err += 1
+	if err > 0:
+		return None
+	return fw_policies
+
+def log_init():
+	global log_handler
+
+	if log_method == "syslog":
+		syslog.openlog("cl-acltool", syslog.LOG_CONS | syslog.LOG_PID,
+				syslog.LOG_DAEMON)
+		log_handler = log_handler_syslog
+	else:
+		log_handler = log_handler_stdout
+
+def init():
+	""" initialization """
+	ret = createdir(scratchdir)
+	if ret == -1:
+		log_error('Could not create scratchdir ' + scratchdir)
+		return -1
+
+	ret = createdir(varcachedir)
+	if ret == -1:
+		log_error('Could not create ' + varcachedir)
+		return -1
+
+	ret = createdir(varrundir_lastgoodpolicyfiles)
+	if ret == -1:
+		log_error('Could not create ' + varrundir_lastgoodpolicyfiles)
+		return -1
+
+	if hw_sync == True:
+		log_verbose('Initializing hw communication ..')
+		ret = hw_init()
+		if ret != 0:
+			return -1
+
+	return 0
+
+
+def deinit():
+	""" Cleanup """
+	removedir(scratchdir)
+
+def save_installed_state(cmdline_args):
+
+	touch_file(donefile)
+	if cmdline_args.lastgood:
+		return
+	os.system('rm -f %s/*' %varrundir_lastgoodpolicyfiles)
+	if not cmdline_args.policy_file and not cmdline_args.policy_dir:
+		# copy policy.conf, If the user used it
+		os.system('cp -f %s %s/ 2>/dev/null'
+				%(policy_conf, varrundir_lastgoodpolicyfiles))
+	map((lambda p: os.system('cp -f %s %s/' %(p, varrundir_lastgoodpolicyfiles))), policy_files)
+	return
+
+if __name__ == "__main__":
+	""" main function """
+	descr = 'acl policy and rule administration'
+	fw_policies = []
+	ret = 0
+
+	if not os.geteuid() == 0:
+		print 'Error: Must be root to run this command'
+		exit(1)
+
+	arg_parser = argparse.ArgumentParser(description=descr)
+
+	# Command line arg parser
+	#
+	group = arg_parser.add_mutually_exclusive_group(required=True)
+	group.add_argument('-i', '--install', dest='install',
+			   action='store_true',
+			   help='Install acl rules')
+	group.add_argument('--hw-sync', dest='hw_sync',
+			action='store_true', help=argparse.SUPPRESS)
+	group.add_argument('-F', '--flush', dest='flush_type',
+			choices=['all', 'ip', 'ip6',
+			'eb'],
+			help='flush rules')
+	group.add_argument('-Z', '--zero-counters', dest='zero_counters',
+			choices=['all', 'ip', 'ip6',
+			'eb'], help='Zero counters')
+	group.add_argument('-L', '--list', dest='list',
+			choices=['all', 'ip', 'ip6',
+			'eb'], help='List rules')
+	group.add_argument('-V', '--version', dest='version',
+			action='store_true', help='show version')
+
+	# XXX: Support append (?) maybe. keep it hidden,
+	# ie iptables-restore --noflush
+	#group.add_argument('--append', dest='append', action='store_true',
+	#		    help=argparse.SUPPRESS)
+
+	arg_parser.add_argument('-p', '--policy', dest='policy_file',
+				action='append',
+				help='acl policy file name')
+
+	arg_parser.add_argument('-P', '--policy-dir', dest='policy_dir',
+				help='policy dir.')
+	arg_parser.add_argument('-n', '--dry-run', dest='dry_run',
+				action='store_true', help='dry run')
+	arg_parser.add_argument('-v', '--verbose', dest='verbose',
+				action='store_true', help='verbose')
+	arg_parser.add_argument('-d', '--debug', dest='debug',
+				action='store_true', help=argparse.SUPPRESS)
+	arg_parser.add_argument('-q', '--quiet', dest='quiet',
+				action='store_true', help=argparse.SUPPRESS)
+	arg_parser.add_argument('-w', '--hw-wait', dest='hw_wait', type=int,
+				help=argparse.SUPPRESS)
+	arg_parser.add_argument('--no-hw-sync', dest='no_hw_sync',
+				action='store_true', help=argparse.SUPPRESS)
+	arg_parser.add_argument('--last-good', dest='lastgood',
+				action='store_true', help='install last good acl policies')
+	arg_parser.add_argument('--log', dest='log',
+				choices=['syslog'],
+				help=argparse.SUPPRESS)
+
+	argcomplete.autocomplete(arg_parser)
+
+	# Parse command line arguments
+	cmdline_args = arg_parser.parse_args()
+
+	if cmdline_args.log != None:
+		log_method = cmdline_args.log
+
+	log_init()
+
+	if cmdline_args.version == True:
+		log('version: %s' %version)
+		exit(0)
+
+	if cmdline_args.policy_file and not cmdline_args.install:
+		log_error('policy_file needed only with -i\n')
+		arg_parser.print_help()
+		exit(1)
+
+	if cmdline_args.policy_dir and not cmdline_args.install:
+		log_error('policy_dir needed only with -i\n')
+		arg_parser.print_help()
+		exit(1)
+
+	if cmdline_args.dry_run and not cmdline_args.install:
+		log_error('dry run only supported with -i\n')
+		arg_parser.print_help()
+		exit(1)
+
+	if cmdline_args.lastgood and not cmdline_args.install:
+		log_error('option last good is only supported with -i\n')
+		arg_parser.print_help()
+		exit(1)
+
+	if cmdline_args.verbose:
+		verbose = True
+
+	if cmdline_args.debug:
+		debug = 1
+		verbose = True
+
+	if cmdline_args.quiet:
+		quiet = True
+		debug = True
+		verbose = True
+
+	if cmdline_args.no_hw_sync:
+		log_warn('Running in no-hw-sync mode. No ' +
+				'rules will be programmed in hw')
+		hw_sync = False
+
+	if cmdline_args.hw_wait:
+		hw_wait = cmdline_args.hw_wait
+
+	if cmdline_args.hw_sync:
+		# Send sync signal to hw
+		ret = init()
+		if ret != 0:
+			log('init failed, aborting')
+			exit(1)
+
+		log_msg_begin('Sending hw sync signal')
+		ret = hw_sync_commit()
+		log_msg_end(ret)
+		deinit()
+		exit(ret)
+	elif cmdline_args.zero_counters:
+		log_msg_begin('Setting counters to zero')
+		ret = set_counters(cmdline_args.zero_counters, 0)
+		log_msg_end(ret)
+		exit(ret)
+	elif cmdline_args.list:
+		ret = list_rules(cmdline_args.list)
+		exit(ret)
+
+	if (cmdline_args.policy_dir):
+		policy_dir = cmdline_args.policy_dir
+	elif (cmdline_args.lastgood):
+		policy_dir = varrundir_lastgoodpolicyfiles
+	else:
+		policy_dir = None
+
+	if policy_dir and not os.path.exists(policy_dir):
+		log_error('Cannot find policy dir ' +
+			policy_dir)
+		exit(1)
+
+	# Initialize
+	ret = init()
+	if ret != 0:
+		log('init failed, aborting')
+		deinit()
+		exit(1)
+
+	if cmdline_args.flush_type != None:
+		log_msg_begin('Flushing rules')
+		ret = flush_rules(cmdline_args.flush_type)
+		log_msg_end(ret)
+		deinit()
+		exit(ret)
+
+	if cmdline_args.policy_file:
+		filesnotfound = [f for f in cmdline_args.policy_file
+							if not os.path.exists(f)]
+		if filesnotfound:
+			log_error('Cannot find policy files: %s' %str(filesnotfound))
+			deinit()
+			exit(1)
+		policy_files = cmdline_args.policy_file
+	elif cmdline_args.lastgood:
+		lastgood_conf = '%s/%s' %(varrundir_lastgoodpolicyfiles,
+										policy_conf_name)
+		if os.path.exists(lastgood_conf):
+			# If lastgood conf exists, use that to read files and
+			# variables. But note that the paths read from the conf
+			# file has to now be relative to the lastgood dir
+			get_policy_files_from_conf(lastgood_conf)
+		else:
+			# else read the files in sorted order
+			get_policy_files_from_dir(policy_dir)
+	elif policy_dir:
+		get_policy_files_from_dir(policy_dir)
+	else:
+		# Get policy_files from conf file
+		get_policy_files_from_conf(policy_conf)
+
+	if not policy_files:
+		log_error('no policy files found')
+		deinit()
+		exit(1)
+
+	log_verbose('Installing policy files : %s' %(', '.join(policy_files)))
+	fw_policies = read_policy_files()
+	if not fw_policies:
+		ret = 1
+
+	if cmdline_args.dry_run:
+		# We are all done, exit
+		log_msg_end(ret)
+		deinit()
+		exit(ret)
+	
+	if ret:
+		log('No acl policies to install, ... aborting')
+		deinit()
+		exit (1)
+
+	num_rules = 0
+	for f in fw_policies:
+		num_rules = num_rules + len(f.get_rules())
+	
+	if num_rules == 0:
+		log('No valid rules found, ... aborting')
+		deinit()
+		exit (1)
+
+	log_verbose('Found %d acl policies' %len(fw_policies))
+
+	if debug == True:
+		log('Dumping processed acl policy ...')
+		for p in fw_policies:
+			p.dump()
+
+	if cmdline_args.install == True:
+		log_msg_begin('Installing acl policy')
+		ret = install_policies(fw_policies)
+		log_msg_end(ret)
+		if ret == 0:
+			save_installed_state(cmdline_args)
+
+	deinit()
+
+	exit(ret)

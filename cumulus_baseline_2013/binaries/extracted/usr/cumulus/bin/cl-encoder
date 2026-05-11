@@ -1,0 +1,1189 @@
+#!/usr/bin/python
+#
+# Copyright 2014 Cumulus Networks, LLC.
+# All rights reserved.
+#
+import sys
+import re
+import json
+
+# Class used to represent a column of output from a networking related program
+class Column():
+    def __init__(self, index, height):
+        self.index = index
+        self.text = []
+        self.left_border = 0
+        self.right_border = 0
+        self.max_streak_starting_row = None
+        self.max_streak = None
+
+        for x in range(0, height):
+            self.text.append(' ')
+
+    def update_row(self, row, character):
+        self.text[row] = character
+
+# Class used to represent a row of output from a networking related program
+class Line():
+    def __init__(self, text, number):
+
+        # Remove newlines and trailing whitespaces
+        self.text = text
+        self.text = self.text.rstrip('\n')
+        self.text = self.text.rstrip()
+        self.width = len(self.text)
+        self.number = number
+
+
+        # text_compressed will compress duplicates spaces to a single space
+        # This will also have leading and trailing whitespaces removed
+        self.text_compressed = text
+        self.text_compressed = re.sub(' +',' ', self.text_compressed)
+        self.text_compressed = self.text_compressed.lstrip(' ')
+        self.text_compressed = self.text_compressed.rstrip(' ')
+
+        # Figure out how many spaces this line is indented
+        result = re.search('^(\s+)', self.text)
+        if (result):
+            self.indention = len(result.group(1))
+        else:
+            self.indention = 0
+
+        (self.text_regexed, self.types, self.key_value_pairs) = self.regex_output()
+
+    # This takes a line of text such as:
+    #
+    #   inet 10.0.1.249/22 brd 10.0.3.255 scope global eth0
+    #
+    # And parses it to extract common data types that you see in the output
+    # of networking applications.  We'll return a string like the following
+    # so that you can see exactly what we did/did not recognize as a common
+    # data type.
+    #
+    #   inet IPv4ADDRESS/MASK brd IPv4ADDRESS scope global INTERFACE"
+    #
+    # We will also return the 'types' dictionary so that holds lists of each
+    # common data type that we found in the output. 'types' for this example
+    # would be:
+    #
+    # {
+    #     "INTERFACE": [
+    #         "eth0"
+    #     ],
+    #     "IPv4ADDRESS": [
+    #         "10.0.1.249",
+    #         "10.0.3.255"
+    #     ],
+    #     "MASK": [
+    #         "22"
+    #     ]
+    # },
+    #
+    def regex_output(self):
+        output = self.text
+        types = {}
+        key_value_pairs = {}
+
+        # Remove the leading / out of /24
+        def fix_masks(masks):
+            results = []
+            for x in masks:
+                results.append(x.lstrip('/'))
+            return results
+
+        # Remove the leading space from "  ::1"
+        def fix_ipv6(addresses):
+            results = []
+            for x in addresses:
+                results.append(x.lstrip(' '))
+            return results
+
+        # Convert " lo:" to just "lo"
+        def fix_lo(loopbacks):
+            results = []
+            for x in loopbacks:
+                results.append('lo')
+            return results
+
+        #
+        # Find any obvious key/value pairs
+        #
+        # Community: 99:1
+        # Last update: Thu Mar 13 02:15:39 2014
+        result_colon = re.search('^\s*(.*): (.*?)$', output)
+        result_comma = re.search(',', output)
+        if (result_colon):
+            key_value_pairs[result_colon.group(1)] = result_colon.group(2)
+
+        # Origin IGP, metric 0, localpref 100, valid, external, best"
+        elif (result_comma):
+            for x in output.split(','):
+                x = x.lstrip(' ')
+                x = x.rstrip(' ')
+                result = re.search('^(.+) (.+?)$', x)
+                if (result):
+                    key_value_pairs[result.group(1)] = result.group(2)
+                elif (x):
+                    key_value_pairs[x] = True
+
+        # We use IPVFOURADDRESS instead of IPV4ADDRESS because with the latter
+        # the 4 would be substituted with NUMBER near the end of this function.
+        # re.findall will return a list of everything that matched the patter
+        result = re.findall('\d+\.\d+\.\d+\.\d+', output)
+        if (result):
+            tmp = output
+            output = re.sub('\d+\.\d+\.\d+\.\d+', 'IPVFOURADDRESS', output)
+            types['IPv4ADDRESS'] = result
+
+            # Extract key/value pairs
+            while (not result_comma and not result_colon):
+                result = re.search('(\S+)\s+(\d+\.\d+\.\d+\.\d+)(.*)', tmp)
+                if (not result):
+                    break
+                tmp = result.group(3)
+                key_value_pairs[result.group(1)] = result.group(2)
+
+        # MAC Address 00:25:90:59:8f:e3
+        result = re.findall('[0-9a-fA-F]{2}:[0-9a-fA-F]{2}:[0-9a-fA-F]{2}:[0-9a-fA-F]{2}:[0-9a-fA-F]{2}:[0-9a-fA-F]{2}', output)
+        if (result):
+            tmp = output
+            output = re.sub('[0-9a-fA-F]{2}:[0-9a-fA-F]{2}:[0-9a-fA-F]{2}:[0-9a-fA-F]{2}:[0-9a-fA-F]{2}:[0-9a-fA-F]{2}', 'MACADDRESS', output)
+            types['MACADDRESS'] = result
+
+            # Extract key/value pairs
+            while (not result_comma and not result_colon):
+                result = re.search('(\S+)\s+([0-9a-fA-F]{2}:[0-9a-fA-F]{2}:[0-9a-fA-F]{2}:[0-9a-fA-F]{2}:[0-9a-fA-F]{2}:[0-9a-fA-F]{2})(.*)', tmp)
+                if (not result):
+                    break
+                tmp = result.group(3)
+                key_value_pairs[result.group(1)] = result.group(2)
+
+        # We use IPVSIXADDRESS instead of IPV6ADDRESS because with the latter
+        # the 6 would be substituted with NUMBER near the end of this function.
+        #
+        # Full IPv6 FE80:0000:0000:0000:0202:B3FF:FE1E:8329
+        result = re.findall('[0-9a-fA-F]{4}:[0-9a-fA-F]{4}:[0-9a-fA-F]{4}:[0-9a-fA-F]{4}:[0-9a-fA-F]{4}:[0-9a-fA-F]{4}:[0-9a-fA-F]{4}:[0-9a-fA-F]{4}', output)
+        if (result):
+            tmp = output
+            output = re.sub('[0-9a-fA-F]{4}:[0-9a-fA-F]{4}:[0-9a-fA-F]{4}:[0-9a-fA-F]{4}:[0-9a-fA-F]{4}:[0-9a-fA-F]{4}:[0-9a-fA-F]{4}:[0-9a-fA-F]{4}', 'IPVSIXADDRESS', output)
+            types['IPv6ADDRESS'] = result
+
+            # Extract key/value pairs
+            while (not result_comma and not result_colon):
+                result = re.search('(\S+)\s+([0-9a-fA-F]{4}:[0-9a-fA-F]{4}:[0-9a-fA-F]{4}:[0-9a-fA-F]{4}:[0-9a-fA-F]{4}:[0-9a-fA-F]{4}:[0-9a-fA-F]{4}:[0-9a-fA-F]{4})(.*)', tmp)
+                if (not result):
+                    break
+                tmp = result.group(3)
+                key_value_pairs[result.group(1)] = result.group(2)
+
+
+        # Collapsed IPv6 FE80::0202:B3FF:FE1E:8329
+        result = re.findall('[0-9a-fA-F:]+\S*?::[0-9a-fA-F:]*', output)
+        if (result):
+            tmp = output
+            output = re.sub('[0-9a-fA-F:]+\S*?::[0-9a-fA-F:]*', 'IPVSIXADDRESS', output)
+            if ('IPVSIXADDRESS' not in types):
+                types['IPVSIXADDRESS'] = []
+            types['IPVSIXADDRESS'].extend(result)
+
+            # Extract key/value pairs
+            while (not result_comma and not result_colon):
+                result = re.search('(\S+)\s+([0-9a-fA-F:]+\S*?::[0-9a-fA-F:]*)(.*)', tmp)
+                if (not result):
+                    break
+                tmp = result.group(3)
+                key_value_pairs[result.group(1)] = result.group(2)
+
+        result = re.findall('\s::[0-9a-fA-F:]*', output)
+        if (result):
+            tmp = output
+            output = re.sub('\s::[0-9a-fA-F:]*', ' IPVSIXADDRESS', output)
+            if ('IPVSIXADDRESS' not in types):
+                types['IPVSIXADDRESS'] = []
+            types['IPVSIXADDRESS'].extend(fix_ipv6(result))
+
+            # Extract key/value pairs
+            while (not result_comma and not result_colon):
+                result = re.search('(\S+)\s+(::[0-9a-fA-F:]*)(.*)', tmp)
+                if (not result):
+                    break
+                tmp = result.group(3)
+                key_value_pairs[result.group(1)] = result.group(2)
+
+        # Mon Nov 25 20:43:30 2013
+        result= re.findall('\w+ \w+ \d+ [0-9]{2}:[0-9]{2}:[0-9]{2} 20\d\d', output)
+        if (result):
+            tmp = output
+            output = re.sub('\w+ \w+ \d+ [0-9]{2}:[0-9]{2}:[0-9]{2} 20\d\d', 'DATETIME', output)
+            types['DATETIME'] = result
+
+            # Extract key/value pairs
+            while (not result_comma and not result_colon):
+                result = re.search('(\S+)\s+(\w+ \w+ \d+ [0-9]{2}:[0-9]{2}:[0-9]{2} 20\d\d)(.*)', tmp)
+                if (not result):
+                    break
+                tmp = result.group(3)
+                key_value_pairs[result.group(1)] = result.group(2)
+
+        # 2014/03/13 02:15:39.230
+        result= re.findall('20\d\d\/\d+\/\d+ \d+:\d+:\d+\.\d+', output)
+        if (result):
+            tmp = output
+            output = re.sub('20\d\d\/\d+\/\d+ \d+:\d+:\d+\.\d+', 'DATETIME', output)
+            if ('DATETIME' not in types):
+                types['DATETIME'] = []
+            types['DATETIME'] = result
+
+            # Extract key/value pairs
+            while (not result_comma and not result_colon):
+                result = re.search('(\S+)\s+(20\d\d\/\d+\/\d+ \d+:\d+:\d+\.\d+)(.*)', tmp)
+                if (not result):
+                    break
+                tmp = result.group(3)
+                key_value_pairs[result.group(1)] = result.group(2)
+
+        # 2014/03/13
+        result= re.findall('20\d\d\/\d+\/\d+', output)
+        if (result):
+            tmp = output
+            output = re.sub('20\d\d\/\d+\/\d+', 'DATE', output)
+            if ('DATE' not in types):
+                types['DATE'] = []
+            types['DATE'] = result
+
+            # Extract key/value pairs
+            while (not result_comma and not result_colon):
+                result = re.search('(\S+)\s+(20\d\d\/\d+\/\d+)(.*)', tmp)
+                if (not result):
+                    break
+                tmp = result.group(3)
+                key_value_pairs[result.group(1)] = result.group(2)
+
+        # Subnet mask in "/24" format
+        result = re.findall('\/\d+', output)
+        if (result):
+            tmp = output
+            output = re.sub('\/\d+', '/MASK', output)
+            types['MASK'] = fix_masks(result)
+
+            # Extract key/value pairs
+            while (not result_comma and not result_colon):
+                result = re.search('(\S+)\s+\/(\d+)(.*)', tmp)
+                if (not result):
+                    break
+                tmp = result.group(3)
+                key_value_pairs[result.group(1)] = result.group(2)
+
+        # Timestamps but no date
+        # 20:43:30
+        result = re.findall('[0-9]{2}:[0-9]{2}:[0-9]{2}', output)
+        if (result):
+            tmp = output
+            output = re.sub('[0-9]{2}:[0-9]{2}:[0-9]{2}', 'TIMESTAMP', output)
+            types['TIMESTAMP'] = result
+
+            # Extract key/value pairs
+            while (not result_comma and not result_colon):
+                result = re.search('(\S+)\s+([0-9]{2}:[0-9]{2}:[0-9]{2})(.*)', tmp)
+                if (not result):
+                    break
+                tmp = result.group(3)
+                key_value_pairs[result.group(1)] = result.group(2)
+
+        # We count 'never' as a timestamp too
+        result = re.findall('never', output)
+        if (result):
+            tmp = output
+            output = re.sub('never', 'TIMESTAMP', output)
+            if ('TIMESTAMP' not in types):
+                types['TIMESTAMP'] = []
+            types['TIMESTAMP'].extend(result)
+
+            # Extract key/value pairs
+            while (not result_comma and not result_colon):
+                result = re.search('(\S+)\s+(never)(.*)', tmp)
+                if (not result):
+                    break
+                tmp = result.group(3)
+                key_value_pairs[result.group(1)] = result.group(2)
+
+        # Hex number
+        # 0xDEADBEEF
+        result = re.findall('0x[0-9a-fA-F]+', output)
+        if (result):
+            tmp = output
+            output = re.sub('0x[0-9a-fA-F]+', 'HEX', output)
+            types['HEX'] = result
+
+            # Extract key/value pairs
+            while (not result_comma and not result_colon):
+                result = re.search('(\S+)\s+(0x[0-9a-fA-F]+)(.*)', tmp)
+                if (not result):
+                    break
+                tmp = result.group(3)
+                key_value_pairs[result.group(1)] = result.group(2)
+
+
+        # BGP Communities
+        result = re.findall('\d+:\d+', output)
+        if (result):
+            tmp = output
+            output = re.sub('\d+:\d+', 'COMMUNITY', output)
+            types['COMMUNITY'] = result
+
+            # Extract key/value pairs
+            while (not result_comma and not result_colon):
+                result = re.search('(\S+)\s+(\d+:\d+)(.*)', tmp)
+                if (not result):
+                    break
+                tmp = result.group(3)
+                key_value_pairs[result.group(1)] = result.group(2)
+
+
+        # Interface names (eth1, swp2, lo)
+        result = re.findall('eth\d+', output)
+        if (result):
+            tmp = output
+            output = re.sub('eth\d+', 'INTERFACE', output)
+            if ('INTERFACE' not in types):
+                types['INTERFACE'] = []
+            types['INTERFACE'].extend(result)
+
+            # Extract key/value pairs
+            while (not result_comma and not result_colon):
+                result = re.search('(\S+)\s+(eth\d+)(.*)', tmp)
+                if (not result):
+                    break
+                tmp = result.group(3)
+                key_value_pairs[result.group(1)] = result.group(2)
+
+        result = re.findall('swp\d+', output)
+        if (result):
+            tmp = output
+            output = re.sub('swp\d+', 'INTERFACE', output)
+            if ('INTERFACE' not in types):
+                types['INTERFACE'] = []
+            types['INTERFACE'].extend(result)
+
+            # Extract key/value pairs
+            while (not result_comma and not result_colon):
+                result = re.search('(\S+)\s+(swp\d+)(.*)', tmp)
+                if (not result):
+                    break
+                tmp = result.group(3)
+                key_value_pairs[result.group(1)] = result.group(2)
+
+        result = re.findall('lo\d+', output)
+        if (result):
+            tmp = output
+            output = re.sub('lo\d+', 'INTERFACE', output)
+            if ('INTERFACE' not in types):
+                types['INTERFACE'] = []
+            types['INTERFACE'].extend(result)
+
+            # Extract key/value pairs
+            while (not result_comma and not result_colon):
+                result = re.search('(\S+)\s+(lo\d+)(.*)', tmp)
+                if (not result):
+                    break
+                tmp = result.group(3)
+                key_value_pairs[result.group(1)] = result.group(2)
+
+        result = re.findall(' lo:', output)
+        if (result):
+            tmp = output
+            output = re.sub(' lo:', ' INTERFACE:', output)
+            if ('INTERFACE' not in types):
+                types['INTERFACE'] = []
+            types['INTERFACE'].extend(fix_lo(result))
+
+            # Extract key/value pairs
+            while (not result_comma and not result_colon):
+                result = re.search('(\S+)\s+(lo:)(.*)', tmp)
+                if (not result):
+                    break
+                tmp = result.group(3)
+                key_value_pairs[result.group(1)] = result.group(2)
+
+        output = re.sub('ipv4', '__IPVFOUR__', output, flags=re.IGNORECASE)
+        output = re.sub('ipv6', '__IPVSIX__', output, flags=re.IGNORECASE)
+        output = re.sub('inet6', '__INETSIX__', output, flags=re.IGNORECASE)
+        result = re.findall('\d+', output)
+        if (result):
+            tmp = output
+            output = re.sub('\d+', 'NUMBER', output)
+            types['NUMBER'] = result
+
+            # Extract key/value pairs
+            while (not result_comma and not result_colon):
+                result = re.search('(\S+)\s+(\d+)(.*)', tmp)
+                if (not result):
+                    break
+                tmp = result.group(3)
+                key_value_pairs[result.group(1)] = result.group(2)
+
+        output = re.sub('__IPVFOUR__', 'ipv4', output)
+        output = re.sub('__IPVSIX__', 'ipv6', output)
+        output = re.sub('__INETSIX__', 'inet6', output)
+        output = re.sub('IPVFOURADDRESS', 'IPv4ADDRESS', output)
+        output = re.sub('IPVSIXADDRESS', 'IPv6ADDRESS', output)
+
+        return (output, types, key_value_pairs)
+
+    # Return True if this row of text has the white space dividers
+    def has_vertical_dividers(self, dividers):
+        if (not self.width):
+            return False
+
+        for (start, stop) in dividers:
+            if (start > self.width or stop > self.width):
+                return False
+
+            for x in range(start, stop+1):
+                if (self.text[x] != ' '):
+                    return False
+        return True
+
+    # Given a set of whitespace column coordinates breakdown the text
+    # between those whitespace columns. Return a list that has one entry
+    # for each column of text.
+    def breakdown_by_column(self, dividers):
+        results = []
+        prev_ws_start = 0
+        prev_ws_stop = -1
+        for (ws_start, ws_stop) in dividers:
+            column_text = self.text[prev_ws_stop+1:ws_start]
+            column_text = column_text.lstrip(' ')
+            column_text = column_text.rstrip(' ')
+            results.append(column_text)
+            prev_ws_start = ws_start
+            prev_ws_stop = ws_stop
+
+        # Grab the last column of text
+        if (prev_ws_stop != self.width-1):
+            column_text = self.text[prev_ws_stop+1:self.width]
+            column_text = column_text.lstrip(' ')
+            column_text = column_text.rstrip(' ')
+            results.append(column_text)
+        return results
+
+
+class JSONEncoder():
+    def __init__(self, mode, target_indention, index_column, key_lowercase, value_lowercase, debug):
+        self.mode = mode
+        self.target_indention = target_indention
+        self.last_header_line = 0
+        self.index_column = index_column
+        self.key_lowercase = key_lowercase
+        self.value_lowercase = value_lowercase
+        self.debug = debug
+
+        # lines is a list of Line objects, there is one Line object per line of input
+        self.lines = []
+        x = 0
+        for text in sys.stdin.readlines():
+            self.lines.append(Line(text, x))
+            x += 1
+
+        # Find the widest line of input
+        self.max_width = 0
+        for line in self.lines:
+            if (line.width > self.max_width):
+                self.max_width = line.width
+
+        # Create max_width Column objects and store them in self.columns
+        self.number_of_lines = len(self.lines)
+        self.columns = []
+        for x in range(0, self.max_width):
+            self.columns.append(Column(x, self.number_of_lines))
+
+        # Populate the contents of each Column object
+        y = 0
+        for line in self.lines:
+            x = 0
+            for character in line.text:
+                column = self.columns[x]
+                column.update_row(y, character)
+                x += 1
+            y += 1
+
+    '''
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 16436 qdisc noqueue state UNKNOWN
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+    inet6 ::1/128 scope host
+       valid_lft forever preferred_lft forever
+2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP qlen 1000
+    link/ether 00:25:90:91:0d:5e brd ff:ff:ff:ff:ff:ff
+    inet 10.0.1.249/22 brd 10.0.3.255 scope global eth0
+    inet6 fe80::225:90ff:fe91:d5e/64 scope link
+       valid_lft forever preferred_lft forever
+3: eth2: <BROADCAST,MULTICAST> mtu 1500 qdisc pfifo_fast state DOWN qlen 1000
+    link/ether 00:15:17:d4:66:a9 brd ff:ff:ff:ff:ff:ff
+    '''
+    #
+    # Lots of command output is structured like the output above (this is
+    # from 'ip addr show') where multiple groups of data are displayed with
+    # part of the output being indented.  This makes the output much easier
+    # for a human to read and if we know how far the first line of each
+    # group is indented then we can break the output down into groups.
+    #
+    # The user tells us what the indention level is via the command line "-i X"
+    # This is saved as self.target_indention.
+    def encode_indented_output(self, first_line, last_line):
+        final = []
+        current_original = []
+        current_regexed = []
+        current_types = []
+        current_key_value_pairs = []
+
+        for line in self.lines[first_line:last_line]:
+            if (line.indention == self.target_indention and current_original):
+                final.append({'original': current_original,\
+                              'post-regex': current_regexed,\
+                              'types': current_types,\
+                              'key-value-pairs': current_key_value_pairs})
+                current_original = []
+                current_regexed = []
+                current_types = []
+                current_key_value_pairs = []
+            current_original.append(line.text)
+            current_regexed.append(line.text_regexed)
+            current_types.append(line.types)
+            current_key_value_pairs.append(line.key_value_pairs)
+        final.append({'original': current_original,\
+                      'post-regex': current_regexed,\
+                      'types': current_types,\
+                      'key-value-pairs': current_key_value_pairs})
+        return final
+
+    # Some commands with columned output have a ----- line to show where the
+    # titles end and the content begins. If this command follows that format
+    # then save the line number of the dividing line as self.divider_line
+    '''
+root@cel-red-01:~# ./show_lldp.py
+
+Local           Local               Remote          Remote Remote
+  Int              IP                 Name         Mgmt IP    Int
+----- ---------------           ---------- --------------- ------
+ eth0            None            swr01sw01   192.168.1.177  swp28
+ swp1            None                  r99    192.168.0.15  swp11
+
+root@cel-red-01:~#
+    '''
+    def find_divider_line(self):
+        self.divider_line = None
+
+        x = 0
+        for line in self.lines:
+            no_spaces = re.sub(' +', '', line.text_compressed)
+
+            # If we find a line that has fewer than 5 of the -'s then ignore
+            # it, 99% of the time this would be a false positive
+            if (len(no_spaces) < 5):
+                x += 1
+                continue
+
+            result_hyphen = re.search('^\-+$', no_spaces)
+            result_underscore = re.search('^\_+$', no_spaces)
+            result_equal = re.search('^\=+$', no_spaces)
+
+            if (result_hyphen or result_underscore or result_equal):
+                self.divider_line = x
+                if (self.debug):
+                    print "Divider Line: %d" % self.divider_line
+                return
+            x += 1
+
+    # We will use the following as an example for walking through the code
+    # that parses columned output. I labelled some of the important columns
+    '''
+                     22*              38*                 59*      68*
+0*              16* 20|      30*    37|       47*  52*  57*|     66 |  71 74
+|               |   | |       |      ||        |    |    | |      | |  |  |
+Neighbor        V    AS MsgRcvd MsgSent   TblVer  InQ OutQ Up/Down  State/PfxRcd
+10.1.1.1        4   100       0       0        0    0    0 never    Connect
+10.1.1.2        4   100       5      28        0    0    0 00:34:02 Idle
+10.1.1.3        4   100       5      28        0    0    0 00:34:07 Connect
+10.1.1.4        4   100       5      28        0    0    0 00:34:07 Connect
+10.1.1.5        4   100       5      28        0    0    0 00:34:06 Connect
+10.1.1.6        4   100       5      28        0    0    0 00:34:06 Connect
+10.1.1.7        4   100       5      28        0    0    0 00:34:07 Connect
+10.1.1.8        4   100       5      29        0    0    0 00:34:09 Connect
+10.1.1.9        4   100       5      28        0    0    0 00:34:06 Connect
+10.1.1.10       4   100       5      28        0    0    0 00:34:06 Connect
+10.1.1.11       4   100       5      28        0    0    0 00:34:06 Connect
+10.1.1.12       4   100       5      29        0    0    0 00:34:08 Connect
+10.1.1.13       4   100       5      29        0    0    0 00:34:09 Connect
+10.1.1.14       4   100       5      28        0    0    0 00:34:02 Idle
+10.1.1.15       4   100       5      28        0    0    0 00:34:02 Idle
+    '''
+    def find_columns(self):
+
+        # Given an x,y coordinate, look for spaces to the left and to the
+        # right of this position.
+        def find_non_spaces_on_line(x, y):
+            non_spaces_to_our_left = False
+            non_spaces_to_our_right = False
+
+            for tmp_x in range(0, x):
+                column = self.columns[tmp_x]
+                character = column.text[y]
+                if (character != ' '):
+                    non_spaces_to_our_left = True
+                    break
+
+            if (x < self.max_width-1):
+                for tmp_x in range(x+1, self.max_width):
+                    column = self.columns[tmp_x]
+                    character = column.text[y]
+                    if (character != ' '):
+                        non_spaces_to_our_right = True
+                        break
+
+            return (non_spaces_to_our_left, non_spaces_to_our_right)
+
+        # Analyze each column and look for the longest streak of vertical
+        # spaces that create the column dividers
+        for x in range(0, self.max_width):
+            column = self.columns[x]
+            column.max_streak = 0
+
+            streak = 0
+            starting_row = None
+            max_streak_starting_row = None
+            for y in range(0, self.number_of_lines):
+                character = column.text[y]
+
+                if (character == ' '):
+                    (non_spaces_to_our_left, non_spaces_to_our_right) = find_non_spaces_on_line(x, y);
+
+                    if (non_spaces_to_our_left and non_spaces_to_our_right):
+                        if (starting_row is None):
+                            starting_row = y
+
+                        streak += 1
+                        if (streak > column.max_streak):
+                            column.max_streak = streak
+                            column.max_streak_starting_row = starting_row
+                    else:
+                        streak = 0
+                        starting_row = None
+                else:
+                    streak = 0
+                    starting_row = None
+
+        # Find the (vertical spacing streak, starting row) tuple that occured the
+        # most often. This tells us how many rows of columned output there are.
+        '''
+Column 8: Max spaces 10
+Column 9: Max spaces 16
+Column 10: Max spaces 16
+Column 11: Max spaces 16
+Column 12: Max spaces 16
+Column 13: Max spaces 16
+Column 14: Max spaces 16
+Column 15: Max spaces 16
+Column 17: Max spaces 16
+Column 18: Max spaces 16
+Column 19: Max spaces 16
+Column 20: Max spaces 1
+Column 23: Max spaces 16
+Column 24: Max spaces 15
+Column 25: Max spaces 15
+Column 26: Max spaces 15
+Column 27: Max spaces 15
+Column 28: Max spaces 15
+Column 29: Max spaces 15
+Column 31: Max spaces 16
+Column 32: Max spaces 15
+Column 33: Max spaces 15
+Column 34: Max spaces 15
+Column 35: Max spaces 15
+Column 36: Max spaces 15
+Column 37: Max spaces 1
+Column 39: Max spaces 16
+Column 40: Max spaces 16
+Column 41: Max spaces 16
+Column 42: Max spaces 15
+Column 43: Max spaces 15
+Column 44: Max spaces 15
+Column 45: Max spaces 15
+Column 46: Max spaces 15
+Column 48: Max spaces 16
+Column 49: Max spaces 16
+Column 50: Max spaces 15
+Column 51: Max spaces 15
+Column 53: Max spaces 16
+Column 54: Max spaces 15
+Column 55: Max spaces 15
+Column 56: Max spaces 15
+Column 58: Max spaces 16
+Column 64: Max spaces 1
+Column 65: Max spaces 1
+Column 66: Max spaces 2
+Column 67: Max spaces 16
+Vertical streaks of 16 starting on row 0 appeard 20 times
+        '''
+        most_popular_max_streak = {}
+        for x in range(0, self.max_width):
+            column = self.columns[x]
+            if (not column.max_streak):
+                continue
+
+            if (self.debug):
+                print "Column %d: Max spaces %d" % (x, column.max_streak)
+
+            if (column.max_streak_starting_row, column.max_streak) not in most_popular_max_streak:
+                most_popular_max_streak[(column.max_streak_starting_row, column.max_streak)] = 0
+
+            most_popular_max_streak[(column.max_streak_starting_row, column.max_streak)] += 1
+
+        max_streak = 0
+        max_streak_appearances = 0
+        max_streak_starting_row = None
+        for ((row, streak), appearances) in most_popular_max_streak.iteritems():
+            if (streak > max_streak):
+                max_streak = streak
+                max_streak_starting_row = row
+                max_streak_appearances = appearances
+
+        if (self.debug):
+            print "Vertical streaks of %d starting on row %d appeared %d times\n" % (max_streak, max_streak_starting_row, max_streak_appearances)
+
+        # Now we know how many rows of column data there are (max_streak), zero out
+        # all other max_streak counts
+        for x in range(0, self.max_width):
+            column = self.columns[x]
+            if (column.max_streak_starting_row != max_streak_starting_row or column.max_streak != max_streak):
+                column.max_streak = 0
+                column.max_streak_starting_row = None
+
+        '''
+Column 9: Max spaces 16
+Column 10: Max spaces 16
+Column 11: Max spaces 16
+Column 12: Max spaces 16
+Column 13: Max spaces 16
+Column 14: Max spaces 16
+Column 15: Max spaces 16
+Column 17: Max spaces 16
+Column 18: Max spaces 16
+Column 19: Max spaces 16
+Column 23: Max spaces 16
+Column 31: Max spaces 16
+Column 39: Max spaces 16
+Column 40: Max spaces 16
+Column 41: Max spaces 16
+Column 48: Max spaces 16
+Column 49: Max spaces 16
+Column 53: Max spaces 16
+Column 58: Max spaces 16
+Column 67: Max spaces 16
+        '''
+        if (self.debug):
+            for x in range(0, self.max_width):
+                column = self.columns[x]
+                if (not column.max_streak):
+                    continue
+                print "Column %d: Max spaces %d" % (x, column.max_streak)
+
+        # Create a list of (column_start, column_stop) tuples, one for each white space divider
+        self.dividers = []
+        current_start = None
+        current_stop = None
+        for x in range(0, self.max_width):
+            column = self.columns[x]
+
+            if (column.max_streak):
+
+                # First vertical space column in this divider
+                if (current_start is None):
+                    current_start = x
+
+            else:
+                # Last vertical space column in this divider
+                if (current_start):
+                    current_stop = x-1
+                    self.dividers.append((current_start, current_stop))
+                    current_start = None
+                    current_stop = None
+
+        if (current_start):
+            self.dividers.append((current_start, self.max_width-1))
+
+        '''
+White Space Dividers:
+9 -> 15
+17 -> 19
+23 -> 23
+31 -> 31
+39 -> 41
+48 -> 49
+53 -> 53
+58 -> 58
+67 -> 67
+        '''
+        if (self.debug):
+            print '\nWhite Space Dividers:'
+            for (start, stop) in self.dividers:
+                print "%d -> %d" % (start, stop)
+
+        # Find the first and last rows that use the column layout
+        self.first_row_with_columns = None
+        self.last_row_with_columns = None
+        x = 0
+        for line in self.lines:
+            if (line.has_vertical_dividers(self.dividers)):
+                if (self.first_row_with_columns is None):
+                    if (x > 0):
+                        self.last_header_line = x - 1
+                    self.first_row_with_columns = x
+                self.last_row_with_columns = x
+            x += 1
+
+        '''
+first_row_with_columns 0
+last_row_with_columns 15
+        '''
+        if (self.debug):
+            print "\nfirst_row_with_columns %s" % str(self.first_row_with_columns)
+            print "last_row_with_columns %s" % str(self.last_row_with_columns)
+
+    def find_column_titles(self):
+        self.titles = []
+
+        # Look at everything between self.first_row_with_columns
+        # and self.divider_line
+        if (self.divider_line):
+            for line in self.lines[self.first_row_with_columns:self.divider_line]:
+                line_columns = line.breakdown_by_column(self.dividers)
+
+                if (not self.titles):
+                    self.titles = line_columns
+                else:
+                    for x in range(0, len(self.titles)):
+                        self.titles[x] += ' ' + line_columns[x]
+
+        # Look at self.first_row_with_columns only
+        else:
+            line = self.lines[self.first_row_with_columns]
+            self.titles = line.breakdown_by_column(self.dividers)
+
+        if (self.key_lowercase):
+            self.titles = [x.lower() for x in self.titles]
+
+        if (self.debug):
+            print "Column Titles:"
+            print self.titles
+
+    def run(self):
+        if (self.mode == 'indent'):
+            final = self.encode_indented_output(0, len(self.lines))
+            print json.dumps(final, indent=4)
+
+        # The goal of column mode it to parse output like the following where
+        # the header section is parsed via the normal "indent" approach but
+        # the "Neighbor V AS" section is parsed to extract key/value pairs
+        # such as "Neighbor: 10.1.1.1", "V: 4", "AS: 100", etc.
+        #
+        #
+        # BGP router identifier 0.0.0.100, local AS number 100
+        # Read-only mode update-delay limit: 60 seconds
+        #   First neighbor established: 2014/03/13 02:15:37.386
+        #           Best-paths resumed: 2014/03/13 02:15:39.230
+        #         zebra update resumed: 2014/03/13 02:15:54.253
+        #         peers update resumed: 2014/03/13 02:15:54.340
+        # RIB entries 19999, using 1406 KiB of memory
+        # Peers 300, using 1949 KiB of memory
+        #
+        # Neighbor        V    AS MsgRcvd MsgSent   TblVer  InQ OutQ Up/Down  State/PfxRcd
+        # 10.1.1.1        4   100     709     725        0    0    0 11:42:31     1000
+        # 10.1.1.2        4   100     704     725        0    0    0 11:42:31        0
+        # 10.1.1.3        4   100     704     725        0    0    0 11:42:31        0
+        # 10.1.1.4        4   100     704     725        0    0    0 11:42:31        0
+        # 10.1.1.5        4   100     704     725        0    0    0 11:42:31        0
+        #
+        elif (mode == 'column'):
+
+            # Print the input with the rows and columns numbered
+            '''
+               1111111111222222222233333333334444444444555555555566666666667777777777
+     01234567890123456789012345678901234567890123456789012345678901234567890123456789
+     --------------------------------------------------------------------------------
+  0: Neighbor        V    AS MsgRcvd MsgSent   TblVer  InQ OutQ Up/Down  State/PfxRcd
+  1: 10.1.1.1        4   100       0       0        0    0    0 never    Connect
+  2: 10.1.1.2        4   100       5      28        0    0    0 00:34:02 Idle
+  3: 10.1.1.3        4   100       5      28        0    0    0 00:34:07 Connect
+  4: 10.1.1.4        4   100       5      28        0    0    0 00:34:07 Connect
+  5: 10.1.1.5        4   100       5      28        0    0    0 00:34:06 Connect
+  6: 10.1.1.6        4   100       5      28        0    0    0 00:34:06 Connect
+  7: 10.1.1.7        4   100       5      28        0    0    0 00:34:07 Connect
+  8: 10.1.1.8        4   100       5      29        0    0    0 00:34:09 Connect
+  9: 10.1.1.9        4   100       5      28        0    0    0 00:34:06 Connect
+ 10: 10.1.1.10       4   100       5      28        0    0    0 00:34:06 Connect
+ 11: 10.1.1.11       4   100       5      28        0    0    0 00:34:06 Connect
+ 12: 10.1.1.12       4   100       5      29        0    0    0 00:34:08 Connect
+ 13: 10.1.1.13       4   100       5      29        0    0    0 00:34:09 Connect
+ 14: 10.1.1.14       4   100       5      28        0    0    0 00:34:02 Idle
+ 15: 10.1.1.15       4   100       5      28        0    0    0 00:34:02 Idle
+            '''
+            if (self.debug):
+                # Print the top row of numbers, if the number is 10->19 print
+                # a 1, 20->29 print a 2, etc
+                print ''
+                x = 0
+                sys.stdout.write('     ')
+                for x in range(0, self.max_width):
+                    if (x >= 10):
+                        sys.stdout.write('%d' % int(x/10))
+                    else:
+                        sys.stdout.write(' ')
+
+                # Print the bottom row of numbers
+                print ''
+                x = 0
+                sys.stdout.write('     ')
+                for x in range(0, self.max_width):
+                    if (x < 10):
+                        sys.stdout.write('%d' % x)
+                    else:
+                        sys.stdout.write('%d' % int(x%10))
+                print ''
+
+                # Print a line of dashes
+                sys.stdout.write('     ')
+                for x in range(0, self.max_width):
+                    sys.stdout.write('-')
+                print ''
+
+                # Print the input but number each line on the left
+                x = 0
+                for line in self.lines:
+                    print "%3d: %s" % (x, line.text)
+                    x += 1
+                print ''
+
+            self.find_divider_line()
+            self.find_columns()
+            self.find_column_titles()
+
+            # "indent" encode the header part of the output.
+            header = self.encode_indented_output(0, self.last_header_line)
+
+            if (self.index_column is not None):
+                body = {}
+            else:
+                body = []
+
+            # Everything else will be encoded as a list of dictionairies
+            # where the title for that column is the dictionary key
+
+            if (self.divider_line):
+                first_row = self.divider_line + 1
+            else:
+                first_row = self.first_row_with_columns + 1
+
+            for line in self.lines[first_row:self.last_row_with_columns+1]:
+                key_value = {}
+                line_columns = line.breakdown_by_column(self.dividers)
+                for x in range(0, len(line_columns)):
+                    title = self.titles[x]
+
+                    # This only happens for a corner case scenario where we
+                    # think a section of whitespaces is a column
+                    if (not title):
+                        continue
+                    key_value[title] = line_columns[x]
+
+                if (self.index_column is not None):
+                    index_column_value = line_columns[self.index_column]
+                    body[index_column_value] = key_value
+                else:
+                    body.append(key_value)
+
+            final = {'header': header, 'body': body}
+            print json.dumps(final, indent=4)
+
+
+def print_help():
+    print """
+This tool is designed to json encode the text from STDIN.  To use this tool
+pipe the output from some other program to STDIN like this:
+
+    your_program | cl-encoder [options]
+
+Options:
+    -i or -indent            : The output from your_program will be indented
+    -c or -column            : The output from your_program will be in columns
+    -klc or -key-lowercase   : Lowercase all dictionary keys
+    -h or -help              : Print help menu
+
+You must specify either Indented Mode or Column Mode via -i or -c.
+
+Indented Mode
+-------------
+In addition to the -i flag you must also specify how many spaces the first
+line of each sub-section of text is indented. For example each sub-section
+of output in 'ip link show' begins with a line that is indented 0 spaces so
+you would use the option '-i 0'
+
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 16436 qdisc noqueue state UNKNOWN mode DEFAULT
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP mode DEFAULT qlen 1000
+    link/ether 00:e0:ec:25:2f:3c brd ff:ff:ff:ff:ff:ff
+3: swp1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP mode DEFAULT qlen 500
+    link/ether 00:e0:ec:25:2f:3d brd ff:ff:ff:ff:ff:ff
+
+
+Column Mode
+-----------
+If your program displays output in column format pass the -c option. If there
+is a particular column that in always unique you can tell the tool to use
+that column as a dictionary key.  For this output the Neighbor column is
+always unique so we would tell the tool to use '-c 0'. Or you can just use '-c'
+and the tool will encode each row into a list instead of a dictionary.
+
+Neighbor        V    AS MsgRcvd MsgSent   TblVer  InQ OutQ Up/Down  State/PfxRcd
+10.1.1.1        4   100       0       0        0    0    0 never    Idle
+10.1.1.2        4   100       5      28        0    0    0 16:47:32 Connect
+10.1.1.3        4   100       5      28        0    0    0 16:47:37 Connect
+10.1.1.4        4   100       5      28        0    0    0 16:47:37 Connect
+10.1.1.5        4   100       5      28        0    0    0 16:47:36 Idle
+10.1.1.6        4   100       5      28        0    0    0 16:47:36 Idle
+10.1.1.7        4   100       5      28        0    0    0 16:47:37 Connect
+10.1.1.8        4   100       5      29        0    0    0 16:47:39 Connect
+10.1.1.9        4   100       5      28        0    0    0 16:47:36 Connect
+10.1.1.10       4   100       5      28        0    0    0 16:47:36 Connect
+
+NOTE: If the output has a 'header' of output before the column section
+cl-encoder will encode the header text in 'indent' mode.
+
+
+Notes About The Output
+----------------------
+If a line of text contains a list of comma separated key/value pairs, they
+will be parsed as follows:
+
+    Origin IGP, metric 0, localpref 110, valid, internal, best
+
+    {
+        "Origin": "IGP",
+        "best": true,
+        "internal": true,
+        "localpref": "110",
+        "metric": "0",
+        "valid": true
+    },
+
+
+If a line of text contains "Key: value" format they will be extracted:
+
+  First neighbor established: 2014/03/13 02:15:37.386
+          Best-paths resumed: 2014/03/13 02:15:39.230
+
+    {
+        "First neighbor established": "2014/03/13 02:15:37.386"
+    },
+    {
+        "Best-paths resumed": "2014/03/13 02:15:39.230"
+    },
+
+
+Column output will have a list of dictionairies, one dictionary per row of
+output. The column titles will be used as dictionary keys.
+    {
+        "AS": "100",
+        "InQ": "0",
+        "MsgRcvd": "820",
+        "MsgSent": "836",
+        "Neighbor": "10.1.1.1",
+        "OutQ": "0",
+        "State/PfxRcd": "1000",
+        "TblVer": "0",
+        "Up/Down": "13:33:35",
+        "V": "4"
+    },
+
+
+If you specify a column to use as a dictionary key you will see json such as:
+
+    {
+        "10.1.1.1": {
+            "AS": "100",
+            "InQ": "0",
+            "MsgRcvd": "0",
+            "MsgSent": "0",
+            "Neighbor": "10.1.1.1",
+            "OutQ": "0",
+            "State/PfxRcd": "Connect",
+            "TblVer": "0",
+            "Up/Down": "never",
+            "V": "4"
+        }
+    },
+
+
+"""
+
+if __name__ == '__main__':
+    mode = None
+    target_indention = 99
+    index_column = None
+    key_lowercase = False
+    value_lowercase = False
+    debug = False
+
+    # Parse all command line args
+    x = 1
+    argc = len(sys.argv)
+    while (x < argc):
+        arg = sys.argv[x]
+
+        if (arg == '-i' or arg == '-indent'):
+            mode = 'indent'
+            x += 1
+
+            if (x < argc):
+                target_indention = int(sys.argv[x])
+            else:
+                print "\nERROR: You must specify the indent level too...'-i 0' for example"
+                print "For help use 'cl-encoder -help'\n"
+                sys.exit(1)
+
+        elif (arg == '-c' or arg == '-column'):
+            mode = 'column'
+
+            x += 1
+            if (x < argc):
+                if (sys.argv[x].isdigit()):
+                    index_column = int(sys.argv[x])
+                else:
+                    x -= 1
+
+        elif (arg == '-klc' or arg == '-key-lowercase'):
+            key_lowercase = True
+
+        #elif (arg == '-vlc' or arg == '-value-lowercase'):
+        #    value_lowercase = True
+
+        elif (arg == '-d' or arg == '-debug'):
+            debug = True
+
+        elif (arg == '-h' or arg == '-help'):
+            print_help()
+            sys.exit(0)
+
+        else:
+            print "\nERROR: '%s' is not a supported command line option" % arg
+            print "For help use 'cl-encoder -help'\n"
+            sys.exit(1)
+        x += 1
+
+    if (mode is None):
+        print "\nERROR: You must specify if the command output is in indented format or column format"
+        print "For help use 'cl-encoder -help'\n"
+        sys.exit(1)
+
+    je = JSONEncoder(mode, target_indention, index_column, key_lowercase, value_lowercase, debug)
+    je.run()
