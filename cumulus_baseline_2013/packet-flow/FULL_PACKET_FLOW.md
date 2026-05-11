@@ -82,6 +82,34 @@ Live state for swp1 (Finisar FTLX1475D3BTL-E7 10GBASE-LR):
 The SFP+ DOM page (A2, bytes 96–105) contains live measurements polled
 by `ethtool -m`. SFF-8472 standard layout.
 
+#### A note on link-up vs. signal quality on swp1
+
+The Nexus side (`show interface ethernet 1/33 transceiver details`)
+reports our swp1 TX arriving at the Nexus RX as **−19.58 dBm**, which
+trips the SFP+'s LOW-ALARM threshold (−16.57 dBm). Our swp1 TX leaves
+the optic at −2.17 dBm, so the fiber/connector path is dropping **~17 dB**
+— several times the 6 dB budget for 10GBASE-LR over SMF.
+
+**The link is still UP** and `ping` works. Why:
+
+* swp1 RX (our side) is healthy: −1.02 dBm from the Nexus TX (−1.70 dBm)
+  → only 0.68 dB loss in *that* direction. So the chip's CDR locks,
+  PCS gets `block_lock=1`, MAC sees valid frames, and Linux sees
+  `carrier=1`.
+* The 802.3 MAC layer makes no per-direction signal-quality decision
+  beyond "did I get a valid frame with good FCS?" — it doesn't surface
+  asymmetric power.
+* The Nexus's LOW-ALARM is a *warning* on the receiving optic, not a
+  link-down signal. The Nexus's PCS is also still locked, just barely.
+* So the chip and OS both say "up" even though one direction is one
+  dirty-fiber-event away from going dark.
+
+This is a useful baseline observation: **link-up alone is not proof of
+healthy optics**. Even when EdgeNOS reports a port linked, a full
+diagnosis needs both sides' DOM (TX power local + RX power remote).
+The Nexus 1/33 also shows **66 interface resets** vs only 28 on 1/34
+— that's the symptom of marginal optical, not bad config.
+
 ### 1.2 DS100DF410 Retimer
 
 Each linked SFP+ port goes through TWO retimers (one Rx, one Tx). For
