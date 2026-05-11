@@ -1,0 +1,5 @@
+Total functions: 23795
+  Small  (<100 bytes):    3420
+  Medium (100-500):       12201
+  Large  (500-2000):      6483
+  Huge   (>2000):         1691
