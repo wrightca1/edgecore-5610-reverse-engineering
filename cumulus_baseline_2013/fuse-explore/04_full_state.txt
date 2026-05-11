@@ -1,0 +1,78 @@
+Warning: Permanently added '10.1.1.212' (ECDSA) to the list of known hosts.
+[sudo] password for cumulus: === NON-INTERFACE CONFIG ===
+config/acl/non_atomic_update_mode                                 = FALSE|
+config/acl/optimize_hw                                            = FALSE|
+config/arp/next_hops                                              = TRUE|
+config/bridge/broadcast_frame_to_cpu                              = FALSE|
+config/buf_util/measure_interval                                  = 0|
+config/buf_util/poll_interval                                     = 0|
+config/coalesce/offset                                            = 0|
+config/coalesce/reducer                                           = 1|
+config/coalesce/timeout                                           = 10|
+config/disable_internal_hw_err_restart                            = FALSE|
+config/disable_internal_parity_restart                            = TRUE|
+config/ignore_non_swps                                            = FALSE|
+config/logging                                                    = file:/var/log/switchd.log=INFO|
+config/netlink/buf_size                                           = 94371840|
+config/resv_vlan_range                                            = 3300-3999|
+config/route/delete_dead_routes                                   = TRUE|
+config/route/host_max_percent                                     = 50|
+config/route/max_routes                                           = 32768|
+config/route/table                                                = 254|
+config/stats/poll_interval                                        = 5000|
+config/stats/vdev_hw_poll_interval                                = 5|
+config/stats/vlan/aggregate                                       = BRIEF|
+config/stats/vlan/show_internal_vlans                             = FALSE|
+config/stats/vxlan/aggregate                                      = DETAIL|
+config/stats/vxlan/member                                         = BRIEF|
+config/traffic/cut_through_enable                                 = TRUE|
+config/traffic/dos/icmp_frag                                      = FALSE|
+config/traffic/dos/icmpv4_length                                  = FALSE|
+config/traffic/dos/icmpv6_length                                  = FALSE|
+config/traffic/dos/ipv6_min_frag                                  = FALSE|
+config/traffic/dos/sip_eq_dip                                     = FALSE|
+config/traffic/dos/smac_eq_dmac                                   = FALSE|
+config/traffic/dos/tcp_ctrl0_seq0                                 = FALSE|
+config/traffic/dos/tcp_flags_fup_seq0                             = FALSE|
+config/traffic/dos/tcp_flags_syn_fin                              = FALSE|
+config/traffic/dos/tcp_hdr_partial                                = FALSE|
+config/traffic/dos/tcp_offset1                                    = FALSE|
+config/traffic/dos/tcp_ports_eq                                   = FALSE|
+config/traffic/dos/tcp_syn_frag                                   = FALSE|
+config/traffic/dos/udp_ports_eq                                   = FALSE|
+config/traffic/dos_enable                                         = FALSE|
+config/vxlan/default_ttl                                          = 64|
+
+/tmp/fuse_explore2.sh: line 9: syntax error near unexpected token `('
+/tmp/fuse_explore2.sh: line 9: `echo === RUN/STATS subtree (top 50) ==='
+Warning: Permanently added '10.1.1.212' (ECDSA) to the list of known hosts.
+[sudo] password for cumulus: === RUN STATS ===
+/cumulus/switchd/run/stats
+/cumulus/switchd/run/stats/vxlan
+/cumulus/switchd/run/stats/vlan
+
+=== RUN STATS sample files ===
+run/stats/vxlan/all = 
+run/stats/vlan/all = 
+
+=== CTRL files ===
+ctrl/hal/resync
+ctrl/logger
+ctrl/netlink/nl_logger
+ctrl/netlink/resync
+ctrl/resync
+ctrl/sample/ulog_channel
+
+=== CLEAR subtree ===
+/cumulus/switchd/clear
+/cumulus/switchd/clear/stats
+/cumulus/switchd/clear/stats/vlan
+/cumulus/switchd/clear/stats/vxlan
+
+=== TOTAL COUNTS ===
+run files:    36
+config files: 250
+ctrl files:   6
+clear:        4
+total dirs:   139
+total files:  296

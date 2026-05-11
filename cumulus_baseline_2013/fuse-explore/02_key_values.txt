@@ -1,0 +1,49 @@
+Warning: Permanently added '10.1.1.212' (ECDSA) to the list of known hosts.
+[sudo] password for cumulus: === acl_info/ingress ===
+counters                                 = 68
+counters_total                           = 1024
+entries                                  = 100
+entries_total                            = 1024
+meters                                   = 18
+meters_total                             = 2048
+slices                                   = 4
+slices_total                             = 5
+
+=== acl_info/egress ===
+counters                                 = 36
+counters_total                           = 1024
+entries                                  = 36
+entries_total                            = 512
+meters                                   = 18
+meters_total                             = 512
+slices                                   = 2
+slices_total                             = 2
+
+=== route_info ===
+route/count_0                            = 22
+route/count_1                            = 6
+route/count_total                        = 26
+route/count_v4                           = 18
+route/count_v6                           = 8
+route/mask_limit                         = 64
+route/max_0                              = 16284
+route/max_1                              = 256
+route/max_total                          = 32768
+host/count                               = 4
+host/count_v4                            = 4
+host/count_v6                            = 0
+host/max                                 = 8192
+
+=== config/interface/swp1 ===
+interface_mode
+storm_control
+interface_mode                 = XFI
+
+=== ctrl/hal ===
+resync
+
+=== config/route ===
+delete_dead_routes             = TRUE
+host_max_percent               = 50
+max_routes                     = 32768
+table                          = 254
