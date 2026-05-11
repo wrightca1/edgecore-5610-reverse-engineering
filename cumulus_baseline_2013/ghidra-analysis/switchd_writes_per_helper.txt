@@ -1,0 +1,135 @@
+# Per-helper register-access call site dump
+# Format:
+#   ==== FUN_<addr> (size=N) ====
+#     +<off>  <primitive>  reg_id=<X>  reg_name="<name>"
+
+==== FUN_10ef40b4 (size=3820) ====
+  [0 primitive call sites]
+
+==== FUN_10ef2a58 (size=1576) ====
+  +0x05c4  soc_mem_clear     reg_id=?       reg_name="?"
+  [1 primitive call sites]
+
+==== FUN_10ef6af4 (size=1224) ====
+  [0 primitive call sites]
+
+==== FUN_10b84308 (size=2252) ====
+  [0 primitive call sites]
+
+==== FUN_10bf08d0 (size=1732) ====
+  [0 primitive call sites]
+
+==== FUN_105b98c4 (size=15108) ====
+  +0x0ca8  reg32_set_wrap    reg_id=15927   reg_name="GPORT_UMAC_CONTROL"
+  +0x0cd0  reg32_set_wrap    reg_id=15927   reg_name="GPORT_UMAC_CONTROL"
+  +0x17d8  reg32_get_wrap    reg_id=36696   reg_name="XLPORT_XMAC_CONTROL"
+  +0x17fc  reg_field_lookup  reg_id=36696   reg_name="XLPORT_XMAC_CONTROL"
+  +0x181c  reg32_set_wrap    reg_id=36696   reg_name="XLPORT_XMAC_CONTROL"
+  +0x1848  reg_field_lookup  reg_id=36696   reg_name="XLPORT_XMAC_CONTROL"
+  +0x1868  reg32_set_wrap    reg_id=36696   reg_name="XLPORT_XMAC_CONTROL"
+  +0x1ad4  reg32_get_wrap    reg_id=36847   reg_name="XPORT_XMAC_CONTROL"
+  +0x1af8  reg_field_lookup  reg_id=36847   reg_name="XPORT_XMAC_CONTROL"
+  +0x1b18  reg32_set_wrap    reg_id=36847   reg_name="XPORT_XMAC_CONTROL"
+  +0x1b44  reg_field_lookup  reg_id=36847   reg_name="XPORT_XMAC_CONTROL"
+  +0x1b64  reg32_set_wrap    reg_id=36847   reg_name="XPORT_XMAC_CONTROL"
+  +0x1f30  reg32_get_wrap    reg_id=28196   reg_name="PORT_MAC_CONTROL"
+  +0x20ac  reg_field_lookup  reg_id=28196   reg_name="PORT_MAC_CONTROL"
+  +0x20dc  reg_field_lookup  reg_id=28196   reg_name="PORT_MAC_CONTROL"
+  +0x210c  reg_field_lookup  reg_id=28196   reg_name="PORT_MAC_CONTROL"
+  +0x213c  reg_field_lookup  reg_id=28196   reg_name="PORT_MAC_CONTROL"
+  +0x2158  reg32_set_wrap    reg_id=28196   reg_name="PORT_MAC_CONTROL"
+  +0x22dc  reg_field_lookup  reg_id=28196   reg_name="PORT_MAC_CONTROL"
+  +0x230c  reg_field_lookup  reg_id=28196   reg_name="PORT_MAC_CONTROL"
+  +0x233c  reg_field_lookup  reg_id=28196   reg_name="PORT_MAC_CONTROL"
+  +0x236c  reg_field_lookup  reg_id=28196   reg_name="PORT_MAC_CONTROL"
+  +0x2388  reg32_set_wrap    reg_id=28196   reg_name="PORT_MAC_CONTROL"
+  +0x2718  reg32_get_wrap    reg_id=28196   reg_name="PORT_MAC_CONTROL"
+  +0x2854  reg_field_lookup  reg_id=28196   reg_name="PORT_MAC_CONTROL"
+  +0x2884  reg_field_lookup  reg_id=28196   reg_name="PORT_MAC_CONTROL"
+  +0x28b4  reg_field_lookup  reg_id=28196   reg_name="PORT_MAC_CONTROL"
+  +0x28d0  reg32_set_wrap    reg_id=28196   reg_name="PORT_MAC_CONTROL"
+  +0x2a14  reg_field_lookup  reg_id=28196   reg_name="PORT_MAC_CONTROL"
+  +0x2a44  reg_field_lookup  reg_id=28196   reg_name="PORT_MAC_CONTROL"
+  +0x2a74  reg_field_lookup  reg_id=28196   reg_name="PORT_MAC_CONTROL"
+  +0x2a90  reg32_set_wrap    reg_id=28196   reg_name="PORT_MAC_CONTROL"
+  +0x2de0  reg32_get_wrap    reg_id=28196   reg_name="PORT_MAC_CONTROL"
+  +0x2f0c  reg_field_lookup  reg_id=28196   reg_name="PORT_MAC_CONTROL"
+  +0x2f28  reg32_set_wrap    reg_id=28196   reg_name="PORT_MAC_CONTROL"
+  +0x305c  reg_field_lookup  reg_id=28196   reg_name="PORT_MAC_CONTROL"
+  +0x3078  reg32_set_wrap    reg_id=28196   reg_name="PORT_MAC_CONTROL"
+  +0x33c8  reg32_get_wrap    reg_id=28196   reg_name="PORT_MAC_CONTROL"
+  +0x34f4  reg_field_lookup  reg_id=28196   reg_name="PORT_MAC_CONTROL"
+  +0x3510  reg32_set_wrap    reg_id=28196   reg_name="PORT_MAC_CONTROL"
+  +0x3644  reg_field_lookup  reg_id=28196   reg_name="PORT_MAC_CONTROL"
+  +0x3660  reg32_set_wrap    reg_id=28196   reg_name="PORT_MAC_CONTROL"
+  [42 primitive call sites]
+
+==== FUN_105b0980 (size=8852) ====
+  +0x19f0  reg32_get_wrap    reg_id=32846   reg_name="SRC_MODID_EGRESS_SEL"
+  [1 primitive call sites]
+
+==== FUN_10bfac18 (size=5256) ====
+  +0x0ef0  reg32_get_wrap    reg_id=12175   reg_name="EGR_VLAN_CONTROL_3"
+  [1 primitive call sites]
+
+==== FUN_105a961c (size=4828) ====
+  [0 primitive call sites]
+
+==== FUN_105b3278 (size=2584) ====
+  [0 primitive call sites]
+
+==== FUN_105e933c (size=2776) ====
+  [0 primitive call sites]
+
+==== FUN_105cc6f0 (size=2748) ====
+  [0 primitive call sites]
+
+==== FUN_10617aac (size=2284) ====
+  [0 primitive call sites]
+
+==== FUN_1099d84c (size=2100) ====
+  [0 primitive call sites]
+
+==== FUN_1084faec (size=8596) ====
+  [0 primitive call sites]
+
+==== FUN_10bdb2fc (size=18648) ====
+  +0x1254  reg32_get_wrap    reg_id=15085   reg_name="FP_SLICE_ENABLE"
+  +0x1af0  reg32_get_wrap    reg_id=15021   reg_name="FP_DOUBLE_WIDE_F4_SELECT"
+  +0x1f14  reg32_get_wrap    reg_id=15021   reg_name="FP_DOUBLE_WIDE_F4_SELECT"
+  [3 primitive call sites]
+
+==== FUN_10d7de9c (size=13712) ====
+  +0x0b04  reg32_get_wrap    reg_id=15085   reg_name="FP_SLICE_ENABLE"
+  +0x0b30  reg32_get_wrap    reg_id=15038   reg_name="FP_LOOKUP_ENABLE"
+  +0x12f0  reg32_get_wrap    reg_id=15022   reg_name="FP_DOUBLE_WIDE_SELECT"
+  +0x16e8  reg32_get_wrap    reg_id=15022   reg_name="FP_DOUBLE_WIDE_SELECT"
+  [4 primitive call sites]
+
+==== FUN_10be052c (size=12016) ====
+  +0x0568  reg32_get_wrap    reg_id=11257   reg_name="EFP_SLICE_CONTROL"
+  [1 primitive call sites]
+
+==== FUN_10d8142c (size=10256) ====
+  +0x0680  reg32_get_wrap    reg_id=36125   reg_name="VFP_SLICE_CONTROL"
+  +0x06e0  reg32_get_wrap    reg_id=36117   reg_name="VFP_KEY_CONTROL_2"
+  [2 primitive call sites]
+
+==== FUN_10be341c (size=9948) ====
+  +0x0670  reg32_get_wrap    reg_id=36125   reg_name="VFP_SLICE_CONTROL"
+  +0x06a0  reg32_get_wrap    reg_id=36115   reg_name="VFP_KEY_CONTROL"
+  +0x0708  reg32_get_wrap    reg_id=36117   reg_name="VFP_KEY_CONTROL_2"
+  [3 primitive call sites]
+
+==== FUN_10a67170 (size=9764) ====
+  +0x0670  reg32_get_wrap    reg_id=36125   reg_name="VFP_SLICE_CONTROL"
+  +0x06d0  reg32_get_wrap    reg_id=36117   reg_name="VFP_KEY_CONTROL_2"
+  [2 primitive call sites]
+
+==== FUN_10794970 (size=112) ====
+  [0 primitive call sites]
+
+==== FUN_10e412f4 (size=204) ====
+  [0 primitive call sites]
+
+# TOTAL: 60 call sites, 59 with resolved register name
