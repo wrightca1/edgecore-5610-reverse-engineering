@@ -1,0 +1,33 @@
+# write() callers (potential TX-out or TUN-write functions)
+  FUN_100467f8                             @ 0x100467f8   (size=348)
+  FUN_10071964                             @ 0x10071964   (size=1020)
+  FUN_1002b8cc                             @ 0x1002b8cc   (size=744)
+
+# writev() callers
+  FUN_1002b8cc                             @ 0x1002b8cc   (size=744)
+
+# read() callers (TX-in or TUN-read functions)
+  FUN_10085208                             @ 0x10085208   (size=520)
+  FUN_10071d60                             @ 0x10071d60   (size=372)
+  FUN_10045c90                             @ 0x10045c90   (size=208)
+  FUN_103230a4                             @ 0x103230a4   (size=2372)
+  FUN_1002b044                             @ 0x1002b044   (size=1096)
+
+# ioctl() callers - LUBDE / TUN setup
+  FUN_1002c62c                             @ 0x1002c62c   (size=916)
+  FUN_1002c2d0                             @ 0x1002c2d0   (size=860)
+  FUN_10322b10                             @ 0x10322b10   (size=412)
+  FUN_10322934                             @ 0x10322934   (size=476)
+  FUN_10008ec4                             @ 0x10008ec4   (size=516)
+  FUN_10322de8                             @ 0x10322de8   (size=140)
+  FUN_10008ae8                             @ 0x10008ae8   (size=988)
+
+# bcm_rx_unregister callers (registration sites)
+  FUN_101c71c4                             @ 0x101c71c4   (size=736)
+  FUN_1032b8a8                             @ 0x1032b8a8   (size=432)
+  FUN_1021905c                             @ 0x1021905c   (size=908)
+  FUN_1010e44c                             @ 0x1010e44c   (size=1332)
+  FUN_101920b4                             @ 0x101920b4   (size=1504)
+  FUN_102173e0                             @ 0x102173e0   (size=80)
+  FUN_1032bff0                             @ 0x1032bff0   (size=432)
+  FUN_10136bec                             @ 0x10136bec   (size=540)

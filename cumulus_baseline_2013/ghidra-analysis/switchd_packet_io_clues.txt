@@ -1,0 +1,44 @@
+# Packet I/O glue function clues
+
+string: "tuntap.c"                                                  
+    @ 0x11319cbc   used in func FUN_10008ae8 (0x10008ae8)
+string: "tuntap.c"                                                  
+    @ 0x11319cbc   used in func FUN_10008ae8 (0x10008ae8)
+string: "tuntap.c"                                                  
+    @ 0x11319cbc   used in func FUN_10008ae8 (0x10008ae8)
+string: "tuntap.c"                                                  
+    @ 0x11319cbc   used in func FUN_10008ae8 (0x10008ae8)
+string: "tuntap.c"                                                  
+    @ 0x11319cbc   used in func FUN_10008ae8 (0x10008ae8)
+string: "tuntap.c"                                                  
+    @ 0x11319cbc   used in func FUN_10008ec4 (0x10008ec4)
+string: "tuntap.c"                                                  
+    @ 0x11319cbc   used in func FUN_10008ec4 (0x10008ec4)
+string: "tuntap.c"                                                  
+    @ 0x11319cbc   used in func FUN_10008ec4 (0x10008ec4)
+string: "%s %s:%d CRIT TUNSETIFF failed: %s\n"                      
+    @ 0x11319cc8   used in func FUN_10008ae8 (0x10008ae8)
+string: "%s %s:%d CRIT Couldn't create tuntap ioctl socket.\n"      
+    @ 0x11319d64   used in func FUN_10008ec4 (0x10008ec4)
+string: "bcm_knet_cleanup"                                          
+    @ 0x113928d0   used in func FUN_103e6ef0 (0x103e6ef0)
+string: "bcm_knet_filter_create"                                    
+    @ 0x113928e4   used in func FUN_103e7000 (0x103e7000)
+string: "bcm_knet_filter_destroy"                                   
+    @ 0x113928fc   used in func FUN_103e7158 (0x103e7158)
+string: "bcm_knet_filter_get"                                       
+    @ 0x11392914   used in func FUN_103e7270 (0x103e7270)
+string: "bcm_knet_filter_traverse"                                  
+    @ 0x11392928   used in func FUN_103e73b0 (0x103e73b0)
+string: "bcm_knet_init"                                             
+    @ 0x11392944   used in func FUN_103e74d0 (0x103e74d0)
+string: "bcm_knet_netif_create"                                     
+    @ 0x11392954   used in func FUN_103e75e0 (0x103e75e0)
+string: "bcm_knet_netif_destroy"                                    
+    @ 0x1139296c   used in func FUN_103e7738 (0x103e7738)
+string: "bcm_knet_netif_get"                                        
+    @ 0x11392984   used in func FUN_103e7850 (0x103e7850)
+string: "bcm_knet_netif_traverse"                                   
+    @ 0x11392998   used in func FUN_103e7990 (0x103e7990)
+
+# Total: 20 packet-io string references
