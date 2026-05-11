@@ -1,5 +1,29 @@
 # Cumulus Linux 2.5.0 Baseline Capture (clock-rolled to 2013)
 
+> **For the documentation overview, see [`../DOCUMENTATION_INDEX.md`](../DOCUMENTATION_INDEX.md)**.
+> This file documents the runtime capture itself; the analysis docs in
+> this directory are listed below.
+
+## 🔑 Key analysis docs in this directory (May 2026)
+
+These build on the captures here to deliver a complete ASIC bring-up
+understanding. Read in this order for EdgeNOS work:
+
+| Doc | Topic |
+|---|---|
+| `ACCESS_METHODS_DEFINITIVE_GUIDE.md` | The 5-layer MMIO/SCHAN/PAXB stack |
+| `CMIC_SCHAN_DMA_DEEP_DIVE.md` | SCHAN protocol + CMICm registers + DMA |
+| `BCM_INIT_STATIC_CHAIN.md` | bcm_init 42-block dispatch order |
+| `ASIC_INIT_COOKBOOK.md` | rc.soc / rc.datapath_0 / config.bcm decoded |
+| `PACKET_FLOW_END_TO_END.md` | RX punt + TX inject end-to-end |
+| `L3_L2_PROGRAMMING_FLOW.md` | netlink → switchd → BCM API → chip |
+| `TABLE_ENTRY_HASH_OPS.md` | HASH_INSERT/LOOKUP/DELETE SCHAN opcodes |
+| `FP_MMU_AND_REMAINING.md` | FP TCAM + MMU + VLAN + Mirror + others |
+| `BCM_INIT_REGISTER_MAP.md` | 89 init-time registers identified |
+| `WHATS_MISSING.md` | Gap analysis |
+| `PROVEN_WORKING_CONFIG.md` | Known-good Cumulus 2.5.0 state |
+| `fuse-explore/SWITCHD_SFS_INTERNALS.md` | switchd FUSE control plane |
+
 ## Why this exists
 
 EdgeNOS, our custom NOS for the AS5610-52X, gets the BCM56846 partway up but
