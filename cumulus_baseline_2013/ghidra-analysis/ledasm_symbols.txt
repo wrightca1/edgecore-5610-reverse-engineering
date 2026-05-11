@@ -1,0 +1,577 @@
+# Symbols in ledasm
+0x1001401c  	_DYNAMIC	Label
+0x10000614  	__DT_INIT	Label
+0x10003480  	__DT_FINI	Label
+0x10000164  	__DT_HASH	Label
+0x1000020c  	__DT_GNU_HASH	Label
+0x100003a0  	__DT_STRTAB	Label
+0x10000230  	__DT_SYMTAB	Label
+0x10014104  	__DT_PLTGOT	Label
+0x10000524  	__DT_JMPREL	Label
+0x100140f8  	__DT_PPC_GOT	Label
+0x10000518  	__DT_RELA	Label
+0x100004c8  	__DT_VERNEED	Label
+0x1000049a  	__DT_VERSYM	Label
+0x10017000  	strcmp	Function
+0xNO ADDRESS	<EXTERNAL>	Library
+0xEXTERNAL:00000001	strcmp	Function
+0x10017004  	__nldbl_fprintf	Function
+0xEXTERNAL:00000002	__nldbl_fprintf	Function
+0x10017008  	fgets	Function
+0xEXTERNAL:00000003	fgets	Function
+0x1001700c  	tolower	Function
+0xEXTERNAL:00000004	tolower	Function
+0x10017010  	fclose	Function
+0xEXTERNAL:00000005	fclose	Function
+0x10017014  	fwrite	Function
+0xEXTERNAL:00000006	fwrite	Function
+0x10017018  	strcat	Function
+0xEXTERNAL:00000007	strcat	Function
+0x1001701c  	strcpy	Function
+0xEXTERNAL:00000008	strcpy	Function
+0x10017020  	__nldbl_printf	Function
+0xEXTERNAL:00000009	__nldbl_printf	Function
+0x10017024  	puts	Function
+0xEXTERNAL:0000000a	puts	Function
+0x1001702c  	exit	Function
+0xEXTERNAL:0000000b	exit	Function
+0x10017030  	strchr	Function
+0xEXTERNAL:0000000c	strchr	Function
+0x10017034  	strlen	Function
+0xEXTERNAL:0000000d	strlen	Function
+0x10017038  	__libc_start_main	Function
+0xEXTERNAL:0000000e	__libc_start_main	Function
+0x1001703c  	fopen	Function
+0xEXTERNAL:0000000f	fopen	Function
+0x10017040  	strncpy	Function
+0xEXTERNAL:00000010	strncpy	Function
+0x10017044  	fputc	Function
+0xEXTERNAL:00000011	fputc	Function
+0x10017048  	remove	Function
+0xEXTERNAL:00000012	remove	Function
+0x1001704c  	__ctype_b_loc	Function
+0xEXTERNAL:00000013	__ctype_b_loc	Function
+0x1000089c  	error	Function
+0x100034c8  	_IO_stdin_used	Label
+0x10014000  	__CTOR_LIST__	Label
+0x10014008  	__DTOR_LIST__	Label
+0x10014010  	__JCR_LIST__	Label
+0x10000684  	deregister_tm_clones	Function
+0x100006bc  	register_tm_clones	Function
+0x100006f8  	__do_global_dtors_aux	Function
+0x100143dc  	completed.6610	Label
+0x100143e0  	dtor_idx.6612	Label
+0x100007a4  	call___do_global_dtors_aux	Function
+0x100007c0  	frame_dummy	Function
+0x1000080c  	call_frame_dummy	Function
+0x10014004  	__CTOR_END__	Label
+0x10003bf0  	__FRAME_END__	Label
+0x10014010  	__JCR_END__	Label
+0x10003244  	__do_global_ctors_aux	Function
+0x10003290  	call___do_global_ctors_aux	Function
+0x1001415c  	optable	Label
+0x100143e4  	size.2854	Label
+0x10014000  	__init_array_end	Label
+0x10014000  	__init_array_start	Label
+0x100140f8  	_GLOBAL_OFFSET_TABLE_	Label
+0x10003180  	__libc_csu_fini	Function
+0x10002b40  	my_fopen	Function
+0x100143bc  	num_labels	Label
+0x10001d44  	parse_sssx	Function
+0x10017050  	_ITM_deregisterTMCloneTable	Label
+0x10014154  	data_start	Label
+0x10000828  	warning	Function
+0x10001874  	parse_addop	Function
+0x100143bc  	_edata	Label
+0x10003480  	_fini	Function
+0x10000d28  	dump_c_file	Function
+0x10000f94  	parse_label	Function
+0x10000b3c  	dump_sym_table	Function
+0x100143e8  	symtab	Label
+0x100143c0  	g_curpc	Label
+0x100143c4  	g_pass	Label
+0x10001efc  	parse_ddd	Function
+0x10001290  	parse_primop	Function
+0x1000160c  	parse_unop	Function
+0x1001400c  	__DTOR_END__	Label
+0x10001be4  	parse_conexpr	Function
+0x10002108  	parse_args	Function
+0x1000120c  	hexval	Function
+0x10000a7c  	add_symbol	Function
+0x10014154  	__data_start	Label
+0x10001124  	ishexdigit	Function
+0x10002780  	parse_mainpart	Function
+0x100016c4  	parse_mulop	Function
+0x10014158  	__dso_handle	Label
+0x10016be8  	g_program	Label
+0x10000f08  	parse_comment	Function
+0x100143c8  	g_warnings	Label
+0x100143cc  	g_errs	Label
+0x10002a3c  	parse_line	Function
+0x10001ae4  	parse_logop	Function
+0x10003190  	__libc_csu_init	Function
+0x1001c3bc  	_SDA_BASE_	Label
+0x10000e88  	skip_ws	Function
+0x10016fe8  	_end	Label
+0x10000660  	_start	Function
+0x10001f68  	parse_d	Function
+0x100143bc  	__bss_start	Label
+0x10002ffc  	main	Function
+0x100143d0  	g_curline	Label
+0x10002c38  	parse_file	Function
+0x10017054  	_Jv_RegisterClasses	Label
+0x10002fc8  	help	Function
+0x10002bd8  	my_unlink	Function
+0x100009b4  	find_sym_idx	Function
+0x10002038  	emit	Function
+0x100143bc  	__TMC_END__	Label
+0x10001974  	parse_shop	Function
+0x10017058  	_ITM_registerTMCloneTable	Label
+0x100143d4  	g_errors_enabled	Label
+0x100011b8  	isoctdigit	Function
+0x10000c4c  	dump_hex_file	Function
+0x10001e90  	parse_sss	Function
+0x10000910  	init_tables	Function
+0x10000614  	_init	Function
+0x100143d8  	g_warnings_enabled	Label
+0x10002aac  	lower_buf	Function
+0x10001c28  	parse_ss	Function
+0xNO ADDRESS	libc.so.6	Library
+0x.comment::00000000	ElfComment[0]	Label
+0x.comment::00000011	ElfComment[1]	Label
+0xVARIABLE:00000001	msg	Parameter
+0xVARIABLE:00000001	msg	Parameter
+0xVARIABLE:00000001	label	Parameter
+0xVARIABLE:00000001	label	Parameter
+0xVARIABLE:00000001	fp	Parameter
+0xVARIABLE:00000001	fp	Parameter
+0xVARIABLE:00000001	fp	Parameter
+0xVARIABLE:00000001	basename	Parameter
+0xVARIABLE:00000001	p	Parameter
+0xVARIABLE:00000001	p	Parameter
+0xVARIABLE:00000001	p	Parameter
+0xVARIABLE:00000001	buf	Parameter
+0xVARIABLE:00000001	c	Parameter
+0xVARIABLE:00000001	c	Parameter
+0xVARIABLE:00000001	c	Parameter
+0xVARIABLE:00000001	p	Parameter
+0xVARIABLE:00000001	p	Parameter
+0xVARIABLE:00000001	p	Parameter
+0xVARIABLE:00000001	p	Parameter
+0xVARIABLE:00000001	p	Parameter
+0xVARIABLE:00000001	p	Parameter
+0xVARIABLE:00000001	p	Parameter
+0xVARIABLE:00000001	p	Parameter
+0xVARIABLE:00000001	field	Parameter
+0xVARIABLE:00000001	twobyte	Parameter
+0xVARIABLE:00000001	byte2	Parameter
+0xVARIABLE:00000001	p	Parameter
+0xVARIABLE:00000001	field	Parameter
+0xVARIABLE:00000001	twobyte	Parameter
+0xVARIABLE:00000001	byte2	Parameter
+0xVARIABLE:00000001	p	Parameter
+0xVARIABLE:00000001	field	Parameter
+0xVARIABLE:00000001	twobyte	Parameter
+0xVARIABLE:00000001	byte2	Parameter
+0xVARIABLE:00000001	p	Parameter
+0xVARIABLE:00000001	field	Parameter
+0xVARIABLE:00000001	twobyte	Parameter
+0xVARIABLE:00000001	byte2	Parameter
+0xVARIABLE:00000001	p	Parameter
+0xVARIABLE:00000001	field	Parameter
+0xVARIABLE:00000001	v	Parameter
+0xNO ADDRESS	emit	Namespace
+0x100143e4  	size	Label
+0xVARIABLE:00000001	p	Parameter
+0xVARIABLE:00000001	op	Parameter
+0xVARIABLE:00000001	label	Parameter
+0xVARIABLE:00000001	p	Parameter
+0xVARIABLE:00000001	line	Parameter
+0xVARIABLE:00000001	dst	Parameter
+0xVARIABLE:00000001	src	Parameter
+0xVARIABLE:00000001	basename	Parameter
+0xVARIABLE:00000001	ext	Parameter
+0xVARIABLE:00000001	access	Parameter
+0xVARIABLE:00000001	basename	Parameter
+0xVARIABLE:00000001	ext	Parameter
+0xVARIABLE:00000001	basename	Parameter
+0xVARIABLE:00000001	argc	Parameter
+0xVARIABLE:00000001	argv	Parameter
+0x10003ba0  	cie_10003ba0	Label
+0x10003bb4  	fde_10003bb4	Label
+0x10003bc8  	cie_10003bc8	Label
+0x100032b0  	strcmp	Function
+0x10003bdc  	fde_10003bdc	Label
+0x.debug_frame::00000000	cie_.debug_frame::00000000	Label
+0x.debug_frame::00000010	fde_.debug_frame::00000010	Label
+0x.debug_frame::00000034	fde_.debug_frame::00000034	Label
+0x.debug_frame::00000058	fde_.debug_frame::00000058	Label
+0x.debug_frame::0000007c	fde_.debug_frame::0000007c	Label
+0x.debug_frame::000000a0	fde_.debug_frame::000000a0	Label
+0x.debug_frame::000000c4	fde_.debug_frame::000000c4	Label
+0x.debug_frame::000000e8	fde_.debug_frame::000000e8	Label
+0x.debug_frame::0000010c	fde_.debug_frame::0000010c	Label
+0x.debug_frame::00000134	fde_.debug_frame::00000134	Label
+0x.debug_frame::00000158	fde_.debug_frame::00000158	Label
+0x.debug_frame::0000017c	fde_.debug_frame::0000017c	Label
+0x.debug_frame::000001a4	fde_.debug_frame::000001a4	Label
+0x.debug_frame::000001c8	fde_.debug_frame::000001c8	Label
+0x.debug_frame::000001ec	fde_.debug_frame::000001ec	Label
+0x.debug_frame::00000210	fde_.debug_frame::00000210	Label
+0x.debug_frame::00000238	fde_.debug_frame::00000238	Label
+0x.debug_frame::0000025c	fde_.debug_frame::0000025c	Label
+0x.debug_frame::00000284	fde_.debug_frame::00000284	Label
+0x.debug_frame::000002a8	fde_.debug_frame::000002a8	Label
+0x.debug_frame::000002d0	fde_.debug_frame::000002d0	Label
+0x.debug_frame::000002f4	fde_.debug_frame::000002f4	Label
+0x.debug_frame::00000318	fde_.debug_frame::00000318	Label
+0x.debug_frame::00000340	fde_.debug_frame::00000340	Label
+0x.debug_frame::00000368	fde_.debug_frame::00000368	Label
+0x.debug_frame::0000038c	fde_.debug_frame::0000038c	Label
+0x.debug_frame::000003b0	fde_.debug_frame::000003b0	Label
+0x.debug_frame::000003d4	fde_.debug_frame::000003d4	Label
+0x.debug_frame::000003f8	fde_.debug_frame::000003f8	Label
+0x.debug_frame::00000420	fde_.debug_frame::00000420	Label
+0x.debug_frame::00000448	fde_.debug_frame::00000448	Label
+0x.debug_frame::0000046c	fde_.debug_frame::0000046c	Label
+0x.debug_frame::00000490	fde_.debug_frame::00000490	Label
+0x.debug_frame::000004b8	fde_.debug_frame::000004b8	Label
+0x.debug_frame::000004e0	fde_.debug_frame::000004e0	Label
+0x.debug_frame::00000508	fde_.debug_frame::00000508	Label
+0x.debug_frame::00000524	fde_.debug_frame::00000524	Label
+0x100032c0  	__nldbl_fprintf	Function
+0x100032d0  	fgets	Function
+0x100032e0  	tolower	Function
+0x100032f0  	fclose	Function
+0x10003300  	fwrite	Function
+0x10003310  	strcat	Function
+0x10003320  	strcpy	Function
+0x10003330  	__nldbl_printf	Function
+0x10003340  	puts	Function
+0xEXTERNAL:00000014	__gmon_start__	Function
+0x10017028  	__gmon_start__	Function
+0x10003350  	__gmon_start__	Function
+0x10003360  	exit	Function
+0x10003370  	strchr	Function
+0x10003380  	strlen	Function
+0x100033a0  	fopen	Function
+0x100033b0  	strncpy	Function
+0x100033c0  	fputc	Function
+0x100033d0  	remove	Function
+0x100033e0  	__ctype_b_loc	Function
+0x10003390  	__libc_start_main	Function
+0xNO ADDRESS	switchD_10002170	Namespace
+0x10002170  	switchD	Label
+0x10002174  	caseD_0	Label
+0x10002220  	caseD_1	Label
+0x100022ac  	caseD_2	Label
+0x100022ac  	caseD_3	Label
+0x100022ac  	caseD_4	Label
+0x100022ac  	caseD_5	Label
+0x100022d4  	caseD_6	Label
+0x100022d4  	caseD_7	Label
+0x100022ac  	caseD_8	Label
+0x100022ac  	caseD_9	Label
+0x100022ac  	caseD_a	Label
+0x100022ac  	caseD_b	Label
+0x100022ac  	caseD_c	Label
+0x100022ac  	caseD_d	Label
+0x10002318  	caseD_e	Label
+0x10002380  	caseD_f	Label
+0x100023e8  	caseD_10	Label
+0x10002380  	caseD_11	Label
+0x10002450  	caseD_12	Label
+0x10002450  	caseD_13	Label
+0x10002450  	caseD_14	Label
+0x10002450  	caseD_15	Label
+0x10002450  	caseD_16	Label
+0x10002450  	caseD_17	Label
+0x10002494  	caseD_18	Label
+0x10002494  	caseD_19	Label
+0x10002494  	caseD_1a	Label
+0x10002494  	caseD_1b	Label
+0x100024fc  	caseD_1c	Label
+0x100024fc  	caseD_1d	Label
+0x100024fc  	caseD_1e	Label
+0x100024fc  	caseD_1f	Label
+0x100024fc  	caseD_20	Label
+0x100024fc  	caseD_21	Label
+0x100025c4  	caseD_22	Label
+0x100025c4  	caseD_23	Label
+0x100025c4  	caseD_24	Label
+0x10002720  	default	Label
+0x100038c0  	switchdataD_100038c0	Label
+0xVARIABLE:00000001	__s	Parameter
+0xVARIABLE:00000001	__c	Parameter
+0xVARIABLE:00000001	__dest	Parameter
+0xVARIABLE:00000001	__src	Parameter
+0xVARIABLE:00000001	__dest	Parameter
+0xVARIABLE:00000001	__src	Parameter
+0xVARIABLE:00000001	__s1	Parameter
+0xVARIABLE:00000001	__s2	Parameter
+0xVARIABLE:00000001	__filename	Parameter
+0xVARIABLE:00000001	__modes	Parameter
+0xVARIABLE:00000001	__c	Parameter
+0xVARIABLE:00000001	__stream	Parameter
+0xVARIABLE:00000001	__c	Parameter
+0xVARIABLE:00000001	__dest	Parameter
+0xVARIABLE:00000001	__src	Parameter
+0xVARIABLE:00000001	__n	Parameter
+0xVARIABLE:00000001	__ptr	Parameter
+0xVARIABLE:00000001	__size	Parameter
+0xVARIABLE:00000001	__n	Parameter
+0xVARIABLE:00000001	__s	Parameter
+0xVARIABLE:00000001	__stream	Parameter
+0xVARIABLE:00000001	__s	Parameter
+0xVARIABLE:00000001	ctx	Parameter
+0xVARIABLE:00000001	__s	Parameter
+0xVARIABLE:00000001	__filename	Parameter
+0xVARIABLE:00000001	__status	Parameter
+0xVARIABLE:00000001	__s	Parameter
+0xVARIABLE:00000001	__n	Parameter
+0xVARIABLE:00000001	__stream	Parameter
+0xVARIABLE:00000002	local_10	Local Var
+0xVARIABLE:00000003	local_8	Local Var
+0xVARIABLE:00000004	local_res4	Local Var
+0xVARIABLE:00000005	local_20	Local Var
+0xVARIABLE:00000006	local_18	Local Var
+0xVARIABLE:00000007	local_4	Local Var
+0xVARIABLE:00000004	local_res4	Local Var
+0xVARIABLE:00000005	local_20	Local Var
+0xVARIABLE:00000006	local_18	Local Var
+0xVARIABLE:00000007	local_4	Local Var
+0xVARIABLE:00000008	local_30	Local Var
+0xVARIABLE:00000009	local_28	Local Var
+0xVARIABLE:0000000a	local_24	Local Var
+0xVARIABLE:0000000b	local_20	Local Var
+0xVARIABLE:00000006	local_18	Local Var
+0xVARIABLE:0000000c	local_14	Local Var
+0xVARIABLE:00000007	local_4	Local Var
+0xVARIABLE:00000004	local_res4	Local Var
+0xVARIABLE:00000005	local_20	Local Var
+0xVARIABLE:00000006	local_18	Local Var
+0xVARIABLE:0000000c	local_14	Local Var
+0xVARIABLE:00000002	local_10	Local Var
+0xVARIABLE:0000000d	local_c	Local Var
+0xVARIABLE:00000007	local_4	Local Var
+0xVARIABLE:00000004	local_res4	Local Var
+0xVARIABLE:00000008	local_30	Local Var
+0xVARIABLE:0000000e	local_1c	Local Var
+0xVARIABLE:00000006	local_18	Local Var
+0xVARIABLE:0000000c	local_14	Local Var
+0xVARIABLE:00000002	local_10	Local Var
+0xVARIABLE:0000000d	local_c	Local Var
+0xVARIABLE:00000003	local_8	Local Var
+0xVARIABLE:00000007	local_4	Local Var
+0xVARIABLE:00000004	local_res4	Local Var
+0xVARIABLE:00000002	local_10	Local Var
+0xVARIABLE:00000004	local_res4	Local Var
+0xVARIABLE:00000002	local_10	Local Var
+0xVARIABLE:00000004	local_res4	Local Var
+0xVARIABLE:00000005	local_20	Local Var
+0xVARIABLE:0000000f	local_18	Local Var
+0xVARIABLE:00000007	local_4	Local Var
+0xVARIABLE:00000004	local_res4	Local Var
+0xVARIABLE:00000005	local_20	Local Var
+0xVARIABLE:00000006	local_18	Local Var
+0xVARIABLE:00000007	local_4	Local Var
+0xVARIABLE:00000004	local_res4	Local Var
+0xVARIABLE:00000005	local_20	Local Var
+0xVARIABLE:00000006	local_18	Local Var
+0xVARIABLE:00000007	local_4	Local Var
+0xVARIABLE:00000004	local_res4	Local Var
+0xVARIABLE:00000008	local_30	Local Var
+0xVARIABLE:00000009	local_28	Local Var
+0xVARIABLE:00000006	local_18	Local Var
+0xVARIABLE:00000007	local_4	Local Var
+0xVARIABLE:00000004	local_res4	Local Var
+0xVARIABLE:00000010	local_50	Local Var
+0xVARIABLE:00000011	local_48	Local Var
+0xVARIABLE:00000012	local_44	Local Var
+0xVARIABLE:00000013	local_40	Local Var
+0xVARIABLE:00000005	local_20	Local Var
+0xVARIABLE:00000006	local_18	Local Var
+0xVARIABLE:00000003	local_8	Local Var
+0xVARIABLE:00000007	local_4	Local Var
+0xVARIABLE:00000004	local_res4	Local Var
+0xVARIABLE:00000014	local_70	Local Var
+0xVARIABLE:00000015	local_68	Local Var
+0xVARIABLE:00000016	local_64	Local Var
+0xVARIABLE:00000017	local_60	Local Var
+0xVARIABLE:00000018	local_5c	Local Var
+0xVARIABLE:00000019	local_3c	Local Var
+0xVARIABLE:00000006	local_18	Local Var
+0xVARIABLE:00000007	local_4	Local Var
+0xVARIABLE:00000004	local_res4	Local Var
+0xVARIABLE:00000002	local_10	Local Var
+0xVARIABLE:00000003	local_8	Local Var
+0xVARIABLE:00000004	local_res4	Local Var
+0xVARIABLE:00000008	local_30	Local Var
+0xVARIABLE:00000009	local_28	Local Var
+0xVARIABLE:00000006	local_18	Local Var
+0xVARIABLE:00000007	local_4	Local Var
+0xVARIABLE:00000004	local_res4	Local Var
+0xVARIABLE:00000008	local_30	Local Var
+0xVARIABLE:00000009	local_28	Local Var
+0xVARIABLE:00000006	local_18	Local Var
+0xVARIABLE:00000007	local_4	Local Var
+0xVARIABLE:00000004	local_res4	Local Var
+0xVARIABLE:00000005	local_20	Local Var
+0xVARIABLE:0000000f	local_18	Local Var
+0xVARIABLE:00000007	local_4	Local Var
+0xVARIABLE:0000001a	local_40	Local Var
+0xVARIABLE:0000001b	local_38	Local Var
+0xVARIABLE:0000001c	local_34	Local Var
+0xVARIABLE:00000008	local_30	Local Var
+0xVARIABLE:0000001d	local_2c	Local Var
+0xVARIABLE:00000009	local_28	Local Var
+0xVARIABLE:0000000a	local_24	Local Var
+0xVARIABLE:00000005	local_20	Local Var
+0xVARIABLE:00000006	local_18	Local Var
+0xVARIABLE:0000000c	local_14	Local Var
+0xVARIABLE:00000002	local_10	Local Var
+0xVARIABLE:00000007	local_4	Local Var
+0xVARIABLE:00000004	local_res4	Local Var
+0xVARIABLE:00000005	local_20	Local Var
+0xVARIABLE:00000006	local_18	Local Var
+0xVARIABLE:00000007	local_4	Local Var
+0xVARIABLE:00000004	local_res4	Local Var
+0xVARIABLE:0000001e	local_840	Local Var
+0xVARIABLE:0000001f	local_838	Local Var
+0xVARIABLE:00000020	local_834	Local Var
+0xVARIABLE:00000021	local_830	Local Var
+0xVARIABLE:00000022	local_82c	Local Var
+0xVARIABLE:00000023	local_828	Local Var
+0xVARIABLE:00000006	local_18	Local Var
+0xVARIABLE:00000008	local_30	Local Var
+0xVARIABLE:00000009	local_28	Local Var
+0xVARIABLE:0000000a	local_24	Local Var
+0xVARIABLE:00000006	local_18	Local Var
+0xVARIABLE:00000007	local_4	Local Var
+0xVARIABLE:00000004	local_res4	Local Var
+0xVARIABLE:00000005	local_20	Local Var
+0xVARIABLE:00000006	local_18	Local Var
+0xVARIABLE:0000000c	local_14	Local Var
+0xVARIABLE:00000007	local_4	Local Var
+0xVARIABLE:00000004	local_res4	Local Var
+0xVARIABLE:00000005	local_20	Local Var
+0xVARIABLE:00000006	local_18	Local Var
+0xVARIABLE:00000007	local_4	Local Var
+0xVARIABLE:00000004	local_res4	Local Var
+0xVARIABLE:00000008	local_30	Local Var
+0xVARIABLE:00000009	local_28	Local Var
+0xVARIABLE:00000006	local_18	Local Var
+0xVARIABLE:0000000c	local_14	Local Var
+0xVARIABLE:00000007	local_4	Local Var
+0xVARIABLE:00000004	local_res4	Local Var
+0xVARIABLE:00000007	local_4	Local Var
+0xVARIABLE:00000004	local_res4	Local Var
+0xVARIABLE:00000002	local_10	Local Var
+0xVARIABLE:00000004	local_res4	Local Var
+0xVARIABLE:00000005	local_20	Local Var
+0xVARIABLE:0000000f	local_18	Local Var
+0xVARIABLE:00000007	local_4	Local Var
+0xVARIABLE:00000004	local_res4	Local Var
+0xVARIABLE:00000010	local_50	Local Var
+0xVARIABLE:00000011	local_48	Local Var
+0xVARIABLE:00000006	local_18	Local Var
+0xVARIABLE:0000000c	local_14	Local Var
+0xVARIABLE:00000002	local_10	Local Var
+0xVARIABLE:0000000d	local_c	Local Var
+0xVARIABLE:00000007	local_4	Local Var
+0xVARIABLE:00000004	local_res4	Local Var
+0xVARIABLE:00000024	local_120	Local Var
+0xVARIABLE:00000006	local_18	Local Var
+0xVARIABLE:0000000c	local_14	Local Var
+0xVARIABLE:00000007	local_4	Local Var
+0xVARIABLE:00000004	local_res4	Local Var
+0xVARIABLE:00000002	local_10	Local Var
+0xVARIABLE:00000007	local_4	Local Var
+0xVARIABLE:00000004	local_res4	Local Var
+0xVARIABLE:00000008	local_30	Local Var
+0xVARIABLE:00000009	local_28	Local Var
+0xVARIABLE:00000006	local_18	Local Var
+0xVARIABLE:00000007	local_4	Local Var
+0xVARIABLE:00000004	local_res4	Local Var
+0xVARIABLE:00000010	local_50	Local Var
+0xVARIABLE:00000009	local_28	Local Var
+0xVARIABLE:00000006	local_18	Local Var
+0xVARIABLE:0000000c	local_14	Local Var
+0xVARIABLE:00000002	local_10	Local Var
+0xVARIABLE:0000000d	local_c	Local Var
+0xVARIABLE:00000007	local_4	Local Var
+0xVARIABLE:00000004	local_res4	Local Var
+0xVARIABLE:00000002	local_10	Local Var
+0xVARIABLE:00000007	local_4	Local Var
+0xVARIABLE:00000004	local_res4	Local Var
+0xVARIABLE:00000002	local_10	Local Var
+0xVARIABLE:00000004	local_res4	Local Var
+0xVARIABLE:00000025	local_130	Local Var
+0xVARIABLE:00000026	local_128	Local Var
+0xVARIABLE:00000006	local_18	Local Var
+0xVARIABLE:0000000c	local_14	Local Var
+0xVARIABLE:00000002	local_10	Local Var
+0xVARIABLE:00000007	local_4	Local Var
+0xVARIABLE:00000004	local_res4	Local Var
+0xVARIABLE:00000005	local_20	Local Var
+0xVARIABLE:00000006	local_18	Local Var
+0xVARIABLE:00000007	local_4	Local Var
+0xVARIABLE:00000004	local_res4	Local Var
+0xVARIABLE:00000005	local_20	Local Var
+0xVARIABLE:00000006	local_18	Local Var
+0xVARIABLE:0000000c	local_14	Local Var
+0xVARIABLE:00000002	local_10	Local Var
+0xVARIABLE:0000000d	local_c	Local Var
+0xVARIABLE:00000007	local_4	Local Var
+0xVARIABLE:00000004	local_res4	Local Var
+0xVARIABLE:00000005	local_20	Local Var
+0xVARIABLE:00000006	local_18	Local Var
+0xVARIABLE:0000000c	local_14	Local Var
+0xVARIABLE:00000007	local_4	Local Var
+0xVARIABLE:00000004	local_res4	Local Var
+0xVARIABLE:00000005	local_20	Local Var
+0xVARIABLE:00000002	local_10	Local Var
+0xVARIABLE:0000000d	local_c	Local Var
+0xVARIABLE:00000003	local_8	Local Var
+0xVARIABLE:00000007	local_4	Local Var
+0xVARIABLE:00000004	local_res4	Local Var
+0xVARIABLE:00000008	local_30	Local Var
+0xVARIABLE:00000009	local_28	Local Var
+0xVARIABLE:0000000a	local_24	Local Var
+0xVARIABLE:00000005	local_20	Local Var
+0xVARIABLE:00000006	local_18	Local Var
+0xVARIABLE:00000007	local_4	Local Var
+0xVARIABLE:00000004	local_res4	Local Var
+0xVARIABLE:00000008	local_30	Local Var
+0xVARIABLE:00000009	local_28	Local Var
+0xVARIABLE:0000000a	local_24	Local Var
+0xVARIABLE:00000005	local_20	Local Var
+0xVARIABLE:00000006	local_18	Local Var
+0xVARIABLE:00000007	local_4	Local Var
+0xVARIABLE:00000004	local_res4	Local Var
+0xVARIABLE:00000008	local_30	Local Var
+0xVARIABLE:00000009	local_28	Local Var
+0xVARIABLE:0000000a	local_24	Local Var
+0xVARIABLE:00000005	local_20	Local Var
+0xVARIABLE:00000006	local_18	Local Var
+0xVARIABLE:00000007	local_4	Local Var
+0xVARIABLE:00000004	local_res4	Local Var
+0xVARIABLE:00000010	local_50	Local Var
+0xVARIABLE:00000011	local_48	Local Var
+0xVARIABLE:00000006	local_18	Local Var
+0xVARIABLE:0000000c	local_14	Local Var
+0xVARIABLE:00000007	local_4	Local Var
+0xVARIABLE:00000004	local_res4	Local Var
+0xVARIABLE:00000008	local_30	Local Var
+0xVARIABLE:00000009	local_28	Local Var
+0xVARIABLE:0000000a	local_24	Local Var
+0xVARIABLE:00000005	local_20	Local Var
+0xVARIABLE:00000006	local_18	Local Var
+0xVARIABLE:00000007	local_4	Local Var
+0xVARIABLE:00000004	local_res4	Local Var
+0xVARIABLE:00000008	local_30	Local Var
+0xVARIABLE:00000009	local_28	Local Var
+0xVARIABLE:00000006	local_18	Local Var
+0xVARIABLE:00000007	local_4	Local Var
+0xVARIABLE:00000004	local_res4	Local Var
+# Total: 575 symbols

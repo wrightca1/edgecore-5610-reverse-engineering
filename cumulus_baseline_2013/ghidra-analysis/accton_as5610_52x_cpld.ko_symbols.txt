@@ -1,0 +1,314 @@
+# Symbols in accton_as5610_52x_cpld.ko
+0x00010114  	pwm1_enable_store	Function
+0x00010aa8  	accton_as5610_52x_cpld_setup	Function
+0x0001011c  	accton_as5610_52x_cpld_remove	Function
+0x00010160  	pwm1_store	Function
+0x000101f4  	watch_dog_store	Function
+0x000103d0  	led_store	Function
+0x00010514  	help_show	Function
+0x00010544  	pwm1_enable_show	Function
+0x00010574  	watch_dog_show	Function
+0x00010670  	led_show	Function
+0x000107a4  	pwm1_show	Function
+0x000107bc  	system_status_show	Function
+0x00010910  	board_revision_show	Function
+0x00010984  	psu_power_show	Function
+0x00010ab0  	accton_as5610_52x_cpld_probe	Function
+0x00010b54  	accton_as5610_52x_cpld_init	Function
+0x00010ba8  	accton_as5610_52x_cpld_exit	Function
+0x00010bb8  	wd_cnt_tbl	Label
+0x00010bf8  	driver_name	Label
+0x00010c10  	__mod_version961	Label
+0x00010c1c  	__mod_license960	Label
+0x00010c28  	__mod_description959	Label
+0x00010c6e  	__mod_author958	Label
+0x00011ee0  	accton_as5610_52x_cpld_attr_group	Label
+0x00012814  	accton_as5610_52x_cpld_attrs	Label
+0x00011eec  	accton_as5610_52x_pwm1	Label
+0x00011f4c  	accton_as5610_52x_cpld_mutex	Label
+0x00011f60  	cpld_leds	Label
+0x0001235c  	cpld_system_status	Label
+0x00012528  	cpld_psu_status	Label
+0x0001263c  	accton_as5610_52x_cpld_driver	Label
+0x0001268c  	accton_as5610_52x_cpld_ids	Label
+0x00012878  	dev_attr_board_revision	Label
+0x00012888  	dev_attr_psu_pwr1_all_ok	Label
+0x00012898  	dev_attr_psu_pwr1_present	Label
+0x000128a8  	dev_attr_psu_pwr1_dc_ok	Label
+0x000128b8  	dev_attr_psu_pwr2_all_ok	Label
+0x000128c8  	dev_attr_psu_pwr2_present	Label
+0x000128d8  	dev_attr_psu_pwr2_dc_ok	Label
+0x000128e8  	dev_attr_system_all_ok	Label
+0x000128f8  	dev_attr_system_dc_power_ok	Label
+0x00012908  	dev_attr_system_fan_present	Label
+0x00012918  	dev_attr_system_fan_ok	Label
+0x00012928  	dev_attr_system_fan_air_flow	Label
+0x00012938  	dev_attr_pwm1	Label
+0x00012948  	dev_attr_pwm1_enable	Label
+0x00012958  	dev_attr_led_psu1	Label
+0x00012968  	dev_attr_led_psu2	Label
+0x00012978  	dev_attr_led_diag	Label
+0x00012988  	dev_attr_led_fan	Label
+0x00012998  	dev_attr_led_locator	Label
+0x000129a8  	dev_attr_help	Label
+0x000129b8  	dev_attr_README	Label
+0x000129c8  	dev_attr_watch_dog_keep_alive	Label
+0x000129d8  	dev_attr_watch_dog_enable	Label
+0x000129e8  	dev_attr_watch_dog_timeout	Label
+0x00012b64  	accton_as5610_52x_cpld_regs	Label
+0x00010ca0  	__mod_srcversion44	Label
+0x00010cc4  	__module_depends	Label
+0x00010ccd  	__mod_vermagic5	Label
+0x00011ae0  	____versions	Label
+0x00010100  	_restgpr_31_x	Label
+0x000129f8  	__this_module	Label
+0x00010028  	_savegpr_15	Label
+0x000100fc  	_restgpr_30_x	Label
+0x000100f8  	_restgpr_29_x	Label
+0x000100f4  	_rest32gpr_28_x	Label
+0x00010054  	_savegpr_26	Label
+0x000100a0  	_rest32gpr_26	Label
+0x000100b4  	_rest32gpr_31	Label
+0x000100f8  	_rest32gpr_29_x	Label
+0x00010058  	_save32gpr_27	Label
+0x00010074  	_rest32gpr_15	Label
+0x000100dc  	_restgpr_22_x	Label
+0x00010080  	_rest32gpr_18	Label
+0x000100ec  	_restgpr_26_x	Label
+0x000100f4  	_restgpr_28_x	Label
+0x0001008c  	_rest32gpr_21	Label
+0x000100e4  	_restgpr_24_x	Label
+0x00010040  	_savegpr_21	Label
+0x000100e0  	_rest32gpr_23_x	Label
+0x00010088  	_restgpr_20	Label
+0x000100a8  	_rest32gpr_28	Label
+0x000100cc  	_restgpr_18_x	Label
+0x00010070  	_rest32gpr_14	Label
+0x0001003c  	_savegpr_20	Label
+0x000100f0  	_rest32gpr_27_x	Label
+0x000100d0  	_rest32gpr_19_x	Label
+0x000100fc  	_rest32gpr_30_x	Label
+0x000100ac  	_restgpr_29	Label
+0x00010034  	_savegpr_18	Label
+0x000100e8  	_rest32gpr_25_x	Label
+0x00010098  	_rest32gpr_24	Label
+0x000100c8  	_rest32gpr_17_x	Label
+0x0001009c  	_rest32gpr_25	Label
+0x00010048  	_savegpr_23	Label
+0x000100c0  	_rest32gpr_15_x	Label
+0x00011eed  	watch_dog_bits	Label
+0x000100a4  	_restgpr_27	Label
+0x00010030  	_save32gpr_17	Label
+0x0001004c  	_savegpr_24	Label
+0x00010068  	_save32gpr_31	Label
+0x00010060  	_save32gpr_29	Label
+0x00010038  	_savegpr_19	Label
+0x000100bc  	_restgpr_14_x	Label
+0x0001002c  	_savegpr_16	Label
+0x00010050  	_save32gpr_25	Label
+0x00010064  	_savegpr_30	Label
+0x000100d8  	_restgpr_21_x	Label
+0x000100b0  	_restgpr_30	Label
+0x000100c4  	_restgpr_16_x	Label
+0x000100f0  	_restgpr_27_x	Label
+0x00010044  	_savegpr_22	Label
+0x00010090  	_rest32gpr_22	Label
+0x00010078  	_rest32gpr_16	Label
+0x00010094  	_restgpr_23	Label
+0x00010084  	_rest32gpr_19	Label
+0x00010024  	_save32gpr_14	Label
+0x0001007c  	_restgpr_17	Label
+0x0001005c  	_save32gpr_28	Label
+0x000100d4  	_restgpr_20_x	Label
+0x00010100  	_rest32gpr_31_x	Label
+0x.comment::00000000	ElfComment[0]	Label
+0x.comment::00000001	ElfComment[1]	Label
+0x.comment::00000012	ElfComment[2]	Label
+0x.comment::00000013	ElfComment[3]	Label
+0xVARIABLE:00000001	dev	Parameter
+0xVARIABLE:00000001	dattr	Parameter
+0xVARIABLE:00000001	buf	Parameter
+0xVARIABLE:00000001	count	Parameter
+0xVARIABLE:00000001	ofdev	Parameter
+0xVARIABLE:00000001	dev	Parameter
+0xVARIABLE:00000001	dattr	Parameter
+0xVARIABLE:00000001	buf	Parameter
+0xVARIABLE:00000001	count	Parameter
+0xVARIABLE:00000001	dev	Parameter
+0xVARIABLE:00000001	dattr	Parameter
+0xVARIABLE:00000001	buf	Parameter
+0xVARIABLE:00000001	count	Parameter
+0xVARIABLE:00000001	dev	Parameter
+0xVARIABLE:00000001	dattr	Parameter
+0xVARIABLE:00000001	buf	Parameter
+0xVARIABLE:00000001	count	Parameter
+0xVARIABLE:00000001	dev	Parameter
+0xVARIABLE:00000001	dattr	Parameter
+0xVARIABLE:00000001	buf	Parameter
+0xVARIABLE:00000001	dev	Parameter
+0xVARIABLE:00000001	dattr	Parameter
+0xVARIABLE:00000001	buf	Parameter
+0xVARIABLE:00000001	dev	Parameter
+0xVARIABLE:00000001	dattr	Parameter
+0xVARIABLE:00000001	buf	Parameter
+0xVARIABLE:00000001	dev	Parameter
+0xVARIABLE:00000001	dattr	Parameter
+0xVARIABLE:00000001	buf	Parameter
+0xVARIABLE:00000001	dev	Parameter
+0xVARIABLE:00000001	dattr	Parameter
+0xVARIABLE:00000001	buf	Parameter
+0xVARIABLE:00000001	dev	Parameter
+0xVARIABLE:00000001	dattr	Parameter
+0xVARIABLE:00000001	buf	Parameter
+0xVARIABLE:00000001	dev	Parameter
+0xVARIABLE:00000001	dattr	Parameter
+0xVARIABLE:00000001	buf	Parameter
+0xVARIABLE:00000001	dev	Parameter
+0xVARIABLE:00000001	dattr	Parameter
+0xVARIABLE:00000001	buf	Parameter
+0xVARIABLE:00000001	ofdev	Parameter
+0x00010b54  	init_module	Label
+0x00010ba8  	cleanup_module	Label
+0x.debug_frame::00000000	cie_.debug_frame::00000000	Label
+0x.debug_frame::00000010	fde_.debug_frame::00000010	Label
+0x.debug_frame::00000020	fde_.debug_frame::00000020	Label
+0x.debug_frame::00000030	fde_.debug_frame::00000030	Label
+0x.debug_frame::00000054	fde_.debug_frame::00000054	Label
+0x.debug_frame::00000078	fde_.debug_frame::00000078	Label
+0x.debug_frame::000000ac	fde_.debug_frame::000000ac	Label
+0x.debug_frame::000000e0	fde_.debug_frame::000000e0	Label
+0x.debug_frame::00000100	fde_.debug_frame::00000100	Label
+0x.debug_frame::00000120	fde_.debug_frame::00000120	Label
+0x.debug_frame::0000015c	fde_.debug_frame::0000015c	Label
+0x.debug_frame::00000198	fde_.debug_frame::00000198	Label
+0x.debug_frame::000001a8	fde_.debug_frame::000001a8	Label
+0x.debug_frame::000001e8	fde_.debug_frame::000001e8	Label
+0x.debug_frame::000001f8	fde_.debug_frame::000001f8	Label
+0x.debug_frame::00000238	fde_.debug_frame::00000238	Label
+0x.debug_frame::00000260	fde_.debug_frame::00000260	Label
+0x.debug_frame::00000280	fde_.debug_frame::00000280	Label
+0x000100b4  	_restgpr_31	Function
+0x00010068  	_savegpr_31	Function
+0x000100ec  	_rest32gpr_26_x	Function
+0xNO ADDRESS	<EXTERNAL>	Library
+0xEXTERNAL:00000001	strcpy	Function
+0x00013000  	strcpy	Function
+0xEXTERNAL:00000002	dev_get_drvdata	Function
+0x00013004  	dev_get_drvdata	Function
+0xEXTERNAL:00000003	_dev_info	Function
+0x0001300c  	_dev_info	Function
+0xEXTERNAL:00000004	platform_driver_register	Function
+0x00013010  	platform_driver_register	Function
+0xEXTERNAL:00000005	mutex_lock	Function
+0x00013014  	mutex_lock	Function
+0xEXTERNAL:00000006	strncmp	Function
+0x00013018  	strncmp	Function
+0xEXTERNAL:00000007	of_iomap	Function
+0x0001301c  	of_iomap	Function
+0xEXTERNAL:00000008	sysfs_create_group	Function
+0x00013020  	sysfs_create_group	Function
+0xEXTERNAL:00000009	sscanf	Function
+0x00013024  	sscanf	Function
+0xEXTERNAL:0000000a	printk	Function
+0x00013028  	printk	Function
+0xEXTERNAL:0000000b	strcmp	Function
+0x0001302c  	strcmp	Function
+0xEXTERNAL:0000000c	sysfs_remove_group	Function
+0x00013030  	sysfs_remove_group	Function
+0xEXTERNAL:0000000d	mutex_unlock	Function
+0x00013038  	mutex_unlock	Function
+0x00010024  	_savegpr_14	Function
+0x00010028  	_save32gpr_15	Function
+0x0001002c  	_save32gpr_16	Function
+0x00010030  	_savegpr_17	Function
+0x00010034  	_save32gpr_18	Function
+0x00010038  	_save32gpr_19	Function
+0x0001003c  	_save32gpr_20	Function
+0x00010040  	_save32gpr_21	Function
+0x00010044  	_save32gpr_22	Function
+0x00010048  	_save32gpr_23	Function
+0x0001004c  	_save32gpr_24	Function
+0x00010050  	_savegpr_25	Function
+0x00010054  	_save32gpr_26	Function
+0x00010058  	_savegpr_27	Function
+0x0001005c  	_savegpr_28	Function
+0x00010060  	_savegpr_29	Function
+0x00010064  	_save32gpr_30	Function
+0x00010070  	_restgpr_14	Function
+0x00010074  	_restgpr_15	Function
+0x00010078  	_restgpr_16	Function
+0x0001007c  	_rest32gpr_17	Function
+0x00010080  	_restgpr_18	Function
+0x00010084  	_restgpr_19	Function
+0x00010088  	_rest32gpr_20	Function
+0x0001008c  	_restgpr_21	Function
+0x00010090  	_restgpr_22	Function
+0x00010094  	_rest32gpr_23	Function
+0x00010098  	_restgpr_24	Function
+0x0001009c  	_restgpr_25	Function
+0x000100a0  	_restgpr_26	Function
+0x000100a4  	_rest32gpr_27	Function
+0x000100a8  	_restgpr_28	Function
+0x000100ac  	_rest32gpr_29	Function
+0x000100b0  	_rest32gpr_30	Function
+0x000100bc  	_rest32gpr_14_x	Function
+0x000100c0  	_restgpr_15_x	Function
+0x000100c4  	_rest32gpr_16_x	Function
+0x000100c8  	_restgpr_17_x	Function
+0x000100cc  	_rest32gpr_18_x	Function
+0x000100d0  	_restgpr_19_x	Function
+0x000100d4  	_rest32gpr_20_x	Function
+0x000100d8  	_rest32gpr_21_x	Function
+0x000100dc  	_rest32gpr_22_x	Function
+0x000100e0  	_restgpr_23_x	Function
+0x000100e4  	_rest32gpr_24_x	Function
+0x000100e8  	_restgpr_25_x	Function
+0xEXTERNAL:0000000e	sprintf	Function
+0x00013034  	sprintf	Function
+0xEXTERNAL:0000000f	platform_driver_unregister	Function
+0x00013008  	platform_driver_unregister	Function
+0xVARIABLE:00000001	__dest	Parameter
+0xVARIABLE:00000001	__src	Parameter
+0xVARIABLE:00000001	__s1	Parameter
+0xVARIABLE:00000001	__s2	Parameter
+0xVARIABLE:00000001	__s	Parameter
+0xVARIABLE:00000001	__format	Parameter
+0xVARIABLE:00000001	__s	Parameter
+0xVARIABLE:00000001	__format	Parameter
+0xVARIABLE:00000001	__s1	Parameter
+0xVARIABLE:00000001	__s2	Parameter
+0xVARIABLE:00000001	__n	Parameter
+0xVARIABLE:00000002	local_10	Local Var
+0xVARIABLE:00000003	local_res4	Local Var
+0xVARIABLE:00000002	local_10	Local Var
+0xVARIABLE:00000003	local_res4	Local Var
+0xVARIABLE:00000004	local_20	Local Var
+0xVARIABLE:00000005	local_18	Local Var
+0xVARIABLE:00000003	local_res4	Local Var
+0xVARIABLE:00000004	local_20	Local Var
+0xVARIABLE:00000005	local_18	Local Var
+0xVARIABLE:00000003	local_res4	Local Var
+0xVARIABLE:00000004	local_20	Local Var
+0xVARIABLE:00000006	local_c	Local Var
+0xVARIABLE:00000003	local_res4	Local Var
+0xVARIABLE:00000002	local_10	Local Var
+0xVARIABLE:00000003	local_res4	Local Var
+0xVARIABLE:00000007	local_40	Local Var
+0xVARIABLE:00000005	local_18	Local Var
+0xVARIABLE:00000003	local_res4	Local Var
+0xVARIABLE:00000002	local_10	Local Var
+0xVARIABLE:00000003	local_res4	Local Var
+0xVARIABLE:00000008	local_30	Local Var
+0xVARIABLE:00000009	local_28	Local Var
+0xVARIABLE:00000004	local_20	Local Var
+0xVARIABLE:0000000a	local_14	Local Var
+0xVARIABLE:00000003	local_res4	Local Var
+0xVARIABLE:00000005	local_18	Local Var
+0xVARIABLE:00000003	local_res4	Local Var
+0xVARIABLE:00000004	local_20	Local Var
+0xVARIABLE:0000000a	local_14	Local Var
+0xVARIABLE:00000003	local_res4	Local Var
+0xVARIABLE:00000004	local_20	Local Var
+0xVARIABLE:00000005	local_18	Local Var
+0xVARIABLE:00000003	local_res4	Local Var
+# Total: 312 symbols

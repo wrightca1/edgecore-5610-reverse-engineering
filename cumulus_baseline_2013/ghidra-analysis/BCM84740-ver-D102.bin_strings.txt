@@ -1,0 +1,2 @@
+# Strings in BCM84740-ver-D102.bin
+# Total: 0 strings

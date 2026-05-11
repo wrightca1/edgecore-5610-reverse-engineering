@@ -1,0 +1,1458 @@
+/* Decompilation of ledasm */
+/* === _init @ 10000614 (size=76) === */
+
+int _init(EVP_PKEY_CTX *ctx)
+
+{
+  int iVar1;
+  
+  if (PTR___gmon_start___100140f4 != (undefined *)0x0) {
+    ctx = (EVP_PKEY_CTX *)__gmon_start__();
+  }
+  frame_dummy(ctx);
+  iVar1 = __do_global_ctors_aux();
+  return iVar1;
+}
+
+
+
+/* === _start @ 10000660 (size=36) === */
+
+void _start(void)
+
+{
+  __libc_start_main();
+  return;
+}
+
+
+
+/* === deregister_tm_clones @ 10000684 (size=56) === */
+
+/* WARNING: Removing unreachable block (ram,0x100006a4) */
+/* WARNING: Removing unreachable block (ram,0x100006b0) */
+/* WARNING: Removing unreachable block (ram,0x100006b4) */
+
+void deregister_tm_clones(void)
+
+{
+  return;
+}
+
+
+
+/* === register_tm_clones @ 100006bc (size=60) === */
+
+/* WARNING: Removing unreachable block (ram,0x100006e0) */
+/* WARNING: Removing unreachable block (ram,0x100006ec) */
+/* WARNING: Removing unreachable block (ram,0x100006f0) */
+
+void register_tm_clones(void)
+
+{
+  return;
+}
+
+
+
+/* === __do_global_dtors_aux @ 100006f8 (size=172) === */
+
+/* WARNING: Removing unreachable block (ram,0x10000754) */
+
+void __do_global_dtors_aux(void)
+
+{
+  if (completed_6610 == '\0') {
+    deregister_tm_clones();
+    completed_6610 = '\x01';
+  }
+  return;
+}
+
+
+
+/* === call___do_global_dtors_aux @ 100007a4 (size=28) === */
+
+void call___do_global_dtors_aux(void)
+
+{
+  return;
+}
+
+
+
+/* === frame_dummy @ 100007c0 (size=76) === */
+
+/* WARNING: Removing unreachable block (ram,0x100007e4) */
+
+void frame_dummy(void)
+
+{
+  register_tm_clones();
+  return;
+}
+
+
+
+/* === call_frame_dummy @ 1000080c (size=28) === */
+
+void call_frame_dummy(void)
+
+{
+  return;
+}
+
+
+
+/* === warning @ 10000828 (size=116) === */
+
+void warning(char *msg)
+
+{
+  g_warnings = g_warnings + 1;
+  if (g_warnings_enabled != 0) {
+    __nldbl_printf("Warning, line %d: %s\n",g_curline,msg);
+  }
+  return;
+}
+
+
+
+/* === error @ 1000089c (size=116) === */
+
+void error(char *msg)
+
+{
+  g_errs = g_errs + 1;
+  if (g_errors_enabled != 0) {
+    __nldbl_printf("Error, line %3d: %s\n",g_curline,msg);
+  }
+  return;
+}
+
+
+
+/* === init_tables @ 10000910 (size=164) === */
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void init_tables(void)
+
+{
+  int local_18;
+  
+                    /* Unresolved local var: int i@[???] */
+  num_labels = 0;
+  for (local_18 = 0; local_18 < 0x100; local_18 = local_18 + 1) {
+    symtab[local_18].valid = 0;
+    symtab[local_18].label[0] = '\0';
+    symtab[local_18].value = 0;
+  }
+  return;
+}
+
+
+
+/* === find_sym_idx @ 100009b4 (size=200) === */
+
+int find_sym_idx(char *label)
+
+{
+  int iVar1;
+  int local_28;
+  
+                    /* Unresolved local var: int i@[???]
+                       Unresolved local var: int match@[???] */
+  local_28 = 0;
+  while( true ) {
+    if (num_labels < local_28) {
+      return 0;
+    }
+    if ((symtab[local_28].valid != 0) && (iVar1 = strcmp(label,symtab[local_28].label), iVar1 == 0))
+    break;
+    local_28 = local_28 + 1;
+  }
+  return local_28;
+}
+
+
+
+/* === add_symbol @ 10000a7c (size=192) === */
+
+int add_symbol(char *label)
+
+{
+  int iVar1;
+  
+  num_labels = num_labels + 1;
+  if (num_labels < 0x100) {
+    symtab[num_labels].valid = 1;
+    strncpy(symtab[num_labels].label,label,0x20);
+    iVar1 = num_labels;
+  }
+  else {
+    error("Error: symbol table overflow\n");
+    iVar1 = -1;
+  }
+  return iVar1;
+}
+
+
+
+/* === dump_sym_table @ 10000b3c (size=272) === */
+
+void dump_sym_table(FILE *fp)
+
+{
+  int local_28;
+  
+                    /* Unresolved local var: int i@[???] */
+  fputc(10,(FILE *)fp);
+  fputc(10,(FILE *)fp);
+  fputc(10,(FILE *)fp);
+  __nldbl_fprintf(fp,"----- symbol table, %d symbols -----\n",num_labels);
+  for (local_28 = 1; local_28 <= num_labels; local_28 = local_28 + 1) {
+    if (symtab[local_28].valid != 0) {
+      __nldbl_fprintf(fp,&UNK_10003600,local_28 * 0x28 + 0x100143ec,symtab[local_28].value);
+    }
+  }
+  return;
+}
+
+
+
+/* === dump_hex_file @ 10000c4c (size=220) === */
+
+void dump_hex_file(FILE *fp)
+
+{
+  uint local_28;
+  
+                    /* Unresolved local var: int i@[???] */
+  for (local_28 = 0; (int)local_28 < 0x100; local_28 = local_28 + 1) {
+    if ((int)local_28 < g_curpc) {
+      __nldbl_fprintf(fp,&UNK_10003610,g_program[local_28]);
+    }
+    else {
+      fwrite(&DAT_10003618,1,3,(FILE *)fp);
+    }
+    if (local_28 +
+        (((int)local_28 >> 4) + (uint)((int)local_28 < 0 && (local_28 & 0xf) != 0)) * -0x10 == 0xf)
+    {
+      fputc(10,(FILE *)fp);
+    }
+  }
+  return;
+}
+
+
+
+/* === dump_c_file @ 10000d28 (size=352) === */
+
+void dump_c_file(FILE *fp,char *basename)
+
+{
+  char *pcVar1;
+  uint local_28;
+  
+                    /* Unresolved local var: int i@[???] */
+  while (pcVar1 = strchr(basename,0x2d), pcVar1 != (char *)0x0) {
+    pcVar1 = strchr(basename,0x2d);
+    *pcVar1 = '_';
+  }
+  __nldbl_fprintf(fp,"/* %s.c -- autogenerated \'%s\' led program */\n\n",basename,basename);
+  __nldbl_fprintf(fp,"const unsigned char ledproc_%s[] = {\n",basename);
+  for (local_28 = 0; (int)local_28 < 0x100; local_28 = local_28 + 1) {
+    if ((int)local_28 < g_curpc) {
+      __nldbl_fprintf(fp,&UNK_10003674,g_program[local_28]);
+    }
+    else {
+      fwrite(&DAT_10003680,1,6,(FILE *)fp);
+    }
+    if (local_28 + (((int)local_28 >> 3) + (uint)((int)local_28 < 0 && (local_28 & 7) != 0)) * -8 ==
+        7) {
+      fputc(10,(FILE *)fp);
+    }
+  }
+  fwrite(&DAT_10003688,1,3,(FILE *)fp);
+  return;
+}
+
+
+
+/* === skip_ws @ 10000e88 (size=128) === */
+
+void skip_ws(char **p)
+
+{
+  ushort **ppuVar1;
+  
+  while (ppuVar1 = __ctype_b_loc(), ((*ppuVar1)[(byte)**p] & 0x20) != 0) {
+    *p = *p + 1;
+  }
+  return;
+}
+
+
+
+/* === parse_comment @ 10000f08 (size=140) === */
+
+void parse_comment(char **p)
+
+{
+  char *local_28 [4];
+  char **local_18;
+  
+                    /* Unresolved local var: char * pp@[???] */
+  local_28[0] = *p;
+  local_18 = p;
+  skip_ws(local_28);
+  if (*local_28[0] == ';') {
+    for (; *local_28[0] != '\0'; local_28[0] = local_28[0] + 1) {
+    }
+  }
+  *local_18 = local_28[0];
+  return;
+}
+
+
+
+/* === parse_label @ 10000f94 (size=400) === */
+
+void parse_label(char **p,char *buf)
+
+{
+  bool bVar1;
+  ushort **ppuVar2;
+  byte *local_28;
+  byte *local_24;
+  
+                    /* Unresolved local var: char * pp@[???]
+                       Unresolved local var: char * np@[???]
+                       Unresolved local var: char nowarn@[???] */
+  local_28 = (byte *)*p;
+  bVar1 = true;
+  if ((*local_28 == 0x5f) ||
+     (ppuVar2 = __ctype_b_loc(), local_24 = (byte *)buf, ((*ppuVar2)[*local_28] & 4) != 0)) {
+    *buf = *local_28;
+    local_24 = (byte *)(buf + 1);
+    while ((local_28 = local_28 + 1, *local_28 == 0x5f ||
+           (ppuVar2 = __ctype_b_loc(), ((*ppuVar2)[*local_28] & 0x800) != 0))) {
+      if ((int)local_24 - (int)buf < 0x1f) {
+        *local_24 = *local_28;
+        local_24 = local_24 + 1;
+      }
+      else if (bVar1) {
+        warning("excessively long label");
+        bVar1 = false;
+      }
+    }
+    *p = (char *)local_28;
+  }
+  *local_24 = 0;
+  return;
+}
+
+
+
+/* === ishexdigit @ 10001124 (size=148) === */
+
+int ishexdigit(char c)
+
+{
+  ushort **ppuVar1;
+  int iVar2;
+  
+  ppuVar1 = __ctype_b_loc();
+  if ((((*ppuVar1)[(byte)c] & 8) == 0) && (((byte)c < 0x61 || (0x66 < (byte)c)))) {
+    iVar2 = 0;
+  }
+  else {
+    iVar2 = 1;
+  }
+  return iVar2;
+}
+
+
+
+/* === isoctdigit @ 100011b8 (size=84) === */
+
+int isoctdigit(char c)
+
+{
+  int iVar1;
+  
+  if (((byte)c < 0x30) || (0x37 < (byte)c)) {
+    iVar1 = 0;
+  }
+  else {
+    iVar1 = 1;
+  }
+  return iVar1;
+}
+
+
+
+/* === hexval @ 1000120c (size=132) === */
+
+int hexval(char c)
+
+{
+  ushort **ppuVar1;
+  int iVar2;
+  
+  ppuVar1 = __ctype_b_loc();
+  if (((*ppuVar1)[(byte)c] & 8) == 0) {
+    iVar2 = (byte)c - 0x57;
+  }
+  else {
+    iVar2 = (byte)c - 0x30;
+  }
+  return iVar2;
+}
+
+
+
+/* === parse_primop @ 10001290 (size=892) === */
+
+int parse_primop(char **p)
+
+{
+  int iVar1;
+  ushort **ppuVar2;
+  int local_48;
+  char local_40 [32];
+  byte *local_20 [2];
+  char **local_18;
+  
+  local_18 = p;
+                    /* Unresolved local var: char[32] lbl@[???]
+                       Unresolved local var: char * pp@[???]
+                       Unresolved local var: long val@[???]
+                       Unresolved local var: int idx@[???] */
+  skip_ws(p);
+  local_20[0] = (byte *)*local_18;
+  if (*local_20[0] == 0x28) {
+    local_20[0] = local_20[0] + 1;
+    local_48 = parse_logop((char **)local_20);
+    skip_ws((char **)local_20);
+    if (*local_20[0] != 0x29) {
+      error("missing closing paren");
+    }
+    *local_18 = (char *)(local_20[0] + 1);
+  }
+  else {
+    if (*local_20[0] == 0x30) {
+      if (local_20[0][1] == 0x78) {
+        local_20[0] = local_20[0] + 2;
+        iVar1 = ishexdigit(*local_20[0]);
+        if (iVar1 == 0) {
+          error("badly formed hex number");
+          *local_18 = (char *)local_20[0];
+          return 0;
+        }
+        local_48 = hexval(*local_20[0]);
+        while( true ) {
+          local_20[0] = local_20[0] + 1;
+          iVar1 = ishexdigit(*local_20[0]);
+          if (iVar1 == 0) break;
+          iVar1 = hexval(*local_20[0]);
+          local_48 = local_48 * 0x10 + iVar1;
+        }
+      }
+      else {
+        local_48 = 0;
+        local_20[0] = local_20[0] + 1;
+        while (iVar1 = isoctdigit(*local_20[0]), iVar1 != 0) {
+          local_48 = local_48 * 8 + (uint)*local_20[0] + -0x30;
+          local_20[0] = local_20[0] + 1;
+        }
+      }
+    }
+    else {
+      ppuVar2 = __ctype_b_loc();
+      if (((*ppuVar2)[*local_20[0]] & 8) == 0) {
+        parse_label(local_18,local_40);
+        if (local_40[0] == '\0') {
+          error("error: expected constant expression");
+          return 0;
+        }
+        iVar1 = find_sym_idx(local_40);
+        if (iVar1 == 0) {
+          local_48 = 0;
+          if (g_pass == 2) {
+            error("couldn\'t find symbol in second pass");
+          }
+        }
+        else {
+          local_48 = symtab[iVar1].value;
+        }
+        local_20[0] = (byte *)*local_18;
+      }
+      else {
+        local_48 = 0;
+        while (ppuVar2 = __ctype_b_loc(), ((*ppuVar2)[*local_20[0]] & 8) != 0) {
+          local_48 = local_48 * 10 + (uint)*local_20[0] + -0x30;
+          local_20[0] = local_20[0] + 1;
+        }
+      }
+    }
+    *local_18 = (char *)local_20[0];
+  }
+  return local_48;
+}
+
+
+
+/* === parse_unop @ 1000160c (size=184) === */
+
+int parse_unop(char **p)
+
+{
+  int iVar1;
+  
+  skip_ws(p);
+  if (**p == '+') {
+    *p = *p + 1;
+    iVar1 = parse_primop(p);
+  }
+  else if (**p == '-') {
+    *p = *p + 1;
+    iVar1 = parse_primop(p);
+    iVar1 = -iVar1;
+  }
+  else {
+    iVar1 = parse_primop(p);
+  }
+  return iVar1;
+}
+
+
+
+/* === parse_mulop @ 100016c4 (size=432) === */
+
+int parse_mulop(char **p)
+
+{
+  char cVar1;
+  bool bVar2;
+  int iVar3;
+  int local_28;
+  
+                    /* Unresolved local var: int val1@[???]
+                       Unresolved local var: int val2@[???]
+                       Unresolved local var: int done@[???] */
+  bVar2 = false;
+  skip_ws(p);
+  local_28 = parse_unop(p);
+  do {
+    skip_ws(p);
+    cVar1 = **p;
+    if (cVar1 == '*') {
+      *p = *p + 1;
+      iVar3 = parse_unop(p);
+      local_28 = local_28 * iVar3;
+    }
+    else if (cVar1 == '/') {
+      *p = *p + 1;
+      iVar3 = parse_unop(p);
+      if (iVar3 == 0) {
+        if (g_pass == 2) {
+          error("division by zero");
+        }
+        bVar2 = true;
+      }
+      else {
+        local_28 = local_28 / iVar3;
+      }
+    }
+    else if (cVar1 == '%') {
+      *p = *p + 1;
+      iVar3 = parse_unop(p);
+      if (iVar3 == 0) {
+        if (g_pass == 2) {
+          error("modulus of zero");
+        }
+        bVar2 = true;
+      }
+      else {
+        local_28 = local_28 - (local_28 / iVar3) * iVar3;
+      }
+    }
+    else {
+      bVar2 = true;
+    }
+  } while (!bVar2);
+  return local_28;
+}
+
+
+
+/* === parse_addop @ 10001874 (size=256) === */
+
+int parse_addop(char **p)
+
+{
+  bool bVar1;
+  int iVar2;
+  int local_28;
+  
+                    /* Unresolved local var: int val1@[???]
+                       Unresolved local var: int val2@[???]
+                       Unresolved local var: int done@[???] */
+  bVar1 = false;
+  skip_ws(p);
+  local_28 = parse_mulop(p);
+  do {
+    skip_ws(p);
+    if (**p == '+') {
+      *p = *p + 1;
+      iVar2 = parse_mulop(p);
+      local_28 = local_28 + iVar2;
+    }
+    else if (**p == '-') {
+      *p = *p + 1;
+      iVar2 = parse_mulop(p);
+      local_28 = local_28 - iVar2;
+    }
+    else {
+      bVar1 = true;
+    }
+  } while (!bVar1);
+  return local_28;
+}
+
+
+
+/* === parse_shop @ 10001974 (size=368) === */
+
+int parse_shop(char **p)
+
+{
+  bool bVar1;
+  uint uVar2;
+  int local_28;
+  
+                    /* Unresolved local var: int val1@[???]
+                       Unresolved local var: int val2@[???]
+                       Unresolved local var: int done@[???] */
+  bVar1 = false;
+  skip_ws(p);
+  local_28 = parse_addop(p);
+  do {
+    skip_ws(p);
+    if ((**p == '>') && ((*p)[1] == '>')) {
+      *p = *p + 2;
+      uVar2 = parse_addop(p);
+      if ((int)uVar2 < 0) {
+        error("negative shift count");
+      }
+      local_28 = local_28 >> (uVar2 & 0x3f);
+    }
+    else if ((**p == '<') && ((*p)[1] == '<')) {
+      *p = *p + 2;
+      uVar2 = parse_addop(p);
+      if ((int)uVar2 < 0) {
+        error("negative shift count");
+      }
+      local_28 = local_28 << (uVar2 & 0x3f);
+    }
+    else {
+      bVar1 = true;
+    }
+  } while (!bVar1);
+  return local_28;
+}
+
+
+
+/* === parse_logop @ 10001ae4 (size=256) === */
+
+int parse_logop(char **p)
+
+{
+  bool bVar1;
+  uint uVar2;
+  uint local_28;
+  
+                    /* Unresolved local var: int val1@[???]
+                       Unresolved local var: int val2@[???]
+                       Unresolved local var: int done@[???] */
+  bVar1 = false;
+  skip_ws(p);
+  local_28 = parse_shop(p);
+  do {
+    skip_ws(p);
+    if (**p == '&') {
+      *p = *p + 1;
+      uVar2 = parse_shop(p);
+      local_28 = local_28 & uVar2;
+    }
+    else if (**p == '|') {
+      *p = *p + 1;
+      uVar2 = parse_shop(p);
+      local_28 = local_28 | uVar2;
+    }
+    else {
+      bVar1 = true;
+    }
+  } while (!bVar1);
+  return local_28;
+}
+
+
+
+/* === parse_conexpr @ 10001be4 (size=68) === */
+
+int parse_conexpr(char **p)
+
+{
+  int iVar1;
+  
+                    /* Unresolved local var: int val@[???] */
+  iVar1 = parse_logop(p);
+  return iVar1;
+}
+
+
+
+/* === parse_ss @ 10001c28 (size=284) === */
+
+void parse_ss(char **p,int *field,int *twobyte,int *byte2)
+
+{
+  char *pcVar1;
+  int iVar2;
+  char acStack_44 [44];
+  char **local_18;
+  int *local_14;
+  int *local_10;
+  int *local_c;
+  
+  local_18 = p;
+  local_14 = field;
+  local_10 = twobyte;
+  local_c = byte2;
+                    /* Unresolved local var: char[32] lbl@[???]
+                       Unresolved local var: char * pp@[???] */
+  skip_ws(p);
+  pcVar1 = *local_18;
+  parse_label(local_18,acStack_44);
+  iVar2 = strcmp(acStack_44,"a");
+  if (iVar2 == 0) {
+    *local_10 = 0;
+    *local_14 = 0;
+  }
+  else {
+    iVar2 = strcmp(acStack_44,"b");
+    if (iVar2 == 0) {
+      *local_10 = 0;
+      *local_14 = 1;
+    }
+    else {
+      *local_18 = pcVar1;
+      iVar2 = parse_conexpr(local_18);
+      *local_c = iVar2;
+      *local_10 = 1;
+      *local_10 = 1;
+      *local_14 = 2;
+    }
+  }
+  return;
+}
+
+
+
+/* === parse_sssx @ 10001d44 (size=332) === */
+
+void parse_sssx(char **p,int *field,int *twobyte,int *byte2)
+
+{
+  int iVar1;
+  char acStack_48 [32];
+  char *local_28 [4];
+  char **local_18;
+  uint *local_14;
+  int *local_10;
+  int *local_c;
+  
+  local_18 = p;
+  local_14 = (uint *)field;
+  local_10 = twobyte;
+  local_c = byte2;
+                    /* Unresolved local var: char[32] lbl@[???]
+                       Unresolved local var: char * pp@[???] */
+  skip_ws(p);
+  local_28[0] = *local_18;
+  if (*local_28[0] == '(') {
+    local_28[0] = local_28[0] + 1;
+    parse_ss(local_28,(int *)local_14,local_10,local_c);
+    if (*local_28[0] == ')') {
+      local_28[0] = local_28[0] + 1;
+      *local_14 = *local_14 | 4;
+    }
+    else {
+      error("missing closing paren");
+    }
+    *local_18 = local_28[0];
+  }
+  else {
+    parse_label(local_18,acStack_48);
+    iVar1 = strcmp(acStack_48,"cy");
+    if (iVar1 == 0) {
+      *local_14 = 7;
+      *local_10 = 0;
+    }
+    else {
+      parse_ss(local_28,(int *)local_14,local_10,local_c);
+      *local_18 = local_28[0];
+    }
+  }
+  return;
+}
+
+
+
+/* === parse_sss @ 10001e90 (size=108) === */
+
+void parse_sss(char **p,int *field,int *twobyte,int *byte2)
+
+{
+  parse_sssx(p,field,twobyte,byte2);
+  if (*field == 7) {
+    error("CY is not a valid argument for this opcode");
+  }
+  return;
+}
+
+
+
+/* === parse_ddd @ 10001efc (size=108) === */
+
+void parse_ddd(char **p,int *field,int *twobyte,int *byte2)
+
+{
+  parse_sss(p,field,twobyte,byte2);
+  if (*field == 2) {
+    error("immediate destination");
+  }
+  return;
+}
+
+
+
+/* === parse_d @ 10001f68 (size=208) === */
+
+void parse_d(char **p,int *field)
+
+{
+  int iVar1;
+  char acStack_44 [44];
+  char **local_18;
+  int *local_14;
+  
+  local_18 = p;
+  local_14 = field;
+                    /* Unresolved local var: char[32] lbl@[???]
+                       Unresolved local var: char * pp@[???] */
+  skip_ws(p);
+  parse_label(local_18,acStack_44);
+  iVar1 = strcmp(acStack_44,"a");
+  if (iVar1 == 0) {
+    *local_14 = 0;
+  }
+  else {
+    iVar1 = strcmp(acStack_44,"b");
+    if (iVar1 == 0) {
+      *local_14 = 1;
+    }
+    else {
+      error("expecting either \'A\' or \'B\' as first arg");
+      *local_14 = 0;
+    }
+  }
+  return;
+}
+
+
+
+/* === emit @ 10002038 (size=208) === */
+
+void emit(int v)
+
+{
+  if (g_curpc < 0x100) {
+    if ((v < -0x80) || (0xff < v)) {
+      error("value out of bounds -128 <= val <= 255");
+    }
+    else {
+      g_program[g_curpc] = v & 0xff;
+      g_curpc = g_curpc + 1;
+    }
+  }
+  else {
+    if (emit::size == 0) {
+      error("program is too long");
+    }
+    emit::size = 1;
+  }
+  return;
+}
+
+
+
+/* === parse_args @ 10002108 (size=1656) === */
+
+void parse_args(char **p,int op,char *label)
+
+{
+  int iVar1;
+  uint local_34;
+  uint local_30;
+  int local_2c;
+  int local_28;
+  int local_24;
+  int local_20 [2];
+  char **local_18;
+  int local_14;
+  char *local_10;
+  
+                    /* Unresolved local var: int idx@[???]
+                       Unresolved local var: int field1@[???]
+                       Unresolved local var: int field2@[???]
+                       Unresolved local var: int val@[???]
+                       Unresolved local var: int val2@[???]
+                       Unresolved local var: int twobyte@[???]
+                       Unresolved local var: int twobyte2@[???] */
+  local_18 = p;
+  local_14 = op;
+  local_10 = label;
+  switch(optable[op].token) {
+  case PO_EQU:
+    local_2c = parse_conexpr(p);
+    if (*local_10 == '\0') {
+      error("EQU must have a label");
+    }
+    else if (g_pass == 1) {
+      iVar1 = find_sym_idx(local_10);
+      if (iVar1 == 0) {
+        iVar1 = add_symbol(local_10);
+        if (-1 < iVar1) {
+          symtab[num_labels].value = local_2c;
+        }
+      }
+      else {
+        error("redefinition of EQU label");
+      }
+    }
+    break;
+  case PO_SET:
+    local_2c = parse_conexpr(p);
+    if (*local_10 == '\0') {
+      error("SET must have a label");
+    }
+    else {
+      iVar1 = find_sym_idx(local_10);
+      if ((iVar1 != 0) || (iVar1 = add_symbol(local_10), -1 < iVar1)) {
+        symtab[num_labels].value = local_2c;
+      }
+    }
+    break;
+  case OP_CLC:
+  case OP_STC:
+  case OP_CMC:
+  case OP_RET:
+  case OP_TAND:
+  case OP_TOR:
+  case OP_TXOR:
+  case OP_TINV:
+  case OP_PACK:
+  case OP_POP:
+    emit(optable[op].opcode);
+    break;
+  case OP_CALL:
+  case OP_JMP:
+    emit(optable[op].opcode);
+    local_2c = parse_conexpr(local_18);
+    emit(local_2c);
+    break;
+  case OP_PUSH:
+    parse_sssx(p,(int *)&local_34,&local_24,&local_2c);
+    emit(optable[local_14].opcode | local_34);
+    if (local_24 != 0) {
+      emit(local_2c);
+    }
+    break;
+  case OP_PORT:
+  case OP_SEND:
+    parse_sss(p,(int *)&local_34,&local_24,&local_2c);
+    emit(optable[local_14].opcode | local_34);
+    if (local_24 != 0) {
+      emit(local_2c);
+    }
+    break;
+  case OP_PUSHST:
+    parse_ss(p,(int *)&local_34,&local_24,&local_2c);
+    emit(optable[local_14].opcode | local_34);
+    if (local_24 != 0) {
+      emit(local_2c);
+    }
+    break;
+  case OP_JZ:
+  case OP_JC:
+  case OP_JT:
+  case OP_JNZ:
+  case OP_JNC:
+  case OP_JNT:
+    emit(optable[op].opcode);
+    local_2c = parse_conexpr(local_18);
+    emit(local_2c);
+    break;
+  case OP_INC:
+  case OP_ROL:
+  case OP_DEC:
+  case OP_ROR:
+    parse_ddd(p,(int *)&local_34,&local_24,&local_2c);
+    emit(optable[local_14].opcode | local_34);
+    if (local_24 != 0) {
+      emit(local_2c);
+    }
+    break;
+  case OP_XOR:
+  case OP_OR:
+  case OP_AND:
+  case OP_CMP:
+  case OP_SUB:
+  case OP_ADD:
+    parse_d(p,(int *)&local_34);
+    skip_ws(local_18);
+    if (**local_18 == ',') {
+      *local_18 = *local_18 + 1;
+      parse_sss(local_18,(int *)&local_30,&local_24,&local_2c);
+      emit(optable[local_14].opcode | local_34 << 3 | local_30);
+      if (local_24 != 0) {
+        emit(local_2c);
+      }
+    }
+    else {
+      error("this op needs two args");
+    }
+    break;
+  case OP_TST:
+  case OP_BIT:
+  case OP_LD:
+    parse_ddd(p,(int *)&local_34,&local_24,&local_2c);
+    skip_ws(local_18);
+    if (**local_18 == ',') {
+      *local_18 = *local_18 + 1;
+      if (optable[local_14].token == OP_LD) {
+        parse_sss(local_18,(int *)&local_30,local_20,&local_28);
+      }
+      else {
+        parse_ss(local_18,(int *)&local_30,local_20,&local_28);
+      }
+      if ((local_24 != 0) && (local_20[0] != 0)) {
+        error("<op> #,(#) format is not allowed (3 bytes)");
+      }
+      emit(optable[local_14].opcode | local_34 << 4 | local_30);
+      if (local_24 != 0) {
+        emit(local_2c);
+      }
+      if (local_20[0] != 0) {
+        emit(local_28);
+      }
+    }
+    else {
+      error("this op needs two args");
+    }
+    break;
+  default:
+    error("internal error: impossible case");
+  }
+  return;
+}
+
+
+
+/* === parse_mainpart @ 10002780 (size=700) === */
+
+void parse_mainpart(char **p)
+
+{
+  bool bVar1;
+  int iVar2;
+  int local_68;
+  char local_5c [32];
+  char local_3c [36];
+  char **local_18;
+  
+                    /* Unresolved local var: char[32] labelbuf@[???]
+                       Unresolved local var: char[32] opbuf@[???]
+                       Unresolved local var: int op@[???]
+                       Unresolved local var: int idx@[???]
+                       Unresolved local var: int colon@[???] */
+  bVar1 = false;
+  local_18 = p;
+  parse_label(p,local_5c);
+  if ((local_5c[0] != '\0') && (bVar1 = **local_18 == ':', bVar1)) {
+    *local_18 = *local_18 + 1;
+  }
+  skip_ws(local_18);
+  local_68 = 0;
+  parse_label(local_18,local_3c);
+  if (local_3c[0] != '\0') {
+    while ((optable[local_68].token != OP_SENTINAL &&
+           (iVar2 = strcmp(optable[local_68].label,local_3c), iVar2 != 0))) {
+      local_68 = local_68 + 1;
+    }
+    if (optable[local_68].token == OP_SENTINAL) {
+      error("bad opcode");
+      return;
+    }
+  }
+  if (((local_5c[0] == '\0') || (local_3c[0] != '\0')) || (bVar1)) {
+    if (((g_pass == 1) && (local_5c[0] != '\0')) &&
+       ((local_3c[0] == '\0' ||
+        ((optable[local_68].token != PO_SET && (optable[local_68].token != PO_EQU)))))) {
+      iVar2 = find_sym_idx(local_5c);
+      if (iVar2 == 0) {
+        iVar2 = add_symbol(local_5c);
+        if (iVar2 < 0) {
+          return;
+        }
+        symtab[iVar2].value = g_curpc;
+      }
+      else {
+        error("label already defined");
+      }
+    }
+    if (local_3c[0] != '\0') {
+      parse_args(local_18,local_68,local_5c);
+    }
+  }
+  else {
+    error("standalone labels must be followed by a colon");
+  }
+  return;
+}
+
+
+
+/* === parse_line @ 10002a3c (size=112) === */
+
+void parse_line(char *line)
+
+{
+  char *local_28 [4];
+  char *local_18;
+  
+                    /* Unresolved local var: char * p@[???] */
+  local_28[0] = line;
+  local_18 = line;
+  parse_mainpart(local_28);
+  parse_comment(local_28);
+  if (*local_28[0] != '\0') {
+    warning("extra garbage at end of line");
+  }
+  return;
+}
+
+
+
+/* === lower_buf @ 10002aac (size=148) === */
+
+void lower_buf(char *dst,char *src)
+
+{
+  int iVar1;
+  char *local_18;
+  byte *local_14;
+  
+  local_18 = dst;
+  for (local_14 = (byte *)src; *local_14 != 0; local_14 = local_14 + 1) {
+    iVar1 = tolower((uint)*local_14);
+    *local_18 = (char)iVar1;
+    local_18 = local_18 + 1;
+  }
+  *local_18 = '\0';
+  return;
+}
+
+
+
+/* === my_fopen @ 10002b40 (size=152) === */
+
+FILE * my_fopen(char *basename,char *ext,char *access)
+
+{
+  FILE *pFVar1;
+  char acStack_124 [268];
+  char *local_18;
+  char *local_14;
+  char *local_10;
+  
+                    /* Unresolved local var: char[256] name@[???]
+                       Unresolved local var: FILE * fp@[???] */
+  local_18 = basename;
+  local_14 = ext;
+  local_10 = access;
+  strcpy(acStack_124,basename);
+  strcat(acStack_124,local_14);
+  pFVar1 = fopen(acStack_124,local_10);
+  if (pFVar1 == (FILE *)0x0) {
+    __nldbl_printf("Error opening file \'%s\'\n",acStack_124);
+  }
+  return (FILE *)pFVar1;
+}
+
+
+
+/* === my_unlink @ 10002bd8 (size=96) === */
+
+void my_unlink(char *basename,char *ext)
+
+{
+  char acStack_118 [256];
+  char *local_18;
+  char *local_14;
+  
+                    /* Unresolved local var: char[256] name@[???] */
+  local_18 = basename;
+  local_14 = ext;
+  strcpy(acStack_118,basename);
+  strcat(acStack_118,local_14);
+  remove(acStack_118);
+  return;
+}
+
+
+
+/* === parse_file @ 10002c38 (size=912) === */
+
+int parse_file(char *basename)
+
+{
+  int iVar1;
+  FILE *__stream;
+  char *pcVar2;
+  FILE *local_838;
+  FILE *local_834;
+  FILE *local_830;
+  char acStack_824 [1024];
+  char acStack_424 [1036];
+  char *local_18;
+  
+                    /* Unresolved local var: char[1024] rawbuf@[???]
+                       Unresolved local var: char[1024] linebuf@[???]
+                       Unresolved local var: FILE * in_fp@[???]
+                       Unresolved local var: FILE * lst_fp@[???]
+                       Unresolved local var: FILE * hex_fp@[???]
+                       Unresolved local var: FILE * c_fp@[???] */
+  local_838 = (FILE *)0x0;
+  local_834 = (FILE *)0x0;
+  local_830 = (FILE *)0x0;
+  local_18 = basename;
+  __stream = my_fopen(basename,".asm","r");
+  if (__stream == (FILE *)0x0) {
+    __nldbl_printf("Error: file %s.asm not found\n",local_18);
+    return -1;
+  }
+  if (g_pass == 1) {
+    g_warnings = 0;
+    g_errs = 0;
+    init_tables();
+  }
+  else {
+    local_838 = (FILE *)my_fopen(local_18,".lst","w");
+    if (local_838 == (FILE *)0x0) {
+      __nldbl_printf("Error: could not open output file %s.lst\n",local_18);
+      return -1;
+    }
+    local_834 = my_fopen(local_18,".hex","w");
+    if (local_834 == (FILE *)0x0) {
+      __nldbl_printf("Error: could not open output file %s.hex\n",local_18);
+      return -1;
+    }
+    local_830 = my_fopen(local_18,".c","w");
+    if (local_830 == (FILE *)0x0) {
+      __nldbl_printf("Error: could not open output file %s.c\n",local_18);
+      return -1;
+    }
+  }
+  __nldbl_printf("starting pass %d ...\n",g_pass);
+  g_curline = 0;
+  g_curpc = 0;
+  while (pcVar2 = fgets(acStack_824,0x400,(FILE *)__stream), iVar1 = g_curpc, pcVar2 != (char *)0x0)
+  {
+                    /* Unresolved local var: int start_pc@[???] */
+    g_curline = g_curline + 1;
+    lower_buf(acStack_424,acStack_824);
+    parse_line(acStack_424);
+    if (g_pass == 2) {
+      __nldbl_fprintf(local_838,&UNK_10003ac0,iVar1);
+      if (g_curpc - iVar1 < 1) {
+        fwrite(&DAT_10003ac8,1,3,local_838);
+      }
+      else {
+        __nldbl_fprintf(local_838,&UNK_10003acc,g_program[iVar1]);
+      }
+      if (g_curpc - iVar1 < 2) {
+        fwrite(&DAT_10003ac8,1,3,local_838);
+      }
+      else {
+        __nldbl_fprintf(local_838,&UNK_10003acc,g_program[iVar1 + 1]);
+      }
+      __nldbl_fprintf(local_838,&DAT_10003ad4,acStack_824);
+    }
+  }
+  if (g_pass == 2) {
+    dump_sym_table((FILE *)local_838);
+    dump_hex_file(local_834);
+    dump_c_file(local_830,local_18);
+    fclose(local_838);
+    fclose((FILE *)local_834);
+    fclose((FILE *)local_830);
+  }
+  fclose((FILE *)__stream);
+  return 0;
+}
+
+
+
+/* === help @ 10002fc8 (size=52) === */
+
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+void help(void)
+
+{
+  puts("Usage: ledasm <filename>");
+  puts("   This scans <filename>.asm, and produces <filename>.lst and <filename>.hex");
+                    /* WARNING: Subroutine does not return */
+  exit(1);
+}
+
+
+
+/* === main @ 10002ffc (size=380) === */
+
+int main(int argc,char **argv)
+
+{
+  size_t sVar1;
+  int iVar2;
+  
+  if (argc != 2) {
+    help();
+  }
+  sVar1 = strlen(argv[1]);
+  if (0xfa < sVar1) {
+    puts("How about a shorter source file name?");
+                    /* WARNING: Subroutine does not return */
+    exit(1);
+  }
+  g_errors_enabled = 1;
+  g_warnings_enabled = 1;
+  g_pass = 1;
+  iVar2 = parse_file(argv[1]);
+  if (iVar2 < 0) {
+    g_errs = g_errs + 1;
+  }
+  else {
+    g_pass = 2;
+    iVar2 = parse_file(argv[1]);
+    if (iVar2 < 0) {
+      g_errs = g_errs + 1;
+    }
+  }
+  __nldbl_printf("%8d errors, %d warnings\n",g_errs,g_warnings);
+  if (g_errs != 0) {
+    my_unlink(argv[1],".lst");
+    my_unlink(argv[1],".hex");
+                    /* WARNING: Subroutine does not return */
+    exit(1);
+  }
+                    /* WARNING: Subroutine does not return */
+  exit(0);
+}
+
+
+
+/* === __libc_csu_fini @ 10003180 (size=4) === */
+
+void __libc_csu_fini(void)
+
+{
+  return;
+}
+
+
+
+/* === __libc_csu_init @ 10003190 (size=180) === */
+
+void __libc_csu_init(EVP_PKEY_CTX *param_1,undefined4 param_2,undefined4 param_3)
+
+{
+  uint uVar1;
+  int iVar2;
+  undefined *puVar3;
+  uint uVar4;
+  
+  _init(param_1);
+  puVar3 = PTR___CTOR_LIST___10014018;
+  uVar1 = (int)PTR___CTOR_LIST___10014014 - (int)PTR___CTOR_LIST___10014018 >> 2;
+  if (uVar1 != 0) {
+    uVar4 = 0;
+    do {
+      iVar2 = uVar4 * 4;
+      uVar4 = uVar4 + 1;
+      (**(code **)(puVar3 + iVar2))(param_1,param_2,param_3);
+    } while (uVar4 < uVar1);
+  }
+  return;
+}
+
+
+
+/* === __do_global_ctors_aux @ 10003244 (size=76) === */
+
+void __do_global_ctors_aux(void)
+
+{
+  undefined4 *puVar1;
+  code *pcVar2;
+  
+  puVar1 = &__CTOR_LIST__;
+  pcVar2 = __CTOR_LIST__;
+  while (pcVar2 != (code *)0xffffffff) {
+    (*pcVar2)();
+    puVar1 = puVar1 + -1;
+    pcVar2 = (code *)*puVar1;
+  }
+  return;
+}
+
+
+
+/* === call___do_global_ctors_aux @ 10003290 (size=28) === */
+
+void call___do_global_ctors_aux(void)
+
+{
+  return;
+}
+
+
+
+/* === _fini @ 10003480 (size=56) === */
+
+void _fini(void)
+
+{
+  __do_global_dtors_aux();
+  return;
+}
+
+
+
+/* Decompiled 49 functions */

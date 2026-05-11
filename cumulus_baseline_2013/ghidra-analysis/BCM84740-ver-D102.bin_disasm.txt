@@ -1,0 +1,56 @@
+# 8051 disassembly of BCM84740-ver-D102.bin
+# Reset vector @ 0x0000
+
+CODE:0000  12 e3 01      LCALL 0xe301
+CODE:0003  12 be 00      LCALL 0xbe00
+CODE:0006  7d 01         MOV R5,#0x1
+CODE:0008  7c c8         MOV R4,#0xc8
+CODE:000a  7f 01         MOV R7,#0x1
+CODE:000c  12 e2 cd      LCALL 0xe2cd
+CODE:000f  90 02 23      MOV DPTR,#0x223
+CODE:0012  ee            MOV A,R6
+CODE:0013  f0            MOVX @DPTR,A
+CODE:0014  a3            INC DPTR
+CODE:0015  ef            MOV A,R7
+CODE:0016  f0            MOVX @DPTR,A
+CODE:0017  90 ff fc      MOV DPTR,#0xfffc
+CODE:001a  e4            CLR A
+CODE:001b  93            MOVC A,@A+DPTR
+CODE:001c  fe            MOV R6,A
+CODE:001d  74 01         MOV A,#0x1
+CODE:001f  93            MOVC A,@A+DPTR
+CODE:0020  ff            MOV R7,A
+CODE:0021  12 e3 fd      LCALL 0xe3fd
+CODE:0024  90 94 34      MOV DPTR,#0x9434
+CODE:0027  ee            MOV A,R6
+CODE:0028  f0            MOVX @DPTR,A
+CODE:0029  a3            INC DPTR
+CODE:002a  ef            MOV A,R7
+CODE:002b  f0            MOVX @DPTR,A
+CODE:002c  90 ff fc      MOV DPTR,#0xfffc
+CODE:002f  e4            CLR A
+CODE:0030  93            MOVC A,@A+DPTR
+CODE:0031  fa            MOV R2,A
+CODE:0032  74 01         MOV A,#0x1
+CODE:0034  93            MOVC A,@A+DPTR
+CODE:0035  fb            MOV R3,A
+CODE:0036  7d 00         MOV R5,#0x0
+CODE:0038  7c ce         MOV R4,#0xce
+CODE:003a  7f 01         MOV R7,#0x1
+CODE:003c  12 e3 34      LCALL 0xe334
+CODE:003f  90 01 f0      MOV DPTR,#0x1f0
+CODE:0042  e4            CLR A
+CODE:0043  f0            MOVX @DPTR,A
+CODE:0044  a3            INC DPTR
+CODE:0045  74 c0         MOV A,#0xc0
+CODE:0047  f0            MOVX @DPTR,A
+CODE:0048  7b 3f         MOV R3,#0x3f
+CODE:004a  7a fe         MOV R2,#0xfe
+CODE:004c  7d 10         MOV R5,#0x10
+CODE:004e  7c ca         MOV R4,#0xca
+CODE:0050  7f 01         MOV R7,#0x1
+CODE:0052  12 e0 f2      LCALL 0xe0f2
+CODE:0055  12 e4 19      LCALL 0xe419
+CODE:0058  12 c1 d7      LCALL 0xc1d7
+CODE:005b  80 fb         SJMP 0x0058
+# Showing first 52 of 52 instructions
