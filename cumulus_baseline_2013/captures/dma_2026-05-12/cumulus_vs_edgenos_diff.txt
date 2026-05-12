@@ -1,0 +1,59 @@
+Cumulus 2.5.0 vs EdgeNOS — live register state during TX
+Captured 2026-05-12 on chassis 10.1.1.212 after restoring Cumulus
+via ONIE reinstall + license restore from /home/smiley/license.txt.
+
+Test: ping 10.101.101.9 from 10.101.101.10 (swp2). Cumulus: 2/3 (33%
+loss, normal first-ping ARP), 0.689 ms / 0.752 ms. EdgeNOS (prior
+session): 0/3, never replied.
+
+Register snapshot taken via /dev/mem mmap of BAR0 at 0xa0000000.
+Both columns are after BMD/switchd init + during active TX.
+
+                                   Cumulus (works)   EdgeNOS (broken)
+0x0000 BAR0[0]                     0x38500000        0x28500000
+0x0050 SCHAN_CTRL                  0x00000000        0x00000000
+0x0100 CMIC_DMA_CTRL               0x00000001        0x00000001    same
+0x0104 CMIC_DMA_STAT               0x00082012        0x00080002    differ
+0x010c CMIC_DMA_STAT2?             0x3f0c2043        0x320c2043    differ
+0x0110 CMIC_DMA_DESC0r ch0 (TX)    0x029e02d8        0x074180c0
+0x0114 CMIC_DMA_DESC0r ch1 (RX)    0x029e1058 (moving)  0x07417fc0
+0x0150 CMIC_DMA_DESC2              0x00000000        0x00000000
+0x0174 CMIC_ENDIAN_SEL             0x05050505        0x04040404    **DIFFER bit 0**
+0x2104 PCIE_EP_AXI_CONFIG          0x00000058        0x00000000    **DIFFER**
+0x2c00 IMAP0_0                     0x00000000        0x000000f8
+0x2c1c IMAP0_7                     0x00000080        (varies)
+0x2d10 OARR_0                      0x000000f8        0x000000f8    same
+0x2d14 OARR_0_UPPER                0x00000080        0x00000080    same
+0x2d50 OARR_1                      0x00000000        0x00000001    **WE ENABLED — Cumulus disables**
+0x2d60 OARR_2                      0x00000000        0x00000001    **WE ENABLED — Cumulus disables**
+0x2030 PAXB_ENDIAN                 0x000000f3        0x000000f2    differ bit 0
+
+ROOT CAUSE (4 fixes for EdgeNOS):
+
+1. CMIC_ENDIAN_SEL must be 0x05050505, NOT 0x04000004/0x04040404.
+   Each byte has bit 0 = byte-swap-enable for one of four endian
+   domains (PIO, DMA_PACKET, DMA_OTHER, MSI). All four must be set
+   on a big-endian PPC host. With only bit 2 set (our value), the
+   chip reads DCB bytes in reversed order, finds no valid descriptor,
+   and hangs the DMA channel.
+
+2. PCIE_EP_AXI_CONFIG (0x2104) MUST NOT be zeroed. Cumulus has 0x58
+   there. Our bde_open() was explicitly zeroing it via PCI config
+   write — that broke the outbound AXI bridge.
+
+3. OARR_1, OARR_2 must remain 0 (disabled). Only OARR_0 (with its
+   firmware default of 0xf8 / upper 0x80) is in use on Cumulus.
+   Our previous session enabled OARR_1/2 hoping it would help —
+   it didn't, and is the wrong thing to do.
+
+4. PAXB_ENDIAN (0x2030) should be 0xf3, not 0xf2 (bit 0 swap-enable
+   for PAXB outbound).
+
+Fixed in EdgeNOS commit 7fbfb7d's bde_interface.c successor (this
+session): bde_set_dma_endianness() now writes 0x05050505 to
+CMIC_ENDIAN_SEL and 0xf3 to PAXB_ENDIAN; bde_open() no longer
+touches PCIE_EP_AXI_CONFIG or OARR_*.
+
+Cumulus license used: 642-byte PGP-signed text file at
+/home/smiley/license.txt (CGG email, expires 2013-11-27, num=3, NFR=1).
+Clock-rolled chassis to 2013-06-15 to satisfy expiration.
