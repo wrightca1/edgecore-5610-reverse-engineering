@@ -1,0 +1,10 @@
+ps: invalid option -- e
+BusyBox v1.25.1 (2017-06-06 10:45:50 CST) multi-call binary.
+
+Usage: ps 
+
+Show list of processes
+
+	w	Wide output
+	l	Long output
+	T	Show threads

@@ -1,0 +1,24 @@
+=== /proc/cmdline ===
+quiet console=ttyS0,115200 serial_num=561052X1916063 eth_addr=80:A2:35:81:CA:AE boot_reason=install
+
+=== boot reason environment ===
+
+=== /tmp/.install_url_parms ===
+cat: can't open '/tmp/.install_url_parms': No such file or directory
+
+=== /etc/inittab ===
+# /etc/inittab for onie
+
+#  Copyright (C) 2013 Curt Brune <curt@cumulusnetworks.com>
+#
+#  SPDX-License-Identifier:     GPL-2.0
+
+::sysinit:/etc/init.d/rc S
+::wait:/etc/init.d/rc 3
+
+# Start an "askfirst" shell on the console (whatever that may be)\n"
+::askfirst:-/bin/onie-console
+
+::shutdown:/etc/init.d/rc 6
+::restart:/sbin/init
+

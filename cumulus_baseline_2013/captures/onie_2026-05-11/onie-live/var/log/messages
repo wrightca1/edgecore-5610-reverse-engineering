@@ -1,0 +1,42 @@
+Jun  2 19:15:09 onie syslog.info syslogd started: BusyBox v1.25.1
+Jun  2 19:15:09 onie authpriv.warn dropbear[229]: Failed loading /etc/dropbear/dropbear_ecdsa_host_key
+Jun  2 19:15:09 onie authpriv.info dropbear[230]: Running in background
+Jun  2 19:15:09 onie daemon.err udhcpc[305]: started, v1.25.1
+Jun  2 19:15:09 onie daemon.err udhcpc[305]: sending discover
+Jun  2 19:15:09 onie daemon.err udhcpc[305]: sending select for 10.1.1.222
+Jun  2 19:15:09 onie daemon.err udhcpc[305]: lease of 10.1.1.222 obtained, lease time 7200
+Jun  2 19:15:11 onie daemon.err udhcpc[366]: started, v1.25.1
+Jun  2 19:15:11 onie daemon.err udhcpc[366]: sending discover
+Jun  2 19:15:11 onie daemon.err udhcpc[366]: sending select for 10.1.1.222
+Jun  2 19:15:11 onie daemon.err udhcpc[366]: lease of 10.1.1.222 obtained, lease time 7198
+Jun  2 19:15:44 onie daemon.err udhcpc[2327]: started, v1.25.1
+Jun  2 19:15:44 onie daemon.err udhcpc[2327]: sending discover
+Jun  2 19:15:44 onie daemon.err udhcpc[2327]: sending select for 10.1.1.222
+Jun  2 19:15:44 onie daemon.err udhcpc[2327]: lease of 10.1.1.222 obtained, lease time 7165
+Jun  2 19:15:45 onie daemon.info init: starting pid 258, tty '': '-/bin/onie-console'
+Jun  2 19:15:45 onie daemon.err udhcpc[2387]: started, v1.25.1
+Jun  2 19:15:45 onie daemon.err udhcpc[2387]: sending discover
+Jun  2 19:15:45 onie daemon.err udhcpc[2387]: sending select for 10.1.1.222
+Jun  2 19:15:45 onie daemon.err udhcpc[2387]: lease of 10.1.1.222 obtained, lease time 7164
+Jun  2 19:16:01 onie authpriv.info dropbear[4283]: Child connection from 10.1.1.30:54268
+Jun  2 19:16:01 onie authpriv.notice dropbear[4283]: Auth succeeded with blank password for 'root' from 10.1.1.30:54268
+Jun  2 19:16:01 onie authpriv.info dropbear[4283]: Exit (root): Disconnect received
+Jun  2 19:16:18 onie daemon.err udhcpc[4353]: started, v1.25.1
+Jun  2 19:16:18 onie daemon.err udhcpc[4353]: sending discover
+Jun  2 19:16:18 onie daemon.err udhcpc[4353]: sending select for 10.1.1.222
+Jun  2 19:16:18 onie daemon.err udhcpc[4353]: lease of 10.1.1.222 obtained, lease time 7131
+Jun  2 19:16:19 onie daemon.err udhcpc[4412]: started, v1.25.1
+Jun  2 19:16:19 onie daemon.err udhcpc[4412]: sending discover
+Jun  2 19:16:19 onie daemon.err udhcpc[4412]: sending select for 10.1.1.222
+Jun  2 19:16:19 onie daemon.err udhcpc[4412]: lease of 10.1.1.222 obtained, lease time 7130
+Jun  2 19:16:22 onie authpriv.info dropbear[4430]: Child connection from 10.1.1.30:44258
+Jun  2 19:16:22 onie authpriv.notice dropbear[4430]: Auth succeeded with blank password for 'root' from 10.1.1.30:44258
+Jun  2 19:16:22 onie authpriv.info dropbear[4430]: Exit (root): Exited normally
+Jun  2 19:16:22 onie authpriv.info dropbear[4431]: Child connection from 10.1.1.30:44262
+Jun  2 19:16:22 onie authpriv.notice dropbear[4431]: Auth succeeded with blank password for 'root' from 10.1.1.30:44262
+Jun  2 19:16:22 onie authpriv.info dropbear[4431]: Exit (root): Disconnect received
+Jun  2 19:16:39 onie authpriv.info dropbear[6323]: Child connection from 10.1.1.30:54642
+Jun  2 19:16:39 onie authpriv.notice dropbear[6323]: Auth succeeded with blank password for 'root' from 10.1.1.30:54642
+Jun  2 19:16:39 onie authpriv.info dropbear[6323]: Exit (root): Disconnect received
+Jun  2 19:16:46 onie authpriv.info dropbear[6337]: Child connection from 10.1.1.30:54652
+Jun  2 19:16:46 onie authpriv.notice dropbear[6337]: Auth succeeded with blank password for 'root' from 10.1.1.30:54652

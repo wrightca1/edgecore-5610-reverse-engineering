@@ -1,0 +1,35 @@
+=== ip link ===
+/tmp/cap.sh: line 97: ip: not found
+
+=== ip addr ===
+/tmp/cap.sh: line 97: ip: not found
+
+=== ip route ===
+/tmp/cap.sh: line 97: ip: not found
+
+=== resolv.conf ===
+domain frostlane.net
+nameserver 10.1.1.1
+
+=== /var/run/dhcp* ===
+drwxrwxrwt    5 root     0              180 Jun  2 19:15 .
+drwxr-xr-x   15 root     0                0 Jun  2 19:15 ..
+-rw-r--r--    1 root     0                0 Jun  2 19:15 .ramfs
+-rw-r--r--    1 root     0                4 Jun  2 19:15 discover.pid
+-rw-r--r--    1 root     0                4 Jun  2 19:15 dropbear.pid
+drwxrwxrwt    2 root     0               60 Jun  2 19:15 lock
+drwxr-xr-x    2 root     0              120 Jun  2 19:16 onie
+drwxrwxrwt    2 root     0               60 Jun  2 19:15 shm
+-rw-r--r--    1 root     0                4 Jun  2 19:15 syslogd.pid
+
+=== udhcpc state ===
+ps: invalid option -- e
+BusyBox v1.25.1 (2017-06-06 10:45:50 CST) multi-call binary.
+
+Usage: ps 
+
+Show list of processes
+
+	w	Wide output
+	l	Long output
+	T	Show threads

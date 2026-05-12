@@ -1,0 +1,71 @@
+=== onie-sysinfo ===
+/bin/onie-sysinfo
+Illegal option --
+Unknown argument: ?
+onie-sysinfo [-hsSevimrpcfdatP]
+Dump ONIE system information.
+
+COMMAND LINE OPTIONS
+
+	The default is to dump the ONIE platform (-p).
+
+	-h
+		Help.  Print this message.
+
+	-s
+		Serial Number
+
+	-P
+		Part Number
+
+	-e
+		Management Ethernet MAC address
+
+	-v
+		ONIE version string
+
+	-i
+
+=== onie-syseeprom ===
+/usr/bin/onie-syseeprom
+BusyBox v1.25.1 (2017-06-06 10:45:50 CST) multi-call binary.
+
+Usage: onie-syseeprom [[-le] | [-g <code>] | [-s <code>=<value>,...]]
+
+Display and program the system EEPROM data block.
+   With no arguments display the EEPROM contents.
+
+	-l	List the understood TLV codes and names.
+	-e	Reset the EEPROM data.
+	-g	Look up a TLV by code and write the value to stdout.
+	-s	Set a TLV code to a value.
+		If no value, TLV is deleted.
+
+
+=== onie-fwpkg ===
+/tmp/cap.sh: line 110: onie-fwpkg: not found
+
+=== onie-nos-install ===
+/bin/onie-nos-install
+Failure: Unknown URL type: --help
+
+=== onie-self-update ===
+/bin/onie-self-update
+/bin/onie-self-update: this operation is available in 'update', 'embed' and 'rescue' modes only.
+
+=== onie-syseeprom (full TLV dump) ===
+onie-syseeprom: invalid option -- a
+Display and program the system EEPROM data block.
+Usage: onie-syseeprom [-h][-l] [-e] [-s <code>=<value>,...]
+   With no arguments display the EEPROM contents.
+   -h --help
+      Display usage
+   -l --list
+      List the understood TLV codes and names.
+   -e --erase
+      Reset the EEPROM data.
+   -g --get <code>
+      Look up a TLV by code and write the value to stdout.
+   -s --set <code>=<value>,<code>=<value>...
+      Set a TLV code to a value.
+      If no value, TLV is deleted.

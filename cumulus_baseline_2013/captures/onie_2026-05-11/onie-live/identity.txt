@@ -1,0 +1,99 @@
+=== uname -a ===
+Linux onie 3.2.69-onie+ #1 SMP Tue Jun 6 10:48:06 CST 2017 ppc
+
+=== /etc/machine.conf ===
+onie_version=2017.02.00.07
+onie_vendor_id=259
+onie_platform=powerpc-accton_as5610_52x-r0
+onie_machine=accton_as5610_52x
+onie_machine_rev=0
+onie_arch=powerpc
+onie_config_version=0
+onie_build_date="2017-06-06T10:47+0800"
+onie_partition_type=
+onie_kernel_version=3.2.69
+onie_firmware=
+onie_switch_asic=bcm
+onie_skip_ethmgmt_macs=no
+
+=== /etc/issue ===
+To check the install status inspect /var/log/onie.log.
+Try this:  tail -f /var/log/onie.log
+
+NOTICE: ONIE started in NOS install mode.  Install mode persists
+NOTICE: until a NOS installer runs successfully.
+
+** Installer Mode Enabled **
+
+=== /etc/os-release ===
+NAME="onie"
+VERSION="2017.02.00.07"
+ID=linux
+
+=== /etc/lsb-release ===
+DISTRIB_ID=onie
+DISTRIB_RELEASE=2017.02.00.07
+DISTRIB_DESCRIPTION=Open Network Install Environment
+
+=== onie-sysinfo (all flags) ===
+2017.02.00.07
+-p: powerpc-accton_as5610_52x-r0
+-a: Unknown Unknown 80:a2:35:81:ca:ae 2017.02.00.07 259 accton_as5610_52x 0 powerpc-accton_as5610_52x-r0 powerpc 0 unknown 2017-06-06T10:47+0800 bcm
+-v: 2017.02.00.07
+-m: accton_as5610_52x
+-r: 0
+-c: powerpc
+-b: Illegal option -b
+Unknown argument: ?
+onie-sysinfo [-hsSevimrpcfdatP]
+Dump ONIE system information.
+
+COMMAND LINE OPTIONS
+
+	The default is to dump the ONIE platform (-p).
+
+	-h
+		Help.  Print this message.
+
+	-s
+		Serial Number
+
+	-P
+		Part Number
+
+	-e
+		Management Ethernet MAC address
+
+	-v
+		ONIE version string
+
+	-i
+		ONIE vendor ID.  Print the ONIE vendor's IANA enterprise number.
+
+	-m
+		ONIE machine string
+
+	-r
+		ONIE machine revision string
+
+	-p
+		ONIE platform string.  This is the default.
+
+	-c
+		ONIE CPU architecture
+
+	-f
+		ONIE configuration version
+
+	-d
+		ONIE build date
+
+	-t
+		ONIE partition type
+
+	-S
+		ONIE silicon switch vendor
+
+	-a
+		Dump all information.
+-s: Unknown

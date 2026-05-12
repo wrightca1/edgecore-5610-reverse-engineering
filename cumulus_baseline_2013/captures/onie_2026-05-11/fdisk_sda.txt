@@ -1,0 +1,29 @@
+GNU Fdisk 1.2.4
+Copyright (C) 1998 - 2006 Free Software Foundation, Inc.
+This program is free software, covered by the GNU General Public License.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+
+Disk /dev/sda: 4 GB, 4007108608 bytes
+124 heads, 62 sectors/track, 1018 cylinders
+Units = cylinders of 7688 * 512 = 3936256 bytes
+
+   Device Boot      Start         End      Blocks   Id  System 
+/dev/sda1               2          36      138322   83  Linux
+Warning: Partition 1 does not end on cylinder boundary.
+/dev/sda2              36         112      292144    5  Extended
+Warning: Partition 2 does not end on cylinder boundary.
+/dev/sda5              36          40       15376   83  Linux
+Warning: Partition 5 does not end on cylinder boundary.
+/dev/sda6              40          74      130696   83  Linux
+Warning: Partition 6 does not end on cylinder boundary.
+/dev/sda7              74          78       15376   83  Linux
+Warning: Partition 7 does not end on cylinder boundary.
+/dev/sda8              78         112      130696   83  Linux
+Warning: Partition 8 does not end on cylinder boundary.
+/dev/sda3             112        1019     3486508   83  Linux
+Warning: Partition 3 does not end on cylinder boundary.

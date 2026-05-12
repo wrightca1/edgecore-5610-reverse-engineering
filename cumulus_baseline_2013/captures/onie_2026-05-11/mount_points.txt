@@ -1,0 +1,4 @@
+/dev/sysroot1 on /mnt/root-ro type squashfs (ro,relatime)
+/dev/sda3 on /mnt/root-rw type ext2 (rw,noatime,errors=continue)
+overlayfs:root on / type overlayfs (rw,noatime,lowerdir=/mnt/root-ro,upperdir=/mnt/root-rw/config1)
+/dev/persist on /mnt/persist type ext2 (rw,relatime,errors=continue)

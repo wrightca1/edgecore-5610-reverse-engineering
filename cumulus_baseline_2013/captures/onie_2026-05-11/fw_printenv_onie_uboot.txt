@@ -1,0 +1,53 @@
+baudrate=115200
+boot_active=if test ${cl.active} = 1; then run set_active1; else run set_active2; fi
+boot_alt=if test ${cl.active} = 1; then run set_active2; else run set_active1; fi
+boot_count=0
+bootcmd=run check_boot_reason; run nos_bootcmd; run onie_bootcmd
+bootdelay=3
+bootorder1=echo ** trying ${ethaddr}.img **; dhcp; tftpboot $loadaddr ${ethaddr}.img; if imi $loadaddr; then source $loadaddr || bootm ${loadaddr}#${cl.platform}; fi; sleep 1 && run bootorder2
+bootorder2=echo ** trying DHCP bootfile **; dhcp; tftpboot $loadaddr $bootfile; if imi $loadaddr; then source $loadaddr || bootm ${loadaddr}#${cl.platform}; fi; sleep 1 && run bootorder3
+bootorder3=echo ** trying ${cl.platform}.img **; tftpboot ${cl.platform}.img; if imi $loadaddr; then source $loadaddr || bootm ${loadaddr}#${cl.platform}; fi; sleep 1 && run bootorder4
+bootorder4=echo ** trying primary image **; run flashboot; sleep 1 && run bootorder5
+bootorder5=echo ** trying alternate image **; run flashboot_alt; sleep 1 && run bootorder1
+bootsource=flashboot
+cl.active=1
+cl.platform=accton_as5610_52x
+cl.ver1=2.5.0-199c587-201501081931-build
+cl.ver2=2.5.0-199c587-201501081931-build
+consoledev=ttyS0
+ethaddr=80:A2:35:81:CA:AE
+fdt_high=0xffffffff
+flashboot=echo "Booting primary image..." && run initargs boot_active
+flashboot_alt=echo "Booting alternate image..." && run initargs boot_alt
+hw_active1=usb start && usbiddev && setenv active_part $usb_part1; run hw_boot
+hw_active2=usb start && usbiddev && setenv active_part $usb_part2; run hw_boot
+hw_boot=usbboot $loadaddr ${usbdev}:$active_part && bootm ${loadaddr}#${cl.platform}
+initrd_high=0xffffffff
+ipaddr=192.168.1.10
+loadaddr=0x2000000
+netmask=255.255.255.0
+nos_bootcmd=if test -n $bootsource; then run lbootcmd; else run bootorder1; fi
+onie_args=run onie_initargs onie_platformargs
+onie_bootcmd=echo Loading Open Network Install Environment ...; echo Platform: $onie_platform ; echo Version : $onie_version ; cp.b $onie_start $loadaddr ${onie_sz.b} && run onie_args && bootm ${loadaddr}
+onie_dropbear_dss_host_key=begin-base64@600@d#AAAAB3NzaC1kc3MAAACBALtp8kBm3mb73pLs1/EYhBG5wAqRbPqTQQPrsUyX#hMqCr2oLNw9Zrdtg35t0xfNXWZ60WjOGXFeojwQt5lg3FetcFPrv9VJKDdwI#KIwlhlgVkEblWI4AY3xhEQHegbhRWz7ByUL6Rw/pw3M2v/2cUK1Lb6PdUIYa#JjJ2QhqIs3jLAAAAFQDuPh2AWKMRy3qyZZnZgzAW2BFohwAAAIBicL3TS5lN#HUDvUowQ6DsocEpUzML3YqyTnzMrM1A8CufHVUGgInReS5F6/OJjpz6BAThh#SCACCNwmAVYvwqu+qomtvhq+OnuvFpY6GrLjmojR3BX5+kzpPhAAvY1fTBVH#Twsb+/19eJWQlNYafJe7EKPWYppqCIfSEO4f2VWgdwAAAIBY3DTZYSQNmGA9#3N1E0KlAwwx3dZt2KcNV/l7Ti1dwWyb/nyzg0VBTQ/pxJNVq6NEQ1HWySNKf#pSGYv8xxUk0Eey+npeSDb2L5U/WCxvLaYTi4nJwpdX0cH9lk6YH28UrMWkTt#G8ruHt5xKBBuipXlBHhj0bLVqkVj398lFtJy1wAAABQnOtbinQ1jtYs+EzA5#cllfcOKlNg==#====#
+onie_dropbear_rsa_host_key=begin-base64@600@r#AAAAB3NzaC1yc2EAAAADAQABAAAAgQCHA96F/tcRQq3Jq2mhPlpyg3NjdY8j#/b2mS50YjWhSJUBsYXPzlz5iwK3U7pBb6HW/QDkilsMC3nHnBPU/ZuDgcaUz#V9Q4gaUO9AXWpp4GRn9lq0MVQIVjn31EwY7e6m/do7gjD5yZ/h5EQyD7Nq6q#q2x2Io3n1ZxTh3d281ZYewAAAIAONHmCho6RHyn9WFQGO3MKWPXYcS4XXs3H#w8J/qqJfANKs3ySdwdFgqXNV6P2g4IMW6pu4SGgJvWaleYTmCp2+crxBymCR#h4F3D9W6vau4H5lyOUgH4f9UCGhXfYbAGTpEOApKLW1P8S2fKTLC6yrQ7EdY#TKVfhTkvE5x7tZTBeQAAAEEApHZd76k7DIyUgrFw+hBgeag7W9Gu4eOtB/0g#lHdijKFJyhh3TZ4lZKUa31idOpJFwxuUYR6VwMYXm+29KfUNEwAAAEEA0ims#BGY5ZZ0Z6zIoGhMY+exKindXIkxE/ENPz94+Na7w1KLM1I7eGPdzVGCvMpSf#NNm2UrCKjHXKYSlnu4n7+Q==#====#
+onie_initargs=setenv bootargs quiet console=$consoledev,$baudrate
+onie_machine=accton_as5610_52x
+onie_machine_rev=0
+onie_platform=powerpc-accton_as5610_52x-r0
+onie_platformargs=setenv bootargs $bootargs serial_num=${serial#} eth_addr=$ethaddr $onie_bootargs $onie_debugargs 
+onie_rescue=setenv onie_boot_reason rescue && boot
+onie_start=0xefc00000
+onie_sz.b=0x00360000
+onie_uninstall=setenv onie_boot_reason uninstall && boot
+onie_update=setenv onie_boot_reason update && boot
+onie_vendor_id=259
+onie_version=2017.02.00.07
+platform=powerpc-accton_as5610_52x-r0
+serial#=561052X1916063
+serverip=192.168.1.99
+set_active1=setenv bootargs ${bootargs} active=1; run hw_active1
+set_active2=setenv bootargs ${bootargs} active=2; run hw_active2
+usb_part1=5
+usb_part2=7
+ver=U-Boot 2013.01.01-gb4d916c (Jun 06 2017 - 10:45:46) - 3.0.3.15

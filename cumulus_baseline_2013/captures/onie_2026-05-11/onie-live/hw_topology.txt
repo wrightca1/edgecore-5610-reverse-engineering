@@ -1,0 +1,15 @@
+=== lsusb ===
+
+=== lspci -v ===
+(null) Class 0000: 0000:0000
+(null) Class 0000: 0000:0000
+
+=== /sys/bus/usb/devices/ ===
+drwxr-xr-x    2 root     0                0 Jun  2 19:16 .
+drwxr-xr-x    4 root     0                0 Jun  2 19:16 ..
+lrwxrwxrwx    1 root     0                0 Jun  2 19:16 1-0:1.0 -> ../../../devices/soc.0/ff722000.usb/fsl-ehci.0/usb1/1-0:1.0
+lrwxrwxrwx    1 root     0                0 Jun  2 19:16 1-1 -> ../../../devices/soc.0/ff722000.usb/fsl-ehci.0/usb1/1-1
+lrwxrwxrwx    1 root     0                0 Jun  2 19:16 1-1.3 -> ../../../devices/soc.0/ff722000.usb/fsl-ehci.0/usb1/1-1/1-1.3
+lrwxrwxrwx    1 root     0                0 Jun  2 19:16 1-1.3:1.0 -> ../../../devices/soc.0/ff722000.usb/fsl-ehci.0/usb1/1-1/1-1.3/1-1.3:1.0
+lrwxrwxrwx    1 root     0                0 Jun  2 19:16 1-1:1.0 -> ../../../devices/soc.0/ff722000.usb/fsl-ehci.0/usb1/1-1/1-1:1.0
+lrwxrwxrwx    1 root     0                0 Jun  2 19:16 usb1 -> ../../../devices/soc.0/ff722000.usb/fsl-ehci.0/usb1

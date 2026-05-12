@@ -1,0 +1,4 @@
+=== lsmod ===
+/tmp/cap.sh: line 179: lsmod: not found
+
+=== /lib/modules/3.2.69-onie+ ===

@@ -1,0 +1,20 @@
+lrwxrwxrwx 1 root root      9 May 10  2026 /dev/mtd-board_eeprom -> /dev/mtd2
+lrwxrwxrwx 1 root root      9 May 10  2026 /dev/mtd-onie -> /dev/mtd0
+lrwxrwxrwx 1 root root      9 May 10  2026 /dev/mtd-uboot -> /dev/mtd3
+lrwxrwxrwx 1 root root      9 May 10  2026 /dev/mtd-uboot-env -> /dev/mtd1
+crw-rw---- 1 root root 90,  0 May 10  2026 /dev/mtd0
+crw-rw---- 1 root root 90,  2 May 10  2026 /dev/mtd1
+crw-rw---- 1 root root 90,  4 May 10  2026 /dev/mtd2
+crw-rw---- 1 root root 90,  6 May 10  2026 /dev/mtd3
+crw-rw---- 1 root root 90,  8 May 10  2026 /dev/mtd4
+crw-rw---- 1 root root 90, 10 May 10  2026 /dev/mtd5
+crw-rw---- 1 root root 90, 12 May 10  2026 /dev/mtd6
+crw-rw---- 1 root root 90, 14 May 10  2026 /dev/mtd7
+brw-rw---- 1 root root 31,  0 May 10  2026 /dev/mtdblock0
+brw-rw---- 1 root root 31,  1 May 10  2026 /dev/mtdblock1
+brw-rw---- 1 root root 31,  2 May 10  2026 /dev/mtdblock2
+brw-rw---- 1 root root 31,  3 May 10  2026 /dev/mtdblock3
+brw-rw---- 1 root root 31,  4 May 10  2026 /dev/mtdblock4
+brw-rw---- 1 root root 31,  5 May 10  2026 /dev/mtdblock5
+brw-rw---- 1 root root 31,  6 May 10  2026 /dev/mtdblock6
+brw-rw---- 1 root root 31,  7 May 10  2026 /dev/mtdblock7

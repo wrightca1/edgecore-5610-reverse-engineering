@@ -1,0 +1,23 @@
+/tmp/capture-onie.sh: line 34: onie-syseeprom: command not found
+/tmp/capture-onie.sh: line 36: cl-tlv-info: command not found
+TlvInfo Header:
+   Id String:    TlvInfo
+   Version:      1
+   Total Length: 171
+TLV Name             Code Len Value
+-------------------- ---- --- -----
+Serial Number        0x23  14 561052X1916063
+Label Revision       0x27   4 R02B
+Platform Name        0x28  28 powerpc-accton_as5610_52x-r0
+Manufacturer         0x2B   6 Accton
+Manufacture Country  0x2C   2 TW
+Vendor Name          0x2D   8 Edgecore
+Diag Version         0x2E   8 0.0.0.13
+Base MAC Address     0x24   6 80:A2:35:81:CA:AE
+Part Number          0x22  13 FP1ZZ5652045A
+Product Name         0x21  16 5610-52X-OI-AC-F
+Manufacture Date     0x25  19 05/25/2019 08:39:38
+MAC Addresses        0x2A   2 65
+ONIE Version         0x29  13 2017.02.00.07
+CRC-32               0xFE   4 0xAF059140
+(checksum valid)

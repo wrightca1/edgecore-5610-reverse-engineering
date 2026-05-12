@@ -1,0 +1,423 @@
+Using Accton Technology Corporation AS5610_52X machine description
+Cannot reserve gpages without hugetlb enabled
+Memory CAM mapping: 256/256/256 Mb, residual: 1280Mb
+Linux version 3.2.69-onie+ (jenny_chang@centosx64-build.accton.com.tw) (gcc version 4.9.2 (crosstool-NG d6f744a - ONIE-2017.02.00.07) ) #1 SMP Tue Jun 6 10:48:06 CST 2017
+Found initrd at 0xc22a42e4:0xc234e4d0
+Found legacy serial port 0 for /soc@ff700000/serial@4500
+  mem=ff704500, taddr=ff704500, irq=0, clk=600000000, speed=0
+CPU maps initialized for 1 thread per core
+ (thread shift is 0)
+bootconsole [udbg0] enabled
+Found FSL PCI host bridge at 0x00000000ff70a000. Firmware bus number: 0->1
+PCI host bridge /pcie@ff70a000  ranges:
+ MEM 0x00000000a0000000..0x00000000bfffffff -> 0x00000000a0000000 
+  IO 0x00000000ffc20000..0x00000000ffc2ffff -> 0x0000000000000000
+/pcie@ff70a000: PCICSRBAR @ 0xfff00000
+Top of RAM: 0x80000000, Total RAM: 0x80000000
+Memory hole size: 0MB
+Zone PFN ranges:
+  DMA      0x00000000 -> 0x00030000
+  Normal   empty
+  HighMem  0x00030000 -> 0x00080000
+Movable zone start PFN for each node
+early_node_map[1] active PFN ranges
+    0: 0x00000000 -> 0x00080000
+On node 0 totalpages: 524288
+free_area_init_node: node 0, pgdat c0539940, node_mem_map c0596000
+  DMA zone: 1536 pages used for memmap
+  DMA zone: 0 pages reserved
+  DMA zone: 195072 pages, LIFO batch:31
+  HighMem zone: 2560 pages used for memmap
+  HighMem zone: 325120 pages, LIFO batch:31
+MMU: Allocated 1088 bytes of context maps for 255 contexts
+PERCPU: Embedded 9 pages/cpu @c15a2000 s5184 r0 d31680 u36864
+pcpu-alloc: s5184 r0 d31680 u36864 alloc=9*4096
+pcpu-alloc: [0] 0 [0] 1 
+Built 1 zonelists in Zone order, mobility grouping on.  Total pages: 520192
+Kernel command line: quiet console=ttyS0,115200 serial_num=561052X1916063 eth_addr=80:A2:35:81:CA:AE boot_reason=install
+PID hash table entries: 4096 (order: 2, 16384 bytes)
+Dentry cache hash table entries: 131072 (order: 7, 524288 bytes)
+Inode-cache hash table entries: 65536 (order: 6, 262144 bytes)
+High memory: 1310712k
+Memory: 2073292k/2097152k available (5208k kernel code, 23860k reserved, 260k data, 238k bss, 248k init)
+Kernel virtual memory layout:
+  * 0xfffbf000..0xfffff000  : fixmap
+  * 0xff800000..0xffc00000  : highmem PTEs
+  * 0xff7ec000..0xff800000  : early ioremap
+  * 0xf1000000..0xff7ec000  : vmalloc & ioremap
+SLUB: Genslabs=15, HWalign=32, Order=0-3, MinObjects=0, CPUs=2, Nodes=1
+Hierarchical RCU implementation.
+NR_IRQS:512
+mpic: Resetting
+mpic: Setting up MPIC " OpenPIC  " version 1.2 at ff740000, max 2 CPUs
+mpic: ISU size: 256, shift: 8, mask: ff
+mpic: Initializing for 256 sources
+time_init: decrementer frequency = 75.000000 MHz
+time_init: processor frequency   = 1200.000000 MHz
+clocksource: timebase mult[3555555] shift[22] registered
+clockevent: decrementer mult[13333333] shift[32] cpu[0]
+pid_max: default: 32768 minimum: 301
+Mount-cache hash table entries: 512
+mpic: requesting IPIs...
+e500 family performance monitor hardware support registered
+Brought up 1 CPUs
+NET: Registered protocol family 16
+PCI: Probing PCI hardware
+pci_bus 0000:00: scanning bus
+pci 0000:00:00.0: [1957:0071] type 1 class 0x000b20
+pci 0000:00:00.0: calling quirk_mmio_always_on+0x0/0x20
+pci 0000:00:00.0: ignoring class b20 (doesn't match header type 01)
+pci 0000:00:00.0: calling fixup_hide_host_resource_fsl+0x0/0x58
+pci 0000:00:00.0: calling pcibios_fixup_resources+0x0/0xdc
+pci 0000:00:00.0: calling quirk_fsl_pcie_header+0x0/0x64
+pci 0000:00:00.0: calling quirk_resource_alignment+0x0/0x170
+pci 0000:00:00.0: supports D1 D2
+pci 0000:00:00.0: PME# supported from D0 D1 D2 D3hot D3cold
+pci 0000:00:00.0: PME# disabled
+pci_bus 0000:00: fixups for bus
+pci 0000:00:00.0: scanning [bus 01-01] behind bridge, pass 0
+pci 0000:00:00.0: scanning [bus 00-00] behind bridge, pass 1
+pci_bus 0000:01: scanning bus
+pci 0000:01:00.0: [14e4:b846] type 0 class 0x000200
+pci 0000:01:00.0: calling quirk_mmio_always_on+0x0/0x20
+pci 0000:01:00.0: reg 10: [mem 0xa0000000-0xa003ffff 64bit]
+pci 0000:01:00.0: calling pcibios_fixup_resources+0x0/0xdc
+pci 0000:01:00.0: calling quirk_resource_alignment+0x0/0x170
+pci 0000:01:00.0: PME# supported from D0 D3hot D3cold
+pci 0000:01:00.0: PME# disabled
+pci_bus 0000:01: fixups for bus
+pci 0000:00:00.0: PCI bridge to [bus 01-ff]
+pci 0000:00:00.0:   bridge window [mem 0xa0000000-0xa00fffff]
+pci_bus 0000:01: bus scan returning with max=01
+pci_bus 0000:00: bus scan returning with max=01
+pci_bus 0000:00: Set PCIe payload and read request to 256
+PCI 0000:00 Cannot reserve Legacy IO [io  0xff7ed000-0xff7edfff]
+PCI: max bus depth: 1 pci_try_num: 2
+pci 0000:00:00.0: PCI bridge to [bus 01-01]
+pci 0000:00:00.0:   bridge window [io  0xff7ed000-0xff7fcfff]
+pci 0000:00:00.0:   bridge window [mem 0xa0000000-0xbfffffff]
+pci 0000:00:00.0: enabling device (0106 -> 0107)
+pci_bus 0000:00: resource 0 [io  0xff7ed000-0xff7fcfff]
+pci_bus 0000:00: resource 1 [mem 0xa0000000-0xbfffffff]
+pci_bus 0000:01: resource 0 [io  0xff7ed000-0xff7fcfff]
+pci_bus 0000:01: resource 1 [mem 0xa0000000-0xbfffffff]
+Registering qe_ic with sysfs...
+bio: create slab <bio-0> at 0
+SCSI subsystem initialized
+libata version 3.00 loaded.
+usbcore: registered new interface driver usbfs
+usbcore: registered new interface driver hub
+usbcore: registered new device driver usb
+Switching to clocksource timebase
+NET: Registered protocol family 2
+IP route cache hash table entries: 32768 (order: 5, 131072 bytes)
+TCP established hash table entries: 131072 (order: 8, 1048576 bytes)
+TCP bind hash table entries: 65536 (order: 7, 524288 bytes)
+TCP: Hash tables configured (established 131072 bind 65536)
+TCP reno registered
+UDP hash table entries: 512 (order: 2, 16384 bytes)
+UDP-Lite hash table entries: 512 (order: 2, 16384 bytes)
+NET: Registered protocol family 1
+RPC: Registered named UNIX socket transport module.
+RPC: Registered udp transport module.
+RPC: Registered tcp transport module.
+RPC: Registered tcp NFSv4.1 backchannel transport module.
+pci 0000:00:00.0: calling quirk_cardbus_legacy+0x0/0x28
+pci 0000:00:00.0: calling quirk_usb_early_handoff+0x0/0x754
+pci 0000:01:00.0: calling quirk_cardbus_legacy+0x0/0x28
+pci 0000:01:00.0: calling quirk_usb_early_handoff+0x0/0x754
+PCI: CLS 32 bytes, default 32
+Trying to unpack rootfs image as initramfs...
+Freeing initrd memory: 684k freed
+highmem bounce pool size: 64 pages
+squashfs: version 4.0 (2009/01/31) Phillip Lougher
+JFFS2 version 2.2. (NAND) (SUMMARY)  © 2001-2006 Red Hat, Inc.
+msgmni has been set to 1490
+io scheduler noop registered
+io scheduler deadline registered
+io scheduler cfq registered (default)
+Serial: 8250/16550 driver, 2 ports, IRQ sharing enabled
+serial8250.0: ttyS0 at MMIO 0xff704500 (irq = 42) is a 16550A
+console [ttyS0] enabled, bootconsole disabled
+brd: module loaded
+loop: module loaded
+efc00000.flash: Found 1 x16 devices at 0x0 in 8-bit bank. Manufacturer ID 0x000001 Chip ID 0x000c01
+NOR chip too large to fit in mapping. Attempting to cope...
+Amd/Fujitsu Extended Query Table at 0x0040
+  Amd/Fujitsu Extended Query version 1.3.
+number of CFI chips: 1
+Reducing visibility of 8192KiB chip to 4096KiB
+4 ofpart partitions found on MTD device efc00000.flash
+Creating 4 MTD partitions on "efc00000.flash":
+0x000000000000-0x000000360000 : "onie"
+0x000000360000-0x000000370000 : "uboot-env"
+0x000000370000-0x000000380000 : "board_eeprom"
+0x000000380000-0x000000400000 : "uboot"
+Freescale PowerQUICC MII Bus: probed
+fsl-gianfar ff724000.ethernet: eth0: mac: 80:a2:35:81:ca:ae
+fsl-gianfar ff724000.ethernet: eth0: Running with NAPI enabled
+fsl-gianfar ff724000.ethernet: eth0: RX BD ring size for Q[0]: 256
+fsl-gianfar ff724000.ethernet: eth0: TX BD ring size for Q[0]: 256
+ehci_hcd: USB 2.0 'Enhanced' Host Controller (EHCI) Driver
+fsl-ehci fsl-ehci.0: Freescale On-Chip EHCI Host Controller
+fsl-ehci fsl-ehci.0: new USB bus registered, assigned bus number 1
+fsl-ehci fsl-ehci.0: irq 28, io mem 0xff722000
+fsl-ehci fsl-ehci.0: USB 2.0 started, EHCI 1.00
+usb usb1: New USB device found, idVendor=1d6b, idProduct=0002
+usb usb1: New USB device strings: Mfr=3, Product=2, SerialNumber=1
+usb usb1: Product: Freescale On-Chip EHCI Host Controller
+usb usb1: Manufacturer: Linux 3.2.69-onie+ ehci_hcd
+usb usb1: SerialNumber: fsl-ehci.0
+hub 1-0:1.0: USB hub found
+hub 1-0:1.0: 1 port detected
+Initializing USB Mass Storage driver...
+usbcore: registered new interface driver usb-storage
+USB Mass Storage support registered.
+usbcore: registered new interface driver usbserial
+usbserial: USB Serial Driver core
+i2c /dev entries driver
+mpc-i2c ff703000.i2c: clock 390625 Hz (dfsrr=1 fdr=10)
+mpc-i2c ff703000.i2c: timeout 10000 us
+mpc-i2c ff703100.i2c: timeout 10000 us
+i2c i2c-0: Added multiplexed i2c bus 2
+rtc-pcf8563 2-0051: chip found, driver version 0.4.3
+rtc-pcf8563 2-0051: rtc core: registered rtc-pcf8563 as rtc0
+i2c i2c-0: Added multiplexed i2c bus 3
+at24 3-0039: 256 byte 24c02 EEPROM, read-only, 0 bytes/write
+at24 3-003d: 256 byte 24c02 EEPROM, read-only, 0 bytes/write
+at24 3-003a: 256 byte 24c02 EEPROM, read-only, 0 bytes/write
+at24 3-003e: 256 byte 24c02 EEPROM, read-only, 0 bytes/write
+i2c i2c-0: Added multiplexed i2c bus 4
+i2c i2c-0: Added multiplexed i2c bus 5
+i2c i2c-0: Added multiplexed i2c bus 6
+i2c i2c-0: Added multiplexed i2c bus 7
+i2c i2c-0: Added multiplexed i2c bus 8
+i2c i2c-0: Added multiplexed i2c bus 9
+pca954x 0-0070: registered 8 multiplexed busses for I2C switch pca9548
+i2c i2c-1: Added multiplexed i2c bus 10
+i2c i2c-1: Added multiplexed i2c bus 11
+i2c i2c-1: Added multiplexed i2c bus 12
+i2c i2c-1: Added multiplexed i2c bus 13
+pca954x 1-0075: registered 4 multiplexed busses for I2C switch pca9546
+i2c i2c-1: Added multiplexed i2c bus 14
+i2c i2c-1: Added multiplexed i2c bus 15
+i2c i2c-1: Added multiplexed i2c bus 16
+i2c i2c-1: Added multiplexed i2c bus 17
+pca954x 1-0076: registered 4 multiplexed busses for I2C switch pca9546
+i2c i2c-1: Added multiplexed i2c bus 18
+at24 18-0050: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+at24 18-0051: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+i2c i2c-1: Added multiplexed i2c bus 19
+at24 19-0050: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+at24 19-0051: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+i2c i2c-1: Added multiplexed i2c bus 20
+at24 20-0050: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+at24 20-0051: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+i2c i2c-1: Added multiplexed i2c bus 21
+at24 21-0050: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+at24 21-0051: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+pca954x 1-0077: registered 4 multiplexed busses for I2C switch pca9546
+i2c i2c-10: Added multiplexed i2c bus 22
+at24 22-0050: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+at24 22-0051: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+i2c i2c-10: Added multiplexed i2c bus 23
+at24 23-0050: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+at24 23-0051: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+i2c i2c-10: Added multiplexed i2c bus 24
+at24 24-0050: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+at24 24-0051: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+i2c i2c-10: Added multiplexed i2c bus 25
+at24 25-0050: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+at24 25-0051: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+i2c i2c-10: Added multiplexed i2c bus 26
+at24 26-0050: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+at24 26-0051: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+i2c i2c-10: Added multiplexed i2c bus 27
+at24 27-0050: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+at24 27-0051: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+i2c i2c-10: Added multiplexed i2c bus 28
+at24 28-0050: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+at24 28-0051: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+i2c i2c-10: Added multiplexed i2c bus 29
+at24 29-0050: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+at24 29-0051: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+pca954x 10-0074: registered 8 multiplexed busses for I2C switch pca9548
+i2c i2c-11: Added multiplexed i2c bus 30
+at24 30-0050: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+at24 30-0051: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+i2c i2c-11: Added multiplexed i2c bus 31
+at24 31-0050: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+at24 31-0051: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+i2c i2c-11: Added multiplexed i2c bus 32
+at24 32-0050: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+at24 32-0051: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+i2c i2c-11: Added multiplexed i2c bus 33
+at24 33-0050: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+at24 33-0051: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+i2c i2c-11: Added multiplexed i2c bus 34
+at24 34-0050: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+at24 34-0051: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+i2c i2c-11: Added multiplexed i2c bus 35
+at24 35-0050: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+at24 35-0051: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+i2c i2c-11: Added multiplexed i2c bus 36
+at24 36-0050: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+at24 36-0051: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+i2c i2c-11: Added multiplexed i2c bus 37
+at24 37-0050: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+at24 37-0051: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+pca954x 11-0074: registered 8 multiplexed busses for I2C switch pca9548
+i2c i2c-12: Added multiplexed i2c bus 38
+at24 38-0050: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+at24 38-0051: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+i2c i2c-12: Added multiplexed i2c bus 39
+at24 39-0050: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+at24 39-0051: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+i2c i2c-12: Added multiplexed i2c bus 40
+at24 40-0050: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+at24 40-0051: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+i2c i2c-12: Added multiplexed i2c bus 41
+at24 41-0050: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+at24 41-0051: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+i2c i2c-12: Added multiplexed i2c bus 42
+at24 42-0050: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+at24 42-0051: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+i2c i2c-12: Added multiplexed i2c bus 43
+at24 43-0050: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+at24 43-0051: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+i2c i2c-12: Added multiplexed i2c bus 44
+at24 44-0050: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+at24 44-0051: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+i2c i2c-12: Added multiplexed i2c bus 45
+at24 45-0050: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+at24 45-0051: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+pca954x 12-0074: registered 8 multiplexed busses for I2C switch pca9548
+i2c i2c-13: Added multiplexed i2c bus 46
+at24 46-0050: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+at24 46-0051: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+i2c i2c-13: Added multiplexed i2c bus 47
+at24 47-0050: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+at24 47-0051: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+i2c i2c-13: Added multiplexed i2c bus 48
+at24 48-0050: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+at24 48-0051: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+i2c i2c-13: Added multiplexed i2c bus 49
+at24 49-0050: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+at24 49-0051: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+i2c i2c-13: Added multiplexed i2c bus 50
+at24 50-0050: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+at24 50-0051: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+i2c i2c-13: Added multiplexed i2c bus 51
+at24 51-0050: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+at24 51-0051: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+i2c i2c-13: Added multiplexed i2c bus 52
+at24 52-0050: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+at24 52-0051: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+i2c i2c-13: Added multiplexed i2c bus 53
+at24 53-0050: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+at24 53-0051: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+pca954x 13-0074: registered 8 multiplexed busses for I2C switch pca9548
+i2c i2c-14: Added multiplexed i2c bus 54
+at24 54-0050: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+at24 54-0051: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+i2c i2c-14: Added multiplexed i2c bus 55
+at24 55-0050: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+at24 55-0051: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+i2c i2c-14: Added multiplexed i2c bus 56
+at24 56-0050: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+at24 56-0051: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+i2c i2c-14: Added multiplexed i2c bus 57
+at24 57-0050: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+at24 57-0051: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+i2c i2c-14: Added multiplexed i2c bus 58
+at24 58-0050: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+at24 58-0051: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+i2c i2c-14: Added multiplexed i2c bus 59
+at24 59-0050: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+at24 59-0051: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+i2c i2c-14: Added multiplexed i2c bus 60
+at24 60-0050: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+at24 60-0051: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+i2c i2c-14: Added multiplexed i2c bus 61
+at24 61-0050: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+at24 61-0051: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+pca954x 14-0074: registered 8 multiplexed busses for I2C switch pca9548
+i2c i2c-15: Added multiplexed i2c bus 62
+at24 62-0050: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+at24 62-0051: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+i2c i2c-15: Added multiplexed i2c bus 63
+at24 63-0050: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+at24 63-0051: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+i2c i2c-15: Added multiplexed i2c bus 64
+at24 64-0050: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+at24 64-0051: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+i2c i2c-15: Added multiplexed i2c bus 65
+at24 65-0050: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+at24 65-0051: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+i2c i2c-15: Added multiplexed i2c bus 66
+at24 66-0050: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+at24 66-0051: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+i2c i2c-15: Added multiplexed i2c bus 67
+at24 67-0050: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+at24 67-0051: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+i2c i2c-15: Added multiplexed i2c bus 68
+at24 68-0050: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+at24 68-0051: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+i2c i2c-15: Added multiplexed i2c bus 69
+at24 69-0050: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+at24 69-0051: 256 byte 24c02 EEPROM, writable, 1 bytes/write
+pca954x 15-0074: registered 8 multiplexed busses for I2C switch pca9548
+hwmon_vid: Unknown VRM version of your CPU
+w83781d 9-0029: Enabling temp2, readings might not make sense
+w83781d 9-0029: Enabling temp3, readings might not make sense
+sdhci: Secure Digital Host Controller Interface driver
+sdhci: Copyright(c) Pierre Ossman
+sdhci-pltfm: SDHCI platform and OF driver helper
+oprofile: using ppc/e500 performance monitoring.
+TCP bic registered
+TCP cubic registered
+TCP westwood registered
+TCP htcp registered
+Initializing XFRM netlink socket
+NET: Registered protocol family 10
+Mobile IPv6
+IPv6 over IPv4 tunneling driver
+NET: Registered protocol family 17
+NET: Registered protocol family 15
+8021q: 802.1Q VLAN Support v1.8
+Registering the dns_resolver key type
+console [netcon0] enabled
+netconsole: network logging started
+rtc-pcf8563 2-0051: setting system clock to 2013-06-02 19:15:04 UTC (1370200504)
+Freeing unused kernel memory: 248k freed
+usb 1-1: new high-speed USB device number 2 using fsl-ehci
+usb 1-1: New USB device found, idVendor=0424, idProduct=2513
+usb 1-1: New USB device strings: Mfr=0, Product=0, SerialNumber=0
+hub 1-1:1.0: USB hub found
+hub 1-1:1.0: 3 ports detected
+usb 1-1.3: new high-speed USB device number 3 using fsl-ehci
+usb 1-1.3: New USB device found, idVendor=13fe, idProduct=4100
+usb 1-1.3: New USB device strings: Mfr=1, Product=2, SerialNumber=3
+usb 1-1.3: Product: USB DISK 2.0
+usb 1-1.3: Manufacturer:         
+usb 1-1.3: SerialNumber: 7F009544DA7CFA01
+scsi0 : usb-storage 1-1.3:1.0
+ADDRCONF(NETDEV_UP): eth0: link is not ready
+scsi 0:0:0:0: Direct-Access              USB DISK 2.0     PMAP PQ: 0 ANSI: 6
+PHY: mdio@ff724520:01 - Link is Up - 1000/Full
+ADDRCONF(NETDEV_CHANGE): eth0: link becomes ready
+sd 0:0:0:0: [sda] 7831552 512-byte logical blocks: (4.00 GB/3.73 GiB)
+sd 0:0:0:0: [sda] Write Protect is off
+sd 0:0:0:0: [sda] Mode Sense: 23 00 00 00
+sd 0:0:0:0: [sda] No Caching mode page found
+sd 0:0:0:0: [sda] Assuming drive cache: write through
+sd 0:0:0:0: [sda] No Caching mode page found
+sd 0:0:0:0: [sda] Assuming drive cache: write through
+ sda: sda1 sda2 < sda5 sda6 sda7 sda8 > sda3
+sd 0:0:0:0: [sda] No Caching mode page found
+sd 0:0:0:0: [sda] Assuming drive cache: write through
+sd 0:0:0:0: [sda] Attached SCSI disk
+EXT2-fs (sda3): warning: mounting unchecked fs, running e2fsck is recommended
+eth0: no IPv6 routers present
+EXT2-fs (sda3): warning: mounting unchecked fs, running e2fsck is recommended
+EXT2-fs (sda3): warning: mounting unchecked fs, running e2fsck is recommended

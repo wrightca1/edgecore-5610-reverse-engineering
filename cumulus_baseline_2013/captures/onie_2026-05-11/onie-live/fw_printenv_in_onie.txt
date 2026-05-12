@@ -1,0 +1,1 @@
+/tmp/cap.sh: line 165: fw_printenv: not found

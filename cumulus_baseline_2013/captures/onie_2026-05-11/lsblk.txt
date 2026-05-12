@@ -1,0 +1,13 @@
+NAME      MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT
+mtdblock0  31:0    0   3.4M  0 disk 
+mtdblock1  31:1    0    64K  0 disk 
+mtdblock2  31:2    0    64K  0 disk 
+mtdblock3  31:3    0   512K  0 disk 
+sda         8:0    0   3.8G  0 disk 
+sda1        8:1    0   128M  0 part /mnt/persist
+sda2        8:2    0     1K  0 part 
+sda3        8:3    0   3.3G  0 part /mnt/root-rw
+sda5        8:5    0    16M  0 part 
+sda6        8:6    0   128M  0 part /mnt/root-ro
+sda7        8:7    0    16M  0 part 
+sda8        8:8    0   128M  0 part 

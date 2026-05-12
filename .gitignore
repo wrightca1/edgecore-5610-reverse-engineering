@@ -5,3 +5,6 @@ INFRASTRUCTURE.md
 
 # Redundant raw text captures — keep .bin and .gz, drop .txt to save space
 cumulus_baseline_2013/captures/*.txt
+
+# ONIE mtd0 derivatives — keep mtd0.bin, drop the unpacked tree
+cumulus_baseline_2013/captures/onie_2026-05-11/onie-extracted/

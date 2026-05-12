@@ -1,0 +1,4 @@
+/dev/sda1: UUID="3d597b70-158f-47d0-8812-aa3a2524d11a" TYPE="ext2" 
+/dev/sda3: UUID="4e8d0cb1-c6ec-4409-ac2c-e3955be4d90d" TYPE="ext2" 
+/dev/sda6: TYPE="squashfs" 
+/dev/sda8: TYPE="squashfs" 

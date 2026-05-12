@@ -1,0 +1,5 @@
+dev:    size   erasesize  name
+mtd0: 00360000 00010000 "onie"
+mtd1: 00010000 00010000 "uboot-env"
+mtd2: 00010000 00010000 "board_eeprom"
+mtd3: 00080000 00010000 "uboot"

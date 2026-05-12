@@ -1,0 +1,426 @@
+=== pid 1 (init) ===
+  cmdline:  /init 
+  cwd:      /
+  exe:      /bin/busybox
+  fds:
+    lrwx------    1 root     0               64 Jun  2 19:16 0 -> /dev/console
+    lrwx------    1 root     0               64 Jun  2 19:16 1 -> /dev/console
+    lrwx------    1 root     0               64 Jun  2 19:16 2 -> /dev/console
+  maps (top 10):
+    00100000-00102000 r-xp 00000000 00:00 0          [vdso]
+    10000000-100be000 r-xp 00000000 00:01 622        /bin/busybox
+    100ce000-100cf000 rwxp 000be000 00:01 622        /bin/busybox
+    100cf000-100d0000 rwxp 00000000 00:00 0 
+    1062d000-1062f000 rwxp 00000000 00:00 0          [heap]
+    48000000-48007000 r-xp 00000000 00:01 30         /lib/ld-uClibc-0.9.33.2.so
+    48007000-48009000 rw-p 00000000 00:00 0 
+    48016000-48017000 r--p 00006000 00:01 30         /lib/ld-uClibc-0.9.33.2.so
+    48017000-48018000 rwxp 00007000 00:01 30         /lib/ld-uClibc-0.9.33.2.so
+    48018000-4801a000 r-xp 00000000 00:01 34         /lib/libcrypt-0.9.33.2.so
+
+=== pid 10 (kblockd) ===
+  cmdline:  
+  cwd:      /
+  exe:      
+  fds:
+  maps (top 10):
+
+=== pid 105 (scsi_eh_0) ===
+  cmdline:  
+  cwd:      /
+  exe:      
+  fds:
+  maps (top 10):
+
+=== pid 106 (usb-storage) ===
+  cmdline:  
+  cwd:      /
+  exe:      
+  fds:
+  maps (top 10):
+
+=== pid 11 (ata_sff) ===
+  cmdline:  
+  cwd:      /
+  exe:      
+  fds:
+  maps (top 10):
+
+=== pid 12 (khubd) ===
+  cmdline:  
+  cwd:      /
+  exe:      
+  fds:
+  maps (top 10):
+
+=== pid 13 (rpciod) ===
+  cmdline:  
+  cwd:      /
+  exe:      
+  fds:
+  maps (top 10):
+
+=== pid 14 (kworker/0:1) ===
+  cmdline:  
+  cwd:      /
+  exe:      
+  fds:
+  maps (top 10):
+
+=== pid 15 (khungtaskd) ===
+  cmdline:  
+  cwd:      /
+  exe:      
+  fds:
+  maps (top 10):
+
+=== pid 16 (kswapd0) ===
+  cmdline:  
+  cwd:      /
+  exe:      
+  fds:
+  maps (top 10):
+
+=== pid 17 (fsnotify_mark) ===
+  cmdline:  
+  cwd:      /
+  exe:      
+  fds:
+  maps (top 10):
+
+=== pid 18 (nfsiod) ===
+  cmdline:  
+  cwd:      /
+  exe:      
+  fds:
+  maps (top 10):
+
+=== pid 19 (crypto) ===
+  cmdline:  
+  cwd:      /
+  exe:      
+  fds:
+  maps (top 10):
+
+=== pid 193 (kworker/u:1) ===
+  cmdline:  
+  cwd:      /
+  exe:      
+  fds:
+  maps (top 10):
+
+=== pid 2 (kthreadd) ===
+  cmdline:  
+  cwd:      /
+  exe:      
+  fds:
+  maps (top 10):
+
+=== pid 214 (syslogd) ===
+  cmdline:  syslogd -b 3 -D -L 
+  cwd:      /
+  exe:      /bin/busybox
+  fds:
+    lrwx------    1 root     0               64 Jun  2 19:16 0 -> socket:[1613]
+    lrwx------    1 root     0               64 Jun  2 19:16 1 -> /dev/null
+    lrwx------    1 root     0               64 Jun  2 19:16 2 -> /dev/null
+    l-wx------    1 root     0               64 Jun  2 19:16 3 -> /var/log/messages
+    l-wx------    1 root     0               64 Jun  2 19:16 4 -> /var/log/onie.log
+  maps (top 10):
+    00100000-00102000 r-xp 00000000 00:00 0          [vdso]
+    10000000-100be000 r-xp 00000000 00:01 622        /bin/busybox
+    100ce000-100cf000 rwxp 000be000 00:01 622        /bin/busybox
+    100cf000-100d0000 rwxp 00000000 00:00 0 
+    102fe000-10300000 rwxp 00000000 00:00 0          [heap]
+    48000000-48007000 r-xp 00000000 00:01 30         /lib/ld-uClibc-0.9.33.2.so
+    48007000-48009000 rw-p 00000000 00:00 0 
+    48016000-48017000 r--p 00006000 00:01 30         /lib/ld-uClibc-0.9.33.2.so
+    48017000-48018000 rwxp 00007000 00:01 30         /lib/ld-uClibc-0.9.33.2.so
+    48018000-4801a000 r-xp 00000000 00:01 34         /lib/libcrypt-0.9.33.2.so
+
+=== pid 230 (dropbear) ===
+  cmdline:  /usr/sbin/dropbear -m -B 
+  cwd:      /
+  exe:      /usr/bin/dropbearmulti
+  fds:
+    lrwx------    1 root     0               64 Jun  2 19:16 0 -> /dev/null
+    lrwx------    1 root     0               64 Jun  2 19:16 1 -> /dev/null
+    lrwx------    1 root     0               64 Jun  2 19:16 2 -> /dev/null
+    lrwx------    1 root     0               64 Jun  2 19:16 3 -> socket:[1644]
+    lrwx------    1 root     0               64 Jun  2 19:16 4 -> socket:[1649]
+    lrwx------    1 root     0               64 Jun  2 19:16 5 -> socket:[1650]
+  maps (top 10):
+    00100000-00102000 r-xp 00000000 00:00 0          [vdso]
+    10000000-10046000 r-xp 00000000 00:01 278        /usr/bin/dropbearmulti
+    10055000-10056000 rwxp 00045000 00:01 278        /usr/bin/dropbearmulti
+    10056000-10057000 rwxp 00000000 00:00 0 
+    1060a000-1060d000 rwxp 00000000 00:00 0          [heap]
+    48000000-48007000 r-xp 00000000 00:01 30         /lib/ld-uClibc-0.9.33.2.so
+    48007000-48009000 rw-p 00000000 00:00 0 
+    48016000-48017000 r--p 00006000 00:01 30         /lib/ld-uClibc-0.9.33.2.so
+    48017000-48018000 rwxp 00007000 00:01 30         /lib/ld-uClibc-0.9.33.2.so
+    48018000-48019000 r-xp 00000000 00:01 27         /lib/libutil-0.9.33.2.so
+
+=== pid 240 (telnetd) ===
+  cmdline:  telnetd -l /bin/onie-console -f /etc/issue.null 
+  cwd:      /
+  exe:      /bin/busybox
+  fds:
+    lrwx------    1 root     0               64 Jun  2 19:16 0 -> /dev/null
+    lrwx------    1 root     0               64 Jun  2 19:16 1 -> /dev/null
+    lrwx------    1 root     0               64 Jun  2 19:16 2 -> /dev/null
+    lrwx------    1 root     0               64 Jun  2 19:16 3 -> socket:[1673]
+  maps (top 10):
+    00100000-00102000 r-xp 00000000 00:00 0          [vdso]
+    10000000-100be000 r-xp 00000000 00:01 622        /bin/busybox
+    100ce000-100cf000 rwxp 000be000 00:01 622        /bin/busybox
+    100cf000-100d0000 rwxp 00000000 00:00 0 
+    1084b000-1084c000 rwxp 00000000 00:00 0          [heap]
+    48000000-48007000 r-xp 00000000 00:01 30         /lib/ld-uClibc-0.9.33.2.so
+    48007000-48009000 rw-p 00000000 00:00 0 
+    48016000-48017000 r--p 00006000 00:01 30         /lib/ld-uClibc-0.9.33.2.so
+    48017000-48018000 rwxp 00007000 00:01 30         /lib/ld-uClibc-0.9.33.2.so
+    48018000-4801a000 r-xp 00000000 00:01 34         /lib/libcrypt-0.9.33.2.so
+
+=== pid 258 (sh) ===
+  cmdline:  /bin/sh -l 
+  cwd:      /
+  exe:      /bin/busybox
+  fds:
+    lrwx------    1 root     0               64 Jun  2 19:16 0 -> /dev/console
+    lrwx------    1 root     0               64 Jun  2 19:16 1 -> /dev/console
+    lrwx------    1 root     0               64 Jun  2 19:16 10 -> /dev/tty
+    lrwx------    1 root     0               64 Jun  2 19:16 2 -> /dev/console
+  maps (top 10):
+    00100000-00102000 r-xp 00000000 00:00 0          [vdso]
+    10000000-100be000 r-xp 00000000 00:01 622        /bin/busybox
+    100ce000-100cf000 rwxp 000be000 00:01 622        /bin/busybox
+    100cf000-100d0000 rwxp 00000000 00:00 0 
+    10214000-10218000 rwxp 00000000 00:00 0          [heap]
+    48000000-48007000 r-xp 00000000 00:01 30         /lib/ld-uClibc-0.9.33.2.so
+    48007000-48009000 rw-p 00000000 00:00 0 
+    48016000-48017000 r--p 00006000 00:01 30         /lib/ld-uClibc-0.9.33.2.so
+    48017000-48018000 rwxp 00007000 00:01 30         /lib/ld-uClibc-0.9.33.2.so
+    48018000-4801a000 r-xp 00000000 00:01 34         /lib/libcrypt-0.9.33.2.so
+
+=== pid 259 (discover) ===
+  cmdline:  /bin/sh /bin/discover 
+  cwd:      /
+  exe:      /bin/busybox
+  fds:
+    lrwx------    1 root     0               64 Jun  2 19:16 0 -> /dev/null
+    lrwx------    1 root     0               64 Jun  2 19:16 1 -> /dev/null
+    lr-x------    1 root     0               64 Jun  2 19:16 10 -> /bin/discover
+    lrwx------    1 root     0               64 Jun  2 19:16 2 -> /dev/null
+  maps (top 10):
+    00100000-00102000 r-xp 00000000 00:00 0          [vdso]
+    10000000-100be000 r-xp 00000000 00:01 622        /bin/busybox
+    100ce000-100cf000 rwxp 000be000 00:01 622        /bin/busybox
+    100cf000-100d0000 rwxp 00000000 00:00 0 
+    1082d000-10839000 rwxp 00000000 00:00 0          [heap]
+    48000000-48007000 r-xp 00000000 00:01 30         /lib/ld-uClibc-0.9.33.2.so
+    48007000-48009000 rw-p 00000000 00:00 0 
+    48016000-48017000 r--p 00006000 00:01 30         /lib/ld-uClibc-0.9.33.2.so
+    48017000-48018000 rwxp 00007000 00:01 30         /lib/ld-uClibc-0.9.33.2.so
+    48018000-4801a000 r-xp 00000000 00:01 34         /lib/libcrypt-0.9.33.2.so
+
+=== pid 3 (ksoftirqd/0) ===
+  cmdline:  
+  cwd:      /
+  exe:      
+  fds:
+  maps (top 10):
+
+=== pid 32 (mtdblock0) ===
+  cmdline:  
+  cwd:      /
+  exe:      
+  fds:
+  maps (top 10):
+
+=== pid 33 (mtdblock1) ===
+  cmdline:  
+  cwd:      /
+  exe:      
+  fds:
+  maps (top 10):
+
+=== pid 335 (kworker/0:2) ===
+  cmdline:  
+  cwd:      /
+  exe:      
+  fds:
+  maps (top 10):
+
+=== pid 339 (flush-8:0) ===
+  cmdline:  
+  cwd:      /
+  exe:      
+  fds:
+  maps (top 10):
+
+=== pid 34 (mtdblock2) ===
+  cmdline:  
+  cwd:      /
+  exe:      
+  fds:
+  maps (top 10):
+
+=== pid 35 (mtdblock3) ===
+  cmdline:  
+  cwd:      /
+  exe:      
+  fds:
+  maps (top 10):
+
+=== pid 4 (kworker/0:0) ===
+  cmdline:  
+  cwd:      /
+  exe:      
+  fds:
+  maps (top 10):
+
+=== pid 5 (kworker/u:0) ===
+  cmdline:  
+  cwd:      /
+  exe:      
+  fds:
+  maps (top 10):
+
+=== pid 6 (migration/0) ===
+  cmdline:  
+  cwd:      /
+  exe:      
+  fds:
+  maps (top 10):
+
+=== pid 6337 (dropbear) ===
+  cmdline:  /usr/sbin/dropbear -m -B 
+  cwd:      /
+  exe:      /usr/bin/dropbearmulti
+  fds:
+    lrwx------    1 root     0               64 Jun  2 19:16 0 -> /dev/null
+    lrwx------    1 root     0               64 Jun  2 19:16 1 -> /dev/null
+    lr-x------    1 root     0               64 Jun  2 19:16 11 -> pipe:[6683]
+    lrwx------    1 root     0               64 Jun  2 19:16 2 -> /dev/null
+    lrwx------    1 root     0               64 Jun  2 19:16 3 -> socket:[1644]
+    lr-x------    1 root     0               64 Jun  2 19:16 4 -> pipe:[6677]
+    l-wx------    1 root     0               64 Jun  2 19:16 5 -> pipe:[6677]
+    lrwx------    1 root     0               64 Jun  2 19:16 6 -> socket:[6675]
+    lr-x------    1 root     0               64 Jun  2 19:16 9 -> pipe:[6682]
+  maps (top 10):
+    00100000-00102000 r-xp 00000000 00:00 0          [vdso]
+    10000000-10046000 r-xp 00000000 00:01 278        /usr/bin/dropbearmulti
+    10055000-10056000 rwxp 00045000 00:01 278        /usr/bin/dropbearmulti
+    10056000-10057000 rwxp 00000000 00:00 0 
+    1060a000-1060d000 rwxp 00000000 00:00 0          [heap]
+    1060d000-10618000 rwxp 00000000 00:00 0          [heap]
+    48000000-48007000 r-xp 00000000 00:01 30         /lib/ld-uClibc-0.9.33.2.so
+    48007000-48009000 rw-p 00000000 00:00 0 
+    48016000-48017000 r--p 00006000 00:01 30         /lib/ld-uClibc-0.9.33.2.so
+    48017000-48018000 rwxp 00007000 00:01 30         /lib/ld-uClibc-0.9.33.2.so
+
+=== pid 6341 (sleep) ===
+  cmdline:  sleep 1 
+  cwd:      /
+  exe:      /bin/busybox
+  fds:
+    lrwx------    1 root     0               64 Jun  2 19:16 0 -> /dev/null
+    lrwx------    1 root     0               64 Jun  2 19:16 1 -> /dev/null
+    lrwx------    1 root     0               64 Jun  2 19:16 2 -> /dev/null
+  maps (top 10):
+    00100000-00102000 r-xp 00000000 00:00 0          [vdso]
+    10000000-100be000 r-xp 00000000 00:01 622        /bin/busybox
+    100ce000-100cf000 rwxp 000be000 00:01 622        /bin/busybox
+    100cf000-100d0000 rwxp 00000000 00:00 0 
+    48000000-48007000 r-xp 00000000 00:01 30         /lib/ld-uClibc-0.9.33.2.so
+    48007000-48009000 rw-p 00000000 00:00 0 
+    48016000-48017000 r--p 00006000 00:01 30         /lib/ld-uClibc-0.9.33.2.so
+    48017000-48018000 rwxp 00007000 00:01 30         /lib/ld-uClibc-0.9.33.2.so
+    48018000-4801a000 r-xp 00000000 00:01 34         /lib/libcrypt-0.9.33.2.so
+    4801a000-48029000 ---p 00000000 00:00 0 
+
+=== pid 6342 (sh) ===
+  cmdline:  sh -c /tmp/cap.sh 2>&1 | tail -n 25 
+  cwd:      /root
+  exe:      /bin/busybox
+  fds:
+    lr-x------    1 root     0               64 Jun  2 19:16 0 -> pipe:[6681]
+    l-wx------    1 root     0               64 Jun  2 19:16 1 -> pipe:[6682]
+    l-wx------    1 root     0               64 Jun  2 19:16 2 -> pipe:[6683]
+  maps (top 10):
+    00100000-00102000 r-xp 00000000 00:00 0          [vdso]
+    10000000-100be000 r-xp 00000000 00:01 622        /bin/busybox
+    100ce000-100cf000 rwxp 000be000 00:01 622        /bin/busybox
+    100cf000-100d0000 rwxp 00000000 00:00 0 
+    1038f000-10391000 rwxp 00000000 00:00 0          [heap]
+    48000000-48007000 r-xp 00000000 00:01 30         /lib/ld-uClibc-0.9.33.2.so
+    48007000-48009000 rw-p 00000000 00:00 0 
+    48016000-48017000 r--p 00006000 00:01 30         /lib/ld-uClibc-0.9.33.2.so
+    48017000-48018000 rwxp 00007000 00:01 30         /lib/ld-uClibc-0.9.33.2.so
+    48018000-4801a000 r-xp 00000000 00:01 34         /lib/libcrypt-0.9.33.2.so
+
+=== pid 6343 (cap.sh) ===
+  cmdline:  /bin/sh /tmp/cap.sh 
+  cwd:      /root
+  exe:      /bin/busybox
+  fds:
+    lr-x------    1 root     0               64 Jun  2 19:16 0 -> pipe:[6681]
+    l-wx------    1 root     0               64 Jun  2 19:16 1 -> /tmp/onie-live/proc_walk.txt
+    lr-x------    1 root     0               64 Jun  2 19:16 10 -> /tmp/cap.sh
+    l-wx------    1 root     0               64 Jun  2 19:16 11 -> pipe:[6686]
+    l-wx------    1 root     0               64 Jun  2 19:16 12 -> pipe:[6686]
+    l-wx------    1 root     0               64 Jun  2 19:16 2 -> /tmp/onie-live/proc_walk.txt
+  maps (top 10):
+    00100000-00102000 r-xp 00000000 00:00 0          [vdso]
+    10000000-100be000 r-xp 00000000 00:01 622        /bin/busybox
+    100ce000-100cf000 rwxp 000be000 00:01 622        /bin/busybox
+    100cf000-100d0000 rwxp 00000000 00:00 0 
+    103e8000-103eb000 rwxp 00000000 00:00 0          [heap]
+    48000000-48007000 r-xp 00000000 00:01 30         /lib/ld-uClibc-0.9.33.2.so
+    48007000-48009000 rw-p 00000000 00:00 0 
+    48016000-48017000 r--p 00006000 00:01 30         /lib/ld-uClibc-0.9.33.2.so
+    48017000-48018000 rwxp 00007000 00:01 30         /lib/ld-uClibc-0.9.33.2.so
+    48018000-4801a000 r-xp 00000000 00:01 34         /lib/libcrypt-0.9.33.2.so
+
+=== pid 6344 (tail) ===
+  cmdline:  tail -n 25 
+  cwd:      /root
+  exe:      /bin/busybox
+  fds:
+    lr-x------    1 root     0               64 Jun  2 19:16 0 -> pipe:[6686]
+    l-wx------    1 root     0               64 Jun  2 19:16 1 -> pipe:[6682]
+    l-wx------    1 root     0               64 Jun  2 19:16 2 -> pipe:[6683]
+  maps (top 10):
+    00100000-00102000 r-xp 00000000 00:00 0          [vdso]
+    10000000-100be000 r-xp 00000000 00:01 622        /bin/busybox
+    100ce000-100cf000 rwxp 000be000 00:01 622        /bin/busybox
+    100cf000-100d0000 rwxp 00000000 00:00 0 
+    10176000-10178000 rwxp 00000000 00:00 0          [heap]
+    48000000-48007000 r-xp 00000000 00:01 30         /lib/ld-uClibc-0.9.33.2.so
+    48007000-48009000 rw-p 00000000 00:00 0 
+    48016000-48017000 r--p 00006000 00:01 30         /lib/ld-uClibc-0.9.33.2.so
+    48017000-48018000 rwxp 00007000 00:01 30         /lib/ld-uClibc-0.9.33.2.so
+    48018000-4801a000 r-xp 00000000 00:01 34         /lib/libcrypt-0.9.33.2.so
+
+=== pid 7 (khelper) ===
+  cmdline:  
+  cwd:      /
+  exe:      
+  fds:
+  maps (top 10):
+
+=== pid 8 (sync_supers) ===
+  cmdline:  
+  cwd:      /
+  exe:      
+  fds:
+  maps (top 10):
+
+=== pid 9 (bdi-default) ===
+  cmdline:  
+  cwd:      /
+  exe:      
+  fds:
+  maps (top 10):
+

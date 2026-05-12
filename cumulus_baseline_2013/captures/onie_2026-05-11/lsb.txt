@@ -1,0 +1,6 @@
+No LSB modules are available.
+Distributor ID:	Cumulus Networks
+Description:	2.5.0-199c587-201501081931-build
+Release:	2.5.0
+Codename:	wheezy
+

@@ -1,0 +1,53 @@
+=== mount ===
+rootfs on / type rootfs (rw)
+proc on /proc type proc (rw,nosuid,nodev,noexec,relatime)
+tmpfs on /run type tmpfs (rw,noatime,size=10240k)
+tmpfs on /run/lock type tmpfs (rw,noatime,size=10240k)
+tmpfs on /tmp type tmpfs (rw,noatime)
+tmpfs on /var/tmp type tmpfs (rw,noatime)
+sysfs on /sys type sysfs (rw,nosuid,nodev,noexec,relatime)
+tmpfs on /run/shm type tmpfs (rw,nosuid,nodev,relatime)
+devpts on /dev/pts type devpts (rw,nosuid,noexec,relatime,gid=5,mode=620)
+
+=== /proc/mounts ===
+rootfs / rootfs rw 0 0
+proc /proc proc rw,nosuid,nodev,noexec,relatime 0 0
+tmpfs /run tmpfs rw,noatime,size=10240k 0 0
+tmpfs /run/lock tmpfs rw,noatime,size=10240k 0 0
+tmpfs /tmp tmpfs rw,noatime 0 0
+tmpfs /var/tmp tmpfs rw,noatime 0 0
+sysfs /sys sysfs rw,nosuid,nodev,noexec,relatime 0 0
+tmpfs /run/shm tmpfs rw,nosuid,nodev,relatime 0 0
+devpts /dev/pts devpts rw,nosuid,noexec,relatime,gid=5,mode=620 0 0
+
+=== /proc/mtd ===
+dev:    size   erasesize  name
+mtd0: 00360000 00010000 "onie"
+mtd1: 00010000 00010000 "uboot-env"
+mtd2: 00010000 00010000 "board_eeprom"
+mtd3: 00080000 00010000 "uboot"
+
+=== /proc/partitions ===
+major minor  #blocks  name
+
+  31        0       3456 mtdblock0
+  31        1         64 mtdblock1
+  31        2         64 mtdblock2
+  31        3        512 mtdblock3
+   8        0    3915776 sda
+   8        1     131041 sda1
+   8        2          1 sda2
+   8        3    3485696 sda3
+   8        5      16353 sda5
+   8        6     131041 sda6
+   8        7      16353 sda7
+   8        8     131041 sda8
+
+=== lsblk ===
+/tmp/cap.sh: line 135: lsblk: not found
+
+=== fdisk -l /dev/sda ===
+/tmp/cap.sh: line 135: fdisk: not found
+
+=== blkid ===
+/tmp/cap.sh: line 135: blkid: not found
