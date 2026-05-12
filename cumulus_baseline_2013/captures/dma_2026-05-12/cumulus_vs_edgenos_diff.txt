@@ -57,3 +57,49 @@ touches PCIE_EP_AXI_CONFIG or OARR_*.
 Cumulus license used: 642-byte PGP-signed text file at
 /home/smiley/license.txt (CGG email, expires 2013-11-27, num=3, NFR=1).
 Clock-rolled chassis to 2013-06-15 to satisfy expiration.
+
+---
+
+Post-ENDIAN-fix session continuation 2026-05-12:
+
+ENDIAN_SEL=0x05050505 fix applied + verified — TX DMA poll TIMEOUT is now 0.
+tcpdump on swp2 shows ARP requests broadcasting correctly with the right MAC:
+   80:a2:35:81:ca:b0 > ff:ff:ff:ff:ff:ff, ARP Request who-has 10.101.101.9 tell 10.101.101.10
+
+But ping still fails. New blocker found:
+
+  bmd_rx_start failed: -19 (CDK_E_IO)
+  RX DMA init failed - RX path disabled
+
+Drilling into the call chain:
+  bcm56840_a0_bmd_rx_start
+    → bmd_xgs_dma_rx_start  (returns CDK_E_NONE)
+    → rv = _cpu_port_enable_set(unit, 1)
+    → returns rv
+
+  _cpu_port_enable_set:
+    ioerr += READ_EPC_LINK_BMAPm(unit, 0, &epc_link);
+    ... set CMIC_PORT bit ...
+    ioerr += WRITE_EPC_LINK_BMAPm(unit, 0, epc_link);
+    return ioerr ? CDK_E_IO : CDK_E_NONE;
+
+So a SCHAN-mediated read or write of EPC_LINK_BMAPm is failing.  Without
+CMIC_PORT (CPU port) in EPC_LINK_BMAP, the egress pipeline doesn't
+forward received frames to the CPU, so ARP replies coming back from
+the Nexus would be silently dropped at the chip's egress stage instead
+of being DMA'd into our RX ring.
+
+This is a fifth register-level fix to discover for next session.
+Specifically: capture what EPC_LINK_BMAP looks like during working
+Cumulus operation (expected to have CMIC_PORT bit set) and figure out
+why our SCHAN read/write to EPC_LINK_BMAPm fails when other SCHAN ops
+(used by bmd_init successfully) work. Likely culprits:
+
+  - EPC_LINK_BMAPm is a *memory* (m-suffix) accessed via a different
+    SCHAN opcode than registers — chip may need TBL_R/TBL_W rather
+    than MEM_R/MEM_W on this generation.
+  - The memory write path needs a specific block/port encoding our
+    CDK macro doesn't supply.
+  - Memory write on this chip needs MMU credit / EPC unlock first
+    that bmd_init doesn't do.
+
