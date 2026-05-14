@@ -1,0 +1,63 @@
+== cumulus_everything.sh start Tue Oct  1 13:20:56 UTC 2013 NEIGHBOR=10.101.101.9 ==
+PCI=01:00.0  BDF=0000:01:00.0  switchd_pid=4795
+-rw------- 1 root root 262144 May 13  2026 /sys/bus/pci/devices/0000:01:00.0/resource0
+== 1. BAR0 idle ==
+ls: cannot access bar/bar0_idle.bin: No such file or directory
+md5sum: bar/bar0_idle.bin: No such file or directory
+== 2. start ping (20 s) + strace ==
+== 3. BAR0 under load ==
+md5sum: bar/bar0_loaded.bin: No such file or directory
+md5sum: bar/bar0_settled.bin: No such file or directory
+/usr/bin/tail.coreutils: option used in invalid context -- 3
+== 6. switchd ==
+== 7. BDE / kernel modules ==
+== 8. chip tables ==
+table dumps:
+  1 table dumps captured
+== 9. DMA regs ==
+== 10. switchd FUSE ==
+== 11. PCI ==
+== 12. cumulus config ==
+== 13. quagga ==
+== 14. thermal ==
+ [ ? ]  aclinit
+ [ ? ]  acltool
+ [ ? ]  autoprovision
+ [ ? ]  bootmisc.sh
+ [ ? ]  checkfs.sh
+ [ ? ]  checkroot-bootclean.sh
+ [ ? ]  cl-l2tune
+ [ ? ]  clcmd_server
+ [ ? ]  clinit
+ [ ? ]  hw_init
+ [ ? ]  hwclock.sh
+ [ ? ]  isc-dhcp-relay
+ [ ? ]  killprocs
+ [ ? ]  kmod
+ [ ? ]  mountall-bootclean.sh
+ [ ? ]  mountall.sh
+ [ ? ]  mountdevsubfs.sh
+ [ ? ]  mountkernfs.sh
+ [ ? ]  mountnfs-bootclean.sh
+ [ ? ]  mountnfs.sh
+ [ ? ]  mtab.sh
+ [ ? ]  networking
+ [ ? ]  phy_ucode_update
+ [ ? ]  rc.local
+ [ ? ]  sendsigs
+ [ ? ]  umountfs
+ [ ? ]  umountnfs.sh
+ [ ? ]  umountroot
+== 15. /var/log ==
+== 16. sfp eeproms ==
+== 17. misc system ==
+== 18. tarring everything_20131001_132056.tgz ==
+/usr/bin/tail.coreutils: option used in invalid context -- 3
+-rw-r--r-- 1 root root 645K Oct  1 13:21 everything_20131001_132056.tgz
+
+== STATS ==
+Total files: 571
+/usr/bin/tail.coreutils: option used in invalid context -- 2
+
+DONE: /tmp/everything_20131001_132056.tgz
+scp /tmp/everything_20131001_132056.tgz <workstation>:/tmp/ && rm -rf /root/everything_20131001_132056 /tmp/everything_20131001_132056.tgz

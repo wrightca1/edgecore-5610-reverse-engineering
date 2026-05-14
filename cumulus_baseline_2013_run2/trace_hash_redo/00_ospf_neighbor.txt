@@ -1,0 +1,5 @@
+
+Neighbor ID     Pri State           Dead Time Address         Interface            RXmtL RqstL DBsmL
+10.101.1.241      1 Full/Backup       37.886s 10.101.101.2    swp1:10.101.101.1        0     0     0
+10.101.1.241      1 Full/DR           33.076s 10.101.101.9    swp2:10.101.101.10       0     0     0
+

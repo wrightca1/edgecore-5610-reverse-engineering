@@ -1,0 +1,43 @@
+============ Tue Oct  1 12:10:30 UTC 2013 ============
+[*] OSPF neighbor state ===
+[*] route count in chip:
+Unit 0, Total Number of IPv4 routes: 41
+#     VRF     Net addr             Next Hop Mac        INTF MODID PORT PRIO CLASS HIT VLAN
+2560  0        10.1.1.0/32          00:00:00:00:00:00 100002    0     0     0    2 n
+[*] 41 routes in DEFIP
+[11] live route ADD trace ===
+switchd=22432 zebra=22885
+[*] adding static route via vtysh: 10.88.88.0/24
+1380629446.427292262
+1380629446.497385183
+[*] adding kernel route: 10.77.77.0/24 via 10.101.101.9
+1380629448.506369320
+1380629448.515425675
+[*] adding /32 host: 10.66.66.66 via 10.101.101.2
+1380629450.525695932
+1380629450.535618585
+[*] diffs:
+   0 11e_EGR_L3_NEXT_HOP_diff.txt
+   4 11e_L3_DEFIP_raw_diff.txt
+   9 11e_defip_diff.txt
+   6 11e_egress_diff.txt
+  19 total
+[12] hash function probe ===
+[*] inserting 12 ARP entries...
+[*] hash probe diff: 22 lines
+[*] new entries:
+> 1     0    10.101.101.6     00:00:00:00:00:00  100008    0    0         0 n
+> 2     0    10.101.101.14    00:00:00:00:00:00  100012    0    0         0 n
+> 3     0    10.1.1.1         00:00:00:00:00:00  100002    0    0         0 n
+> 4     0    10.101.101.2     00:00:00:00:00:00  100004    0    0         0 n
+> 5     0    10.101.101.12    00:00:00:00:00:00  100010    0    0         0 n
+> 6     0    10.101.101.4     00:00:00:00:00:00  100006    0    0         0 n
+> 7     0    10.101.101.11    00:00:00:00:00:00  100009    0    0         0 n
+> 8     0    10.101.101.3     00:00:00:00:00:00  100005    0    0         0 n
+> 9     0    10.101.101.9     00:00:00:00:00:00  100003    0    0         0 n
+> 10    0    10.101.101.5     00:00:00:00:00:00  100007    0    0         0 n
+> 11    0    10.1.1.30        00:00:00:00:00:00  100002    0    0         0 n
+> 12    0    10.101.101.13    00:00:00:00:00:00  100011    0    0         0 n
+[12 done]
+[13] wider hash probe with distinct subnets via static ARPs...
+============ DONE Tue Oct  1 12:11:23 UTC 2013 ============

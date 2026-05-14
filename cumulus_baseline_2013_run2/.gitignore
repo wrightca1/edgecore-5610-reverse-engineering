@@ -1,0 +1,27 @@
+# Skip the unpacked directories — every one of these has a corresponding .tgz
+# at the same level (e.g. streamed_*/ <-> streamed_*.tgz).  Commit the tarball,
+# skip the unpacked tree to save 800+ MB of redundant files.
+all/
+deep_mine_unpack/
+dma/
+everything_unpack/
+final_gaps_unpack/
+fixup_unpack/
+gcore_and_misc_unpack/
+routes/
+single_unpack/
+tac_unpack/
+trace_hash_redo_unpack/
+
+# Skip the unpacked dirs that have the original name (we want only the tarballs)
+all_20131001_134200/
+deep_mine_20260513_191506/
+fixup_20260513_163730/
+gcorev3_20260513_171317/
+gcore_and_misc_20260513_171139/
+finish_20260513_203818/
+final_gaps_20260513_202013/
+streamed_20260513_162341/
+
+# In-place re-extraction artefacts
+*.tmp

@@ -1,0 +1,5 @@
+Entry  Mac                 Vlan INTF PORT MOD MPLS_LABEL ToCpu Drop RefCount
+100000  00:00:00:00:00:00    0 4095    31    0        -1   no  yes    0
+100002  00:00:00:00:00:00    0 4095     0    0        -1   no   no   23
+100003  6c:b2:ae:cd:13:33 3302    2     2    0        -1   no   no    2
+100004  6c:b2:ae:cd:13:33 3301    1     1    0        -1   no   no    2

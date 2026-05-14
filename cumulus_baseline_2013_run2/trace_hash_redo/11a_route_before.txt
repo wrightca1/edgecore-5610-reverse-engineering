@@ -1,0 +1,85 @@
+default via 10.1.1.1 dev eth0 
+10.1.1.0/24 dev eth0  proto kernel  scope link  src 10.1.1.212 
+10.3.1.0/24  proto zebra  metric 20 
+	nexthop via 10.101.101.2  dev swp1 weight 1
+	nexthop via 10.101.101.9  dev swp2 weight 1
+10.4.1.0/24  proto zebra  metric 20 
+	nexthop via 10.101.101.2  dev swp1 weight 1
+	nexthop via 10.101.101.9  dev swp2 weight 1
+10.11.1.0/24  proto zebra  metric 20 
+	nexthop via 10.101.101.2  dev swp1 weight 1
+	nexthop via 10.101.101.9  dev swp2 weight 1
+10.12.1.0/24  proto zebra  metric 20 
+	nexthop via 10.101.101.2  dev swp1 weight 1
+	nexthop via 10.101.101.9  dev swp2 weight 1
+10.14.1.0/24  proto zebra  metric 20 
+	nexthop via 10.101.101.2  dev swp1 weight 1
+	nexthop via 10.101.101.9  dev swp2 weight 1
+10.20.1.0/24  proto zebra  metric 20 
+	nexthop via 10.101.101.2  dev swp1 weight 1
+	nexthop via 10.101.101.9  dev swp2 weight 1
+10.21.1.0/24  proto zebra  metric 20 
+	nexthop via 10.101.101.2  dev swp1 weight 1
+	nexthop via 10.101.101.9  dev swp2 weight 1
+10.22.1.0/24  proto zebra  metric 20 
+	nexthop via 10.101.101.2  dev swp1 weight 1
+	nexthop via 10.101.101.9  dev swp2 weight 1
+10.100.1.0/24  proto zebra  metric 20 
+	nexthop via 10.101.101.2  dev swp1 weight 1
+	nexthop via 10.101.101.9  dev swp2 weight 1
+10.101.1.0/29  proto zebra  metric 20 
+	nexthop via 10.101.101.2  dev swp1 weight 1
+	nexthop via 10.101.101.9  dev swp2 weight 1
+10.101.1.8/29  proto zebra  metric 20 
+	nexthop via 10.101.101.2  dev swp1 weight 1
+	nexthop via 10.101.101.9  dev swp2 weight 1
+10.101.1.16/29  proto zebra  metric 20 
+	nexthop via 10.101.101.2  dev swp1 weight 1
+	nexthop via 10.101.101.9  dev swp2 weight 1
+10.101.1.24/29  proto zebra  metric 20 
+	nexthop via 10.101.101.2  dev swp1 weight 1
+	nexthop via 10.101.101.9  dev swp2 weight 1
+10.101.1.32/29  proto zebra  metric 20 
+	nexthop via 10.101.101.2  dev swp1 weight 1
+	nexthop via 10.101.101.9  dev swp2 weight 1
+10.101.1.40/29  proto zebra  metric 20 
+	nexthop via 10.101.101.2  dev swp1 weight 1
+	nexthop via 10.101.101.9  dev swp2 weight 1
+10.101.1.48/29  proto zebra  metric 20 
+	nexthop via 10.101.101.2  dev swp1 weight 1
+	nexthop via 10.101.101.9  dev swp2 weight 1
+10.101.1.217  proto zebra  metric 20 
+	nexthop via 10.101.101.2  dev swp1 weight 1
+	nexthop via 10.101.101.9  dev swp2 weight 1
+10.101.1.225  proto zebra  metric 20 
+	nexthop via 10.101.101.2  dev swp1 weight 1
+	nexthop via 10.101.101.9  dev swp2 weight 1
+10.101.1.233  proto zebra  metric 20 
+	nexthop via 10.101.101.2  dev swp1 weight 1
+	nexthop via 10.101.101.9  dev swp2 weight 1
+10.101.1.241  proto zebra  metric 20 
+	nexthop via 10.101.101.2  dev swp1 weight 1
+	nexthop via 10.101.101.9  dev swp2 weight 1
+10.101.101.0/29 dev swp1  proto kernel  scope link  src 10.101.101.1 
+10.101.101.8/29 dev swp2  proto kernel  scope link  src 10.101.101.10 
+10.102.1.0/24  proto zebra  metric 20 
+	nexthop via 10.101.101.2  dev swp1 weight 1
+	nexthop via 10.101.101.9  dev swp2 weight 1
+10.104.1.0/24  proto zebra  metric 20 
+	nexthop via 10.101.101.2  dev swp1 weight 1
+	nexthop via 10.101.101.9  dev swp2 weight 1
+10.105.1.0/24  proto zebra  metric 20 
+	nexthop via 10.101.101.2  dev swp1 weight 1
+	nexthop via 10.101.101.9  dev swp2 weight 1
+10.107.1.0/24  proto zebra  metric 20 
+	nexthop via 10.101.101.2  dev swp1 weight 1
+	nexthop via 10.101.101.9  dev swp2 weight 1
+10.199.1.0/24  proto zebra  metric 20 
+	nexthop via 10.101.101.2  dev swp1 weight 1
+	nexthop via 10.101.101.9  dev swp2 weight 1
+10.200.1.0/24  proto zebra  metric 20 
+	nexthop via 10.101.101.2  dev swp1 weight 1
+	nexthop via 10.101.101.9  dev swp2 weight 1
+71.181.68.0/22  proto zebra  metric 20 
+	nexthop via 10.101.101.2  dev swp1 weight 1
+	nexthop via 10.101.101.9  dev swp2 weight 1
