@@ -33,6 +33,16 @@
   - Bit 31: **chain/descriptor valid** (1 = valid, 0 = stop).
   - SOC_DCB_KNET_DONE (0x8000): set when kernel has consumed (RX) or filled (TX) the descriptor.
 
+> **VERIFIED on EdgeNOS / bcm56840 (2026-05-30).** The chip uses **DCB type 21**.
+> The hardware **control word** (DCB word 1) is: `c_count[15:0]`, `c_chain[16]`,
+> `c_sg[17]`, **`c_reload[18]`**, `c_hg[19]`, `c_purge[20]`. The reload semantics
+> matter: `c_chain=1` advances to the next contiguous DCB; **`c_reload=1` makes the
+> chip auto-reuse the DCB** (continuous ring) instead of one-shot. Completion is the
+> **per-DCB DONE bit in descriptor memory**, NOT CMIC `STAT.CHAIN_DONE` (sticky-1 at
+> idle on this chip). See `patches/openmdk/bcm56840_a0_bmd_rx.c` (64-DCB ring,
+> RELOAD=1, `DESC_HALT_ADDR` at `0x31120+4·chan`, polls `RX_DCB_DONEf`). Maps to
+> Broadcom patent US8250251 (flexible DMA descriptor / reload field).
+
 ### 2.2 First words (buffer / next)
 
 - **Word 0**: For chained DCBs, can hold **next DCB physical address** (or first buffer address for TX).

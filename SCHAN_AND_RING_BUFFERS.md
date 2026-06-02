@@ -121,6 +121,21 @@ From `bcm-knet.c`:
 - **DMA_HALT_ADDR** – halt address for continuous DMA mode
 - Channels: TX typically 0, RX typically 1; CMICm supports multiple RX channels (e.g. 3)
 
+> **CONTINUOUS_DMA decoded + IMPLEMENTED (2026-05-30).** `DMA_CTRL.ENABLE_CONTINUOUS_DMA=1`
+> + `DROP_RX_PKT_ON_CHAIN_END=0` make the chip walk a contiguous DCB ring autonomously
+> and **wrap when its internal pointer reaches `DMA_HALT_ADDR`** (set one past the last
+> DCB). Each DCB has `RELOAD=1` so it auto-refills. **Completion is the per-DCB DONE bit
+> in descriptor memory** — `STAT.CHAIN_DONE` is sticky-1 at idle here and is NOT a
+> reliable per-packet signal. RX completion interrupt (controlled-int) lives in
+> `IRQ_PCI_MASK` bits `0x78000000` (NOT the low `0xff00`); EdgeNOS currently polls the
+> DCB DONE bit instead of using the interrupt. Impl: `patches/openmdk/bcm56840_a0_bmd_rx.c`
+> + `patches/openmdk/xgsd_dma.c`.
+
+> **Register access note:** EdgeNOS reaches these CMICm regs via the kernel BDE
+> (`linux-kernel-bde`) — two ioctls: `REG_WRITE`/`REG_READ` (direct BAR0) and
+> `IPROC_WRITE`/`IPROC_READ` (PAXB sub-window translated, IMAP0_7 remap). The CDK bulk
+> path uses the direct one; both reach the CMC0 block (verified — `0` is normal idle).
+
 ### CMIC (legacy) Registers
 For older CMIC (non-CMICm) devices:
 
