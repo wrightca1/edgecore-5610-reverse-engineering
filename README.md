@@ -29,6 +29,8 @@ Working folder for bringing up our own NOS (EdgeNOS-class) on the
 6. [`FULLY_OPENSOURCE_LINUX_PLAN.md`](FULLY_OPENSOURCE_LINUX_PLAN.md) — what it
    takes to run a vanilla-Linux + L3-routing stack (FRR) with no proprietary
    NOS, and exactly where the open-source line falls.
+7. [`LICENSING.md`](LICENSING.md) — licenses on the OpenMDK / OpenBCM switch
+   SDKs (source-available, redistributable, not OSI-libre) and the GPL boundary.
 
 ---
 
