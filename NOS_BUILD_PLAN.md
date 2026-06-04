@@ -42,9 +42,13 @@ L2 **or L3** forwarding). The BMD has no L3 API at all. Two routes:
   `CONFIG_BCM56340` field defs). The chip-generic `bcm_l3_*` API dispatches
   through `helix4.c`. Likely-easiest path to a working router.
 - **Hand-program Helix4 L3 memories via SCHAN** — the exact table technique the
-  5610 project already proved (`L3_NEXTHOP_FORMAT`, HASH_INSERT). We have the
-  method; we need Helix4 bit layouts from the CDK regsfile (`bcm56340_a0_defs.h`),
-  not 5610 Trident+ values.
+  5610 project already proved (`L3_NEXTHOP_FORMAT`, HASH_INSERT). **Now easy:**
+  OpenMDK's CDK already gives every Helix4 L3 table's exact field bit layout
+  (`bcm56340_a0_defs.h`, e.g. `EGR_L3_INTFm_MAC_ADDRESSf` = bits 34..81) **and**
+  the access engine (`cdk/PKG/arch/xgsm/xgsm_mem_write`). So this is table-fill
+  code with provided macros, **not** reverse engineering — unlike the 5610 where
+  we had to derive those layouts by hand. See `EXISTING_SOFTWARE_ASSETS.md` §
+  "Layer 1 — CDK".
 
 > Recommendation: **A → B → C.** Get ONL booting and the platform proven, stand
 > up an L2 switch on the BMD, then add L3 last (the only genuinely hard piece).

@@ -34,18 +34,70 @@ U-Boot env on `/dev/mtd2`.
 
 ## 2. OpenMDK — data-plane SDK with native BCM56340 support
 
-`OpenMDK/bmd/PKG/chip/bcm56340_a0/` — a **complete BMD (Broadcom Minimal Driver)
-chip package** for our exact ASIC. `SUPPORTED_CHIPS.md` confirms:
+> **Key insight:** OpenMDK is *layered*. The bottom layer (CDK) **is the
+> silicon, as source** — the complete register/memory/field map for the
+> BCM56340. The "minimal" in BMD refers only to the **driver API surface** (it
+> happens to expose L2 ops), **not** to chip coverage. So the so-called "L3 gap"
+> is *not* a silicon-knowledge gap: we have every L3 table's exact bit layout.
+> This is precisely the data we reverse-engineered by hand on the 5610
+> (`L2_ENTRY_FORMAT`, `L3_NEXTHOP_FORMAT`, `VLAN_TABLE_FORMAT`) — here it's
+> simply given to us.
 
-> Wolfhound/Helix — BCM56300–BCM56344 … **BMD: … BCM56340_A0**
+### Layer 1 — CDK: the chip definition (`cdk/PKG/chip/bcm56340/`)
 
-The package implements the full minimal data plane:
+**~25 MB, ~504K lines of source for this one chip:**
+
+| File | Size | Contents |
+|---|---|---|
+| `bcm56340_a0_defs.h` | 248,528 lines | **2,301 registers** + field-level GET/SET macros with **exact bit positions** |
+| `bcm56340_a0_sym.c` | 140,351 lines | **8,108 symbols** — runtime table of every reg/memory + fields |
+| `bcm56340_a0_cmic.h` | 104,773 lines | CMIC management-interface register defs |
+| `bcm56340_a0_enum.h` | 10,057 lines | **5,013 enumerated** registers/memories |
+| `bcm56340_a0_chip.c` / `_sym.c` | — | chip descriptor + symbol wiring |
+
+L3 tables are fully defined with bit encodings — e.g. straight from `defs.h`:
+
+```c
+EGR_L3_INTFm_MAC_ADDRESSf    → bits 34..81   (router source MAC)
+EGR_L3_INTFm_TTL_THRESHOLDf  → bits 26..33
+EGR_PORT_TO_NHI_MAPPINGr_NEXT_HOP_INDEXf → 14-bit, mask 0x3fff
+```
+
+Present (with layouts): `L3_DEFIP`, `L3_ENTRY*`, `EGR_L3_NEXT_HOP`,
+`ING_L3_NEXT_HOP`, `EGR_L3_INTF`, `FP_POLICY_TABLE`, VLAN/EGR_VLAN, etc.
+**Use these Helix4 values — not the 5610 Trident+ ones.**
+
+### Layer 2 — xgsm access engine (`cdk/PKG/arch/xgsm/`)
+
+The CMIC/SCHAN/DMA plumbing as source: `xgsm_mem_read/write/clear`,
+`xgsm_block_*` addressing, `xgsm_chip.c`. This is the 5610's painstakingly
+reverse-engineered "5-layer access stack" — handed to us. (Arch is **XGS-M**, the
+same CMICm/DMA family our 5610 work migrated toward, so
+`project_dcb_format_decoded` / `project_cmicm_rx_completion_decoded` partially
+transfer — verify DCB specifics for this stepping.)
+
+### Layer 3 — libbde (`libbde/`)
+
+Bus/DMA enumeration (PCI/iProc probe + mmap) — the user/kernel BDE shim.
+
+### Layer 4 — PHY + SerDes firmware (`phy/PKG/chip/`)
+
+SerDes drivers **plus microcode as C source**: `bcmi_warpcore_xgxs_ucode*.c`
+(~4,865 lines) for the 10G uplinks, internal SerDes (`combo`/`tsce`/etc.) for the
+1G ports, and external-PHY ucode (`bcm84xxx_ucode.c`). The usual "binary blob"
+problem is source-available here.
+
+### Layer 5 — BMD: the driver (`bmd/PKG/chip/bcm56340_a0/`)
+
+A **complete BMD chip package** for our exact ASIC (`SUPPORTED_CHIPS.md`: *Helix —
+BCM56300–BCM56344 … BMD: BCM56340_A0*). `bmd_init.c` is a real 2,188-line init
+sequence. The public API:
 
 | Capability | File |
 |---|---|
 | Chip attach/detach/reset | `..._bmd_attach.c`, `..._bmd_detach.c`, `..._bmd_reset.c` |
 | Init + switching init | `..._bmd_init.c`, `..._bmd_switching_init.c` |
-| Port mode get/set/update | `..._bmd_port_mode_*.c` |
+| Port mode get/set/update (incl. 10G XFI/SFI) | `..._bmd_port_mode_*.c` |
 | VLAN create/destroy/port | `..._bmd_vlan_*.c` |
 | STP state | `..._bmd_port_stp_*.c` |
 | L2 / CPU MAC add/remove | `..._bmd_*_mac_addr_*.c` |
@@ -53,14 +105,10 @@ The package implements the full minimal data plane:
 | Stats | `..._bmd_stat_*.c` |
 | PHY firmware download | `..._bmd_download.c` |
 
-Architecture: **XGS-M** (`bmdi/arch/xgsm_dma.h`, `cdk/arch/xgsm_chip.h`) — the
-same CMICm/XGS-M DMA family our 5610 work migrated toward, so the
-`project_dcb_format_decoded` / `project_cmicm_rx_completion_decoded` learnings
-partially transfer (verify DCB specifics for this stepping).
-
-CDK register/memory definitions for the chip: `cdk/chip/bcm56340_a0_defs.h` and
-the generated regsfile (this is where Helix4-specific table addresses and field
-layouts live — **use these, not the 5610 Trident+ values**).
+**L2-only API** — no `bmd_l3_route_add`. But given Layers 1+2 (full L3 defs +
+access engine) and the SCHAN table technique already proven on the 5610, adding
+L3 is **straightforward table-fill code** (`EGR_L3_INTFm_*_SET(...)` →
+`xgsm_mem_write`), *not* reverse engineering.
 
 ## 3. OpenBCM (full SDK 6.5.27) — **first-class Helix4 + full L3**
 

@@ -69,8 +69,13 @@ So the data-plane choice is:
 1. **OpenBCM for L3** (validate Helix4 path), reusing OpenMDK's firmware if
    OpenBCM's Helix4 SerDes init is incomplete; **or**
 2. **OpenMDK for ports+SerDes (proven on 56340) + hand-written L3** table
-   programming using the Helix4 register defs (`bcm56340_a0_defs.h`) and the
-   SCHAN table-insert technique already proven in the 5610 project.
+   programming. This is more tractable than it sounds: OpenMDK's **CDK is the
+   full silicon source** — every L3 table (`L3_DEFIP`, `L3_ENTRY`,
+   `EGR_L3_NEXT_HOP`, `EGR_L3_INTF`, …) defined with **exact field bit layouts**
+   (`bcm56340_a0_defs.h`, 2,301 regs / 8,108 symbols), plus the `xgsm` access
+   engine to read/write them. Combined with the SCHAN table-insert technique
+   already proven in the 5610 project, L3 here is table-fill code, **not** silicon
+   RE. See `EXISTING_SOFTWARE_ASSETS.md` § "What OpenMDK contains".
 
 ### License reality
 Both SDKs and the SerDes firmware are under the **Broadcom/Avago license**:
