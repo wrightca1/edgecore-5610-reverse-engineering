@@ -198,6 +198,65 @@ installable). Confirms when our target hardware entered Cumulus support:
 
 ---
 
+## 6. Street price / where to buy (used-market acquisition guide)
+
+For anyone wanting hardware to reproduce this RE work. Prices are **US eBay,
+used/refurb, ~June 2026** — highly volatile with condition, PSU count, airflow
+direction, and shipping (one AS5610 listing was $108 item **+ $150 shipping**).
+Search the **commercial brand name**, not the Cumulus `platform id`: Accton =
+"Edgecore", Quanta = "QuantaMesh T-series", DNI = "Delta Networks".
+
+### Commonly listed (priced)
+
+| Mfg / brand | Model | ASIC | Ports | eBay (used/refurb) |
+|---|---|---|---|---|
+| Edgecore (Accton) | **AS5610-52X** ← *our target* | Trident+ BCM56846 | 48×10G + 4×40G | **~$110–260** |
+| Edgecore (Accton) | AS5712-54X | Trident2 BCM56854 | 48×10G + 6×40G | **~$300** |
+| Edgecore (Accton) | AS6712-32X | Trident2 BCM56854 | 32×40G | **~$150–400** (retail was ~$2,150) |
+| Dell | S6000-ON | Trident2 BCM56850 | 32×40G | **~$375–430** |
+| Quanta | LB8 / QuantaMesh T3048-LB8 | Trident BCM5684x | 48×10G + 4×40G | **~$550** |
+| Quanta | LY8 / QuantaMesh T3048-LY8 | Trident2 BCM56854 | 48×10G + 6×40G | **~$700–930** |
+| Quanta | LB9 / QuantaMesh T1048-LB9 | Triumph2 BCM5663x | 48×1G + 4×10G | **~$60–150** |
+| Mellanox | SX1400 (MSX1400) | SwitchX-2 *(non-BCM)* | 48×10G + 12×40G | listed; **~$200–500 typ.** |
+| Quanta | LY2 / LY2R | Trident BCM5684x | 48×10G + 4×40G | ~$100–250 |
+
+### Rare / priced by analogue
+
+| Mfg | Model | ASIC | Ports | CPU | eBay |
+|---|---|---|---|---|---|
+| Edgecore | AS4600-54T | Apollo2 BCM56540 | 48×1G + 4×10G | P2020 | rare, ~$80–200 |
+| Edgecore | AS6700/AS6701-32X | Trident2 BCM56850 | 32×40G | P2020/P2041 | rare |
+| Accton | ES5652BT1 | Trident BCM5684x | 48×10G + 4×40G | P2020 | rare |
+| Dell | S4000 (`s4000_c2338`)¹ | Trident2 BCM56854 | 48×10G + 6×40G | Atom C2338 | ≈ S4048-ON, ~$150–400 |
+| Dell | S3000 (`s3000_c2338`) | Helix4 BCM56340 | 48×1G + 4×10G | Atom C2338 | rare |
+| Celestica | Redstone / Redstone-XP | Trident / Trident2 BCM56854 | 48×10G + 4–6×40G | PPC / Atom | rare |
+| Celestica | Smallstone / -XP | Trident2 BCM56850 | 32×40G | PPC / Atom | rare |
+| Celestica | Kennisis | Triumph2 BCM5663x | 48×1G + 4×10G | PPC | rare |
+| Delta/DNI | ET-7448BF / C7448N | Trident BCM5684x | 48×10G + 4×40G | PPC | rare |
+| Delta/DNI | ET-6448R | Triumph2 BCM5663x | 48 ports | PPC | rare |
+| Quanta | LY6 / LY9 (Rangeley) | Trident2 56850/56854 | 32×40G / 54-port | Atom | rare |
+| Quanta | Panther | (Atom board) | — | Atom | rare |
+| Cumulus | P2020 reference (LC / Trident2) | Trident / Trident2 | line-card variants | P2020 | not sold retail |
+
+¹ `dell,s4000_c2338` (Trident2, 48×10G+6×40G) most likely maps to the **Dell
+S4048-ON**, not the older Trident-based S4810; mapping not fully certain, so the
+price is an analogue.
+
+### Buying guidance for this RE project
+- **Cheapest exact match = the AS5610-52X itself (~$110–260)** — the box this
+  whole repo reverse-engineers (BCM56846 Trident+, PowerPC P2020).
+- **Cheapest Cumulus-capable box = Quanta LB9 (~$60–150)** but it's the slower
+  Triumph2 (48×1G + 4×10G), a different datapath than our work.
+- **Closest to the AS4610-54T effort = anything Helix4/BCM56340** — the Dell
+  S3000 is the only Helix4 board in Cumulus's DB, useful as a config cross-ref.
+- Watch shipping (these are heavy 1U boxes) and **airflow direction**
+  (port-to-PSU vs PSU-to-port) if rack placement matters.
+
+*eBay prices captured ~June 2026 from US listings; for current pricing search
+the commercial model name directly. Prices move; verify before buying.*
+
+---
+
 *Generated from the Cumulus Linux installer images in this tree
 (`CumulusLinux-{1.5.2…2.5.1}-{powerpc,amd64}.bin`). See `extracted/` for the
 unpacked 2.5.0/2.5.1 trees.*
