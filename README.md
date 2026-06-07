@@ -33,6 +33,7 @@ starting fresh".
 | Issue SCHAN transactions | `cumulus_baseline_2013/CMIC_SCHAN_DMA_DEEP_DIVE.md` |
 | Move packets RX/TX | `cumulus_baseline_2013/PACKET_FLOW_END_TO_END.md` |
 | Program L3 routes | `cumulus_baseline_2013/L3_L2_PROGRAMMING_FLOW.md` |
+| What hardware Cumulus supports (decoded from the install images) | [`CUMULUS_SUPPORTED_HARDWARE.md`](CUMULUS_SUPPORTED_HARDWARE.md) |
 | L2 entry bit layout (verified via bcmcmd) | [`L2_ENTRY_FORMAT.md`](L2_ENTRY_FORMAT.md) |
 | L3 entry bit layout (verified) | [`L3_NEXTHOP_FORMAT.md`](L3_NEXTHOP_FORMAT.md) |
 | VLAN entry bit layout (verified) | [`VLAN_TABLE_FORMAT.md`](VLAN_TABLE_FORMAT.md) |
