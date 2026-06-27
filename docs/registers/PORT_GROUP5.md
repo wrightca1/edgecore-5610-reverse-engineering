@@ -2,7 +2,7 @@
 
 _Port group 5 — per-port MAC/PCS block_
 
-28 registers. Source: OpenMDK CDK defs/sym + OpenBCM descriptions + live Cumulus dump.
+28 registers.
 
 ---
 
@@ -449,4 +449,3 @@ _Port group 5 — per-port MAC/PCS block_
     | `[4:0]` | PG5_ISO_ENABLE |
 
 ---
-

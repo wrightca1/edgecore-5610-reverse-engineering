@@ -2,7 +2,7 @@
 
 _Port group 4 — per-port MAC/PCS block_
 
-25 registers. Source: OpenMDK CDK defs/sym + OpenBCM descriptions + live Cumulus dump.
+25 registers.
 
 ---
 
@@ -399,4 +399,3 @@ _Port group 4 — per-port MAC/PCS block_
     | `[3:0]` | PG4_ISO_ENABLE |
 
 ---
-

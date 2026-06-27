@@ -2,7 +2,7 @@
 
 _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
-516 registers. Source: OpenMDK CDK defs/sym + OpenBCM descriptions + live Cumulus dump.
+516 registers.
 
 ---
 
@@ -1378,7 +1378,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -1395,7 +1395,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -1592,7 +1592,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -1609,7 +1609,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -2826,7 +2826,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -2862,7 +2862,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -3047,7 +3047,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -3058,7 +3058,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -3069,7 +3069,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -3080,7 +3080,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -3365,7 +3365,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -3594,7 +3594,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -3611,7 +3611,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -3628,7 +3628,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -3645,7 +3645,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -3662,7 +3662,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -3679,7 +3679,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -3696,7 +3696,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -4282,7 +4282,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -5166,7 +5166,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -5183,7 +5183,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -5200,7 +5200,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -5217,7 +5217,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -5420,7 +5420,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -5490,7 +5490,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -5708,7 +5708,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -5725,7 +5725,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -5742,7 +5742,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -5759,7 +5759,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -5776,7 +5776,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -5793,7 +5793,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -5810,7 +5810,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -5827,7 +5827,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -5844,7 +5844,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -5861,7 +5861,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -5878,7 +5878,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -5895,7 +5895,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -5912,7 +5912,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -5929,7 +5929,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -5946,7 +5946,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -5963,7 +5963,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -6177,7 +6177,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -6194,7 +6194,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -6211,7 +6211,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -6228,7 +6228,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -7710,7 +7710,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -7727,7 +7727,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -7744,7 +7744,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -7761,7 +7761,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -7778,7 +7778,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -7795,7 +7795,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -7812,7 +7812,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -7829,7 +7829,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -7846,7 +7846,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -8147,7 +8147,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -8164,7 +8164,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -8181,7 +8181,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -8198,7 +8198,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -9743,7 +9743,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -9760,7 +9760,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -9777,7 +9777,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -9794,7 +9794,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -9811,7 +9811,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -9828,7 +9828,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -9845,7 +9845,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -9862,7 +9862,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -9879,7 +9879,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -9896,7 +9896,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -9913,7 +9913,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -9930,7 +9930,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -9987,7 +9987,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -10004,7 +10004,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -10556,7 +10556,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -10573,7 +10573,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -10639,7 +10639,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -10709,7 +10709,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -10779,7 +10779,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -10946,7 +10946,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -10957,7 +10957,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -11933,7 +11933,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -11950,7 +11950,7 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -11983,4 +11983,3 @@ _Memory Management Unit — buffering, queueing, scheduling, flow control_
     | mmu0 | `0x223800b0` | `0x00000000` |
 
 ---
-

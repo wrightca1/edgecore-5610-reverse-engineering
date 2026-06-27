@@ -1,10 +1,11 @@
-# AS5610 / BCM56846 Register Index
+# AS5610 / BCM56846 — Master Index
 
-All 2301 registers implemented on the BCM56840_B0 die (the BCM56846's base chip).
-One line each. Full detail in the per-block files under this directory.
+2301 registers and 654 memories on the BCM56840_B0 die.
+
+## Registers
 
 | Address | Register | Block | Description |
-|---------|----------|-------|-------------|
+|---|---|---|---|
 | `0x00000000` | CMIC_SCHAN_MESSAGEr | CMIC | S-bus PIO Message Register Set |
 | `0x00000050` | CMIC_SCHAN_CTRLr | CMIC | Status and Control Register |
 | `0x0000005c` | CMIC_SCHAN_ERRr | CMIC | Error Status Register |
@@ -2306,3 +2307,662 @@ One line each. Full detail in the per-block files under this directory.
 | `0x22380090` | OOBFC_MSG_REG0r | MMU | Debug Register, store OOBFC message Byte0-Byte7 |
 | `0x223800a0` | OOBFC_MSG_REG1r | MMU | Debug Register, store OOBFC message Byte8-Byte14 |
 | `0x223800b0` | OOBIF_DEBUGr | MMU | Debug Register |
+
+## Memories (tables)
+
+| Base | Memory | Entries | Block | Description |
+|---|---|---|---|---|
+| `0x00162000` | ING_PHYS_TO_LOGIC_MAPm | 74 | IPIPE |  |
+| `0x00170000` | IARB_MAIN_TDMm | 65 | IPIPE | TDM TABLE configuration, Set to 0, select port_group5. Set to 1, select port_gro |
+| `0x00500000` | XLPORT_WC_UCMEM_DATAm | 4096 | XLPORT | Warpcore External Memory Interface to program micro-controller memory |
+| `0x01162000` | PORT_TABm | 67 | IPIPE | Port Table |
+| `0x01164000` | SYSTEM_CONFIG_TABLE_MODBASEm | 256 | IPIPE | Specifies the port(s) that is (are) CPU. |
+| `0x01166000` | SYSTEM_CONFIG_TABLEm | 4096 | IPIPE | System Port Table. Holds fields necessary to futher parse a higig packet, addres |
+| `0x01168000` | SOURCE_TRUNK_MAP_MODBASEm | 256 | IPIPE | Specifies the port(s) that is (are) CPU. |
+| `0x01262000` | EGR_MAC_DA_PROFILEm | 512 | EPIPE | MAC-DA values for use when doing MPLS packet mods, FeatureSpecific-Ethernet |
+| `0x01264000` | EGR_L3_INTFm | 4096 | EPIPE | L3 Interface Table |
+| `0x01268000` | EGR_MPLS_VC_AND_SWAP_LABEL_TABLEm | 8192 | EPIPE | MPLS VC and SWAP Label Table, FeatureSpecific-MPLS |
+| `0x0126c000` | EGR_IPMCm | 4096 | EPIPE | Per IPMC group attributes needed in EP, FeatureSpecific-Ethernet |
+| `0x01270000` | EGR_ING_PORTm | 67 | EPIPE | Configuration Register for Ingress Port. This is different for each GE, 10GE por |
+| `0x01272000` | EGR_QCN_CNM_CONTROL_TABLEm | 1 | EPIPE | QCN CNM Control table. |
+| `0x01274000` | EGR_TRILL_TREE_PROFILEm | 16 | EPIPE | Trill Tree profile table. |
+| `0x01278000` | EGR_MAP_MHm | 1056 | EPIPE | Used for mapping incoming PBE MH_PRIORITY into a new MH_PRIORITY/TC For Higig+/H |
+| `0x02162000` | SOURCE_TRUNK_MAP_TABLEm | 4096 | IPIPE | Source Trunk Map Table |
+| `0x02164000` | L3_TUNNELm | 512 | IPIPE | L3 Tunnel Table TCAM |
+| `0x02166000` | FP_UDF_TCAMm | 512 | IPIPE | FP UDF tcam table, FeatureSpecific-FP |
+| `0x02168000` | FP_UDF_OFFSETm | 512 | IPIPE | FP UDF offset table |
+| `0x0216a000` | ING_MOD_MAP_TABLEm | 256 | IPIPE | Ingress Module Remapping Table |
+| `0x0216c000` | SOURCE_MOD_PROXY_TABLEm | 256 | IPIPE | Source MODID table for Higig Lookup |
+| `0x02170000` | IPV4_IN_IPV6_PREFIX_MATCH_TABLEm | 4 | IPIPE | IPv6 in IPv6 Address Prefix Matching Memory |
+| `0x02172000` | LPORT_TABm | 128 | IPIPE | LPort Table |
+| `0x02174000` | ING_VLAN_RANGEm | 128 | IPIPE | vlan range match table |
+| `0x02176000` | CPU_TS_MAPm | 256 | IPIPE | vlan range match table |
+| `0x0217a000` | FC_HEADER_TYPEm | 256 | IPIPE | FCoE Header Type. |
+| `0x0217c000` | ING_TRILL_PARSE_CONTROLm | 1 | IPIPE | Trill parse control. |
+| `0x02231000` | EGR_FRAGMENT_ID_TABLE_Xm | 512 | EPIPE | IPv4 Tunnel Fragment ID Table. |
+| `0x02251000` | EGR_FRAGMENT_ID_TABLE_Ym | 512 | EPIPE | IPv4 Tunnel Fragment ID Table. |
+| `0x02261000` | EGR_VLAN_STGm | 512 | EPIPE | Egress Spanning Tree Stage Table |
+| `0x02264000` | EGR_PRI_CNG_MAPm | 4224 | EPIPE | Per port egress priority/CFI mapping table |
+| `0x02266000` | EGR_IP_TUNNELm | 512 | EPIPE | Egress IP Tunnel Table. Used to Make new Tunnel Header. |
+| `0x02267000` | EGR_IP_TUNNEL_IPV6m | 256 | EPIPE | IPV6 view of the Egress IP Tunnel Table. Used to make new IPV6 Tunnel Header. Fe |
+| `0x02268000` | EGR_IP_TUNNEL_MPLSm | 512 | EPIPE | MPLS view of the Egress IP Tunnel Table. Used to make new MPLS Tunnel Header. No |
+| `0x02269000` | EGR_MPLS_EXP_MAPPING_1m | 1024 | EPIPE | Mapping table for Internal Priority and CNG to MPLS labels EXP. Address = {VC_AN |
+| `0x0226a000` | EGR_MPLS_EXP_MAPPING_2m | 1024 | EPIPE | Mapping table for Internal Priority and CNG to MPLS labels EXP. Address = {EGR_I |
+| `0x0226b000` | EGR_MPLS_PRI_MAPPINGm | 1024 | EPIPE | Mapping table for Internal Priority and CNG to MPLS labels EXP. Address = {MPLS_ |
+| `0x0226c000` | EGR_IM_MTP_INDEXm | 32 | EPIPE | Mirror to Port Table to be used for IM tagged packets. |
+| `0x0226d000` | EGR_EM_MTP_INDEXm | 32 | EPIPE | Mirror to Port Table. |
+| `0x0226e000` | EGR_DSCP_ECN_MAPm | 64 | EPIPE | Egress DSCP Table to select the new dscp for outer tunnel header packets. |
+| `0x0226f000` | EGR_VLAN_TAG_ACTION_PROFILEm | 64 | EPIPE | Egress VLAN Tag Action Profile Table. |
+| `0x02270000` | EGR_MIRROR_ENCAP_CONTROLm | 8 | EPIPE | Contains the Mirror Encap controls for each of the 8 Mirror Encap Indices. |
+| `0x02272000` | EGR_DSCP_TABLEm | 8192 | EPIPE | Egress DSCP Table to select the new dscp for outer tunnel header packets. |
+| `0x02274000` | EGR_GPP_ATTRIBUTES_MODBASEm | 256 | EPIPE | Per-GPP attributes MODBASE table. |
+| `0x02275000` | EGR_GPP_ATTRIBUTESm | 4096 | EPIPE | Per-GPP attributes table, PORT view. |
+| `0x022d1000` | EGR_FRAGMENT_ID_TABLEm | 512 | EPIPE | IPv4 / CAPWAP Tunnel Fragment ID Table |
+| `0x03300000` | MMU_THDO_CONFIG_0m | 296 | MMU | THDO configuration for UC queues in normal (non-VOQ) ports, MMU ports 5 - 32.  A |
+| `0x03300800` | THDO_CONFIG_0Am | 296 | MMU | First physical copy of MMU_THDO_CONFIG_0 |
+| `0x03301000` | THDO_CONFIG_0Bm | 296 | MMU | Second physical copy of MMU_THDO_CONFIG_0 |
+| `0x03301800` | MMU_THDO_CONFIG_1m | 296 | MMU | THDO configuration for UC queues in normal (non-VOQ) ports, MMU ports 38 - 65.   |
+| `0x03302000` | THDO_CONFIG_1Am | 296 | MMU | First physical copy of MMU_THDO_CONFIG_1 |
+| `0x03302800` | THDO_CONFIG_1Bm | 296 | MMU | Second physical copy of MMU_THDO_CONFIG_1 |
+| `0x03303000` | MMU_THDO_OFFSET_0m | 296 | MMU | THDO configuration for UC queues in normal (non-VOQ) ports, MMU ports 5 - 32.  A |
+| `0x03303800` | THDO_OFFSET_0Am | 296 | MMU | First physical copy of MMU_THDO_OFFSET_0 |
+| `0x03304000` | THDO_OFFSET_0Bm | 296 | MMU | Second physical copy of MMU_THDO_OFFSET_0 |
+| `0x03304800` | MMU_THDO_OFFSET_1m | 296 | MMU | THDO configuration for UC queues in normal (non-VOQ) ports, MMU ports 38 - 65.   |
+| `0x03305000` | THDO_OFFSET_1Am | 296 | MMU | First physical copy of MMU_THDO_OFFSET_1 |
+| `0x03305800` | THDO_OFFSET_1Bm | 296 | MMU | Second physical copy of MMU_THDO_OFFSET_1 |
+| `0x03306000` | MMU_THDO_CONFIG_EX_0m | 296 | MMU | THDO configuration for UC extended queues in VOQ ports, MMU ports 1 - 4.  Addres |
+| `0x03306800` | THDO_CONFIG_EX_0Am | 296 | MMU | First physical copy of MMU_THDO_CONFIG_EX_0 |
+| `0x03307000` | THDO_CONFIG_EX_0Bm | 296 | MMU | Second physical copy of MMU_THDO_CONFIG_EX_0 |
+| `0x03307800` | MMU_THDO_CONFIG_EX_1m | 296 | MMU | THDO configuration for UC extended queues in VOQ ports, MMU ports 34 - 37.  Addr |
+| `0x03308000` | THDO_CONFIG_EX_1Am | 296 | MMU | First physical copy of MMU_THDO_CONFIG_EX_1 |
+| `0x03308800` | THDO_CONFIG_EX_1Bm | 296 | MMU | Second physical copy of MMU_THDO_CONFIG_EX_1 |
+| `0x03309000` | MMU_THDO_OFFSET_EX_0m | 296 | MMU | THDO configuration for UC extended queues in VOQ ports, MMU ports 1 - 4.  Addres |
+| `0x03309800` | THDO_OFFSET_EX_0Am | 296 | MMU | First physical copy of MMU_THDO_OFFSET_EX_0 |
+| `0x0330a000` | THDO_OFFSET_EX_0Bm | 296 | MMU | Second physical copy of MMU_THDO_OFFSET_EX_0 |
+| `0x0330a800` | MMU_THDO_OFFSET_EX_1m | 296 | MMU | THDO configuration for UC extended queues in VOQ ports, MMU ports 34 - 37.  Addr |
+| `0x0330b000` | THDO_OFFSET_EX_1Am | 296 | MMU | First physical copy of MMU_THDO_OFFSET_EX_1 |
+| `0x0330b800` | THDO_OFFSET_EX_1Bm | 296 | MMU | Second physical copy of MMU_THDO_OFFSET_EX_1 |
+| `0x0330c000` | MMU_THDO_CONFIG_SP_0m | 40 | MMU | THDO configuration for UC COS queues in VOQ ports, MMU ports 1 - 4.  Address ind |
+| `0x0330c800` | MMU_THDO_CONFIG_SP_1m | 40 | MMU | THDO configuration for UC COS queues in VOQ ports, MMU ports 34 - 37.  Address i |
+| `0x0330d000` | MMU_THDO_OFFSET_SP_0m | 40 | MMU | THDO offset configuration for UC COS queues in VOQ ports, MMU ports 1 - 4.  Addr |
+| `0x0330d800` | MMU_THDO_OFFSET_SP_1m | 40 | MMU | THDO offset configuration for UC COS queues in VOQ ports, MMU ports 34 - 37.  Ad |
+| `0x03319000` | MMU_THDO_QDRPRST_0m | 296 | MMU | THDO cos_queue_drop_state_cell reset value for UC queues in normal (non-VOQ) por |
+| `0x03319800` | MMU_THDO_QDRPRST_1m | 296 | MMU | THDO cos_queue_drop_state_cell reset value for UC queues in normal (non-VOQ) por |
+| `0x0331a000` | MMU_THDO_QDRPRST_EX_0m | 296 | MMU | THDO cos_queue_drop_state_cell reset value for UC extended queues in VOQ ports,  |
+| `0x0331a800` | MMU_THDO_QDRPRST_EX_1m | 296 | MMU | THDO cos_queue_drop_state_cell reset value for UC extended queues in VOQ ports,  |
+| `0x0331b000` | MMU_THDO_QDRPRST_SP_0m | 40 | MMU | THDO cos_queue_drop_state_cell reset value for UC COS queues in VOQ ports, MMU p |
+| `0x0331b800` | MMU_THDO_QDRPRST_SP_1m | 40 | MMU | THDO cos_queue_drop_state_cell reset value for UC COS queues in VOQ ports, MMU p |
+| `0x0331c000` | MMU_THDO_QYELRST_0m | 296 | MMU | THDO cos_yellow_ds_cell reset value for UC queues in normal (non-VOQ) ports, MMU |
+| `0x0331c800` | MMU_THDO_QYELRST_1m | 296 | MMU | THDO cos_yellow_ds_cell reset value for UC queues in normal (non-VOQ) ports, MMU |
+| `0x0331d000` | MMU_THDO_QYELRST_EX_0m | 296 | MMU | THDO cos_yellow_ds_cell reset value for UC extended queues in VOQ ports, MMU por |
+| `0x0331d800` | MMU_THDO_QYELRST_EX_1m | 296 | MMU | THDO cos_yellow_ds_cell reset value for UC extended queues in VOQ ports, MMU por |
+| `0x0331e000` | MMU_THDO_QYELRST_SP_0m | 40 | MMU | THDO cos_yellow_ds_cell reset value for UC COS queues in VOQ ports, MMU ports 1  |
+| `0x0331e800` | MMU_THDO_QYELRST_SP_1m | 40 | MMU | THDO cos_yellow_ds_cell reset value for UC COS queues in VOQ ports, MMU ports 34 |
+| `0x0331f000` | MMU_THDO_QREDRST_0m | 296 | MMU | THDO cos_red_ds_cell reset value for UC queues in normal (non-VOQ) ports, MMU po |
+| `0x0331f800` | MMU_THDO_QREDRST_1m | 296 | MMU | THDO cos_red_ds_cell reset value for UC queues in normal (non-VOQ) ports, MMU po |
+| `0x03320000` | MMU_THDO_QREDRST_EX_0m | 296 | MMU | THDO cos_red_ds_cell reset value for UC extended queues in VOQ ports, MMU ports  |
+| `0x03320800` | MMU_THDO_QREDRST_EX_1m | 296 | MMU | THDO cos_red_ds_cell reset value for UC extended queues in VOQ ports, MMU ports  |
+| `0x03321000` | MMU_THDO_QREDRST_SP_0m | 40 | MMU | THDO cos_red_ds_cell reset value for UC COS queues in VOQ ports, MMU ports 1 - 4 |
+| `0x03321800` | MMU_THDO_QREDRST_SP_1m | 40 | MMU | THDO cos_red_ds_cell reset value for UC COS queues in VOQ ports, MMU ports 34 -  |
+| `0x04160000` | VLAN_PROTOCOLm | 16 | IPIPE | Holds data for Protocol-based VLAN substitution.  Just the VLAN_PROTOCOL RAM. |
+| `0x04162000` | VLAN_PROTOCOL_DATAm | 2048 | IPIPE | Holds data for Protocol-based VLAN substitution |
+| `0x04164000` | VLAN_SUBNETm | 512 | IPIPE | TCAM for IP subnet based VLAN substitution |
+| `0x04166000` | VLAN_SUBNET_ONLYm | 512 | IPIPE | TCAM for IP subnet based VLAN substitution |
+| `0x04168000` | VLAN_SUBNET_DATA_ONLYm | 512 | IPIPE | Holds data for IP Subnet-based VLAN substitution |
+| `0x0416e000` | VLAN_MACm | 8192 | IPIPE | Holds key & data for MAC-based VLAN substitution |
+| `0x04170000` | VLAN_XLATEm | 8192 | IPIPE | BCAM for VLAN trans of tagged pkts. |
+| `0x04172000` | VFP_TCAMm | 1024 | IPIPE | TCAM FOR VFP |
+| `0x04176000` | ING_VLAN_TAG_ACTION_PROFILEm | 64 | IPIPE | ACTIONS for the VXLT stage |
+| `0x0417a000` | VFP_POLICY_TABLEm | 1024 | IPIPE | POLICY TABLE FOR DETERMINING ACTIONS IN THE VFP |
+| `0x0417c000` | MPLS_ENTRYm | 8192 | IPIPE | MPLS Label Lookup. Dual-Hash table with Keys and Data |
+| `0x04260000` | EGR_MPLS_EXP_PRI_MAPPINGm | 128 | EPIPE | Mapping table for EXP to .1p/cfi. Address = {MPLS_EXP_MAPPING_PTR, new_exp} Feat |
+| `0x04262000` | EGR_TRILL_RBRIDGE_NICKNAMESm | 4 | EPIPE | Table that defines the TRILL RBridge nickname to use when sending out a packet.  |
+| `0x04380000` | MMU_PKTLINKm | 49152 | MMU | PKTLINK |
+| `0x04390000` | MMU_CPQLINKm | 49152 | MMU | CPQLINK |
+| `0x043a0000` | MMU_UCQ_WPm | 1152 | MMU | UCQ_WP |
+| `0x043a0800` | MMU_UCQ_RPm | 1152 | MMU | UCQ_RP |
+| `0x05160000` | VLAN_MPLSm | 4096 | IPIPE | Contains MPLS cntrls assoc with the 4K VLANs. |
+| `0x05162000` | MY_STATION_TCAMm | 512 | IPIPE | TCAM for MPLS My Station lookups - no associated data. |
+| `0x05164000` | MY_STATION_TCAM_ENTRY_ONLYm | 512 | IPIPE | TCAM for MPLS My Station lookups - no associated data. |
+| `0x05166000` | MY_STATION_TCAM_DATA_ONLYm | 512 | IPIPE | TCAM for MPLS My Station lookups - no associated data. |
+| `0x0516e000` | VFI_1m | 1024 | IPIPE | VFI-1 Table (used for MAC-in-MAC and HG ports) - address is VFI value. |
+| `0x05170000` | ING_MPLS_EXP_MAPPINGm | 256 | IPIPE | EXP to Internal Priority and Color Maping table. Address = {EXP_MAPPING_PTR, EXP |
+| `0x05176000` | STG_TABm | 512 | IPIPE | Spanning Tree Group state table |
+| `0x05178000` | VLAN_PROFILE_TABm | 128 | IPIPE | Programmable L2_MISS_TOCPU Value. |
+| `0x0517a000` | ING_OUTER_DOT1P_MAPPING_TABLEm | 1024 | IPIPE | Outer Dot1p mapping table, used to mark traffic from non-QCN-aware sources with  |
+| `0x05260000` | EGR_MOD_MAP_TABLEm | 512 | EPIPE | Egress Module Remapping Table |
+| `0x06120000` | L2_HITDA_ONLYm | 16384 | IPIPE | HW managed L2_HITDA_ONLY table.  Just the DA hit bits. |
+| `0x06124000` | L2_HITSA_ONLYm | 16384 | IPIPE | HW managed L2_HITSA_ONLY table.  Just the SA hit bits. |
+| `0x0612e000` | L2_MOD_FIFOm | 128 | IPIPE | FIFO for operations that MODify the L2_ENTRY table. |
+| `0x06132000` | L2_BULK_MATCH_MASKm | 1 | IPIPE | L2 Bulk match enable. |
+| `0x06134000` | L2_BULK_MATCH_DATAm | 1 | IPIPE | L2 Bulk match enable. |
+| `0x06136000` | L2_BULK_REPLACE_MASKm | 1 | IPIPE | L2 Bulk match enable. |
+| `0x06138000` | L2_BULK_REPLACE_DATAm | 1 | IPIPE | L2 Bulk match enable. |
+| `0x06168000` | L2_USER_ENTRYm | 512 | IPIPE | Combined L2_ENTRY TCAM/Data RAM for guaranteed L2 entries and BPDUs. |
+| `0x0616a000` | L2_USER_ENTRY_ONLYm | 512 | IPIPE | TCAM for guaranteed L2 entries and BPDUs. |
+| `0x0616c000` | L2_USER_ENTRY_DATA_ONLYm | 512 | IPIPE | Data SRAM for L2_USER_ENTRY TCAM. |
+| `0x06260000` | EGR_MIRROR_ENCAP_DATA_1m | 8 | EPIPE | Contains the Base Header portion of Mirror Encap Data for each of the 8 Mirror E |
+| `0x06262000` | EGR_MIRROR_ENCAP_DATA_2m | 8 | EPIPE | Contains the Optional Header portion of Mirror Encap Data for each of the 8 Mirr |
+| `0x06266000` | EGR_TRILL_PARSE_CONTROL_2m | 1 | EPIPE | Trill parse control (second copy). |
+| `0x06300000` | ARB_TDM_TABLE_0m | 256 | MMU | MMU to EPIPE Arbiter TDM Table, PIPE 0 |
+| `0x06300100` | ARB_TDM_TABLE_1m | 256 | MMU | MMU to EPIPE Arbiter TDM Table, PIPE 1 |
+| `0x07120000` | L2Xm | 131072 | IPIPE | Combined HW managed L2 entry table.  Includes L2_ENTRY, L2_HITDA, and L2_HITSA |
+| `0x07300000` | MMU_CFAP_BANK0m | 1536 | MMU | CBP Free Address Pool RAM |
+| `0x07300800` | MMU_CFAP_BANK1m | 1536 | MMU | CBP Free Address Pool RAM |
+| `0x07301000` | MMU_CFAP_BANK2m | 1536 | MMU | CBP Free Address Pool RAM |
+| `0x07301800` | MMU_CFAP_BANK3m | 1536 | MMU | CBP Free Address Pool RAM |
+| `0x07302000` | MMU_CFAP_BANK4m | 1536 | MMU | CBP Free Address Pool RAM |
+| `0x07302800` | MMU_CFAP_BANK5m | 1536 | MMU | CBP Free Address Pool RAM |
+| `0x07303000` | MMU_CFAP_BANK6m | 1536 | MMU | CBP Free Address Pool RAM |
+| `0x07303800` | MMU_CFAP_BANK7m | 1536 | MMU | CBP Free Address Pool RAM |
+| `0x07304000` | MMU_CFAP_BANK8m | 1536 | MMU | CBP Free Address Pool RAM |
+| `0x07304800` | MMU_CFAP_BANK9m | 1536 | MMU | CBP Free Address Pool RAM |
+| `0x07305000` | MMU_CFAP_BANK10m | 1536 | MMU | CBP Free Address Pool RAM |
+| `0x07305800` | MMU_CFAP_BANK11m | 1536 | MMU | CBP Free Address Pool RAM |
+| `0x07306000` | MMU_CFAP_BANK12m | 1536 | MMU | CBP Free Address Pool RAM |
+| `0x07306800` | MMU_CFAP_BANK13m | 1536 | MMU | CBP Free Address Pool RAM |
+| `0x07307000` | MMU_CFAP_BANK14m | 1536 | MMU | CBP Free Address Pool RAM |
+| `0x07307800` | MMU_CFAP_BANK15m | 1536 | MMU | CBP Free Address Pool RAM |
+| `0x08120000` | L2_ENTRY_ONLYm | 131072 | IPIPE | HW managed L2_ENTRY table only.  Does not include L2_HITSA or L2_HITDA |
+| `0x08224000` | EFP_METER_TABLE_Xm | 1024 | EPIPE | METER TABLE STRUCTURES FOR THE EFP |
+| `0x08226000` | EGR_PW_INIT_COUNTERS_Xm | 8192 | EPIPE | L2 MPLS Pseudo-wire Initiation SEQNUM Table -- indexed by PW number. |
+| `0x08244000` | EFP_METER_TABLE_Ym | 1024 | EPIPE | METER TABLE STRUCTURES FOR THE EFP |
+| `0x08246000` | EGR_PW_INIT_COUNTERS_Ym | 8192 | EPIPE | L2 MPLS Pseudo-wire Initiation SEQNUM Table -- indexed by PW number. |
+| `0x08260000` | EFP_TCAMm | 1024 | EPIPE | TCAM FOR EFP |
+| `0x08262000` | EFP_POLICY_TABLEm | 1024 | EPIPE | POLICY TABLE FOR DETERMINING ACTIONS IN THE EFP |
+| `0x082c4000` | EFP_METER_TABLEm | 1024 | EPIPE | METER TABLE STRUCTURES FOR THE EFP |
+| `0x082c6000` | EGR_PW_INIT_COUNTERSm | 8192 | EPIPE | L2 MPLS Pseudo-wire Initiation Pkt/byte counters with SEQNUM overlay-- indexed b |
+| `0x08300000` | MMU_CCP_MEMm | 24576 | MMU | Copy Count Pool RAM |
+| `0x09168000` | L3_ENTRY_IPV4_MULTICASTm | 8192 | IPIPE | L3 routing table IPV4 MULTICAST view |
+| `0x09170000` | L3_ENTRY_IPV6_MULTICASTm | 4096 | IPIPE | L3 routing table IPV6 MULTICAST view |
+| `0x09174000` | L3_ENTRY_ONLYm | 16384 | IPIPE | L3 routing table with fb_regs arch view.  No hit bits |
+| `0x09178000` | L3_ENTRY_IPV4_UNICASTm | 16384 | IPIPE | L3 routing table IPV4 UNICAST view |
+| `0x0917c000` | L3_ENTRY_IPV6_UNICASTm | 8192 | IPIPE | L3 routing table IPV6 UNICAST view |
+| `0x0a162000` | L3_DEFIP_ONLYm | 8192 | IPIPE | L3 Default IP Route (LPM) TCAM only view |
+| `0x0a168000` | L3_DEFIP_128_ONLYm | 256 | IPIPE | L3 Default IP Route (LPM) TCAM only view. FeatureSpecific-Ethernet |
+| `0x0a16c000` | RTAG7_FLOW_BASED_HASHm | 256 | IPIPE | RTAG7 Flow-based Hash table. |
+| `0x0a170000` | L3_DEFIPm | 8192 | IPIPE | L3 Default IP Route (LPM) TCAM view with data and hit bits |
+| `0x0a174000` | L3_DEFIP_DATA_ONLYm | 8192 | IPIPE | L3 Default IP Route (LPM) Data SRAM for the L3_DEFIP TCAM |
+| `0x0a176000` | L3_DEFIP_128m | 256 | IPIPE | L3 Default IP Route (LPM) TCAM view with data and hit bits. FeatureSpecific-Ethe |
+| `0x0a17a000` | L3_DEFIP_128_DATA_ONLYm | 256 | IPIPE | L3 Default IP Route (LPM) Data SRAM for the L3_DEFIP_128 TCAM. FeatureSpecific-E |
+| `0x0a220000` | EFP_COUNTER_TABLE_Xm | 1024 | EPIPE | COUNTER TABLE FOR THE EFP |
+| `0x0a224000` | EGR_PERQ_XMT_COUNTERS_Xm | 784 | EPIPE | Per-port Per-queue transmit counters. |
+| `0x0a226000` | EGR_VINTF_COUNTER_TABLE_Xm | 8192 | EPIPE | Egress Virtual Port / Interface Counters. |
+| `0x0a228000` | EGR_SERVICE_COUNTER_TABLE_Xm | 8192 | EPIPE | Egress Virtual Port / Interface Counters. |
+| `0x0a22c000` | EGR_PORT_REQUESTS_Xm | 74 | EPIPE | This table contains the cell requests asserted by individual port blocks (XLPORT |
+| `0x0a22e000` | EGR_MMU_REQUESTS_Xm | 74 | EPIPE | This register contains the cell requests asserted by TP for individual ports to  |
+| `0x0a230000` | EGR_MAX_USED_ENTRIES_Xm | 74 | EPIPE | This register contains the cell requests asserted by TP for individual ports to  |
+| `0x0a240000` | EFP_COUNTER_TABLE_Ym | 1024 | EPIPE | COUNTER TABLE FOR THE EFP |
+| `0x0a244000` | EGR_PERQ_XMT_COUNTERS_Ym | 784 | EPIPE | Per-port Per-queue transmit counters. |
+| `0x0a246000` | EGR_VINTF_COUNTER_TABLE_Ym | 8192 | EPIPE | Egress Virtual Port / Interface Counters. |
+| `0x0a248000` | EGR_SERVICE_COUNTER_TABLE_Ym | 8192 | EPIPE | Egress Virtual Port / Interface Counters. |
+| `0x0a24c000` | EGR_PORT_REQUESTS_Ym | 74 | EPIPE | This table contains the cell requests asserted by individual port blocks (XLPORT |
+| `0x0a24e000` | EGR_MMU_REQUESTS_Ym | 74 | EPIPE | This register contains the cell requests asserted by TP for individual ports to  |
+| `0x0a250000` | EGR_MAX_USED_ENTRIES_Ym | 74 | EPIPE | This register contains the cell requests asserted by TP for individual ports to  |
+| `0x0a262000` | EGR_PERQ_XMT_COUNTERS_BASE_ADDRm | 264 | EPIPE | Per-port Per-queue transmit counters Base Address. |
+| `0x0a26a000` | EGR_ENABLEm | 74 | EPIPE | Enables the Egress Port for transmission. |
+| `0x0a272000` | EGR_PFC_CONTROLm | 74 | EPIPE | control the PFC (Priority Flow Control) feature of the egress. It should be only |
+| `0x0a2c0000` | EFP_COUNTER_TABLEm | 1024 | EPIPE | COUNTER TABLE FOR THE EFP |
+| `0x0a2c4000` | EGR_PERQ_XMT_COUNTERSm | 784 | EPIPE | Per-port Per-queue transmit counters |
+| `0x0a2c6000` | EGR_VINTF_COUNTER_TABLEm | 8192 | EPIPE | Egress Virtual Port / Interface Counters |
+| `0x0a2c8000` | EGR_SERVICE_COUNTER_TABLEm | 8192 | EPIPE | Egress Virtual Port / Interface Counters |
+| `0x0a2cc000` | EGR_PORT_REQUESTSm | 74 | EPIPE | This register contains the cell requests asserted by individual ports from GPORT |
+| `0x0a2ce000` | EGR_MMU_REQUESTSm | 74 | EPIPE | This register contains the cell requests asserted by TP for individual ports to  |
+| `0x0a2d0000` | EGR_MAX_USED_ENTRIESm | 74 | EPIPE | This register contains the cell requests asserted by TP for individual ports to  |
+| `0x0b168000` | INITIAL_PROT_GROUP_TABLEm | 1024 | IPIPE | Protection Switching (backup path) Next Hop Table |
+| `0x0b16e000` | TRUNK_CBL_TABLEm | 1024 | IPIPE | Trunk (LAG) Class Based Learning Attribute Table for class based station movemen |
+| `0x0b170000` | L3_IPMC_1m | 4096 | IPIPE | L3 IPMC Table (for source properties) |
+| `0x0b17a000` | PORT_CBL_TABLE_MODBASEm | 256 | IPIPE | Specifies the port(s) that is (are) CPU. |
+| `0x0b17c000` | PORT_CBL_TABLEm | 8192 | IPIPE | Port Class Based Learning Attribute Table for class based station movement. Dire |
+| `0x0b270000` | ESBS_PORT_TO_PIPE_MAPPINGm | 1 | EPIPE | ESBS Port to Pipe Mapping table. |
+| `0x0c122000` | L3_ENTRY_HIT_ONLY_Xm | 1024 | IPIPE | L3 Hit bit table, FeatureSpecific-Ethernet. |
+| `0x0c124000` | L3_DEFIP_HIT_ONLY_Xm | 8192 | IPIPE | L3_DEFIP Hit bit table, FeatureSpecific-Ethernet. |
+| `0x0c142000` | L3_ENTRY_HIT_ONLY_Ym | 1024 | IPIPE | L3 Hit bit table, FeatureSpecific-Ethernet. |
+| `0x0c144000` | L3_DEFIP_HIT_ONLY_Ym | 8192 | IPIPE | L3_DEFIP Hit bit table, FeatureSpecific-Ethernet. |
+| `0x0c160000` | FP_PORT_FIELD_SELm | 128 | IPIPE | FIELD SELECT VALUE FOR EACH SLICE IN THE FP |
+| `0x0c166000` | TCP_FNm | 64 | IPIPE | TCP function table to map TCP Flags to any value for an IFP key, FeatureSpecific |
+| `0x0c168000` | TTL_FNm | 256 | IPIPE | TTL FUNCTION TABLE FOR IFP, FeatureSpecific-Ethernet |
+| `0x0c16a000` | TOS_FNm | 256 | IPIPE | TOS FUNCTION TABLE FOR IFP, FeatureSpecific-Ethernet |
+| `0x0c16c000` | L3_DEFIP_128_HIT_ONLYm | 256 | IPIPE | L3_DEFIP Hit bit table, FeatureSpecific-Ethernet |
+| `0x0c16e000` | DSCP_TABLEm | 8192 | IPIPE | Diff Serv Code Point Table |
+| `0x0c170000` | ING_PRI_CNG_MAPm | 1024 | IPIPE | Per port ingress priority/CFI mapping table |
+| `0x0c172000` | ING_UNTAGGED_PHBm | 64 | IPIPE | Table used to derive untagged packet's PHB. |
+| `0x0c1c2000` | L3_ENTRY_HIT_ONLYm | 1024 | IPIPE | L3 Hit bit table |
+| `0x0c1c4000` | L3_DEFIP_HIT_ONLYm | 8192 | IPIPE | L3_DEFIP Hit bit table |
+| `0x0c260000` | EGR_L3_NEXT_HOPm | 16384 | EPIPE | Next Hop Table |
+| `0x0c264000` | EGR_DVP_ATTRIBUTEm | 8192 | EPIPE | Egress DVP Attribute Table, FeatureSpecific-Ethernet. |
+| `0x0c268000` | EGR_VFIm | 1024 | EPIPE | Egress WLAN Destination Virtual Port Table, FeatureSpecific-Wireless |
+| `0x0c26a000` | EGR_PORTm | 67 | EPIPE | Configuration Register for a Port. This is different for each GE, 10GE port. |
+| `0x0c26c000` | EGR_TRILL_PARSE_CONTROLm | 1 | EPIPE | Trill parse control. |
+| `0x0d128000` | FP_METER_TABLEm | 2048 | IPIPE | METER TABLE STRUCTURES FOR THE FP |
+| `0x0d12a000` | FP_COUNTER_TABLE_Xm | 2048 | IPIPE | COUNTER TABLE FOR THE FP in IPX. FeatureSpecific-FP |
+| `0x0d12e000` | FP_GLOBAL_MASK_TCAM_Xm | 2048 | IPIPE | IPB view of the IFP_TCAM. |
+| `0x0d130000` | FP_STORM_CONTROL_METERS_Xm | 264 | IPIPE | STORM CONTROL METER TABLE STRUCTURES FOR THE FP, FeatureSpecific-FP. |
+| `0x0d14a000` | FP_COUNTER_TABLE_Ym | 2048 | IPIPE | COUNTER TABLE FOR THE FP in IPY. FeatureSpecific-FP |
+| `0x0d14e000` | FP_GLOBAL_MASK_TCAM_Ym | 2048 | IPIPE | IPB view of the IFP_TCAM. |
+| `0x0d150000` | FP_STORM_CONTROL_METERS_Ym | 264 | IPIPE | STORM CONTROL METER TABLE STRUCTURES FOR THE FP, FeatureSpecific-FP. |
+| `0x0d160000` | FP_RANGE_CHECKm | 32 | IPIPE | RANGE CHECK VALUES FOR FP |
+| `0x0d162000` | FP_TCAMm | 2048 | IPIPE | TCAM FOR FP |
+| `0x0d164000` | FP_SLICE_MAPm | 1 | IPIPE | SLICE MAPPING CONTROLS FOR IFP |
+| `0x0d16e000` | FP_GLOBAL_MASK_TCAMm | 2048 | IPIPE | PORT BITMAP TCAM ENTRY FOR EACH IFP_TCAM ENTRY. |
+| `0x0d172000` | FP_SLICE_KEY_CONTROLm | 1 | IPIPE | SLICE KEY GENERATION CONTROLS FOR IFP, FeatureSpecific-FP |
+| `0x0d174000` | FP_PORT_METER_MAPm | 66 | IPIPE | FP_PORT_METER_MAP TABLE STRUCTURES FOR THE FP, FeatureSpecific-FP |
+| `0x0d176000` | FP_GM_FIELDSm | 2048 | IPIPE | Fields view of IFP_GM TCAM. |
+| `0x0d17a000` | ING_DVP_2_TABLEm | 8192 | IPIPE | Used to generate an ECMP_Group/NHI from the DVP value and other DVP properties. |
+| `0x0d17c000` | FP_POLICY_TABLEm | 2048 | IPIPE | POLICY TABLE FOR DETERMINING ACTIONS IN THE FP |
+| `0x0d1ca000` | FP_COUNTER_TABLEm | 2048 | IPIPE | COUNTER TABLE FOR THE FP |
+| `0x0d1d0000` | FP_STORM_CONTROL_METERSm | 264 | IPIPE | STORM CONTROL METER TABLE STRUCTURES FOR THE FP, FeatureSpecific-FP |
+| `0x0d220000` | EGR_VLAN_Xm | 4096 | EPIPE | Vlan Membership Table for Egress. |
+| `0x0d240000` | EGR_VLAN_Ym | 4096 | EPIPE | Vlan Membership Table for Egress. |
+| `0x0d260000` | EGR_VLANm | 4096 | EPIPE | Vlan Membership Table for Egress |
+| `0x0d262000` | EGR_VLAN_XLATEm | 8192 | EPIPE | Egress Vlan Translate CAM-RAM Combined View. |
+| `0x0d300000` | MMU_AGING_CTRm | 8192 | MMU | Aging Counter RAM |
+| `0x0d308000` | MMU_AGING_EXPm | 8192 | MMU | Aging Expiration Status RAM |
+| `0x0e128000` | L2MCm | 8192 | IPIPE | L2 Multicast table |
+| `0x0e12c000` | L3_IPMCm | 4096 | IPIPE | L3 IPMC Table |
+| `0x0e166000` | IFP_REDIRECTION_PROFILEm | 1024 | IPIPE | Contains the number of members in each ECMP group.  Used with ECMP_POINTER to ca |
+| `0x0e16a000` | L3_IPMC_REMAPm | 4096 | IPIPE | L3 IPMC Remap Table |
+| `0x0e16e000` | ICONTROL_OPCODE_BITMAPm | 66 | IPIPE | Higig control packet's switching bitmap register |
+| `0x0e170000` | CPU_PBMm | 1 | IPIPE | Specifies the port(s) that is (are) CPU. |
+| `0x0e172000` | EGR_MASK_MODBASEm | 256 | IPIPE | Specifies the port(s) that is (are) CPU. |
+| `0x0e174000` | L3_ECMP_COUNTm | 1024 | IPIPE | Contains the number of members in each ECMP group.  Used with ECMP_POINTER to ca |
+| `0x0e176000` | L3_ECMPm | 4096 | IPIPE | L3 Equal Cost Multipath table |
+| `0x0e17a000` | TRUNK_GROUPm | 1024 | IPIPE | Egress Mask Table |
+| `0x0e17c000` | ING_L3_NEXT_HOPm | 16384 | IPIPE | Reduced version of L3_NEXT_HOP table.  Used to provide just mod and port/TGID |
+| `0x0e300000` | MMU_CELLCHK0m | 12288 | MMU | Cell CRC Check |
+| `0x0e304000` | MMU_CELLCHK1m | 12288 | MMU | Cell CRC Check |
+| `0x0e308000` | MMU_CELLCHK2m | 12288 | MMU | Cell CRC Check |
+| `0x0e30c000` | MMU_CELLCHK3m | 12288 | MMU | Cell CRC Check |
+| `0x0e310000` | MMU_CELLLINKm | 49152 | MMU | CELLLINK |
+| `0x0e330000` | MMU_PKTHDRm | 49152 | MMU | CBP Packet Header RAM |
+| `0x0f12b000` | EGR_MASKm | 4096 | IPIPE | Egress Mask Table |
+| `0x0f131400` | E2E_HOL_STATUSm | 256 | IPIPE | Remote Module End-to-End HOL Status Table |
+| `0x0f131800` | E2E_HOL_STATUS_1m | 256 | IPIPE | Remote Module End-to-End HOL Status Table |
+| `0x0f13c000` | TRILL_DROP_STATS_Xm | 1 | IPIPE | TRILL_DROP_STATS table. |
+| `0x0f15c000` | TRILL_DROP_STATS_Ym | 1 | IPIPE | TRILL_DROP_STATS table. |
+| `0x0f160000` | L3_MTU_VALUESm | 12288 | IPIPE | index by ING_L3_NEXT_HOP.L3_OIF or ipmc_index or VID |
+| `0x0f164000` | MODPORT_MAP_M2m | 2048 | IPIPE | First physical copy of Module Port Mapping Table - used for mapping the M2 copy  |
+| `0x0f165000` | MODPORT_MAP_M3m | 2048 | IPIPE | First physical copy of Module Port Mapping Table - used for mapping the M3 copy  |
+| `0x0f167000` | VLAN_COS_MAPm | 4096 | IPIPE | index by vid |
+| `0x0f16a000` | SRC_MODID_EGRESSm | 2048 | IPIPE | Source Modid based blocking mask table |
+| `0x0f16a800` | TRUNK_MEMBERm | 2048 | IPIPE | Contains the members in each LAG group. |
+| `0x0f16c000` | MODPORT_MAP_SWm | 2048 | IPIPE | First physical copy of Module Port Mapping Table - used for mapping the switched |
+| `0x0f16d000` | MODPORT_MAP_MIRRORm | 2048 | IPIPE | Second physical copy of Module Port Mapping Table - used for mapping the ingress |
+| `0x0f16e000` | MODPORT_MAP_M0m | 2048 | IPIPE | First physical copy of Module Port Mapping Table - used for mapping the M0 copy  |
+| `0x0f16f000` | MODPORT_MAP_M1m | 2048 | IPIPE | First physical copy of Module Port Mapping Table - used for mapping the M1 copy  |
+| `0x0f170000` | HG_TRUNK_GROUPm | 32 | IPIPE | HiGig Trunk [0-7] membership by port number and RTAG |
+| `0x0f170400` | HG_TRUNK_MEMBERm | 256 | IPIPE | Contains the list of all HG Trunk members. |
+| `0x0f170800` | TRUNK_BITMAPm | 1024 | IPIPE | Source Trunk Bitmap Table |
+| `0x0f170c00` | MAC_BLOCKm | 32 | IPIPE | Source Trunk Bitmap Table |
+| `0x0f171000` | NONUCAST_TRUNK_BLOCK_MASKm | 1024 | IPIPE | Multicast and Broadcast Trunk Block Mask Table |
+| `0x0f171c00` | IM_MTP_INDEXm | 4 | IPIPE | Ingress Mirror to Port Table |
+| `0x0f172000` | EM_MTP_INDEXm | 4 | IPIPE | Egress Mirror to Port Table |
+| `0x0f172400` | SRC_MODID_INGRESS_BLOCKm | 256 | IPIPE | Source Modid based blocking mask table |
+| `0x0f172800` | ALTERNATE_EMIRROR_BITMAPm | 256 | IPIPE | Source Modid based blocking mask table |
+| `0x0f172c00` | PORT_LAG_FAILOVER_SETm | 66 | IPIPE | Port LAG Failover Set Table |
+| `0x0f173000` | HG_TRUNK_FAILOVER_SETm | 66 | IPIPE | Higig Trunk Failover Set Table |
+| `0x0f173400` | VLAN_PROFILE_2m | 128 | IPIPE | Vlan Profile Table 2 |
+| `0x0f173800` | PORT_COS_MAPm | 64 | IPIPE | index by COS_MAP_SEL.SELECT(2-bit), ingress port internal priority(4-bit) |
+| `0x0f174000` | CPU_COS_MAPm | 128 | IPIPE | index by COPYTO_CPU reasons code and internal priorities |
+| `0x0f174400` | CPU_COS_MAP_ONLYm | 128 | IPIPE | CPU_COS_MAP TCAM only view |
+| `0x0f174800` | CPU_COS_MAP_DATA_ONLYm | 128 | IPIPE | CPU_COS_MAP Data SRAM for CPU_COS_MAP TCAM |
+| `0x0f174c00` | UNKNOWN_UCAST_BLOCK_MASKm | 67 | IPIPE | Unknown Unicast Block Mask |
+| `0x0f175000` | UNKNOWN_MCAST_BLOCK_MASKm | 67 | IPIPE | Unknown Multicast Block Mask |
+| `0x0f175400` | BCAST_BLOCK_MASKm | 67 | IPIPE | Broadcast Block Mask |
+| `0x0f175800` | EMIRROR_CONTROLm | 67 | IPIPE | Egress mirror bitmap register |
+| `0x0f175c00` | ING_EGRMSKBMAPm | 67 | IPIPE | Ingress Block Mask, FeatureSpecific-Ethernet |
+| `0x0f176000` | LOCAL_SW_DISABLE_DEFAULT_PBMm | 67 | IPIPE | Local switching disable default port bitmap, FeatureSpecific-Ethernet |
+| `0x0f176400` | KNOWN_MCAST_BLOCK_MASKm | 67 | IPIPE | Known Multicast Block Mask, FeatureSpecific-Ethernet |
+| `0x0f176800` | EMIRROR_CONTROL1m | 67 | IPIPE | Egress mirror 1bitmap register, FeatureSpecific-Ethernet |
+| `0x0f176c00` | EMIRROR_CONTROL2m | 67 | IPIPE | Egress mirror bitmap register, FeatureSpecific-Ethernet. |
+| `0x0f177000` | EMIRROR_CONTROL3m | 67 | IPIPE | Egress mirror bitmap register, FeatureSpecific-Ethernet. |
+| `0x0f177400` | LOCAL_SW_DISABLE_DEFAULT_PBM_MIRRm | 67 | IPIPE | Local switching disable default port bitmap for ingress mirror or egress mirror  |
+| `0x0f177800` | IMIRROR_BITMAPm | 66 | IPIPE | Alternate Bitmap/path to MTP for Mirroring |
+| `0x0f177c00` | UNKNOWN_HGI_BITMAPm | 66 | IPIPE | Forwarding bitmap for unknown HGI |
+| `0x0f178000` | ING_EN_EFILTER_BITMAPm | 1 | IPIPE | Ingress Enable EFilter Bitmap Register |
+| `0x0f178400` | HIGIG_TRUNK_CONTROLm | 1 | IPIPE | HiGig Trunk Control Register |
+| `0x0f178800` | EPC_LINK_BMAPm | 1 | IPIPE | Link status register |
+| `0x0f179000` | HG_TRUNK_BITMAPm | 32 | IPIPE | HiGig Trunk [0-7] Membership Bitmap |
+| `0x0f179400` | HG_TRUNK_FAILOVER_ENABLEm | 1 | IPIPE | HiGig Trunk Failover Enable Register |
+| `0x0f179800` | LINK_STATUSm | 1 | IPIPE | Link Status Indication Register |
+| `0x0f179c00` | PORT_BRIDGE_BMAPm | 1 | IPIPE | Bitmap of ports with port_bridge enabled |
+| `0x0f17a000` | PORT_BRIDGE_MIRROR_BMAPm | 1 | IPIPE | Bitmap of ports with port bridge enables for mirror packets. |
+| `0x0f17a800` | MULTIPASS_LOOPBACK_BITMAPm | 1 | IPIPE | Multipass Loopback Bitmap Register. |
+| `0x0f17ac00` | MIRROR_CONTROLm | 67 | IPIPE | Mirror control register |
+| `0x0f17b000` | COS_MAP_SELm | 67 | IPIPE | Select one of four sections of COS_MAP table |
+| `0x0f17b400` | ING_ROUTED_INT_PRI_MAPPINGm | 16 | IPIPE | Internal priority mapping table, used to steer traffic from non-QCN-aware source |
+| `0x0f17b800` | ING_HIGIG_TRUNK_OVERRIDE_PROFILEm | 256 | IPIPE | Higig Trunk Override Profile Pointer. |
+| `0x0f17bc00` | VOQ_COS_MAPm | 256 | IPIPE | VOQ Mapping table. |
+| `0x0f17c400` | HGT_DLB_CONTROLm | 32 | IPIPE | HG-Trunk DLB Control. |
+| `0x0f17c800` | PHB2_COS_MAPm | 272 | IPIPE | index by PHB2_DOT1P_MAPPING_PTR(4-bit), 802.1 priority(3-bit), CFI/DE |
+| `0x0f17cc00` | CPU_PBM_2m | 1 | IPIPE | Specifies the port(s) that is (are) CPU. |
+| `0x0f1dc000` | TRILL_DROP_STATSm | 1 | IPIPE | TRILL_DROP_STATS table. |
+| `0x10170000` | ISBS_PORT_TO_PIPE_MAPPINGm | 1 | IPIPE | SBS Port to Pipe Mapping table. |
+| `0x10300000` | MMU_CBPDATA0m | 12288 | MMU | CBP Data RAM 0 |
+| `0x10304000` | MMU_CBPDATA1m | 12288 | MMU | CBP Data RAM 1 |
+| `0x10308000` | MMU_CBPDATA2m | 12288 | MMU | CBP Data RAM 2 |
+| `0x1030c000` | MMU_CBPDATA3m | 12288 | MMU | CBP Data RAM 3 |
+| `0x10310000` | MMU_CBPDATA4m | 12288 | MMU | CBP Data RAM 4 |
+| `0x10314000` | MMU_CBPDATA5m | 12288 | MMU | CBP Data RAM 5 |
+| `0x10318000` | MMU_CBPDATA6m | 12288 | MMU | CBP Data RAM 6 |
+| `0x1031c000` | MMU_CBPDATA7m | 12288 | MMU | CBP Data RAM 7 |
+| `0x10320000` | MMU_CBPDATA8m | 12288 | MMU | CBP Data RAM 8 |
+| `0x10324000` | MMU_CBPDATA9m | 12288 | MMU | CBP Data RAM 9 |
+| `0x10328000` | MMU_CBPDATA10m | 12288 | MMU | CBP Data RAM 10 |
+| `0x1032c000` | MMU_CBPDATA11m | 12288 | MMU | CBP Data RAM 11 |
+| `0x10330000` | MMU_CBPDATA12m | 12288 | MMU | CBP Data RAM 12 |
+| `0x10334000` | MMU_CBPDATA13m | 12288 | MMU | CBP Data RAM 13 |
+| `0x10338000` | MMU_CBPDATA14m | 12288 | MMU | CBP Data RAM 14 |
+| `0x1033c000` | MMU_CBPDATA15m | 12288 | MMU | CBP Data RAM 15 |
+| `0x10340000` | MMU_CBPDATA16m | 12288 | MMU | CBP Data RAM 16 |
+| `0x10344000` | MMU_CBPDATA17m | 12288 | MMU | CBP Data RAM 17 |
+| `0x10348000` | MMU_CBPDATA18m | 12288 | MMU | CBP Data RAM 18 |
+| `0x1034c000` | MMU_CBPDATA19m | 12288 | MMU | CBP Data RAM 19 |
+| `0x10350000` | MMU_CBPDATA20m | 12288 | MMU | CBP Data RAM 20 |
+| `0x10354000` | MMU_CBPDATA21m | 12288 | MMU | CBP Data RAM 21 |
+| `0x10358000` | MMU_CBPDATA22m | 12288 | MMU | CBP Data RAM 22 |
+| `0x1035c000` | MMU_CBPDATA23m | 12288 | MMU | CBP Data RAM 23 |
+| `0x10360000` | MMU_CBPDATA24m | 12288 | MMU | CBP Data RAM 24 |
+| `0x10364000` | MMU_CBPDATA25m | 12288 | MMU | CBP Data RAM 25 |
+| `0x10368000` | MMU_CBPDATA26m | 12288 | MMU | CBP Data RAM 26 |
+| `0x1036c000` | MMU_CBPDATA27m | 12288 | MMU | CBP Data RAM 27 |
+| `0x10370000` | MMU_CBPDATA28m | 12288 | MMU | CBP Data RAM 28 |
+| `0x10374000` | MMU_CBPDATA29m | 12288 | MMU | CBP Data RAM 29 |
+| `0x10378000` | MMU_CBPDATA30m | 12288 | MMU | CBP Data RAM 30 |
+| `0x1037c000` | MMU_CBPDATA31m | 12288 | MMU | CBP Data RAM 31 |
+| `0x10380000` | MMU_CBPDATA32m | 12288 | MMU | CBP Data RAM 32 |
+| `0x10384000` | MMU_CBPDATA33m | 12288 | MMU | CBP Data RAM 33 |
+| `0x10388000` | MMU_CBPDATA34m | 12288 | MMU | CBP Data RAM 34 |
+| `0x1038c000` | MMU_CBPDATA35m | 12288 | MMU | CBP Data RAM 35 |
+| `0x10390000` | MMU_CBPDATA36m | 12288 | MMU | CBP Data RAM 36 |
+| `0x10394000` | MMU_CBPDATA37m | 12288 | MMU | CBP Data RAM 37 |
+| `0x10398000` | MMU_CBPDATA38m | 12288 | MMU | CBP Data RAM 38 |
+| `0x1039c000` | MMU_CBPDATA39m | 12288 | MMU | CBP Data RAM 39 |
+| `0x103a0000` | MMU_CBPDATA40m | 12288 | MMU | CBP Data RAM 40 |
+| `0x103a4000` | MMU_CBPDATA41m | 12288 | MMU | CBP Data RAM 41 |
+| `0x103a8000` | MMU_CBPDATA42m | 12288 | MMU | CBP Data RAM 42 |
+| `0x103ac000` | MMU_CBPDATA43m | 12288 | MMU | CBP Data RAM 43 |
+| `0x103b0000` | MMU_CBPDATA44m | 12288 | MMU | CBP Data RAM 44 |
+| `0x103b4000` | MMU_CBPDATA45m | 12288 | MMU | CBP Data RAM 45 |
+| `0x103b8000` | MMU_CBPDATA46m | 12288 | MMU | CBP Data RAM 46 |
+| `0x103bc000` | MMU_CBPDATA47m | 12288 | MMU | CBP Data RAM 47 |
+| `0x103c0000` | MMU_CBPDATA48m | 12288 | MMU | CBP Data RAM 48 |
+| `0x103c4000` | MMU_CBPDATA49m | 12288 | MMU | CBP Data RAM 49 |
+| `0x103c8000` | MMU_CBPDATA50m | 12288 | MMU | CBP Data RAM 50 |
+| `0x103cc000` | MMU_CBPDATA51m | 12288 | MMU | CBP Data RAM 51 |
+| `0x11120000` | DLB_HGT_GROUP_CONTROL_Xm | 8 | IPIPE | DLB_HGT Group Parameters. |
+| `0x11121000` | DLB_HGT_PORT_QUALITY_MAPPINGm | 512 | IPIPE | DLB_HGT Quality Mapping. |
+| `0x11125000` | DLB_HGT_GROUP_STATS_Xm | 8 | IPIPE | DLB_HGT Group Member Bitmap. |
+| `0x11126000` | DLB_HGT_FLOWSET_TIMESTAMP_PAGE_Xm | 1024 | IPIPE | DLB_HGT Flow Set Page-Number table. |
+| `0x11127000` | DLB_HGT_GLB_QUANTIZE_THRESHOLDSm | 1 | IPIPE | DLB_HGT Quantization Thresholds table. |
+| `0x11128000` | DLB_HGT_OPTIMAL_CANDIDATE_Xm | 8 | IPIPE | DLB_HGT Optimal Candidate table. |
+| `0x11130000` | DLB_HGT_FLOWSET_PORT_Xm | 32768 | IPIPE | DLB_HGT Flow Set Assigned Member. |
+| `0x11138000` | DLB_HGT_FLOWSET_TIMESTAMP_Xm | 32768 | IPIPE | DLB_HGT Flow Set Observation Timestamp. |
+| `0x11140000` | DLB_HGT_GROUP_CONTROL_Ym | 8 | IPIPE | DLB_HGT Group Parameters. |
+| `0x11145000` | DLB_HGT_GROUP_STATS_Ym | 8 | IPIPE | DLB_HGT Group Member Bitmap. |
+| `0x11146000` | DLB_HGT_FLOWSET_TIMESTAMP_PAGE_Ym | 1024 | IPIPE | DLB_HGT Flow Set Page-Number table. |
+| `0x11148000` | DLB_HGT_OPTIMAL_CANDIDATE_Ym | 8 | IPIPE | DLB_HGT Optimal Candidate table. |
+| `0x11150000` | DLB_HGT_FLOWSET_PORT_Ym | 32768 | IPIPE | DLB_HGT Flow Set Assigned Member. |
+| `0x11158000` | DLB_HGT_FLOWSET_TIMESTAMP_Ym | 32768 | IPIPE | DLB_HGT Flow Set Observation Timestamp. |
+| `0x11162000` | DLB_HGT_GROUP_MEMBERSHIPm | 8 | IPIPE | DLB_HGT Group Member Bitmap. |
+| `0x11163000` | DLB_HGT_PORT_STATEm | 1 | IPIPE | DLB_HGT Hardware Link State. |
+| `0x11164000` | DLB_HGT_LINK_CONTROLm | 1 | IPIPE | DLB_HGT Software Link Status Control. |
+| `0x111c0000` | DLB_HGT_GROUP_CONTROLm | 8 | IPIPE | DLB_HGT Group Parameters. |
+| `0x111c5000` | DLB_HGT_GROUP_STATSm | 8 | IPIPE | DLB_HGT Group Member Bitmap. |
+| `0x111c6000` | DLB_HGT_FLOWSET_TIMESTAMP_PAGEm | 1024 | IPIPE | DLB_HGT Flow Set Page-Number table. |
+| `0x111c8000` | DLB_HGT_OPTIMAL_CANDIDATEm | 8 | IPIPE | DLB_HGT Optimal Candidate table. |
+| `0x111d0000` | DLB_HGT_FLOWSET_PORTm | 32768 | IPIPE | DLB_HGT Flow Set Assigned Member. |
+| `0x111d8000` | DLB_HGT_FLOWSET_TIMESTAMPm | 32768 | IPIPE | DLB_HGT Flow Set Observation Timestamp. |
+| `0x11300000` | MMU_CBPDATA52m | 12288 | MMU | CBP Data RAM 52 |
+| `0x11304000` | MMU_CBPDATA53m | 12288 | MMU | CBP Data RAM 53 |
+| `0x11308000` | MMU_CBPDATA54m | 12288 | MMU | CBP Data RAM 54 |
+| `0x1130c000` | MMU_CBPDATA55m | 12288 | MMU | CBP Data RAM 55 |
+| `0x11310000` | MMU_CBPDATA56m | 12288 | MMU | CBP Data RAM 56 |
+| `0x11314000` | MMU_CBPDATA57m | 12288 | MMU | CBP Data RAM 57 |
+| `0x11318000` | MMU_CBPDATA58m | 12288 | MMU | CBP Data RAM 58 |
+| `0x1131c000` | MMU_CBPDATA59m | 12288 | MMU | CBP Data RAM 59 |
+| `0x11320000` | MMU_CBPDATA60m | 12288 | MMU | CBP Data RAM 60 |
+| `0x11324000` | MMU_CBPDATA61m | 12288 | MMU | CBP Data RAM 61 |
+| `0x11328000` | MMU_CBPDATA62m | 12288 | MMU | CBP Data RAM 62 |
+| `0x1132c000` | MMU_CBPDATA63m | 12288 | MMU | CBP Data RAM 63 |
+| `0x11330000` | MMU_CBPDATA64m | 12288 | MMU | CBP Data RAM 64 |
+| `0x11334000` | MMU_CBPDATA65m | 12288 | MMU | CBP Data RAM 65 |
+| `0x11338000` | MMU_CBPDATA66m | 12288 | MMU | CBP Data RAM 66 |
+| `0x1133c000` | MMU_CBPDATA67m | 12288 | MMU | CBP Data RAM 67 |
+| `0x11340000` | MMU_CBPDATA68m | 12288 | MMU | CBP Data RAM 68 |
+| `0x11344000` | MMU_CBPDATA69m | 12288 | MMU | CBP Data RAM 69 |
+| `0x11348000` | MMU_CBPDATA70m | 12288 | MMU | CBP Data RAM 70 |
+| `0x1134c000` | MMU_CBPDATA71m | 12288 | MMU | CBP Data RAM 71 |
+| `0x11350000` | MMU_CBPDATA72m | 12288 | MMU | CBP Data RAM 72 |
+| `0x11354000` | MMU_CBPDATA73m | 12288 | MMU | CBP Data RAM 73 |
+| `0x11358000` | MMU_CBPDATA74m | 12288 | MMU | CBP Data RAM 74 |
+| `0x1135c000` | MMU_CBPDATA75m | 12288 | MMU | CBP Data RAM 75 |
+| `0x11360000` | MMU_CBPDATA76m | 12288 | MMU | CBP Data RAM 76 |
+| `0x11364000` | MMU_CBPDATA77m | 12288 | MMU | CBP Data RAM 77 |
+| `0x11368000` | MMU_CBPDATA78m | 12288 | MMU | CBP Data RAM 78 |
+| `0x1136c000` | MMU_CBPDATA79m | 12288 | MMU | CBP Data RAM 79 |
+| `0x11370000` | MMU_CBPDATA80m | 12288 | MMU | CBP Data RAM 80 |
+| `0x11374000` | MMU_CBPDATA81m | 12288 | MMU | CBP Data RAM 81 |
+| `0x11378000` | MMU_CBPDATA82m | 12288 | MMU | CBP Data RAM 82 |
+| `0x1137c000` | MMU_CBPDATA83m | 12288 | MMU | CBP Data RAM 83 |
+| `0x11380000` | MMU_CBPDATA84m | 12288 | MMU | CBP Data RAM 84 |
+| `0x11384000` | MMU_CBPDATA85m | 12288 | MMU | CBP Data RAM 85 |
+| `0x11388000` | MMU_CBPDATA86m | 12288 | MMU | CBP Data RAM 86 |
+| `0x1138c000` | MMU_CBPDATA87m | 12288 | MMU | CBP Data RAM 87 |
+| `0x11390000` | MMU_CBPDATA88m | 12288 | MMU | CBP Data RAM 88 |
+| `0x11394000` | MMU_CBPDATA89m | 12288 | MMU | CBP Data RAM 89 |
+| `0x11398000` | MMU_CBPDATA90m | 12288 | MMU | CBP Data RAM 90 |
+| `0x1139c000` | MMU_CBPDATA91m | 12288 | MMU | CBP Data RAM 91 |
+| `0x113a0000` | MMU_CBPDATA92m | 12288 | MMU | CBP Data RAM 92 |
+| `0x113a4000` | MMU_CBPDATA93m | 12288 | MMU | CBP Data RAM 93 |
+| `0x113a8000` | MMU_CBPDATA94m | 12288 | MMU | CBP Data RAM 94 |
+| `0x113ac000` | MMU_CBPDATA95m | 12288 | MMU | CBP Data RAM 95 |
+| `0x113b0000` | MMU_CBPDATA96m | 12288 | MMU | CBP Data RAM 96 |
+| `0x113b4000` | MMU_CBPDATA97m | 12288 | MMU | CBP Data RAM 97 |
+| `0x113b8000` | MMU_CBPDATA98m | 12288 | MMU | CBP Data RAM 98 |
+| `0x113bc000` | MMU_CBPDATA99m | 12288 | MMU | CBP Data RAM 99 |
+| `0x113c0000` | MMU_CBPDATA100m | 12288 | MMU | CBP Data RAM 100 |
+| `0x113c4000` | MMU_CBPDATA101m | 12288 | MMU | CBP Data RAM 101 |
+| `0x113c8000` | MMU_CBPDATA102m | 12288 | MMU | CBP Data RAM 102 |
+| `0x113cc000` | MMU_CBPDATA103m | 12288 | MMU | CBP Data RAM 103 |
+| `0x12160000` | SOURCE_VPm | 8192 | IPIPE | Source Virtual Port Properties |
+| `0x12162000` | L3_IIFm | 8192 | IPIPE | Layer 3 Input Interface Properties |
+| `0x12164000` | VFIm | 1024 | IPIPE | VFI Properties - address is VFI value. |
+| `0x12166000` | VRFm | 1024 | IPIPE | VRF Properties - address is VRF value. |
+| `0x12168000` | VLAN_TABm | 4096 | IPIPE | Contains cntrls assoc with the 4K VLANs. |
+| `0x1216a000` | ING_TRILL_PAYLOAD_PARSE_CONTROLm | 1 | IPIPE | Trill parse control. |
+| `0x13122000` | INITIAL_L3_ECMP_Xm | 4096 | IPIPE | Initial L3 Equal Cost Multipath table. |
+| `0x13142000` | INITIAL_L3_ECMP_Ym | 4096 | IPIPE | Initial L3 Equal Cost Multipath table. |
+| `0x13160000` | INITIAL_L3_ECMP_GROUPm | 1024 | IPIPE | Contains the number of members in each ECMP group and the ECMP base pointer.  It |
+| `0x13162000` | INITIAL_L3_ECMPm | 4096 | IPIPE | Initial L3 Equal Cost Multipath table |
+| `0x13164000` | ING_DVP_TABLEm | 8192 | IPIPE | Used to generte a NHI from the DVP value and other DVP properties. |
+| `0x13168000` | INITIAL_PROT_NHI_TABLEm | 16384 | IPIPE | Protection Switching (backup path) Next Hop Table |
+| `0x1316c000` | INITIAL_ING_L3_NEXT_HOPm | 16384 | IPIPE | Reduced version of L3_NEXT_HOP table.  Used to provide just mod and port/TGID |
+| `0x14126000` | ING_PW_TERM_SEQ_NUM_Xm | 8192 | IPIPE | Pseudo-wire Termination Sequence Number - index by PW number. |
+| `0x14128000` | ING_VINTF_COUNTER_TABLE_Xm | 8192 | IPIPE | Ingress Virtual Port / Interface Counters. |
+| `0x1412a000` | ING_SERVICE_COUNTER_TABLE_Xm | 8192 | IPIPE | Ingress Service Interface Counters. |
+| `0x14146000` | ING_PW_TERM_SEQ_NUM_Ym | 8192 | IPIPE | Pseudo-wire Termination Sequence Number - index by PW number. |
+| `0x14148000` | ING_VINTF_COUNTER_TABLE_Ym | 8192 | IPIPE | Ingress Virtual Port / Interface Counters. |
+| `0x1414a000` | ING_SERVICE_COUNTER_TABLE_Ym | 8192 | IPIPE | Ingress Service Interface Counters. |
+| `0x141c6000` | ING_PW_TERM_SEQ_NUMm | 8192 | IPIPE | Pseudo-wire Termination Sequence Number - index by PW number |
+| `0x141c8000` | ING_VINTF_COUNTER_TABLEm | 8192 | IPIPE | Ingress Virtual Port / Interface Counters |
+| `0x141ca000` | ING_SERVICE_COUNTER_TABLEm | 8192 | IPIPE | Ingress Service Interface Counters |
+| `0x173c0000` | MMU_WRED_DROP_CURVE_PROFILE_0m | 128 | MMU | WRED Drop Curve Profile for TCP Green Traffic |
+| `0x173c0080` | MMU_WRED_DROP_CURVE_PROFILE_1m | 128 | MMU | WRED Drop Curve Profile for TCP Yellow Traffic |
+| `0x173c0100` | MMU_WRED_DROP_CURVE_PROFILE_2m | 128 | MMU | WRED Drop Curve Profile For TCP Red Traffic |
+| `0x173c0180` | MMU_WRED_DROP_CURVE_PROFILE_3m | 128 | MMU | WRED Drop Curve Profile For Non-TCP Green Traffic |
+| `0x173c0200` | MMU_WRED_DROP_CURVE_PROFILE_4m | 128 | MMU | WRED Drop Curve Profile For Non-TCP Yellow Traffic |
+| `0x173c0280` | MMU_WRED_DROP_CURVE_PROFILE_5m | 128 | MMU | WRED Drop Curve Profile For Non-TCP Red Traffic |
+| `0x173c1000` | MMU_WRED_DROP_THD_UC_ENQ0m | 1024 | MMU | WRED Unicast Drop Threshold Memory for Enq pipe 0 |
+| `0x173c1800` | MMU_WRED_DROP_THD_UC_ENQ1m | 1024 | MMU | WRED Unicast Drop Threshold Memory for Enq pipe 1 |
+| `0x173c2000` | MMU_WRED_DROP_THD_UC_DEQ0m | 1024 | MMU | WRED Unicast Drop Threshold Memory for Deq pipe 0 |
+| `0x173c2800` | MMU_WRED_DROP_THD_UC_DEQ1m | 1024 | MMU | WRED Unicast Drop Threshold Memory for Deq pipe 1 |
+| `0x1b300000` | MMU_IPMC_GROUP_TBL1m | 4096 | MMU | IPMC VLAN Group Table 1 |
+| `0x1b301000` | MMU_IPMC_GROUP_TBL5m | 4096 | MMU | IPMC VLAN Group Table 5 |
+| `0x1b302000` | MMU_IPMC_GROUP_TBL9m | 4096 | MMU | IPMC VLAN Group Table 9 |
+| `0x1b303000` | MMU_IPMC_GROUP_TBL13m | 4096 | MMU | IPMC VLAN Group Table 13 |
+| `0x1b304000` | MMU_IPMC_GROUP_TBL2m | 4096 | MMU | IPMC VLAN Group Table 2 |
+| `0x1b305000` | MMU_IPMC_GROUP_TBL6m | 4096 | MMU | IPMC VLAN Group Table 6 |
+| `0x1b306000` | MMU_IPMC_GROUP_TBL10m | 4096 | MMU | IPMC VLAN Group Table 10 |
+| `0x1b307000` | MMU_IPMC_GROUP_TBL14m | 4096 | MMU | IPMC VLAN Group Table 14 |
+| `0x1b308000` | MMU_IPMC_GROUP_TBL3m | 4096 | MMU | IPMC VLAN Group Table 3 |
+| `0x1b309000` | MMU_IPMC_GROUP_TBL7m | 4096 | MMU | IPMC VLAN Group Table 7 |
+| `0x1b30a000` | MMU_IPMC_GROUP_TBL11m | 4096 | MMU | IPMC VLAN Group Table 11 |
+| `0x1b30b000` | MMU_IPMC_GROUP_TBL15m | 4096 | MMU | IPMC VLAN Group Table 15 |
+| `0x1b30c000` | MMU_IPMC_GROUP_TBL4m | 4096 | MMU | IPMC VLAN Group Table 4 |
+| `0x1b30d000` | MMU_IPMC_GROUP_TBL8m | 4096 | MMU | IPMC VLAN Group Table 8 |
+| `0x1b30e000` | MMU_IPMC_GROUP_TBL12m | 4096 | MMU | IPMC VLAN Group Table 12 |
+| `0x1b30f000` | MMU_IPMC_GROUP_TBL16m | 4096 | MMU | IPMC VLAN Group Table 16 |
+| `0x1b310000` | MMU_IPMC_GROUP_TBL17m | 4096 | MMU | IPMC VLAN Group Table 17 |
+| `0x1b311000` | MMU_IPMC_GROUP_TBL21m | 4096 | MMU | IPMC VLAN Group Table 21 |
+| `0x1b312000` | MMU_IPMC_GROUP_TBL25m | 4096 | MMU | IPMC VLAN Group Table 25 |
+| `0x1b313000` | MMU_IPMC_GROUP_TBL29m | 4096 | MMU | IPMC VLAN Group Table 29 |
+| `0x1b314000` | MMU_IPMC_GROUP_TBL18m | 4096 | MMU | IPMC VLAN Group Table 18 |
+| `0x1b315000` | MMU_IPMC_GROUP_TBL22m | 4096 | MMU | IPMC VLAN Group Table 22 |
+| `0x1b316000` | MMU_IPMC_GROUP_TBL26m | 4096 | MMU | IPMC VLAN Group Table 26 |
+| `0x1b317000` | MMU_IPMC_GROUP_TBL30m | 4096 | MMU | IPMC VLAN Group Table 30 |
+| `0x1b318000` | MMU_IPMC_GROUP_TBL19m | 4096 | MMU | IPMC VLAN Group Table 19 |
+| `0x1b319000` | MMU_IPMC_GROUP_TBL23m | 4096 | MMU | IPMC VLAN Group Table 23 |
+| `0x1b31a000` | MMU_IPMC_GROUP_TBL27m | 4096 | MMU | IPMC VLAN Group Table 27 |
+| `0x1b31b000` | MMU_IPMC_GROUP_TBL31m | 4096 | MMU | IPMC VLAN Group Table 31 |
+| `0x1b31c000` | MMU_IPMC_GROUP_TBL20m | 4096 | MMU | IPMC VLAN Group Table 20 |
+| `0x1b31d000` | MMU_IPMC_GROUP_TBL24m | 4096 | MMU | IPMC VLAN Group Table 24 |
+| `0x1b31e000` | MMU_IPMC_GROUP_TBL28m | 4096 | MMU | IPMC VLAN Group Table 28 |
+| `0x1b31f000` | MMU_IPMC_GROUP_TBL32m | 4096 | MMU | IPMC VLAN Group Table 32 |
+| `0x1b320000` | MMU_IPMC_GROUP_TBL34m | 4096 | MMU | IPMC VLAN Group Table 34 |
+| `0x1b321000` | MMU_IPMC_GROUP_TBL38m | 4096 | MMU | IPMC VLAN Group Table 38 |
+| `0x1b322000` | MMU_IPMC_GROUP_TBL42m | 4096 | MMU | IPMC VLAN Group Table 42 |
+| `0x1b323000` | MMU_IPMC_GROUP_TBL46m | 4096 | MMU | IPMC VLAN Group Table 46 |
+| `0x1b324000` | MMU_IPMC_GROUP_TBL35m | 4096 | MMU | IPMC VLAN Group Table 35 |
+| `0x1b325000` | MMU_IPMC_GROUP_TBL39m | 4096 | MMU | IPMC VLAN Group Table 39 |
+| `0x1b326000` | MMU_IPMC_GROUP_TBL43m | 4096 | MMU | IPMC VLAN Group Table 43 |
+| `0x1b327000` | MMU_IPMC_GROUP_TBL47m | 4096 | MMU | IPMC VLAN Group Table 47 |
+| `0x1b328000` | MMU_IPMC_GROUP_TBL36m | 4096 | MMU | IPMC VLAN Group Table 36 |
+| `0x1b329000` | MMU_IPMC_GROUP_TBL40m | 4096 | MMU | IPMC VLAN Group Table 40 |
+| `0x1b32a000` | MMU_IPMC_GROUP_TBL44m | 4096 | MMU | IPMC VLAN Group Table 44 |
+| `0x1b32b000` | MMU_IPMC_GROUP_TBL48m | 4096 | MMU | IPMC VLAN Group Table 48 |
+| `0x1b32c000` | MMU_IPMC_GROUP_TBL37m | 4096 | MMU | IPMC VLAN Group Table 37 |
+| `0x1b32d000` | MMU_IPMC_GROUP_TBL41m | 4096 | MMU | IPMC VLAN Group Table 41 |
+| `0x1b32e000` | MMU_IPMC_GROUP_TBL45m | 4096 | MMU | IPMC VLAN Group Table 45 |
+| `0x1b32f000` | MMU_IPMC_GROUP_TBL49m | 4096 | MMU | IPMC VLAN Group Table 49 |
+| `0x1b330000` | MMU_IPMC_GROUP_TBL50m | 4096 | MMU | IPMC VLAN Group Table 50 |
+| `0x1b331000` | MMU_IPMC_GROUP_TBL54m | 4096 | MMU | IPMC VLAN Group Table 54 |
+| `0x1b332000` | MMU_IPMC_GROUP_TBL58m | 4096 | MMU | IPMC VLAN Group Table 58 |
+| `0x1b333000` | MMU_IPMC_GROUP_TBL62m | 4096 | MMU | IPMC VLAN Group Table 62 |
+| `0x1b334000` | MMU_IPMC_GROUP_TBL51m | 4096 | MMU | IPMC VLAN Group Table 51 |
+| `0x1b335000` | MMU_IPMC_GROUP_TBL55m | 4096 | MMU | IPMC VLAN Group Table 55 |
+| `0x1b336000` | MMU_IPMC_GROUP_TBL59m | 4096 | MMU | IPMC VLAN Group Table 59 |
+| `0x1b337000` | MMU_IPMC_GROUP_TBL63m | 4096 | MMU | IPMC VLAN Group Table 63 |
+| `0x1b338000` | MMU_IPMC_GROUP_TBL52m | 4096 | MMU | IPMC VLAN Group Table 52 |
+| `0x1b339000` | MMU_IPMC_GROUP_TBL56m | 4096 | MMU | IPMC VLAN Group Table 56 |
+| `0x1b33a000` | MMU_IPMC_GROUP_TBL60m | 4096 | MMU | IPMC VLAN Group Table 60 |
+| `0x1b33b000` | MMU_IPMC_GROUP_TBL64m | 4096 | MMU | IPMC VLAN Group Table 64 |
+| `0x1b33c000` | MMU_IPMC_GROUP_TBL53m | 4096 | MMU | IPMC VLAN Group Table 53 |
+| `0x1b33d000` | MMU_IPMC_GROUP_TBL57m | 4096 | MMU | IPMC VLAN Group Table 57 |
+| `0x1b33e000` | MMU_IPMC_GROUP_TBL61m | 4096 | MMU | IPMC VLAN Group Table 61 |
+| `0x1b33f000` | MMU_IPMC_GROUP_TBL65m | 4096 | MMU | IPMC VLAN Group Table 65 |
+| `0x1b340000` | MMU_IPMC_GROUP_TBL33m | 4096 | MMU | IPMC VLAN Group Table 33 |
+| `0x1b380000` | MMU_IPMC_VLAN_TBLm | 8192 | MMU | IPMC VLAN LSB Bitmap Table RAM |
+| `0x1b384000` | IPMC_VLAN_TBL0m | 8192 | MMU | First physical copy of MMU_IPMC_VLAN_TBL |
+| `0x1b388000` | IPMC_VLAN_TBL1m | 8192 | MMU | Second physical copy of MMU_IPMC_VLAN_TBL |
+| `0x1b3a0000` | MMU_MC_FIFO1m | 1024 | MMU | MC_FIFO1 |
+| `0x1b3a0400` | MMU_MC_FIFO5m | 1024 | MMU | MC_FIFO1 |
+| `0x1b3a0800` | MMU_MC_FIFO9m | 1024 | MMU | MC_FIFO1 |
+| `0x1b3a0c00` | MMU_MC_FIFO13m | 1024 | MMU | MC_FIFO1 |
+| `0x1b3a1000` | MMU_MC_FIFO2m | 1024 | MMU | MC_FIFO1 |
+| `0x1b3a1400` | MMU_MC_FIFO6m | 1024 | MMU | MC_FIFO1 |
+| `0x1b3a1800` | MMU_MC_FIFO10m | 1024 | MMU | MC_FIFO1 |
+| `0x1b3a1c00` | MMU_MC_FIFO14m | 1024 | MMU | MC_FIFO1 |
+| `0x1b3a2000` | MMU_MC_FIFO3m | 1024 | MMU | MC_FIFO1 |
+| `0x1b3a2400` | MMU_MC_FIFO7m | 1024 | MMU | MC_FIFO1 |
+| `0x1b3a2800` | MMU_MC_FIFO11m | 1024 | MMU | MC_FIFO1 |
+| `0x1b3a2c00` | MMU_MC_FIFO15m | 1024 | MMU | MC_FIFO1 |
+| `0x1b3a3000` | MMU_MC_FIFO4m | 1024 | MMU | MC_FIFO1 |
+| `0x1b3a3400` | MMU_MC_FIFO8m | 1024 | MMU | MC_FIFO1 |
+| `0x1b3a3800` | MMU_MC_FIFO12m | 1024 | MMU | MC_FIFO1 |
+| `0x1b3a3c00` | MMU_MC_FIFO16m | 1024 | MMU | MC_FIFO1 |
+| `0x1b3a4000` | MMU_MC_FIFO17m | 1024 | MMU | MC_FIFO1 |
+| `0x1b3a4400` | MMU_MC_FIFO21m | 1024 | MMU | MC_FIFO1 |
+| `0x1b3a4800` | MMU_MC_FIFO25m | 1024 | MMU | MC_FIFO1 |
+| `0x1b3a4c00` | MMU_MC_FIFO29m | 1024 | MMU | MC_FIFO1 |
+| `0x1b3a5000` | MMU_MC_FIFO18m | 1024 | MMU | MC_FIFO1 |
+| `0x1b3a5400` | MMU_MC_FIFO22m | 1024 | MMU | MC_FIFO1 |
+| `0x1b3a5800` | MMU_MC_FIFO26m | 1024 | MMU | MC_FIFO1 |
+| `0x1b3a5c00` | MMU_MC_FIFO30m | 1024 | MMU | MC_FIFO1 |
+| `0x1b3a6000` | MMU_MC_FIFO19m | 1024 | MMU | MC_FIFO1 |
+| `0x1b3a6400` | MMU_MC_FIFO23m | 1024 | MMU | MC_FIFO1 |
+| `0x1b3a6800` | MMU_MC_FIFO27m | 1024 | MMU | MC_FIFO1 |
+| `0x1b3a6c00` | MMU_MC_FIFO31m | 1024 | MMU | MC_FIFO1 |
+| `0x1b3a7000` | MMU_MC_FIFO20m | 1024 | MMU | MC_FIFO1 |
+| `0x1b3a7400` | MMU_MC_FIFO24m | 1024 | MMU | MC_FIFO1 |
+| `0x1b3a7800` | MMU_MC_FIFO28m | 1024 | MMU | MC_FIFO1 |
+| `0x1b3a7c00` | MMU_MC_FIFO32m | 1024 | MMU | MC_FIFO1 |
+| `0x1b3a8000` | MMU_MC_FIFO34m | 1024 | MMU | MC_FIFO1 |
+| `0x1b3a8400` | MMU_MC_FIFO38m | 1024 | MMU | MC_FIFO1 |
+| `0x1b3a8800` | MMU_MC_FIFO42m | 1024 | MMU | MC_FIFO1 |
+| `0x1b3a8c00` | MMU_MC_FIFO46m | 1024 | MMU | MC_FIFO1 |
+| `0x1b3a9000` | MMU_MC_FIFO35m | 1024 | MMU | MC_FIFO1 |
+| `0x1b3a9400` | MMU_MC_FIFO39m | 1024 | MMU | MC_FIFO1 |
+| `0x1b3a9800` | MMU_MC_FIFO43m | 1024 | MMU | MC_FIFO1 |
+| `0x1b3a9c00` | MMU_MC_FIFO47m | 1024 | MMU | MC_FIFO1 |
+| `0x1b3aa000` | MMU_MC_FIFO36m | 1024 | MMU | MC_FIFO1 |
+| `0x1b3aa400` | MMU_MC_FIFO40m | 1024 | MMU | MC_FIFO1 |
+| `0x1b3aa800` | MMU_MC_FIFO44m | 1024 | MMU | MC_FIFO1 |
+| `0x1b3aac00` | MMU_MC_FIFO48m | 1024 | MMU | MC_FIFO1 |
+| `0x1b3ab000` | MMU_MC_FIFO37m | 1024 | MMU | MC_FIFO1 |
+| `0x1b3ab400` | MMU_MC_FIFO41m | 1024 | MMU | MC_FIFO1 |
+| `0x1b3ab800` | MMU_MC_FIFO45m | 1024 | MMU | MC_FIFO1 |
+| `0x1b3abc00` | MMU_MC_FIFO49m | 1024 | MMU | MC_FIFO1 |
+| `0x1b3ac000` | MMU_MC_FIFO50m | 1024 | MMU | MC_FIFO1 |
+| `0x1b3ac400` | MMU_MC_FIFO54m | 1024 | MMU | MC_FIFO1 |
+| `0x1b3ac800` | MMU_MC_FIFO58m | 1024 | MMU | MC_FIFO1 |
+| `0x1b3acc00` | MMU_MC_FIFO62m | 1024 | MMU | MC_FIFO1 |
+| `0x1b3ad000` | MMU_MC_FIFO51m | 1024 | MMU | MC_FIFO1 |
+| `0x1b3ad400` | MMU_MC_FIFO55m | 1024 | MMU | MC_FIFO1 |
+| `0x1b3ad800` | MMU_MC_FIFO59m | 1024 | MMU | MC_FIFO1 |
+| `0x1b3adc00` | MMU_MC_FIFO63m | 1024 | MMU | MC_FIFO1 |
+| `0x1b3ae000` | MMU_MC_FIFO52m | 1024 | MMU | MC_FIFO1 |
+| `0x1b3ae400` | MMU_MC_FIFO56m | 1024 | MMU | MC_FIFO1 |
+| `0x1b3ae800` | MMU_MC_FIFO60m | 1024 | MMU | MC_FIFO1 |
+| `0x1b3aec00` | MMU_MC_FIFO64m | 1024 | MMU | MC_FIFO1 |
+| `0x1b3af000` | MMU_MC_FIFO53m | 1024 | MMU | MC_FIFO1 |
+| `0x1b3af400` | MMU_MC_FIFO57m | 1024 | MMU | MC_FIFO1 |
+| `0x1b3af800` | MMU_MC_FIFO61m | 1024 | MMU | MC_FIFO1 |
+| `0x1b3afc00` | MMU_MC_FIFO65m | 1024 | MMU | MC_FIFO1 |
+| `0x1b3b0000` | MMU_MC_FIFO33m | 1024 | MMU | MC_FIFO1 |
+| `0x1d300000` | MMU_PQE_MEM0m | 3168 | MMU | Central Purge Queue RAM |
+| `0x1d301000` | MMU_PQE_MEM1m | 3168 | MMU | Central Purge Queue RAM |
+| `0x1e300000` | MMU_QCN_ENABLEm | 66 | MMU | Memory address = dest_port_num |
+| `0x1e300100` | MMU_QCN_CPQCFGm | 66 | MMU | Memory address = dest_port_num |
+| `0x1e300200` | MMU_QCN_SITBm | 128 | MMU | Sample Interval Table. |
+| `0x1e300400` | MMU_QCN_QFBTBm | 1024 | MMU | The Table to map QuantizedFb[5:0] from PreQntzFb[6:0]. |
+| `0x1e300800` | MMU_QCN_CPQST_TSSLSm | 132 | MMU | Per CPQ state memory for TSSLS. |
+| `0x1e301000` | MMU_QCN_CPQST_QLENm | 132 | MMU | Per CPQ state memory for Q length and jitter. |
+| `0x1e301200` | MMU_QCN_CNM_QUEUE0m | 150 | MMU | QCN CNM queue. |
+| `0x1e301400` | MMU_QCN_CNM_QUEUE1m | 150 | MMU | QCN CNM queue. |
+| `0x1e301600` | MMU_QCN_CNM_COUNTERm | 132 | MMU | QCN CNM Counter per CP Queue. |
+| `0x1f380000` | MMU_OVQ_BANK0_MEM0m | 12288 | MMU | OVQ BANK0 MEM0 |
+| `0x1f384000` | MMU_OVQ_BANK0_MEM1m | 12288 | MMU | OVQ BANK0 MEM1 |
+| `0x1f388000` | MMU_OVQ_BANK0_MEM2m | 12288 | MMU | OVQ BANK0 MEM2 |
+| `0x1f38c000` | MMU_OVQ_BANK0_MEM3m | 12288 | MMU | OVQ BANK0 MEM3 |
+| `0x1f390000` | MMU_OVQ_BANK1_MEM0m | 12288 | MMU | OVQ BANK1 MEM0 |
+| `0x1f394000` | MMU_OVQ_BANK1_MEM1m | 12288 | MMU | OVQ BANK1 MEM1 |
+| `0x1f398000` | MMU_OVQ_BANK1_MEM2m | 12288 | MMU | OVQ BANK1 MEM2 |
+| `0x1f39c000` | MMU_OVQ_BANK1_MEM3m | 12288 | MMU | OVQ BANK0 MEM3 |
+| `0x1f3a0000` | MMU_OVQ_BANK2_MEM0m | 12288 | MMU | OVQ BANK2 MEM0 |
+| `0x1f3a4000` | MMU_OVQ_BANK2_MEM1m | 12288 | MMU | OVQ BANK2 MEM1 |
+| `0x1f3a8000` | MMU_OVQ_BANK2_MEM2m | 12288 | MMU | OVQ BANK2 MEM2 |
+| `0x1f3ac000` | MMU_OVQ_BANK2_MEM3m | 12288 | MMU | OVQ BANK2 MEM3 |
+| `0x1f3b0000` | MMU_OVQ_BANK3_MEM0m | 12288 | MMU | OVQ BANK3 MEM0 |
+| `0x1f3b4000` | MMU_OVQ_BANK3_MEM1m | 12288 | MMU | OVQ BANK3 MEM1 |
+| `0x1f3b8000` | MMU_OVQ_BANK3_MEM2m | 12288 | MMU | OVQ BANK0 MEM2 |
+| `0x1f3bc000` | MMU_OVQ_BANK3_MEM3m | 12288 | MMU | OVQ BANK3 MEM3 |
+| `0x1f3c0000` | MMU_OVQ_DISTRIBUTOR_MEM0m | 128 | MMU | OVQ_DISTRIBUTOR_MEM0 |
+| `0x1f3c0080` | MMU_OVQ_DISTRIBUTOR_MEM1m | 128 | MMU | OVQ_DISTRIBUTOR_MEM1 |
+| `0x1f3c0100` | MMU_OVQ_DISTRIBUTOR_MEM2m | 128 | MMU | OVQ Distributor MEM2 |
+| `0x1f3c0180` | MMU_OVQ_DISTRIBUTOR_MEM3m | 128 | MMU | OVQ DISTRIBUTOR MEM3 |
+| `0x20300000` | MMU_CTR_UC_DROP_MEMm | 1152 | MMU | Unicast drop counter mmeory. |
+| `0x20301000` | MMU_CTR_MC_DROP_MEMm | 373 | MMU | Unicast drop counter mmeory. |
+| `0x20302000` | MMU_CTR_COLOR_DROP_MEMm | 330 | MMU | Unicast WRED Color drop counter ,and |
+| `0x22300100` | MMU_CHFC_SYSPORT_MAPPINGm | 32 | MMU | Mapping from channel Flow Control Byte number to System port number |
+| `0x22300200` | MMU_INTFO_TC2PRI_MAPPINGm | 256 | MMU | Channel TC state to Priority mapping |

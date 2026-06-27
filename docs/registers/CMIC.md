@@ -2,7 +2,7 @@
 
 _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
-451 registers. Source: OpenMDK CDK defs/sym + OpenBCM descriptions + live Cumulus dump.
+451 registers.
 
 ---
 
@@ -13,7 +13,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -92,7 +92,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -103,7 +103,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -114,7 +114,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -125,7 +125,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -368,7 +368,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -379,7 +379,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -390,7 +390,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -401,7 +401,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -504,7 +504,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -680,7 +680,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -691,7 +691,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -718,7 +718,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -729,7 +729,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -874,7 +874,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -885,7 +885,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -896,7 +896,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -907,7 +907,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -918,7 +918,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -929,7 +929,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -940,7 +940,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -951,7 +951,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -962,7 +962,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -973,7 +973,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -984,7 +984,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -1219,7 +1219,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -1230,7 +1230,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -1241,7 +1241,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -1252,7 +1252,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -1263,7 +1263,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -1274,7 +1274,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -1285,7 +1285,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -1296,7 +1296,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -1307,7 +1307,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -1318,7 +1318,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -1329,7 +1329,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -1340,7 +1340,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -1351,7 +1351,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -1362,7 +1362,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -1373,7 +1373,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -1384,7 +1384,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -1395,7 +1395,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -1406,7 +1406,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -1417,7 +1417,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -1428,7 +1428,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -1439,7 +1439,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -1450,7 +1450,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -1461,7 +1461,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -1472,7 +1472,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -1483,7 +1483,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -1494,7 +1494,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -1505,7 +1505,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -1516,7 +1516,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -1527,7 +1527,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -1538,7 +1538,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -1549,7 +1549,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -1560,7 +1560,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -2157,7 +2157,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -2231,7 +2231,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -2285,7 +2285,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -2296,7 +2296,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -2352,7 +2352,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -2377,7 +2377,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -2402,7 +2402,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -2427,7 +2427,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -2690,7 +2690,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -2701,7 +2701,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -2749,7 +2749,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -2760,7 +2760,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -2771,7 +2771,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -2820,7 +2820,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -2885,7 +2885,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -3111,7 +3111,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -3122,7 +3122,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -4526,7 +4526,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -4537,7 +4537,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -4548,7 +4548,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -4559,7 +4559,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -4608,7 +4608,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -4633,7 +4633,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -4672,7 +4672,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -4683,7 +4683,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -4694,7 +4694,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -4705,7 +4705,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -4730,7 +4730,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -4741,7 +4741,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -4752,7 +4752,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -4763,7 +4763,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -4774,7 +4774,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -4785,7 +4785,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -4796,7 +4796,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -4807,7 +4807,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -4818,7 +4818,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -4829,7 +4829,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -4840,7 +4840,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -4851,7 +4851,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -4862,7 +4862,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -4873,7 +4873,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -4960,7 +4960,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -4971,7 +4971,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -4982,7 +4982,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -5272,7 +5272,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -5283,7 +5283,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -5294,7 +5294,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -5305,7 +5305,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -5476,7 +5476,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -5487,7 +5487,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -5933,7 +5933,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -5944,7 +5944,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -5955,7 +5955,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -5966,7 +5966,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -5977,7 +5977,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -5988,7 +5988,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -5999,7 +5999,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -6010,7 +6010,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -6021,7 +6021,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -6032,7 +6032,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -6043,7 +6043,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -6054,7 +6054,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -6065,7 +6065,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -6076,7 +6076,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -6087,7 +6087,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -6098,7 +6098,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -6133,7 +6133,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -6144,7 +6144,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -6155,7 +6155,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -6166,7 +6166,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -6305,7 +6305,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -6395,7 +6395,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -6406,7 +6406,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -6417,7 +6417,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -6428,7 +6428,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -6484,7 +6484,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -6495,7 +6495,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -6506,7 +6506,7 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -7140,4 +7140,3 @@ _CMIC / CMICm — CPU Management Interface (DMA, S-channel, interrupts, MIIM)_
     | `[7:0]` | DATA |
 
 ---
-

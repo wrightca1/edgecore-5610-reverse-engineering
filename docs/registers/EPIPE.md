@@ -2,7 +2,7 @@
 
 _Egress pipeline — egress VLAN, modification, mirroring, egress policy_
 
-214 registers. Source: OpenMDK CDK defs/sym + OpenBCM descriptions + live Cumulus dump.
+214 registers.
 
 ---
 
@@ -2842,7 +2842,7 @@ _Egress pipeline — egress VLAN, modification, mirroring, egress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -2859,7 +2859,7 @@ _Egress pipeline — egress VLAN, modification, mirroring, egress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -2876,7 +2876,7 @@ _Egress pipeline — egress VLAN, modification, mirroring, egress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -2893,7 +2893,7 @@ _Egress pipeline — egress VLAN, modification, mirroring, egress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -3862,7 +3862,7 @@ _Egress pipeline — egress VLAN, modification, mirroring, egress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -3879,7 +3879,7 @@ _Egress pipeline — egress VLAN, modification, mirroring, egress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -3906,7 +3906,7 @@ _Egress pipeline — egress VLAN, modification, mirroring, egress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -3923,7 +3923,7 @@ _Egress pipeline — egress VLAN, modification, mirroring, egress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -3940,7 +3940,7 @@ _Egress pipeline — egress VLAN, modification, mirroring, egress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -3957,7 +3957,7 @@ _Egress pipeline — egress VLAN, modification, mirroring, egress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -4027,7 +4027,7 @@ _Egress pipeline — egress VLAN, modification, mirroring, egress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -4097,7 +4097,7 @@ _Egress pipeline — egress VLAN, modification, mirroring, egress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -4167,7 +4167,7 @@ _Egress pipeline — egress VLAN, modification, mirroring, egress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -4237,7 +4237,7 @@ _Egress pipeline — egress VLAN, modification, mirroring, egress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -4307,7 +4307,7 @@ _Egress pipeline — egress VLAN, modification, mirroring, egress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -4377,7 +4377,7 @@ _Egress pipeline — egress VLAN, modification, mirroring, egress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -4447,7 +4447,7 @@ _Egress pipeline — egress VLAN, modification, mirroring, egress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -4517,7 +4517,7 @@ _Egress pipeline — egress VLAN, modification, mirroring, egress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -4587,7 +4587,7 @@ _Egress pipeline — egress VLAN, modification, mirroring, egress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -4657,7 +4657,7 @@ _Egress pipeline — egress VLAN, modification, mirroring, egress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -4727,7 +4727,7 @@ _Egress pipeline — egress VLAN, modification, mirroring, egress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -4797,7 +4797,7 @@ _Egress pipeline — egress VLAN, modification, mirroring, egress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -4867,7 +4867,7 @@ _Egress pipeline — egress VLAN, modification, mirroring, egress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -4937,7 +4937,7 @@ _Egress pipeline — egress VLAN, modification, mirroring, egress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -5007,7 +5007,7 @@ _Egress pipeline — egress VLAN, modification, mirroring, egress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -5090,7 +5090,7 @@ _Egress pipeline — egress VLAN, modification, mirroring, egress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -5107,7 +5107,7 @@ _Egress pipeline — egress VLAN, modification, mirroring, egress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -5124,7 +5124,7 @@ _Egress pipeline — egress VLAN, modification, mirroring, egress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -5141,7 +5141,7 @@ _Egress pipeline — egress VLAN, modification, mirroring, egress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -5158,7 +5158,7 @@ _Egress pipeline — egress VLAN, modification, mirroring, egress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -5175,7 +5175,7 @@ _Egress pipeline — egress VLAN, modification, mirroring, egress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -5192,7 +5192,7 @@ _Egress pipeline — egress VLAN, modification, mirroring, egress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -5209,7 +5209,7 @@ _Egress pipeline — egress VLAN, modification, mirroring, egress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -5226,7 +5226,7 @@ _Egress pipeline — egress VLAN, modification, mirroring, egress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -5243,7 +5243,7 @@ _Egress pipeline — egress VLAN, modification, mirroring, egress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -5260,7 +5260,7 @@ _Egress pipeline — egress VLAN, modification, mirroring, egress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -5277,7 +5277,7 @@ _Egress pipeline — egress VLAN, modification, mirroring, egress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -5294,7 +5294,7 @@ _Egress pipeline — egress VLAN, modification, mirroring, egress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -6064,4 +6064,3 @@ _Egress pipeline — egress VLAN, modification, mirroring, egress policy_
     | epipe0 | `0x0b280700` | `0x00000000` |
 
 ---
-

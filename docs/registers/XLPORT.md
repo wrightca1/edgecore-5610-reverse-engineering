@@ -2,7 +2,7 @@
 
 _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
-258 registers. Source: OpenMDK CDK defs/sym + OpenBCM descriptions + live Cumulus dump.
+258 registers.
 
 ---
 
@@ -13,7 +13,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -81,7 +81,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -149,7 +149,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -217,7 +217,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -285,7 +285,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -353,7 +353,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -421,7 +421,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -489,7 +489,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -557,7 +557,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -625,7 +625,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -693,7 +693,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -761,7 +761,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -829,7 +829,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -897,7 +897,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -965,7 +965,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -1033,7 +1033,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -1101,7 +1101,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -1169,7 +1169,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -1237,7 +1237,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -1305,7 +1305,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -1373,7 +1373,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -1441,7 +1441,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -1509,7 +1509,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -1577,7 +1577,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -1645,7 +1645,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -1713,7 +1713,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -1781,7 +1781,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -1849,7 +1849,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -1917,7 +1917,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -1985,7 +1985,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -2053,7 +2053,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -2121,7 +2121,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -2189,7 +2189,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -2257,7 +2257,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -2325,7 +2325,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -2393,7 +2393,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -2461,7 +2461,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -2529,7 +2529,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -2597,7 +2597,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -2665,7 +2665,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -2733,7 +2733,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -2801,7 +2801,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -2869,7 +2869,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -2937,7 +2937,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -3005,7 +3005,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -3073,7 +3073,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -3141,7 +3141,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -3209,7 +3209,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -3277,7 +3277,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -3345,7 +3345,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -3413,7 +3413,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -3481,7 +3481,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -3549,7 +3549,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -3617,7 +3617,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -3685,7 +3685,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -3753,7 +3753,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -3821,7 +3821,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -3889,7 +3889,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -3957,7 +3957,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -4025,7 +4025,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -4093,7 +4093,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -4161,7 +4161,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -4229,7 +4229,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -4297,7 +4297,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -4365,7 +4365,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -4433,7 +4433,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -4501,7 +4501,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -4569,7 +4569,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -4637,7 +4637,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -4705,7 +4705,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -4773,7 +4773,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -4841,7 +4841,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -4909,7 +4909,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -4977,7 +4977,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -5045,7 +5045,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -5113,7 +5113,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -5181,7 +5181,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -5249,7 +5249,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -5317,7 +5317,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -5385,7 +5385,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -5453,7 +5453,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -5521,7 +5521,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -5589,7 +5589,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -5657,7 +5657,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -5725,7 +5725,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -5793,7 +5793,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -5861,7 +5861,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -5929,7 +5929,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -5997,7 +5997,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -6065,7 +6065,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -6133,7 +6133,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -6201,7 +6201,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -6269,7 +6269,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -6337,7 +6337,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -6405,7 +6405,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -6473,7 +6473,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -6541,7 +6541,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -6609,7 +6609,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -6677,7 +6677,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -6745,7 +6745,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -6813,7 +6813,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -6881,7 +6881,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -6949,7 +6949,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -7017,7 +7017,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -7085,7 +7085,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -7153,7 +7153,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -7221,7 +7221,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -7289,7 +7289,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -7357,7 +7357,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -7716,7 +7716,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -7784,7 +7784,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -7852,7 +7852,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -7920,7 +7920,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -7988,7 +7988,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -8056,7 +8056,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -8124,7 +8124,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -8192,7 +8192,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -8260,7 +8260,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -8328,7 +8328,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -8396,7 +8396,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -8464,7 +8464,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -8532,7 +8532,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -8600,7 +8600,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -8668,7 +8668,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -8736,7 +8736,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -8874,7 +8874,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -9362,7 +9362,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -9430,7 +9430,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -10446,7 +10446,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -11311,7 +11311,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -11659,7 +11659,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -11797,7 +11797,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -11896,7 +11896,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -12543,7 +12543,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -13986,7 +13986,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -14704,7 +14704,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -14736,7 +14736,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -14768,7 +14768,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -14800,7 +14800,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -14832,7 +14832,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -14864,7 +14864,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -14896,7 +14896,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -14928,7 +14928,7 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -16416,4 +16416,3 @@ _XLPORT — 10/40G port logic / Warpcore SerDes wrapper_
     | xlport17 | `0x40b80255` | `0x00000000` |
 
 ---
-

@@ -2,7 +2,7 @@
 
 _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
 
-809 registers. Source: OpenMDK CDK defs/sym + OpenBCM descriptions + live Cumulus dump.
+809 registers.
 
 ---
 
@@ -116,7 +116,7 @@ _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -1474,7 +1474,7 @@ _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -1548,7 +1548,7 @@ _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -1770,7 +1770,7 @@ _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -1934,7 +1934,7 @@ _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -1970,7 +1970,7 @@ _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -2007,7 +2007,7 @@ _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -2224,7 +2224,7 @@ _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -2322,7 +2322,7 @@ _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -2361,7 +2361,7 @@ _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -2393,7 +2393,7 @@ _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -2432,7 +2432,7 @@ _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -3240,7 +3240,7 @@ _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -3279,7 +3279,7 @@ _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -3592,7 +3592,7 @@ _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -3662,7 +3662,7 @@ _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -4421,7 +4421,7 @@ _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -4438,7 +4438,7 @@ _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -4971,7 +4971,7 @@ _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -5010,7 +5010,7 @@ _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -5547,7 +5547,7 @@ _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -5564,7 +5564,7 @@ _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -5581,7 +5581,7 @@ _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -5656,7 +5656,7 @@ _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -5673,7 +5673,7 @@ _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -5690,7 +5690,7 @@ _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -5765,7 +5765,7 @@ _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -5782,7 +5782,7 @@ _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -5799,7 +5799,7 @@ _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -5874,7 +5874,7 @@ _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -5891,7 +5891,7 @@ _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -5908,7 +5908,7 @@ _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -5983,7 +5983,7 @@ _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -6000,7 +6000,7 @@ _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -6017,7 +6017,7 @@ _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -6092,7 +6092,7 @@ _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -6109,7 +6109,7 @@ _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -6126,7 +6126,7 @@ _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -6201,7 +6201,7 @@ _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -6218,7 +6218,7 @@ _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -6235,7 +6235,7 @@ _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -6310,7 +6310,7 @@ _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -6327,7 +6327,7 @@ _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -6344,7 +6344,7 @@ _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -6545,7 +6545,7 @@ _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -6584,7 +6584,7 @@ _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -7950,7 +7950,7 @@ _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -7989,7 +7989,7 @@ _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -8166,7 +8166,7 @@ _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -8205,7 +8205,7 @@ _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -10493,7 +10493,7 @@ _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -10568,7 +10568,7 @@ _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -14905,7 +14905,7 @@ _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -15004,7 +15004,7 @@ _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -15103,7 +15103,7 @@ _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -15120,7 +15120,7 @@ _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -15137,7 +15137,7 @@ _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -15154,7 +15154,7 @@ _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -15171,7 +15171,7 @@ _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -15188,7 +15188,7 @@ _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -15205,7 +15205,7 @@ _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -15222,7 +15222,7 @@ _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -15239,7 +15239,7 @@ _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -15256,7 +15256,7 @@ _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -15494,7 +15494,7 @@ _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -16132,7 +16132,7 @@ _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 **Observed live values (Cumulus, working chip):**
 
@@ -16171,7 +16171,7 @@ _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
 
 **Fields:**
 
-    _(no field breakdown — treated as a single 32-bit value)_
+    _(no field breakdown — treated as a single value)_
 
 ---
 
@@ -19905,4 +19905,3 @@ _Ingress pipeline — parsing, L2/L3 lookup, VLAN, FP/TCAM, ingress policy_
     | ipipe0 | `0x11180d08` | `0x00000000` |
 
 ---
-
